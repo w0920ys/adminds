@@ -14,16 +14,31 @@ const TableDensityContext = React.createContext<TableDensity>('default')
  * 두어, 이 표를 담는 문서 예시 상자(overflow-hidden)에 잘리기 전에
  * 표 안에서 먼저 스크롤이 생긴다. className은 이 바깥 스크롤 그릇에
  * 적용된다 — <table>은 항상 w-full이다.
+ *
+ * 스크롤 그릇은 role="region"·tabIndex={0}으로 키보드 포커스를 받는다
+ * (WCAG 2.1.1) — sticky 첫 열은 가로 스크롤 자체를 대신하지 않는다.
+ * 포인터가 없으면 이 칸으로 Tab이 와서 방향키로 훑을 수 있어야 한다.
+ * label은 필수다 — region에는 이름이 있어야 하는데 이 컴포넌트는 표
+ * 안의 내용을 모르므로 호출한 쪽이 채워야 한다.
  */
 function Table({
   className,
   density = 'default',
+  label,
   children,
   ...props
-}: React.ComponentProps<'table'> & { density?: TableDensity }) {
+}: React.ComponentProps<'table'> & { density?: TableDensity; label: string }) {
   return (
     <TableDensityContext.Provider value={density}>
-      <div className={cn('w-full overflow-x-auto rounded-md border', className)}>
+      <div
+        role="region"
+        aria-label={label}
+        tabIndex={0}
+        className={cn(
+          'w-full overflow-x-auto rounded-md border outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-2',
+          className,
+        )}
+      >
         <table data-slot="table" className="w-full caption-bottom text-sm" {...props}>
           {children}
         </table>

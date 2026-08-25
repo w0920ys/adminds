@@ -16,7 +16,7 @@ function renderTable(options: RenderOptions) {
   const density = (options.density ?? 'default') as 'default' | 'compact'
   const state = options.state ?? 'default'
   return (
-    <Table density={density} className="w-72">
+    <Table density={density} className="w-72" label="이름과 주문 수를 보여주는 표">
       <TableHeader>
         <TableRow>
           <TableHead>이름</TableHead>
@@ -77,7 +77,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
   switch (guidelineId) {
     case 'numeric-align':
       return (
-        <Table className="w-56">
+        <Table className="w-56" label="상품과 금액을 보여주는 표">
           <TableHeader>
             <TableRow>
               <TableHead>상품</TableHead>
@@ -99,7 +99,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
 
     case 'clickable-row-affordance':
       return (
-        <Table className="w-56">
+        <Table className="w-56" label="주문 번호를 보여주는 표">
           <TableBody>
             <TableRow className="cursor-pointer">
               <TableCell>주문 20260824-001</TableCell>
@@ -116,7 +116,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
     case 'horizontal-scroll-fixed-column':
       return (
         <div className="w-64">
-          <Table>
+          <Table label="일곱 칸짜리 사용자 목록">
             <TableHeader>
               <WideHeader sticky={kind === 'do'} />
             </TableHeader>
@@ -136,7 +136,7 @@ function renderExample(exampleId: string): ReactNode {
   switch (exampleId) {
     case 'user-list':
       return (
-        <Table>
+        <Table label="사용자 목록">
           <TableHeader>
             <TableRow>
               <TableHead>이름</TableHead>
@@ -170,7 +170,7 @@ function renderExample(exampleId: string): ReactNode {
 
     case 'order-history':
       return (
-        <Table>
+        <Table label="주문 내역">
           <TableHeader>
             <TableRow>
               <TableHead>주문번호</TableHead>
@@ -202,7 +202,7 @@ function renderExample(exampleId: string): ReactNode {
 
     case 'log':
       return (
-        <Table density="compact">
+        <Table density="compact" label="이벤트 로그">
           <TableHeader>
             <TableRow>
               <TableHead>시간</TableHead>
@@ -235,7 +235,7 @@ function renderExample(exampleId: string): ReactNode {
               선택 삭제
             </Button>
           </div>
-          <Table>
+          <Table label="선택 가능한 사용자 목록">
             <TableHeader>
               <TableRow>
                 <TableHead sticky className="w-10">
@@ -319,7 +319,7 @@ function renderExample(exampleId: string): ReactNode {
 
     case 'empty-list':
       return (
-        <Table>
+        <Table label="표시할 항목이 없는 사용자 목록">
           <TableHeader>
             <TableRow>
               <TableHead>이름</TableHead>
@@ -339,7 +339,7 @@ function renderExample(exampleId: string): ReactNode {
 
     case 'loading':
       return (
-        <Table>
+        <Table label="불러오는 중인 사용자 목록">
           <TableHeader>
             <TableRow>
               <TableHead>이름</TableHead>
@@ -367,7 +367,7 @@ function renderExample(exampleId: string): ReactNode {
 
     case 'missing-value':
       return (
-        <Table>
+        <Table label="담당자가 없을 수 있는 사용자 목록">
           <TableHeader>
             <TableRow>
               <TableHead>이름</TableHead>
@@ -395,7 +395,7 @@ function renderExample(exampleId: string): ReactNode {
       return (
         <div className="flex flex-col gap-2">
           <Bounds className="w-48">
-            <Table>
+            <Table label="일곱 칸짜리 사용자 목록">
               <TableHeader>
                 <WideHeader sticky />
               </TableHeader>
@@ -425,7 +425,7 @@ function renderExample(exampleId: string): ReactNode {
  */
 function AnatomyPreview() {
   return (
-    <Table className="w-80">
+    <Table className="w-80" label="이름과 주문 수를 보여주는 표">
       <TableHeader>
         <TableRow data-anatomy="header">
           <TableHead className="w-10">

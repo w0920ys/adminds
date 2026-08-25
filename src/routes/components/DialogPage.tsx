@@ -271,7 +271,12 @@ function renderExample(exampleId: string): ReactNode {
             <DialogHeader>
               <DialogTitle>이용 약관</DialogTitle>
             </DialogHeader>
-            <div className="max-h-48 overflow-y-auto text-sm">
+            <div
+              role="region"
+              aria-label="이용 약관 본문"
+              tabIndex={0}
+              className="max-h-48 overflow-y-auto rounded-md text-sm outline-none focus-visible:ring-ring/50 focus-visible:ring-2"
+            >
               {Array.from({ length: 12 }).map((_, i) => (
                 <p key={i} className="text-muted-foreground py-1">
                   제{i + 1}조. 본문이 길어지면 컨테이너는 늘어나지 않고 이 영역 안에서 세로로 스크롤됩니다.
