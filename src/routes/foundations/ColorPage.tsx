@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router'
 import tokensCss from '@/styles/tokens.css?raw'
 import { DocPage, DocSection } from '@/components/docs/DocPage'
 import { DoDont } from '@/components/docs/DoDont'
@@ -36,9 +37,15 @@ export function ColorPage() {
     >
       <DocSection title="개요">
         <p className="text-muted-foreground text-sm">
-          역할 이름으로 색을 쓰는 규칙을 정합니다. 개별 색상값의 원본은 Palette에서, 역할 사이의
-          위계는 Color Role에서 다룹니다. 새 색이 필요하다고 느낄 때 먼저 이 문서에서 맞는 역할이
-          있는지 봅니다.
+          역할 이름으로 색을 쓰는 규칙을 정합니다. 개별 색상값의 원본은{' '}
+          <Link to="/foundations/palette" className="underline underline-offset-2">
+            Palette
+          </Link>
+          에서, 역할 사이의 위계는{' '}
+          <Link to="/foundations/color-role" className="underline underline-offset-2">
+            Color Role
+          </Link>
+          에서 다룹니다. 새 색이 필요하다고 느낄 때 먼저 이 문서에서 맞는 역할이 있는지 봅니다.
         </p>
       </DocSection>
 

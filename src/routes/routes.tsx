@@ -5,9 +5,11 @@ import { Placeholder } from '@/routes/Placeholder'
 import { ButtonPage } from '@/routes/components/ButtonPage'
 import { ComponentsIndex } from '@/routes/components/ComponentsIndex'
 import { ColorPage } from '@/routes/foundations/ColorPage'
+import { ColorRolePage } from '@/routes/foundations/ColorRolePage'
 import { DesignTokenPage } from '@/routes/foundations/DesignTokenPage'
 import { FoundationsOverview } from '@/routes/foundations/FoundationsOverview'
 import { IconographyPage } from '@/routes/foundations/IconographyPage'
+import { PalettePage } from '@/routes/foundations/PalettePage'
 import { SpacingPage } from '@/routes/foundations/SpacingPage'
 import { StatePage } from '@/routes/foundations/StatePage'
 import { TypographyPage } from '@/routes/foundations/TypographyPage'
@@ -26,8 +28,8 @@ export const routes: RouteObject[] = [
       { path: 'foundations', element: <FoundationsOverview /> },
       { path: 'foundations/design-token', element: <DesignTokenPage /> },
       { path: 'foundations/color', element: <ColorPage /> },
-      { path: 'foundations/color-role', element: <Placeholder title="Color Role" /> },
-      { path: 'foundations/palette', element: <Placeholder title="Palette" /> },
+      { path: 'foundations/color-role', element: <ColorRolePage /> },
+      { path: 'foundations/palette', element: <PalettePage /> },
       { path: 'foundations/typography', element: <TypographyPage /> },
       { path: 'foundations/spacing', element: <SpacingPage /> },
       { path: 'foundations/iconography', element: <IconographyPage /> },
