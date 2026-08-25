@@ -609,6 +609,112 @@ export const components: ComponentMeta[] = [
     verified: false,
   },
   {
+    id: 'switch',
+    name: 'Switch',
+    category: 'inputs',
+    status: 'stable',
+    addedIn: 'v0.8.0',
+    changedIn: 'v0.8.0',
+    purpose:
+      '즉시 반영되는 켜고 끄기를 나타낸다. Checkbox와 다르다 — 체크박스는 저장을 눌러야 반영되고 스위치는 누르는 즉시 반영된다.',
+    anatomy: [
+      {
+        part: 'track',
+        label: 'Track',
+        note: 'w-11 h-6, 꺼짐은 bg-input, 켜짐은 bg-primary, 모서리는 radius-full',
+      },
+      {
+        part: 'thumb',
+        label: 'Thumb',
+        note: '5×5(20px)의 흰 원. 상태에 따라 트랙의 왼쪽이나 오른쪽으로 옮겨간다. pending이면 이 자리에 스피너가 대신 그려진다',
+      },
+      { part: 'label', label: 'Label', note: 'text-sm. 켜진 상태를 뜻하는 말로 적는다', optional: true },
+      {
+        part: 'description',
+        label: 'Description',
+        note: '라벨 아래의 보조 설명. text-muted-foreground / text-xs',
+        optional: true,
+      },
+    ],
+    properties: [
+      {
+        name: 'state',
+        title: 'State',
+        description: '켜짐 여부와 상호작용, 반영 진행을 나타낸다.',
+        display: 'grid',
+        options: [
+          { value: 'off' },
+          { value: 'on' },
+          { value: 'disabled', note: '지금 상태를 바꿀 수 없음' },
+          { value: 'focus', note: '키보드 포커스. 항상 보여야 한다' },
+          {
+            value: 'pending',
+            note: '반영을 기다리는 동안. 손잡이가 스피너로 바뀌고 다시 누를 수 없다',
+          },
+        ],
+      },
+      {
+        name: 'layout',
+        title: 'Layout',
+        description: '라벨과 설명을 붙이는 방식을 정한다.',
+        display: 'row',
+        options: [
+          { value: 'standalone', note: '표의 행처럼 라벨이 다른 곳에 이미 있을 때' },
+          { value: 'with-label', note: '기본. 라벨 전체가 눌리는 자리다' },
+          { value: 'with-description', note: '라벨만으로 부족할 때 아래에 설명을 더한다' },
+        ],
+      },
+    ],
+    guidelines: [
+      {
+        id: 'form-with-save',
+        title: 'Form with save button',
+        body: '저장 버튼이 있는 폼에서는 Switch 대신 Checkbox를 씁니다. 저장을 누르기 전까지 아무것도 바뀌지 않아야 하는데, Switch는 누르는 즉시 반영되어 그 약속을 어깁니다.',
+        do: ['저장 버튼이 있는 폼에는 Checkbox를 쓴다', '즉시 반영해도 되는 자리에만 Switch를 쓴다'],
+        dont: ['저장을 눌러야 반영되는 폼 안에 Switch를 두지 않는다'],
+      },
+      {
+        id: 'irreversible',
+        title: 'Irreversible actions',
+        body: '되돌리기 어려운 동작에는 Switch를 쓰지 않습니다. 실수로 눌러도 즉시 반영되므로 후회할 틈이 없습니다.',
+        do: ['가역적인 설정에만 Switch를 쓴다', '되돌리기 어려우면 Dialog로 한 번 더 확인한다'],
+        dont: ['삭제나 결제처럼 되돌릴 수 없는 동작에 Switch를 쓰지 않는다'],
+      },
+      {
+        id: 'label-wording',
+        title: 'Label wording',
+        body: '라벨은 켜진 상태를 뜻하는 말로 적습니다. 꺼진 상태를 기준으로 적으면 스위치가 켜졌을 때 라벨과 상태가 서로 반대로 읽힙니다.',
+        do: ["'알림 받기'처럼 켜진 상태를 뜻하는 말을 쓴다"],
+        dont: ["'알림 끄기'처럼 꺼진 상태를 뜻하는 말을 라벨로 쓰지 않는다"],
+      },
+      {
+        id: 'pending-feedback',
+        title: 'Pending feedback',
+        body: '반영을 기다리는 동안은 손잡이 자리에 스피너를 보입니다. 트랙 전체를 흐리게 하면 disabled와 구분되지 않으므로, 손잡이라는 좁은 자리에서만 움직임을 주고 트랙의 색은 목표 상태를 그대로 보입니다.',
+        do: ['손잡이를 스피너로 바꾸고 트랙은 목표 상태의 색을 유지한다', '반영이 끝나기 전까지 다시 누르지 못하게 막는다'],
+        dont: ['트랙 전체를 흐리게 해 disabled처럼 보이게 하지 않는다'],
+      },
+      {
+        id: 'shared-rules',
+        title: 'Shared rules',
+        body: 'Checkbox · Radio와 포커스 링을 공유합니다. 포커스 링은 셋이 같은 모양입니다. 자세한 규칙은 Foundations의 State 문서를 따릅니다.',
+      },
+    ],
+    usage: [
+      { id: 'notification-toggle', title: '알림 켜기', note: '켜진 상태를 뜻하는 라벨과 함께 즉시 반영한다' },
+      { id: 'visibility', title: '공개 여부', note: '누르는 즉시 다른 사용자에게 보이거나 감춰진다' },
+      { id: 'auto-renew', title: '자동 갱신', note: '설명을 더해 무엇이 자동으로 일어나는지 알린다' },
+      { id: 'row-toggle', title: '표의 행 안 토글', note: '라벨 없이 트랙만 두고 스크린리더용 이름을 따로 붙인다' },
+    ],
+    cases: [
+      { id: 'update-failed', title: '반영이 실패한 경우', note: '이전 상태로 되돌리고 실패를 알린다' },
+      { id: 'locked', title: '권한이 없어 잠긴 경우', note: 'disabled로 두고 이유를 근처에 적는다' },
+      { id: 'long-label', title: '라벨이 긴 경우', note: '라벨은 줄바꿈하고 트랙 위치는 그대로 둔다' },
+      { id: 'narrow-screen', title: '좁은 화면', note: '라벨이 줄바꿈되어도 트랙과의 정렬은 유지된다' },
+    ],
+    verified: false,
+  },
+  {
     id: 'textarea',
     name: 'Textarea',
     category: 'inputs',
