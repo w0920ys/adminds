@@ -74,6 +74,7 @@ export const sections: NavSection[] = [
       { to: '/components/tooltip', label: 'Tooltip', updatedAt: '2026-08-26' },
       { to: '/components/dialog', label: 'Dialog', updatedAt: '2026-08-26' },
       { to: '/components/badge', label: 'Badge', updatedAt: '2026-08-26' },
+      { to: '/components/avatar', label: 'Avatar', updatedAt: '2026-08-26' },
     ],
   },
   {

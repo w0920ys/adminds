@@ -1468,6 +1468,87 @@ export const components: ComponentMeta[] = [
     ],
     verified: false,
   },
+  {
+    id: 'avatar',
+    name: 'Avatar',
+    category: 'data-display',
+    status: 'stable',
+    addedIn: 'v0.8.0',
+    changedIn: 'v0.8.0',
+    purpose: '사람이나 조직을 나타낸다.',
+    anatomy: [
+      {
+        part: 'container',
+        label: 'Container',
+        note: 'rounded-full, overflow-hidden. 크기는 size에 따라 size-control-sm·size-control·size-control-lg',
+      },
+      {
+        part: 'content',
+        label: 'Content',
+        note: '이미지가 성공적으로 불러와지면 그 사진(object-cover)이 안을 채운다. 이미지가 없거나 아직 불러오는 동안에는 대체 글자가 대신한다 — 이름이 있으면 이니셜(첫 글자), 이름조차 없으면 일반 사람 아이콘. bg-muted, text-muted-foreground, text-xs',
+      },
+    ],
+    properties: [
+      {
+        name: 'size',
+        title: 'Size',
+        description: '컨테이너의 지름을 정한다. 같은 줄에 놓이는 컨트롤끼리는 크기를 맞춘다.',
+        display: 'row',
+        options: [
+          { value: 'sm', note: '표 행처럼 조밀한 자리' },
+          { value: 'default', note: '기본. 목록·카드' },
+          { value: 'lg', note: '프로필 헤더처럼 단독으로 놓일 때' },
+        ],
+      },
+      {
+        name: 'state',
+        title: 'State',
+        description: '무엇이 안을 채우는지를 나타낸다.',
+        display: 'grid',
+        options: [
+          { value: 'image', note: '이미지를 성공적으로 불러온 경우' },
+          { value: 'initials', note: '이미지가 없고 이름은 있는 경우. 이름의 첫 글자를 보인다' },
+          { value: 'fallback', note: '이미지가 실패했고 이름도 없는 경우. 일반 사람 아이콘을 보인다' },
+        ],
+      },
+    ],
+    guidelines: [
+      {
+        id: 'initials-fallback',
+        title: 'Initials as fallback',
+        body: '이미지가 없으면 이름의 첫 글자를 씁니다. 빈 원만 남기면 그 자리에 누가 있어야 하는지 알 수 없습니다.',
+        do: ['이미지가 없으면 이름의 첫 글자를 대체 글자로 보인다'],
+        dont: ['이미지도 이니셜도 없이 빈 원만 남기지 않는다'],
+      },
+      {
+        id: 'not-a-name-substitute',
+        title: 'Not a name substitute',
+        body: 'Avatar가 이름을 대신하지 않습니다. 얼굴이나 이니셜만으로는 누구인지 확신할 수 없어 이름 글자를 함께 둡니다.',
+        do: ['Avatar 옆에 이름을 글자로 함께 둔다'],
+        dont: ['이름 없이 Avatar 하나만 두고 누구인지 짐작하게 하지 않는다'],
+      },
+      {
+        id: 'stack-with-count',
+        title: 'Stack with count',
+        body: '여럿을 겹쳐 놓을 때 개수를 함께 보입니다. 겹친 뒤로 몇 명이 더 있는지 알 수 없으면 목록의 전체 크기를 가늠할 수 없습니다.',
+        do: ['겹친 목록 끝에 남은 인원 수(+N)를 보인다'],
+        dont: ['겹친 뒤에 몇 명이 더 있는지 알려 주지 않는다'],
+      },
+    ],
+    usage: [
+      { id: 'user-list', title: '사용자 목록', note: '이름 앞에 sm 크기로 놓는다' },
+      { id: 'comment', title: '댓글', note: '작성자를 이름과 함께 보인다' },
+      { id: 'assignee', title: '담당자 표시', note: '표의 담당자 칸에서 이름 대신 짧게 보인다' },
+      { id: 'stacked-list', title: '겹친 목록', note: '참여자가 많을 때 겹쳐 놓고 나머지는 개수로 보인다' },
+    ],
+    cases: [
+      { id: 'image-failure', title: '이미지 실패', note: '실패하면 대체 글자로 자동 전환된다' },
+      { id: 'single-char-name', title: '이름이 한 글자', note: '그 한 글자를 그대로 이니셜로 쓴다' },
+      { id: 'no-name', title: '이름이 없는 경우', note: '이니셜을 만들 수 없으므로 일반 사람 아이콘을 쓴다' },
+      { id: 'narrow-screen', title: '좁은 화면', note: '크기가 줄지 않고 옆 글자가 줄바꿈된다' },
+    ],
+    verified: false,
+  },
 ]
 
 export function getComponent(id: string): ComponentMeta | undefined {

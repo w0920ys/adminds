@@ -3,6 +3,7 @@ import type { RouteObject } from 'react-router'
 import { AppShell } from '@/components/layout/AppShell'
 import { Placeholder } from '@/routes/Placeholder'
 import { AlertPage } from '@/routes/components/AlertPage'
+import { AvatarPage } from '@/routes/components/AvatarPage'
 import { BadgePage } from '@/routes/components/BadgePage'
 import { BreadcrumbPage } from '@/routes/components/BreadcrumbPage'
 import { ButtonPage } from '@/routes/components/ButtonPage'
@@ -70,6 +71,7 @@ export const routes: RouteObject[] = [
           { path: 'tooltip', element: <TooltipPage /> },
           { path: 'dialog', element: <DialogPage /> },
           { path: 'badge', element: <BadgePage /> },
+          { path: 'avatar', element: <AvatarPage /> },
         ],
       },
 
