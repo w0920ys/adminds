@@ -28,13 +28,13 @@ const FORM_EXAMPLES: CopyExample[] = [
     situation: '폼 라벨',
     dont: '이메일을 입력해 주세요',
     do: '이메일',
-    why: '라벨은 명사입니다. 요청은 도움말과 에러 메시지가 합니다.',
+    why: '라벨은 명사입니다. 요청은 도움말과 오류 메시지가 합니다.',
   },
   {
     situation: '도움말',
     dont: '올바른 값을 입력하세요',
     do: '영문 소문자, 숫자, 하이픈만 씁니다. 만든 뒤에는 바꿀 수 없습니다.',
-    why: '도움말은 입력하기 전에 알아야 할 것만 적습니다. 입력한 뒤에 알려줄 것은 에러 메시지의 몫입니다.',
+    why: '도움말은 입력하기 전에 알아야 할 것만 적습니다. 입력한 뒤에 알려줄 것은 오류 메시지의 몫입니다.',
   },
   {
     situation: 'placeholder',
@@ -102,6 +102,7 @@ const NOTATION = [
   { item: '말줄임표', rule: '누르면 추가 입력을 받는 창이 열릴 때만 — 내보내기…', avoid: '내보내기...' },
   { item: '영문', rule: '기술 고유명사는 원문 그대로 — API, Webhook, OAuth', avoid: '에이피아이, 웹훅' },
   { item: '필수 표시', rule: '필수가 기본. 선택 항목에만 (선택)을 붙인다', avoid: '필수 라벨마다 별표' },
+  { item: '오류', rule: '오류', avoid: '에러' },
   { item: '문서 구조', rule: '한국어 — 구조, 속성, 지침', avoid: 'Anatomy, Properties, Guidelines' },
 ]
 
@@ -113,7 +114,7 @@ export function WritingPage() {
     >
       <DocSection title="개요">
         <p className="text-muted-foreground text-sm">
-          버튼 라벨, 에러 메시지 같은 실제 문구의 표기 규칙을 정합니다. 어떤 태도와 톤으로
+          버튼 라벨, 오류 메시지 같은 실제 문구의 표기 규칙을 정합니다. 어떤 태도와 톤으로
           말할지는 Voice and Tone에서 다루고, 이 문서는 그 톤을 구체적 문장으로 옮기는 표기만
           다룹니다. 화면에 넣을 문구의 정확한 표현이 궁금할 때 이 문서를 찾습니다.
         </p>
@@ -136,7 +137,7 @@ export function WritingPage() {
         <CopyPairs items={FORM_EXAMPLES} />
       </DocSection>
 
-      <DocSection title="에러 메시지">
+      <DocSection title="오류 메시지">
         <p className="text-muted-foreground text-xs">
           무엇이 잘못됐는지와 어떻게 고치는지를 한 문장씩 씁니다. 필드 오류는 필드 바로 아래에, 요청 오류는
           토스트나 화면 상단 배너에 둡니다. 예외 이름과 스택은 화면에 노출하지 않습니다 — 지원 요청에 필요한
@@ -205,7 +206,7 @@ export function WritingPage() {
           do={[
             '버튼 라벨은 동사로 시작하고 결과를 말한다',
             '라벨은 명사, 도움말은 입력 전에 필요한 정보만 쓴다',
-            '에러는 무엇이 잘못됐는지와 고치는 방법을 함께 쓴다',
+            '오류는 무엇이 잘못됐는지와 고치는 방법을 함께 쓴다',
             '숫자·날짜·단위는 표기 규칙을 그대로 따른다',
           ]}
           dont={[

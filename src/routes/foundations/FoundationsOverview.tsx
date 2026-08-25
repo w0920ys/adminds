@@ -12,7 +12,7 @@ const NOTES: Record<string, string> = {
   '/foundations/iconography': '아이콘 크기·스트로크·사용 규칙',
   '/foundations/state': '상호작용 상태의 표현 규칙',
   '/foundations/voice-and-tone': '어드민이 사용자에게 말하는 방식',
-  '/foundations/writing': '라벨·문구·에러 메시지 작성 규칙',
+  '/foundations/writing': '라벨·문구·오류 메시지 작성 규칙',
 }
 
 export function FoundationsOverview() {
