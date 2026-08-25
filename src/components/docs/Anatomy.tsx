@@ -150,33 +150,35 @@ export function Anatomy({ meta, preview }: { meta: ComponentMeta; preview: React
               })}
             </svg>
 
-            {placed.map((item) => {
-              const isActive = active === item.part.part
-              const isDimmed = active !== null && !isActive
-              return (
-                <div
-                  key={item.part.part}
-                  className={cn(
-                    'pointer-events-none absolute w-32 -translate-y-1/2',
-                    item.side === 'left' ? 'text-right' : 'text-left',
-                    isDimmed && 'opacity-20',
-                  )}
-                  style={{
-                    top: item.labelY,
-                    [item.side]: GUTTER,
-                  }}
-                >
-                  <strong
-                    className={cn('block text-xs', isActive ? 'text-primary' : undefined)}
+            <div aria-hidden className="contents">
+              {placed.map((item) => {
+                const isActive = active === item.part.part
+                const isDimmed = active !== null && !isActive
+                return (
+                  <div
+                    key={item.part.part}
+                    className={cn(
+                      'pointer-events-none absolute w-32 -translate-y-1/2',
+                      item.side === 'left' ? 'text-right' : 'text-left',
+                      isDimmed && 'opacity-20',
+                    )}
+                    style={{
+                      top: item.labelY,
+                      [item.side]: GUTTER,
+                    }}
                   >
-                    {item.part.label}
-                  </strong>
-                  {item.part.optional && (
-                    <span className="text-muted-foreground text-2xs">(Optional)</span>
-                  )}
-                </div>
-              )
-            })}
+                    <strong
+                      className={cn('block text-xs', isActive ? 'text-primary' : undefined)}
+                    >
+                      {item.part.label}
+                    </strong>
+                    {item.part.optional && (
+                      <span className="text-muted-foreground text-2xs">(Optional)</span>
+                    )}
+                  </div>
+                )
+              })}
+            </div>
           </>
         )}
       </div>
