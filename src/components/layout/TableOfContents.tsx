@@ -48,18 +48,24 @@ export function TableOfContents() {
     if (nodes.length === 0) return
 
     /*
-     * 화면 위쪽 1/3 안에 들어온 제목 중 가장 아래 것을 현재 위치로 본다.
-     * 스크롤 방향과 무관하게 "지금 읽고 있는 절"이 잡힌다.
+     * 교차 여부만 보면 관찰 시작 시의 초기 콜백에서 여러 제목이 한꺼번에 보고되어
+     * 엉뚱한 항목이 잡힌다. 관찰은 '무언가 바뀌었다'는 신호로만 쓰고,
+     * 현재 위치는 매번 제목들의 좌표를 재서 정한다 —
+     * 무대 상단에서 1/3 지점 위에 있는 마지막 제목이 지금 읽고 있는 절이다.
      */
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .map((entry) => entry.target.id)
-        if (visible.length > 0) setActive(visible[visible.length - 1])
-      },
-      { root: document.querySelector('main'), rootMargin: '0px 0px -67% 0px' },
-    )
+    const root = document.querySelector('main')
+    const pick = () => {
+      if (!root) return
+      const line = root.getBoundingClientRect().top + root.clientHeight / 3
+      let current = nodes[0]?.id ?? null
+      for (const node of nodes) {
+        if (node.getBoundingClientRect().top <= line) current = node.id
+      }
+      setActive(current)
+    }
+
+    pick()
+    const observer = new IntersectionObserver(pick, { root, threshold: 0 })
     nodes.forEach((node) => observer.observe(node))
     return () => observer.disconnect()
   }, [pathname])
