@@ -6,7 +6,7 @@ type Heading = {
   id: string
   text: string
   /** 2 또는 3 */
-  level: number
+  level: 2 | 3
 }
 
 /** 제목 텍스트에서 id를 만든다. 한글을 그대로 두면 URL 조각이 길어지므로 순번을 섞는다 */
@@ -31,7 +31,7 @@ export function TableOfContents() {
     /* 렌더가 끝난 뒤 훑는다. 측정이 아니라 목록 수집이므로 한 프레임 뒤로 미뤄도 된다 */
     const collect = () => {
       const nodes = [...main.querySelectorAll('h2, h3')]
-      const found = nodes.map((node, index) => {
+      const found = nodes.map((node, index): Heading => {
         if (!node.id) node.id = makeId(node.textContent ?? '', index)
         return {
           id: node.id,
@@ -53,21 +53,33 @@ export function TableOfContents() {
      * 현재 위치는 매번 제목들의 좌표를 재서 정한다 —
      * 무대 상단에서 1/3 지점 위에 있는 마지막 제목이 지금 읽고 있는 절이다.
      */
-    const root = document.querySelector('main')
+    const root = main
     const pick = () => {
       if (!root) return
+
+      const EDGE = 8
+      const maxScroll = root.scrollHeight - root.clientHeight
+
+      /*
+       * 스크롤할 곳이 없는 문서는 전체가 한눈에 들어오므로 첫 제목이 현재 위치다.
+       * 이 갈래를 먼저 두지 않으면 아래 두 조건이 동시에 참이 되어
+       * 순서가 우연히 승자를 정한다.
+       */
+      if (maxScroll <= EDGE) {
+        setActive(nodes[0]?.id ?? null)
+        return
+      }
 
       /*
        * 스크롤 양 끝은 판정선으로 정하지 않는다.
        * 첫 절이 짧으면 맨 위에서도 다음 제목이 판정선을 넘고,
        * 마지막 절이 짧으면 끝까지 내려도 그 제목이 판정선까지 올라오지 못한다.
        */
-      const EDGE = 8
       if (root.scrollTop <= EDGE) {
         setActive(nodes[0]?.id ?? null)
         return
       }
-      if (root.scrollHeight - root.scrollTop - root.clientHeight <= EDGE) {
+      if (maxScroll - root.scrollTop <= EDGE) {
         setActive(nodes[nodes.length - 1]?.id ?? null)
         return
       }
