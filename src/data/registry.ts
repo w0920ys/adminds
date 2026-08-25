@@ -443,14 +443,14 @@ export const components: ComponentMeta[] = [
         display: 'grid',
         options: [
           { value: 'unchecked' },
-          { value: 'hover', note: '포인터가 올라간 동안. 켜진 상자에서는 보이지 않는다' },
           { value: 'checked' },
           {
             value: 'indeterminate',
             note: "일부만 선택됨. '모름'이나 '해당 없음'을 뜻하지 않는다",
           },
-          { value: 'disabled', note: '지금 상태를 바꿀 수 없음' },
+          { value: 'hover', note: '포인터가 올라간 동안. 켜진 상자에서는 보이지 않는다' },
           { value: 'focus', note: '키보드 포커스. 항상 보여야 한다' },
+          { value: 'disabled', note: '지금 상태를 바꿀 수 없음' },
         ],
       },
       {
@@ -556,10 +556,10 @@ export const components: ComponentMeta[] = [
         display: 'grid',
         options: [
           { value: 'unselected' },
-          { value: 'hover', note: '포인터가 올라간 동안. 선택된 항목에서는 보이지 않는다' },
           { value: 'selected' },
-          { value: 'disabled', note: '지금 상태를 바꿀 수 없음' },
+          { value: 'hover', note: '포인터가 올라간 동안. 선택된 항목에서는 보이지 않는다' },
           { value: 'focus', note: '키보드 포커스. 항상 보여야 한다' },
+          { value: 'disabled', note: '지금 상태를 바꿀 수 없음' },
         ],
       },
       {
@@ -659,10 +659,10 @@ export const components: ComponentMeta[] = [
         display: 'grid',
         options: [
           { value: 'off' },
-          { value: 'hover', note: '포인터가 올라간 동안' },
           { value: 'on' },
-          { value: 'disabled', note: '지금 상태를 바꿀 수 없음' },
+          { value: 'hover', note: '포인터가 올라간 동안' },
           { value: 'focus', note: '키보드 포커스. 항상 보여야 한다' },
+          { value: 'disabled', note: '지금 상태를 바꿀 수 없음' },
           {
             value: 'pending',
             note: '반영을 기다리는 동안. 손잡이가 스피너로 바뀌고 다시 누를 수 없다',
@@ -886,10 +886,10 @@ export const components: ComponentMeta[] = [
         display: 'grid',
         options: [
           { value: 'default' },
-          { value: 'hover', note: '포인터가 올라간 동안. 활성 탭에서는 보이지 않는다' },
           { value: 'active', note: '지금 열려 있는 탭' },
-          { value: 'disabled', note: '지금 고를 수 없음' },
+          { value: 'hover', note: '포인터가 올라간 동안. 활성 탭에서는 보이지 않는다' },
           { value: 'focus', note: '키보드 포커스. 항상 보여야 한다' },
+          { value: 'disabled', note: '지금 고를 수 없음' },
         ],
       },
     ],
@@ -1329,8 +1329,8 @@ export const components: ComponentMeta[] = [
         display: 'grid',
         options: [
           { value: 'default' },
-          { value: 'hover', note: '포인터가 올라간 동안. 배경으로 나타낸다 — 행은 면이지 테두리 있는 컨트롤이 아니다' },
           { value: 'selected', note: 'Checkbox로 고른 행. bg-accent' },
+          { value: 'hover', note: '포인터가 올라간 동안. 배경으로 나타낸다 — 행은 면이지 테두리 있는 컨트롤이 아니다' },
         ],
       },
     ],
