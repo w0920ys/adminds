@@ -4,6 +4,10 @@ import { AppShell } from '@/components/layout/AppShell'
 import { Placeholder } from '@/routes/Placeholder'
 import { ButtonPage } from '@/routes/components/ButtonPage'
 import { ComponentsIndex } from '@/routes/components/ComponentsIndex'
+import { ColorPage } from '@/routes/foundations/ColorPage'
+import { FoundationsOverview } from '@/routes/foundations/FoundationsOverview'
+import { SpacingPage } from '@/routes/foundations/SpacingPage'
+import { TypographyPage } from '@/routes/foundations/TypographyPage'
 
 export const routes: RouteObject[] = [
   {
@@ -14,10 +18,10 @@ export const routes: RouteObject[] = [
       { path: 'get-started/install', element: <Placeholder title="설치" /> },
       { path: 'get-started/principles', element: <Placeholder title="원칙" /> },
 
-      { path: 'foundations', element: <Placeholder title="Foundations" /> },
-      { path: 'foundations/color', element: <Placeholder title="Color" /> },
-      { path: 'foundations/typography', element: <Placeholder title="Typography" /> },
-      { path: 'foundations/spacing', element: <Placeholder title="Spacing" /> },
+      { path: 'foundations', element: <FoundationsOverview /> },
+      { path: 'foundations/color', element: <ColorPage /> },
+      { path: 'foundations/typography', element: <TypographyPage /> },
+      { path: 'foundations/spacing', element: <SpacingPage /> },
       { path: 'foundations/iconography', element: <Placeholder title="Iconography" /> },
       { path: 'foundations/state', element: <Placeholder title="State" /> },
       { path: 'foundations/voice-and-tone', element: <Placeholder title="Voice and Tone" /> },
