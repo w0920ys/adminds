@@ -10,6 +10,7 @@ import { CheckboxPage } from '@/routes/components/CheckboxPage'
 import { ComponentsIndex } from '@/routes/components/ComponentsIndex'
 import { InputPage } from '@/routes/components/InputPage'
 import { PaginationPage } from '@/routes/components/PaginationPage'
+import { RadioPage } from '@/routes/components/RadioPage'
 import { SelectPage } from '@/routes/components/SelectPage'
 import { TextareaPage } from '@/routes/components/TextareaPage'
 import { ColorPage } from '@/routes/foundations/ColorPage'
@@ -53,6 +54,7 @@ export const routes: RouteObject[] = [
           { path: 'input', element: <InputPage /> },
           { path: 'select', element: <SelectPage /> },
           { path: 'checkbox', element: <CheckboxPage /> },
+          { path: 'radio', element: <RadioPage /> },
           { path: 'textarea', element: <TextareaPage /> },
           { path: 'breadcrumb', element: <BreadcrumbPage /> },
           { path: 'pagination', element: <PaginationPage /> },
