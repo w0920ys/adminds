@@ -203,7 +203,7 @@ export const components: ComponentMeta[] = [
       { id: 'in-progress', title: '처리 중', note: 'disabled + 스피너. 라벨을 진행형으로 바꿔 상태를 알린다' },
       { id: 'narrow-screen', title: '좁은 화면', note: '라벨을 숨기고 아이콘만 남길 때는 aria-label을 유지한다' },
     ],
-    verified: false,
+    verified: true,
   },
   {
     id: 'input',
