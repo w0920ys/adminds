@@ -17,8 +17,8 @@ type Placed = {
   box: { x: number; y: number; width: number; height: number }
   /** 라벨의 세로 중심 */
   labelY: number
-  /** 같은 쪽에서 위에서부터 몇 번째인가. 꺾임점을 어긋나게 하는 데 쓴다 */
-  lane: number
+  /** 지시선이 꺾이는 x. 부위 가장자리에서 시작해 겹치면 바깥으로 밀린다 */
+  bendX: number
 }
 
 /** 라벨 하나가 차지하는 세로 공간 */
@@ -27,10 +27,10 @@ const LABEL_SLOT = 56
 const GUTTER = 12
 /** 이 폭 미만에서는 라벨을 놓을 자리가 없어 번호 배지로 대신한다 */
 const MIN_WIDTH_FOR_LINES = 640
-/** 라벨에서 첫 꺾임점까지의 거리 */
-const LANE_START = 24
-/** 같은 쪽 지시선끼리 벌리는 간격. 세로 구간이 서로 다른 선 위에 놓이게 한다 */
+/** 같은 쪽 지시선이 같은 x에서 꺾일 때 벌리는 간격 */
 const LANE_GAP = 14
+/** 라벨에서 꺾임점까지 최소한 남겨두는 가로 길이 */
+const LANE_MIN = 12
 
 export function Anatomy({ meta, preview }: { meta: ComponentMeta; preview: ReactNode }) {
   const stageRef = useRef<HTMLDivElement>(null)
@@ -60,7 +60,7 @@ export function Anatomy({ meta, preview }: { meta: ComponentMeta; preview: React
           },
         }
       })
-      .filter((item): item is Omit<Placed, 'side' | 'labelY'> => item !== null)
+      .filter((item): item is Omit<Placed, 'side' | 'labelY' | 'bendX'> => item !== null)
 
     const isNarrow = stageBox.width < MIN_WIDTH_FOR_LINES
     setNarrow(isNarrow)
@@ -68,7 +68,7 @@ export function Anatomy({ meta, preview }: { meta: ComponentMeta; preview: React
 
     if (isNarrow) {
       /** 좁은 화면에서는 지시선 대신 부위 위에 번호 배지를 올린다 */
-      setPlaced(found.map((item) => ({ ...item, side: 'left' as const, labelY: 0, lane: 0 })))
+      setPlaced(found.map((item) => ({ ...item, side: 'left' as const, labelY: 0, bendX: 0 })))
       return
     }
 
@@ -98,9 +98,29 @@ export function Anatomy({ meta, preview }: { meta: ComponentMeta; preview: React
         LABEL_SLOT / 2,
         stageBox.height / 2 - (group.length * LABEL_SLOT) / 2 + LABEL_SLOT / 2,
       )
-      group.forEach((item, i) =>
-        next.push({ ...item, labelY: start + i * LABEL_SLOT, lane: i }),
-      )
+      const anchorX = side === 'left' ? GUTTER + 140 : stageBox.width - GUTTER - 140
+
+      /*
+       * 부위 가장자리에서 바로 꺾는다. 그래야 부위에 닿는 가로 구간이 없어지고
+       * 긴 가로 구간은 라벨 높이에 놓인다 — 라벨끼리는 LABEL_SLOT만큼 떨어져 있다.
+       * 한 줄짜리 컴포넌트는 모든 부위의 세로 중심이 같아서, 가장자리가 아니라
+       * 라벨을 기준으로 꺾으면 네 선이 한 가로선 위에 포개진다.
+       */
+      const taken: number[] = []
+      group.forEach((item, i) => {
+        const edgeX = side === 'left' ? item.box.x : item.box.x + item.box.width
+        let bendX = edgeX
+        /* 같은 x를 이미 쓰는 선이 있으면 부위에서 멀어지는 쪽으로 밀어낸다 */
+        while (taken.some((x) => Math.abs(x - bendX) < LANE_GAP)) {
+          bendX += side === 'left' ? -LANE_GAP : LANE_GAP
+        }
+        bendX =
+          side === 'left'
+            ? Math.max(bendX, anchorX + LANE_MIN)
+            : Math.min(bendX, anchorX - LANE_MIN)
+        taken.push(bendX)
+        next.push({ ...item, labelY: start + i * LABEL_SLOT, bendX })
+      })
     }
 
     setPlaced(next.sort((a, b) => a.index - b.index))
@@ -141,21 +161,11 @@ export function Anatomy({ meta, preview }: { meta: ComponentMeta; preview: React
                 const cy = item.box.y + item.box.height / 2
                 const edgeX = item.side === 'left' ? item.box.x : item.box.x + item.box.width
                 const anchorX = item.side === 'left' ? GUTTER + 140 : size.width - GUTTER - 140
-                /*
-                 * 꺾임점을 레인마다 어긋나게 둔다. 같은 쪽 선들이 한 세로선 위에
-                 * 겹치면 어느 선이 어느 라벨의 것인지 분간되지 않는다.
-                 * 위에서부터 순서대로 라벨에서 멀어지므로 선끼리 교차하지도 않는다.
-                 */
-                const lane = LANE_START + item.lane * LANE_GAP
-                const bendX =
-                  item.side === 'left'
-                    ? Math.min(anchorX + lane, edgeX - 8)
-                    : Math.max(anchorX - lane, edgeX + 8)
                 const isActive = active === item.index
                 return (
                   <g key={item.index}>
                     <polyline
-                      points={`${anchorX},${item.labelY} ${bendX},${item.labelY} ${bendX},${cy} ${edgeX},${cy}`}
+                      points={`${anchorX},${item.labelY} ${item.bendX},${item.labelY} ${item.bendX},${cy} ${edgeX},${cy}`}
                       fill="none"
                       stroke="currentColor"
                       strokeWidth={isActive ? 1.25 : 0.75}
