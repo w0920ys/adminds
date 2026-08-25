@@ -2,6 +2,8 @@ import type { ReactNode } from 'react'
 import { Bounds } from '@/components/docs/Bounds'
 import { ComponentPage } from '@/components/docs/ComponentPage'
 import type { RenderOptions } from '@/components/docs/PropertyBlock'
+import { Button } from '@/components/ui/button'
+import { Checkbox } from '@/components/ui/checkbox'
 import { Switch } from '@/components/ui/switch'
 import { getComponent } from '@/data/registry'
 import { Placeholder } from '@/routes/Placeholder'
@@ -56,30 +58,24 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
   switch (guidelineId) {
     case 'form-with-save':
       return kind === 'do' ? (
-        <form className="flex flex-col gap-3">
+        <form className="flex flex-col items-start gap-3">
           <label className="flex items-center gap-2 text-sm">
-            <input type="checkbox" defaultChecked className="size-4 rounded-sm border-input" />
+            <Checkbox defaultChecked />
             마케팅 이메일 수신 동의
           </label>
-          <button
-            type="button"
-            className="bg-primary text-primary-foreground w-fit rounded-md px-3 py-1.5 text-sm"
-          >
+          <Button type="button" size="sm">
             저장
-          </button>
+          </Button>
         </form>
       ) : (
-        <form className="flex flex-col gap-3">
+        <form className="flex flex-col items-start gap-3">
           <label className="flex items-center gap-2 text-sm">
             <Switch defaultChecked />
             마케팅 이메일 수신 동의
           </label>
-          <button
-            type="button"
-            className="bg-primary text-primary-foreground w-fit rounded-md px-3 py-1.5 text-sm"
-          >
+          <Button type="button" size="sm">
             저장
-          </button>
+          </Button>
         </form>
       )
 
@@ -113,7 +109,9 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
       return kind === 'do' ? (
         <Switch checked pending />
       ) : (
-        <Switch checked disabled className="opacity-100" />
+        // disabled가 쓰는 opacity를 그대로 빌려 온 상태다. 흐려진 트랙만으로는
+        // 정말 disabled인지 반영을 기다리는 중인지 구분할 수 없다는 것을 보인다.
+        <Switch checked className="opacity-50" />
       )
 
     default:
