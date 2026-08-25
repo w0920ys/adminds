@@ -15,6 +15,7 @@ export type NavSection = {
   items: DocLink[]
 }
 
+/** 문서 내용을 고칠 때 그 항목의 updatedAt도 함께 갱신한다. */
 export const sections: NavSection[] = [
   {
     id: 'get-started',
@@ -68,8 +69,9 @@ export const sections: NavSection[] = [
 ]
 
 /**
- * LNB 순서를 평탄화한 선형 문서 목록.
- * 페이지 하단의 이전/다음이 여기서 나오며, 섹션 경계를 넘어 이어진다.
+ * LNB 순서를 평탄화한 전체 문서 목록.
+ * 경로로 문서를 찾거나(findDoc) 라우트와 대조하는 데 쓴다.
+ * 이전·다음 이동은 여기서 나오지 않는다 — findAdjacent가 섹션 안에서만 계산한다.
  */
 export const docOrder: DocLink[] = sections.flatMap((section) => section.items)
 
