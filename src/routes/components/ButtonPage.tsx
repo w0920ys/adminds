@@ -1,5 +1,6 @@
 import type { ComponentProps, ReactNode } from 'react'
 import { ChevronRight, Loader2, Plus, Search, Settings2, Trash2 } from 'lucide-react'
+import { Bounds } from '@/components/docs/Bounds'
 import { ComponentPage } from '@/components/docs/ComponentPage'
 import type { RenderOptions } from '@/components/docs/PropertyBlock'
 import { Button } from '@/components/ui/button'
@@ -41,11 +42,6 @@ function renderButton(options: RenderOptions) {
  * 유틸리티만으로 만든 어드민 화면의 한 조각이다. 토큰이 바뀌면 예시도
  * 따라 바뀌므로 문서가 실제와 어긋나지 않는다.
  * ------------------------------------------------------------------ */
-
-/** 예시 안에서 공간의 경계를 보여줄 때 쓰는 점선 상자 */
-function Bounds({ className, children }: { className?: string; children: ReactNode }) {
-  return <div className={cn('rounded-md border border-dashed p-2', className)}>{children}</div>
-}
 
 /** hierarchy의 do/don't가 공유하는 페이지 헤더 한 줄 */
 function EditHeader({ children }: { children: ReactNode }) {

@@ -291,6 +291,11 @@ export const components: ComponentMeta[] = [
         do: ['짧은 값에는 좁은 폭을 쓴다', '기대하는 값의 길이에 폭을 맞춘다'],
         dont: ['모든 입력 칸을 같은 폭으로 맞추지 않는다'],
       },
+      {
+        id: 'shared-rules',
+        title: 'Shared rules',
+        body: "Input · Select · Checkbox 셋이 함께 지키는 규칙입니다. 높이는 같은 size에서 서로 같습니다. sm은 표와 필터 바, default는 폼, lg는 단독 입력입니다. 포커스 링은 셋이 같은 모양입니다. 오류는 aria-invalid로 나타내고 색과 문구를 함께 씁니다. 비활성과 읽기 전용은 다릅니다. 상태 표현의 자세한 규칙은 Foundations의 State 문서를 따릅니다.",
+      },
     ],
     usage: [
       { id: 'search-box', title: '검색 상자', note: '앞에 검색 아이콘을 두고 자리표시자로 예시를 보여준다' },
@@ -356,8 +361,8 @@ export const components: ComponentMeta[] = [
           { value: 'default' },
           { value: 'hover', note: '포인터가 올라간 동안' },
           { value: 'focus', note: '키보드 포커스. 항상 보여야 한다' },
-          { value: 'disabled', note: '지금 선택을 바꿀 수 없다' },
-          { value: 'invalid', note: 'aria-invalid로 나타낸다. 테두리 색과 함께 문구를 쓴다' },
+          { value: 'disabled', note: '지금 선택을 바꿀 수 없음' },
+          { value: 'invalid', note: 'aria-invalid로 나타낸다. 테두리 색과 문구를 함께 쓴다' },
         ],
       },
       {
@@ -392,6 +397,11 @@ export const components: ComponentMeta[] = [
         body: '항목 순서에 뜻을 담습니다. 빈도나 크기 순이 알파벳순보다 나은 자리가 많습니다.',
         do: ['빈도나 단계가 있으면 그 순서를 따른다', '자주 쓰는 항목을 위로 올린다'],
         dont: ['뜻 없이 알파벳순으로만 늘어놓지 않는다'],
+      },
+      {
+        id: 'shared-rules',
+        title: 'Shared rules',
+        body: "Input · Select · Checkbox 셋이 함께 지키는 규칙입니다. 높이는 같은 size에서 서로 같습니다. sm은 표와 필터 바, default는 폼, lg는 단독 입력입니다. 포커스 링은 셋이 같은 모양입니다. 오류는 aria-invalid로 나타내고 색과 문구를 함께 씁니다. 비활성과 읽기 전용은 다릅니다. 상태 표현의 자세한 규칙은 Foundations의 State 문서를 따릅니다.",
       },
     ],
     usage: [
@@ -480,6 +490,18 @@ export const components: ComponentMeta[] = [
         body: '체크박스와 라디오를 바꿔 쓰지 않습니다. 여럿 고를 수 있으면 체크박스, 하나만 고를 수 있으면 라디오입니다.',
         do: ['여럿을 고를 수 있는 목록에는 Checkbox를 쓴다', '하나만 고를 수 있는 목록에는 Radio를 쓴다'],
         dont: ['하나만 고를 수 있는 목록에 Checkbox를 쓰지 않는다'],
+      },
+      {
+        id: 'single-size',
+        title: 'Single size',
+        body: 'Checkbox는 size 축을 두지 않습니다. 체크박스는 한 크기로 충분하고, 크기를 늘리면 옆 글자와의 정렬이 깨집니다.',
+        do: ['체크박스를 옆 라벨의 줄 높이에 맞춘 한 크기로 쓴다'],
+        dont: ['체크박스만 키워 옆 글자와의 정렬을 어긋나게 하지 않는다'],
+      },
+      {
+        id: 'shared-rules',
+        title: 'Shared rules',
+        body: "Input · Select · Checkbox 셋이 함께 지키는 규칙입니다. 높이는 같은 size에서 서로 같습니다. sm은 표와 필터 바, default는 폼, lg는 단독 입력입니다. 포커스 링은 셋이 같은 모양입니다. 오류는 aria-invalid로 나타내고 색과 문구를 함께 씁니다. Checkbox에는 읽기 전용이 없으므로 비활성과 읽기 전용을 구별하는 규칙은 적용되지 않습니다. 상태 표현의 자세한 규칙은 Foundations의 State 문서를 따릅니다.",
       },
     ],
     usage: [
