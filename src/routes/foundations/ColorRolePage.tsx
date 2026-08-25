@@ -373,14 +373,14 @@ export function ColorRolePage() {
       <DocSection title="Guidelines">
         <DoDont
           do={[
-            '배경 토큰을 쓰면 그 짝이 되는 전경을 함께 쓴다',
-            '새 면은 표면 위계에서 자기 높이를 먼저 찾는다',
+            '배경 토큰을 쓰면 그 짝이 되는 Foreground를 함께 쓴다',
+            '새 면은 Hierarchy에서 자기 높이를 먼저 찾는다',
             '상태 색은 사건이 그 뜻을 정할 때만 쓴다',
             '한 화면의 주 동작은 primary 하나로 유지한다',
           ]}
           dont={[
-            '배경과 전경을 다른 짝에서 가져와 섞지 않는다',
-            '이미 층이 있는 높이에 새 표면 토큰을 만들지 않는다',
+            '배경과 Foreground를 다른 짝에서 가져와 섞지 않는다',
+            '이미 층이 있는 높이에 새 Surface 토큰을 만들지 않는다',
             'success나 warning을 장식으로 쓰지 않는다',
             'annotation을 제품 UI에 쓰지 않는다',
           ]}
