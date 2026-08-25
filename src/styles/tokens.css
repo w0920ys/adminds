@@ -4,7 +4,10 @@
 /* 전시 페이지에서 hover/focus를 정적으로 보여주기 위한 강제 변형.
    .state-hover 안의 자손은 마우스가 없어도 hover 스타일을 받는다.
    StateGrid 외의 곳에서는 이 클래스를 쓰지 않는다. */
-@custom-variant hover (&:hover, .state-hover &);
+@custom-variant hover {
+  &:hover { @media (hover: hover) { @slot } }
+  .state-hover & { @slot }
+}
 @custom-variant focus-visible (&:focus-visible, .state-focus &);
 
 :root {

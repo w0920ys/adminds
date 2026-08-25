@@ -21,7 +21,11 @@ export function ButtonPage() {
         </Button>
       }
       renderVariant={({ variant, size }) => (
-        <Button variant={variant as ButtonVariant} size={size as ButtonSize}>
+        <Button
+          variant={variant as ButtonVariant}
+          size={size as ButtonSize}
+          aria-label={size === 'icon' ? `${variant} icon 버튼` : undefined}
+        >
           {size === 'icon' ? <Plus /> : '버튼'}
         </Button>
       )}

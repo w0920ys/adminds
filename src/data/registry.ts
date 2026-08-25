@@ -43,7 +43,7 @@ export const components: ComponentMeta[] = [
       do: [
         '한 화면의 주요 액션은 default 하나로 제한한다',
         '삭제·차단처럼 되돌리기 어려운 동작은 destructive를 쓴다',
-        '처리에 시간이 걸리면 loading 상태로 중복 클릭을 막는다',
+        '처리 중에는 disabled와 스피너를 함께 써서 중복 클릭을 막는다',
       ],
       dont: [
         '다른 페이지로 이동하는 데 버튼을 쓰지 않는다',
@@ -55,7 +55,7 @@ export const components: ComponentMeta[] = [
       { part: 'Container', note: '높이는 size 토큰, 모서리는 radius-md' },
       { part: 'Leading icon', note: '16×16, 라벨과 8px 간격' },
       { part: 'Label', note: 'text-sm / font-medium' },
-      { part: 'Focus ring', note: 'ring 토큰, 오프셋 2px' },
+      { part: 'Focus ring', note: 'ring 토큰 2px, 오프셋 없음' },
     ],
     variants: ['default', 'secondary', 'outline', 'ghost', 'destructive', 'link'],
     sizes: ['sm', 'default', 'lg', 'icon'],

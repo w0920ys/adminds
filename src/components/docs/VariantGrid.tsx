@@ -13,12 +13,16 @@ export function VariantGrid({
       <table className="w-full border-separate border-spacing-0 text-left">
         <thead>
           <tr>
-            <th className="text-muted-foreground sticky left-0 bg-surface px-3 py-2 text-2xs font-bold tracking-widest">
+            <th
+              scope="col"
+              className="text-muted-foreground sticky left-0 bg-surface px-3 py-2 text-2xs font-bold tracking-widest"
+            >
               VARIANT
             </th>
             {meta.sizes.map((size) => (
               <th
                 key={size}
+                scope="col"
                 className="text-muted-foreground px-3 py-2 text-2xs font-bold tracking-widest"
               >
                 {size.toUpperCase()}
@@ -29,9 +33,12 @@ export function VariantGrid({
         <tbody>
           {meta.variants.map((variant) => (
             <tr key={variant}>
-              <td className="bg-surface sticky left-0 border-t px-3 py-3 text-sm font-medium">
+              <th
+                scope="row"
+                className="bg-surface sticky left-0 border-t px-3 py-3 text-sm font-medium"
+              >
                 {variant}
-              </td>
+              </th>
               {meta.sizes.map((size) => (
                 <td key={size} className="border-t px-3 py-3">
                   {render({ variant, size })}
