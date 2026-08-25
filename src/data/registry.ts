@@ -212,7 +212,7 @@ export const components: ComponentMeta[] = [
     status: 'stable',
     addedIn: 'v0.7.0',
     changedIn: 'v0.8.0',
-    purpose: '사용자가 한 줄짜리 값을 직접 입력하도록 한다. 여러 값 중 고르게 할 때는 Select를 쓴다.',
+    purpose: '사용자가 한 줄짜리 값을 직접 입력하도록 한다. 여러 값 중 고르게 할 때는 Select를, 여러 줄이 필요하면 Textarea를 쓴다.',
     anatomy: [
       { part: 'container', label: 'Container', note: '테두리는 border-input, 높이는 size 토큰, 모서리는 radius-md' },
       {
@@ -488,6 +488,13 @@ export const components: ComponentMeta[] = [
         dont: ['하나만 고를 수 있는 목록에 Checkbox를 쓰지 않는다'],
       },
       {
+        id: 'checkbox-vs-switch',
+        title: 'Checkbox vs switch',
+        body: 'Checkbox와 Switch를 바꿔 쓰지 않습니다. 저장을 눌러야 반영되면 Checkbox, 누르는 즉시 반영되면 Switch입니다.',
+        do: ['저장 버튼이 있는 폼에는 Checkbox를 쓴다', '누르는 즉시 반영해야 하는 자리에는 Switch를 쓴다'],
+        dont: ['즉시 반영되어야 하는 자리에 저장을 기다리는 Checkbox를 쓰지 않는다'],
+      },
+      {
         id: 'single-size',
         title: 'Single size',
         body: 'Checkbox는 size 축을 두지 않습니다. 체크박스는 한 크기로 충분하고, 크기를 늘리면 옆 글자와의 정렬이 깨집니다.',
@@ -599,7 +606,7 @@ export const components: ComponentMeta[] = [
       {
         id: 'shared-rules',
         title: 'Shared rules',
-        body: 'Checkbox와 짝을 이루는 컴포넌트로 포커스 링과 size 축을 두지 않는 이유를 함께 씁니다. 포커스 링은 Input · Select · Checkbox와 같은 모양입니다.',
+        body: 'Checkbox와 짝을 이루는 컴포넌트입니다. size 축을 두지 않는 이유는 Checkbox와 같은 문구로 적습니다. 포커스 링은 Input · Select · Checkbox와 같은 모양입니다.',
       },
     ],
     usage: [
