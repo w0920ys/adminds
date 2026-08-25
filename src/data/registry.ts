@@ -310,7 +310,7 @@ export const components: ComponentMeta[] = [
       { id: 'password', title: '비밀번호', note: 'type만 다르고 시각적으로는 달라지지 않는다' },
       { id: 'narrow-screen', title: '좁은 화면', note: '기본 폭이 부모를 채우므로 별도 처리가 필요 없다' },
     ],
-    verified: false,
+    verified: true,
   },
   {
     id: 'select',
@@ -416,7 +416,7 @@ export const components: ComponentMeta[] = [
       { id: 'single-option', title: '선택지가 하나뿐인 경우', note: 'Select로 접어 두는 대신 값을 그대로 보여주는 편이 낫다' },
       { id: 'empty-list', title: '비어 있는 목록', note: '항목이 없다는 안내를 목록 자리에 보여준다' },
     ],
-    verified: false,
+    verified: true,
   },
   {
     id: 'checkbox',
@@ -516,7 +516,7 @@ export const components: ComponentMeta[] = [
       { id: 'nested-selection', title: '중첩된 선택', note: '하위 항목의 일부만 선택되면 상위는 중간 상태로 나타낸다' },
       { id: 'narrow-screen', title: '좁은 화면', note: '라벨이 줄바꿈되어도 상자와의 정렬은 유지된다' },
     ],
-    verified: false,
+    verified: true,
   },
 ]
 
