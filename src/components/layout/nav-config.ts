@@ -64,6 +64,7 @@ export const sections: NavSection[] = [
       { to: '/components/select', label: 'Select', updatedAt: '2026-08-25' },
       { to: '/components/checkbox', label: 'Checkbox', updatedAt: '2026-08-25' },
       { to: '/components/textarea', label: 'Textarea', updatedAt: '2026-08-26' },
+      { to: '/components/badge', label: 'Badge', updatedAt: '2026-08-26' },
     ],
   },
   {

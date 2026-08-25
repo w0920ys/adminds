@@ -630,6 +630,86 @@ export const components: ComponentMeta[] = [
     ],
     verified: false,
   },
+  {
+    id: 'badge',
+    name: 'Badge',
+    category: 'data-display',
+    status: 'stable',
+    addedIn: 'v0.8.0',
+    changedIn: 'v0.8.0',
+    purpose: '짧은 상태나 분류를 보인다. 누를 수 있는 동작에는 쓰지 않는다.',
+    anatomy: [
+      { part: 'container', label: 'Container', note: 'radius-sm, variant에 따른 배경·글자색' },
+      {
+        part: 'dot',
+        label: 'Dot',
+        note: '1.5×1.5, bg-current로 글자색을 그대로 물려받는다',
+        optional: true,
+      },
+      { part: 'label', label: 'Label', note: 'text-2xs / font-bold' },
+    ],
+    properties: [
+      {
+        name: 'variant',
+        title: 'Variant',
+        description: '상태의 뜻을 정한다. Foundations의 Color Role이 정한 상태 색의 뜻을 그대로 따른다.',
+        display: 'row',
+        options: [
+          { value: 'neutral', note: '뜻이 정해지지 않은 값이나 분류' },
+          { value: 'info', note: '사용자의 행동과 무관한 사실. 점검 예정, 새 기능' },
+          { value: 'success', note: '요청이 끝나고 더 할 일이 없음. 승인, 완료' },
+          { value: 'warning', note: '그대로 두면 문제가 됨. 만료 임박, 한도 근접' },
+          { value: 'destructive', note: '되돌릴 수 없거나 실패함. 정지, 오류' },
+        ],
+      },
+      {
+        name: 'layout',
+        title: 'Layout',
+        description: '점을 함께 둘지 정한다.',
+        display: 'row',
+        options: [
+          { value: 'text', note: '기본' },
+          { value: 'with-dot', note: '점으로 상태를 먼저 알린다. 표의 좁은 칸에 유용' },
+        ],
+      },
+    ],
+    guidelines: [
+      {
+        id: 'color-alone',
+        title: 'Color alone',
+        body: '색만으로 뜻을 전하지 않습니다. 라벨 문구가 뜻을 전하는 주된 수단이고 색은 그것을 강조할 뿐입니다.',
+        do: ['라벨 문구로 상태를 명확히 적는다', '색과 문구를 함께 쓴다'],
+        dont: ['문구 없이 색이 있는 점만으로 상태를 나타내지 않는다'],
+      },
+      {
+        id: 'no-hover',
+        title: 'No hover',
+        body: 'Badge는 누를 수 있는 요소가 아니므로 hover 효과를 넣지 않습니다. 커서나 hover 효과가 있으면 사용자가 누를 수 있다고 착각합니다.',
+        do: ['상태를 알리는 정보로만 쓴다', '동작이 필요하면 Button을 쓴다'],
+        dont: ['hover 효과나 커서 모양을 더하지 않는다'],
+      },
+      {
+        id: 'no-single-char',
+        title: 'No single character',
+        body: '한 글자만 담은 배지는 만들지 않습니다. 무엇을 뜻하는지 짐작해야 하고, 번역하면 폭이 달라져 정렬이 흔들립니다.',
+        do: ['짧더라도 뜻이 통하는 단어를 쓴다'],
+        dont: ["'신'처럼 한 글자만 담지 않는다"],
+      },
+    ],
+    usage: [
+      { id: 'table-status-column', title: '표의 상태 열', note: '행마다 상태를 짧게 알린다' },
+      { id: 'list-category', title: '목록 항목의 분류', note: '제목 옆에 붙여 분류를 보인다' },
+      { id: 'count', title: '개수', note: '숫자만 담아 대기 중이거나 처리할 항목 수를 보인다' },
+      { id: 'new-indicator', title: '새 항목 표시', note: '새로 추가된 항목 옆에 붙인다' },
+    ],
+    cases: [
+      { id: 'long-label', title: '라벨이 긴 경우', note: '줄바꿈하지 않고 배지가 늘어난다' },
+      { id: 'many-in-row', title: '여럿이 나란한 경우', note: '간격을 두고 줄바꿈을 허용한다' },
+      { id: 'no-value', title: '값이 없는 경우', note: '배지를 생략하고 자리를 비운다' },
+      { id: 'narrow-screen', title: '좁은 화면', note: '글자 크기를 줄이지 않고 줄바꿈으로 대응한다' },
+    ],
+    verified: false,
+  },
 ]
 
 export function getComponent(id: string): ComponentMeta | undefined {
