@@ -120,7 +120,6 @@ export default defineConfig({
     { "path": "./tsconfig.node.json" }
   ],
   "compilerOptions": {
-    "baseUrl": ".",
     "paths": { "@/*": ["./src/*"] }
   }
 }
@@ -128,12 +127,15 @@ export default defineConfig({
 
 - [ ] **Step 5: `tsconfig.app.json`의 `compilerOptions`에 동일 별칭 추가**
 
-기존 `compilerOptions` 안에 두 줄을 넣는다.
+기존 `compilerOptions` 안에 한 줄을 넣는다.
 
 ```json
-"baseUrl": ".",
 "paths": { "@/*": ["./src/*"] }
 ```
+
+`baseUrl`은 넣지 않는다. TypeScript 6에서 `TS5101: Option 'baseUrl' is deprecated`로
+빌드가 실패한다. `moduleResolution: "bundler"` 아래에서 `paths`는 tsconfig 위치를
+기준으로 해석되므로 `baseUrl` 없이도 동일하게 동작한다.
 
 - [ ] **Step 6: Tailwind 진입점 CSS 작성**
 
@@ -1634,7 +1636,13 @@ npx shadcn@latest add button --yes
 
 `src/components/ui/button.tsx`가 생성되고 `@radix-ui/react-slot`이 설치된다.
 
-CLI가 실패하면 https://ui.shadcn.com/docs/components/button 의 소스를 `src/components/ui/button.tsx`에 직접 붙여넣고 `npm install @radix-ui/react-slot class-variance-authority`를 실행한다.
+**주의:** Task 1에서 확인된 바로, 이 환경의 shadcn CLI는 v4.19.0이며 계획서가 가정한
+구형 CLI와 플래그·대화형 동작이 다르다. `--yes`로도 대화형 프롬프트를 우회하지 못한다.
+CLI가 프롬프트에서 멈추거나 1회 실패하면 즉시 수동 경로로 전환한다 — 재시도하지 않는다.
+
+수동 경로: https://ui.shadcn.com/docs/components/button 의 소스를
+`src/components/ui/button.tsx`에 붙여넣고 `npm install @radix-ui/react-slot`을 실행한다.
+`class-variance-authority`는 Task 1에서 이미 설치되어 있다.
 
 - [ ] **Step 2: Button이 토큰만 쓰는지 확인**
 
@@ -1855,6 +1863,10 @@ Vercel 프리뷰 URL을 사용자에게 전달하고 승인을 기다린다.
 ```bash
 npx shadcn@latest add <name> --yes
 ```
+
+CLI가 프롬프트에서 멈추거나 실패하면 재시도하지 말고, https://ui.shadcn.com/docs/components/<name>
+의 소스를 `src/components/ui/<name>.tsx`에 직접 붙여넣은 뒤 해당 페이지가 요구하는
+`@radix-ui/*` 패키지만 설치한다. (Task 1에서 확인된 CLI 버전 불일치)
 
 - [ ] **Step 2: registry에 메타 추가**
 
