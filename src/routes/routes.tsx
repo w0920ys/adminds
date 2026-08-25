@@ -2,6 +2,7 @@
 import type { RouteObject } from 'react-router'
 import { AppShell } from '@/components/layout/AppShell'
 import { Placeholder } from '@/routes/Placeholder'
+import { AlertPage } from '@/routes/components/AlertPage'
 import { BadgePage } from '@/routes/components/BadgePage'
 import { ButtonPage } from '@/routes/components/ButtonPage'
 import { CheckboxPage } from '@/routes/components/CheckboxPage'
@@ -51,6 +52,7 @@ export const routes: RouteObject[] = [
           { path: 'select', element: <SelectPage /> },
           { path: 'checkbox', element: <CheckboxPage /> },
           { path: 'textarea', element: <TextareaPage /> },
+          { path: 'alert', element: <AlertPage /> },
           { path: 'badge', element: <BadgePage /> },
         ],
       },
