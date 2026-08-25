@@ -60,7 +60,7 @@ export const components: ComponentMeta[] = [
     variants: ['default', 'secondary', 'outline', 'ghost', 'destructive', 'link'],
     sizes: ['sm', 'default', 'lg', 'icon'],
     states: ['default', 'hover', 'focus', 'disabled', 'loading'],
-    verified: false,
+    verified: true,
   },
 ]
 
