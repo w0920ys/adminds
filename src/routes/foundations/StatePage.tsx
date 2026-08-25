@@ -91,9 +91,9 @@ export function StatePage() {
       <DocSection title="개요">
         <p className="text-muted-foreground text-sm">
           hover·focus·disabled 같은 상호작용 상태의 종류와 표현 규칙을 정합니다. 상태를
-          표현하는 색상값 자체는 Color에서, 상태 전환에 쓰는 문구는 Writing에서 다룹니다.
-          컴포넌트에 새 상태를 추가하거나 상태 표현이 화면마다 다르게 보일 때 이 문서를
-          확인합니다.
+          표현하는 색상값은 Color에서, 문장 부호나 종결 어미 같은 표기 형식은 Writing에서
+          다루고, 상태에 따라 쓰는 문구 자체는 아래 규칙에서 이 문서가 정합니다. 컴포넌트에
+          새 상태를 추가하거나 상태 표현이 화면마다 다르게 보일 때 이 문서를 확인합니다.
         </p>
       </DocSection>
 
