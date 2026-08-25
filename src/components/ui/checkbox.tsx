@@ -11,15 +11,19 @@ function Checkbox({
     <CheckboxPrimitive.Root
       data-slot="checkbox"
       className={cn(
-        'peer size-4 shrink-0 rounded-sm border border-input shadow-xs outline-none transition-shadow',
+        'peer size-4 shrink-0 rounded-sm border border-input shadow-xs outline-none transition',
         'data-[state=checked]:bg-primary data-[state=checked]:border-primary data-[state=checked]:text-primary-foreground',
         'data-[state=indeterminate]:bg-primary data-[state=indeterminate]:border-primary data-[state=indeterminate]:text-primary-foreground',
         /*
-         * hover는 배경을 한 단계 옮겨 Input · Select 트리거와 같은 생각을 쓴다.
-         * checked·indeterminate는 이미 bg-primary를 쓰므로 unchecked에서만 건다 —
-         * 그렇지 않으면 켜진 상자 위에서 색이 뒤섞인다.
+         * hover는 Input · Select 트리거와 같은 생각(테두리를 한 단계 옮김)을
+         * 쓴다. data-state로 가리지 않아도 된다 — checked·indeterminate의
+         * border-primary와 hover:border-ring/60은 명시도가 같고(둘 다
+         * 클래스 하나 + 속성/의사클래스 하나), 컴파일된 CSS에서
+         * data-state 규칙이 hover보다 뒤에 나와 소스 순서로 이긴다.
+         * npm run build 후 순서를 확인했다 — 켜진 상자 위에서 hover가
+         * border-primary를 가리는 일은 생기지 않는다.
          */
-        'data-[state=unchecked]:hover:bg-accent',
+        'hover:border-ring/60',
         'focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-2',
         'disabled:cursor-not-allowed disabled:opacity-50',
         'aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40',

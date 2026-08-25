@@ -436,7 +436,7 @@ export const components: ComponentMeta[] = [
         display: 'grid',
         options: [
           { value: 'unchecked' },
-          { value: 'hover', note: '포인터가 올라간 동안. 켜진 상자에는 걸지 않는다' },
+          { value: 'hover', note: '포인터가 올라간 동안. 켜진 상자에서는 보이지 않는다' },
           { value: 'checked' },
           {
             value: 'indeterminate',

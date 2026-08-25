@@ -33,7 +33,7 @@ const DEMOS: { name: string; force?: string; node: ReactNode; note: string }[] =
     name: 'hover',
     force: 'state-hover',
     node: <Button>저장</Button>,
-    note: '배경이 한 단계 움직인다',
+    note: '배경이 한 단계 움직인다 — 면으로 채워진 컨트롤 기준. 테두리로 정체성을 나타내는 컨트롤은 아래를 본다',
   },
   {
     name: 'focus',
@@ -130,6 +130,13 @@ export function StatePage() {
           active는 강제 클래스를 두지 않았습니다. 이 시스템은 누르는 순간에 별도 스타일을 주지 않기
           때문입니다 — 어드민은 같은 버튼을 연달아 누르는 화면이라 눌림 효과가 쌓이면 화면이 시끄러워집니다.
           누른 사실은 눌림 효과가 아니라 결과(토스트, 목록 갱신)로 알립니다.
+        </p>
+        <p className="text-muted-foreground text-xs">
+          위 hover 데모는 Button처럼 면으로 채워진 컨트롤 기준입니다. Input · Select 트리거 · Checkbox처럼
+          테두리로 정체성을 나타내는 컨트롤은 배경을 이미 disabled(불투명도)와 readonly(Input의 읽기 전용
+          배경)가 쓰고 있어 hover까지 배경을 두면 상태끼리 서로를 가립니다. 그래서 이 셋은 배경 대신
+          테두리를 한 단계 움직입니다 — "아직 아무것도 일어나지 않았다"는 같은 뜻을 테두리로 옮겼을 뿐,
+          hover가 가리키는 뜻 자체는 다르지 않습니다.
         </p>
       </DocSection>
 

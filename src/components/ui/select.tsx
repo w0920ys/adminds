@@ -1,7 +1,7 @@
 import * as React from 'react'
 import * as SelectPrimitive from '@radix-ui/react-select'
 import { Check, ChevronDown } from 'lucide-react'
-import { inputVariants } from '@/components/ui/input'
+import { controlShellVariants } from '@/components/ui/input'
 import { cn } from '@/lib/utils'
 
 const Select = SelectPrimitive.Root
@@ -19,7 +19,7 @@ function SelectTrigger({
     <SelectPrimitive.Trigger
       data-slot="select-trigger"
       className={cn(
-        inputVariants({ size }),
+        controlShellVariants({ size }),
         'items-center justify-between gap-2 text-left data-[placeholder]:text-muted-foreground',
         className,
       )}
