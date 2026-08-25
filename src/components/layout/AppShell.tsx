@@ -3,6 +3,7 @@ import { Outlet } from 'react-router'
 import { DocFooterNav } from '@/components/layout/DocFooterNav'
 import { Gnb } from '@/components/layout/Gnb'
 import { Lnb } from '@/components/layout/Lnb'
+import { TableOfContents } from '@/components/layout/TableOfContents'
 
 export function AppShell() {
   const [lnbOpen, setLnbOpen] = useState(false)
@@ -18,6 +19,7 @@ export function AppShell() {
             <DocFooterNav />
           </div>
         </main>
+        <TableOfContents />
       </div>
     </div>
   )
