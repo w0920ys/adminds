@@ -401,7 +401,7 @@ export const components: ComponentMeta[] = [
       {
         id: 'shared-rules',
         title: 'Shared rules',
-        body: "Input · Select · Checkbox 셋이 함께 지키는 규칙입니다. 높이는 같은 size에서 서로 같습니다. sm은 표와 필터 바, default는 폼, lg는 단독 입력입니다. 포커스 링은 셋이 같은 모양입니다. 오류는 aria-invalid로 나타내고 색과 문구를 함께 씁니다. 비활성과 읽기 전용은 다릅니다. 상태 표현의 자세한 규칙은 Foundations의 State 문서를 따릅니다.",
+        body: "Input · Select · Checkbox 셋이 함께 지키는 규칙입니다. 높이는 같은 size에서 서로 같습니다. sm은 표와 필터 바, default는 폼, lg는 단독 입력입니다. 포커스 링은 셋이 같은 모양입니다. 오류는 aria-invalid로 나타내고 색과 문구를 함께 씁니다. 상태 표현의 자세한 규칙은 Foundations의 State 문서를 따릅니다.",
       },
     ],
     usage: [
@@ -501,7 +501,7 @@ export const components: ComponentMeta[] = [
       {
         id: 'shared-rules',
         title: 'Shared rules',
-        body: "Input · Select · Checkbox 셋이 함께 지키는 규칙입니다. 높이는 같은 size에서 서로 같습니다. sm은 표와 필터 바, default는 폼, lg는 단독 입력입니다. 포커스 링은 셋이 같은 모양입니다. 오류는 aria-invalid로 나타내고 색과 문구를 함께 씁니다. Checkbox에는 읽기 전용이 없으므로 비활성과 읽기 전용을 구별하는 규칙은 적용되지 않습니다. 상태 표현의 자세한 규칙은 Foundations의 State 문서를 따릅니다.",
+        body: "Input · Select · Checkbox 셋이 함께 지키는 규칙입니다. 포커스 링은 셋이 같은 모양입니다. 오류는 aria-invalid로 나타내고 색과 문구를 함께 씁니다. 상태 표현의 자세한 규칙은 Foundations의 State 문서를 따릅니다.",
       },
     ],
     usage: [
