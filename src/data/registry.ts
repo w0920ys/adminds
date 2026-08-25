@@ -170,7 +170,7 @@ export const components: ComponentMeta[] = [
         title: 'Destructive actions',
         body: '삭제·차단·해제처럼 되돌리기 어려운 동작에는 destructive를 씁니다. 색만으로는 부족하므로 라벨에도 동작을 그대로 적고, 영향 범위가 넓으면 확인 단계를 둡니다.',
         do: [
-          '라벨에 동작을 그대로 적는다 — "확인"이 아니라 "삭제"',
+          "라벨에 동작을 그대로 적는다 — '확인'이 아니라 '삭제'",
           '되돌릴 수 없는 동작은 확인 단계를 둔다',
         ],
         dont: [
@@ -187,7 +187,11 @@ export const components: ComponentMeta[] = [
       },
     ],
     usage: [
-      { id: 'page-header', title: '페이지 헤더', note: '제목 오른쪽에 주요 동작 하나. 예: "사용자 추가"' },
+      {
+        id: 'page-header',
+        title: '페이지 헤더',
+        note: "제목 오른쪽에 주요 동작 하나. 예: '사용자 추가'",
+      },
       { id: 'table-row', title: '표 행 내부', note: 'sm + ghost로 밀도를 지킨다. 아이콘만 쓸 때는 aria-label을 붙인다' },
       { id: 'confirm-dialog', title: '확인 다이얼로그', note: '오른쪽에 실행, 왼쪽에 취소. 위험한 동작은 destructive' },
       { id: 'empty-state', title: '빈 상태', note: 'lg 크기의 단독 동작으로 다음 행동을 제안한다' },
