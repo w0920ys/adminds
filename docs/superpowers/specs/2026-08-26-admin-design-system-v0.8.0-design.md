@@ -50,7 +50,7 @@ Radix를 쓰는 것과 쓰지 않는 것을 가릅니다. **기준은 하나입�
 
 | 축 | 값 |
 |---|---|
-| `state` | `unselected` · `selected` · `disabled` · `focus` |
+| `state` | `unselected` · `selected` · `hover` · `focus` · `disabled` |
 | `layout` | `vertical` · `horizontal` · `with-description` |
 
 `size` 축을 두지 않습니다 — `Checkbox`와 같은 이유이고, 같은 문구로 적습니다.
@@ -68,7 +68,7 @@ Radix를 쓰는 것과 쓰지 않는 것을 가릅니다. **기준은 하나입�
 
 | 축 | 값 |
 |---|---|
-| `state` | `off` · `on` · `disabled` · `focus` · `pending` |
+| `state` | `off` · `on` · `hover` · `focus` · `disabled` · `pending` |
 | `layout` | `standalone` · `with-label` · `with-description` |
 
 `pending`을 넣습니다. 즉시 반영이라 서버 응답을 기다리는 동안의 모습이 필요한데 빠뜨리기 쉽습니다.
@@ -130,7 +130,7 @@ Radix를 쓰는 것과 쓰지 않는 것을 가릅니다. **기준은 하나입�
 | 축 | 값 |
 |---|---|
 | `variant` | `line` · `enclosed` |
-| `state` | `default` · `active` · `disabled` · `focus` |
+| `state` | `default` · `active` · `hover` · `focus` · `disabled` |
 
 **구조**: 목록 · 탭 · 활성 표시 · 패널
 
@@ -232,7 +232,7 @@ Radix를 쓰는 것과 쓰지 않는 것을 가릅니다. **기준은 하나입�
 | `variant` | `default` · `destructive` |
 | `size` | `sm` · `default` · `lg` |
 
-**구조**: 덮개 · 컨테이너 · 제목 · 본문 · 동작 · 닫기
+**구조**: `trigger`뿐입니다. 컨테이너는 화면 전체를 덮어 나머지 부위를 무대 안에 함께 담을 수 없습니다 — 이유는 registry의 anatomy note를 봅니다.
 
 **지침**: 오른쪽에 실행, 왼쪽에 취소를 둔다 · 위험한 동작은 무엇이 지워지는지 제목에 적는다 · 바깥 클릭으로 닫는 것은 잃을 것이 없을 때만 허용한다
 
@@ -250,11 +250,15 @@ Radix를 쓰는 것과 쓰지 않는 것을 가릅니다. **기준은 하나입�
 | 축 | 값 |
 |---|---|
 | `density` | `compact` · `default` |
-| `state` | `default` · `hover` · `selected` · `loading` · `empty` |
+| `state` | `default` · `selected` · `hover` |
 
 `density`를 축으로 둡니다. Foundations의 `Spacing`이 정한 밀도 축이 실제로 쓰이는 첫 자리입니다.
 
-**구조**: 머리 · 행 · 칸 · 선택 칸(선택) · 정렬 표시(선택) · 빈 상태
+`loading`·`empty`는 축에 두지 않습니다. 행 하나의 상호작용 상태가 아니라 표 전체가 행 대신 무엇을 채우는지의 문제라 같은 격자에서 '한 축만 바꾼' 비교가 되지 않습니다 — Cases의 '빈 목록'·'불러오는 중'에서 표 전체 크기로 봅니다. 이유는 registry의 anatomy 옆 주석을 봅니다.
+
+**구조**: 머리 · 행 · 칸 · 선택 칸(선택) · 정렬 표시(선택)
+
+'빈 상태'는 부위로 두지 않습니다. 행이 있는 인스턴스와 함께 보일 수 없어 부위가 아니라 상태이기 때문입니다.
 
 **지침**: 숫자는 오른쪽으로 정렬한다 · 행 전체를 누를 수 있게 하려면 그 사실을 보인다 · 열이 화면보다 넓으면 가로로 스크롤하되 첫 열을 고정한다
 
@@ -286,7 +290,7 @@ Radix를 쓰는 것과 쓰지 않는 것을 가릅니다. **기준은 하나입�
 | `size` | `sm` · `default` · `lg` |
 | `state` | `image` · `initials` · `fallback` |
 
-**구조**: 컨테이너 · 이미지 · 대체 글자
+**구조**: 컨테이너 · `content`. 이미지와 대체 글자는 한 인스턴스에 항상 하나만 나타나는 같은 자리라 `content` 하나로 합칩니다 — 무엇이 채우는지는 부위가 아니라 `state` 축이 정합니다.
 
 **지침**: 이미지가 없으면 이름의 첫 글자를 쓴다 · 이름을 대신하지 않는다 · 여럿을 겹쳐 놓을 때 개수를 함께 보인다
 
