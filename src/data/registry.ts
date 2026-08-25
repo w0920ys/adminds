@@ -1799,6 +1799,81 @@ export const components: ComponentMeta[] = [
     ],
     verified: false,
   },
+  {
+    id: 'skeleton',
+    name: 'Skeleton',
+    category: 'feedback',
+    status: 'stable',
+    addedIn: 'v0.9.0',
+    changedIn: 'v0.9.0',
+    purpose:
+      '아직 도착하지 않은 내용의 자리를 실제 모양에 가까운 뼈대로 채운다. 뼈대 자체는 aria-hidden이고, 불러오는 중이라는 사실은 role="status" 문구가 따로 알린다.',
+    anatomy: [],
+    properties: [
+      {
+        name: 'shape',
+        title: 'Shape',
+        description: '뼈대가 흉내 낼 실제 내용의 모양을 정한다.',
+        display: 'row',
+        options: [{ value: 'text' }, { value: 'title' }, { value: 'block' }, { value: 'circle' }],
+      },
+    ],
+    guidelines: [
+      {
+        id: 'match-real-content',
+        title: '실제 내용의 모양을 닮게 만든다',
+        body: '뼈대가 실제와 다르면 내용이 도착하는 순간 화면이 튑니다. 줄 수와 폭을 맞춥니다.',
+        do: ['실제 내용의 줄 수와 폭에 맞춰 뼈대를 그린다'],
+        dont: ['실제 내용과 다른 모양의 뼈대를 두어 내용이 도착할 때 화면을 튀게 하지 않는다'],
+      },
+      {
+        id: 'not-for-brief-loads',
+        title: '짧게 끝나는 것에는 쓰지 않는다',
+        body: '곧 사라질 뼈대는 깜빡임으로만 보입니다.',
+        do: ['오래 걸리는 로딩에만 뼈대를 쓴다'],
+        dont: ['금방 끝나는 로딩에 뼈대를 두어 깜빡임만 남기지 않는다'],
+      },
+      {
+        id: 'no-mixing-with-spinner',
+        title: '뼈대와 스피너를 한 화면에 섞지 않는다',
+        body: '무엇을 기다리는지 두 가지로 말하면 둘 다 흐려집니다.',
+        do: ['한 화면에는 뼈대나 스피너 중 하나만 쓴다'],
+        dont: ['뼈대와 스피너를 한 화면에 함께 쓰지 않는다'],
+      },
+      {
+        id: 'announce-via-text',
+        title: '스크린 리더에는 문구로 알린다',
+        body: '뼈대 자체는 aria-hidden이고, 상태는 문구가 전합니다.',
+        do: ["role='status'를 가진 문구로 불러오는 중임을 알린다"],
+        dont: ['불러오는 중이라는 사실을 문구 없이 뼈대만으로 전하려 하지 않는다'],
+      },
+    ],
+    usage: [
+      { id: 'table-row', title: '표의 행', note: '표가 아직 불러오지 않았을 때 행 모양의 뼈대를 반복해 보인다' },
+      { id: 'card-list', title: '카드 목록', note: '카드 여러 장이 함께 불러올 때 카드 모양의 뼈대를 나열한다' },
+      {
+        id: 'detail-basic-info',
+        title: '상세 화면의 기본 정보',
+        note: '상세 화면 상단의 제목과 본문 자리를 뼈대로 채운다',
+      },
+      {
+        id: 'avatar-with-name',
+        title: '아바타와 이름',
+        note: '아바타와 이름 두 줄이 함께 불러오는 자리를 뼈대로 채운다',
+      },
+    ],
+    cases: [
+      {
+        id: 'shorter-or-longer-content',
+        title: '실제 내용보다 짧거나 긴 경우',
+        note: '뼈대 폭보다 실제 내용이 짧거나 길면 도착하는 순간 폭이 다시 잡힌다',
+      },
+      { id: 'partial-arrival', title: '일부만 도착한 경우', note: '일부 항목만 먼저 도착하면 나머지 자리만 뼈대로 남는다' },
+      { id: 'repeat-count', title: '반복 횟수를 정하는 경우', note: '반복 횟수는 배열에서 파생하고 손으로 적지 않는다' },
+      { id: 'dark-theme', title: '다크 테마', note: 'bg-muted가 다크 테마에서도 배경과 구분되는 밝기를 유지한다' },
+    ],
+    verified: false,
+  },
 ]
 
 export function getComponent(id: string): ComponentMeta | undefined {
