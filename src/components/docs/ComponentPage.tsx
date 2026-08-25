@@ -23,9 +23,20 @@ export type ComponentPageProps = {
   render: (options: RenderOptions) => ReactNode
   /** 이 컴포넌트에만 필요한 섹션 */
   extraSections?: { title: string; node: ReactNode }[]
+  /** guideline의 do/don't 예시를 주입한다 */
+  renderGuidelineExample?: (guidelineId: string, kind: 'do' | 'dont') => ReactNode
+  /** usage·cases 항목의 예시를 주입한다 */
+  renderExample?: (exampleId: string) => ReactNode
 }
 
-export function ComponentPage({ meta, preview, render, extraSections = [] }: ComponentPageProps) {
+export function ComponentPage({
+  meta,
+  preview,
+  render,
+  extraSections = [],
+  renderGuidelineExample,
+  renderExample,
+}: ComponentPageProps) {
   return (
     <DocPage title={meta.name} description={meta.purpose}>
       <div className="-mt-6 flex flex-wrap items-center gap-2">
@@ -62,17 +73,21 @@ export function ComponentPage({ meta, preview, render, extraSections = [] }: Com
       <DocSection title="Guidelines">
         <div className="flex flex-col gap-3">
           {meta.guidelines.map((guideline) => (
-            <GuidelineBlock key={guideline.title} guideline={guideline} />
+            <GuidelineBlock
+              key={guideline.id}
+              guideline={guideline}
+              renderExample={renderGuidelineExample}
+            />
           ))}
         </div>
       </DocSection>
 
       <DocSection title="Usage">
-        <ExampleList examples={meta.usage} />
+        <ExampleList examples={meta.usage} renderExample={renderExample} />
       </DocSection>
 
       <DocSection title="Cases">
-        <ExampleList examples={meta.cases} />
+        <ExampleList examples={meta.cases} renderExample={renderExample} />
       </DocSection>
 
       {extraSections.map((section) => (

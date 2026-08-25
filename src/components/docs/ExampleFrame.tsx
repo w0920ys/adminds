@@ -1,0 +1,33 @@
+import type { ReactNode } from 'react'
+import { Check, X } from 'lucide-react'
+import { cn } from '@/lib/utils'
+
+const KIND_LABEL = {
+  do: 'DO',
+  dont: "DON'T",
+} as const
+
+export function ExampleFrame({
+  kind = 'plain',
+  children,
+}: {
+  kind?: 'do' | 'dont' | 'plain'
+  children: ReactNode
+}) {
+  return (
+    <div className="overflow-hidden rounded-lg border">
+      {kind !== 'plain' && (
+        <p
+          className={cn(
+            'flex items-center gap-1.5 border-b px-3 py-2 text-2xs font-bold tracking-widest',
+            kind === 'do' ? 'text-success' : 'text-destructive',
+          )}
+        >
+          {kind === 'do' ? <Check size={13} aria-hidden /> : <X size={13} aria-hidden />}
+          {KIND_LABEL[kind]}
+        </p>
+      )}
+      <div className="bg-surface-raised p-4">{children}</div>
+    </div>
+  )
+}

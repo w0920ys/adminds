@@ -97,3 +97,32 @@ describe('anatomy', () => {
     }
   })
 })
+
+describe('예시 식별자', () => {
+  it('guideline의 id가 중복되지 않는다', () => {
+    for (const meta of components) {
+      const ids = meta.guidelines.map((g) => g.id)
+      expect(new Set(ids).size, meta.id).toBe(ids.length)
+    }
+  })
+
+  it('usage와 cases의 id가 서로 겹치지 않는다', () => {
+    for (const meta of components) {
+      const ids = [...meta.usage, ...meta.cases].map((e) => e.id)
+      expect(new Set(ids).size, meta.id).toBe(ids.length)
+    }
+  })
+
+  it('모든 id가 kebab-case다', () => {
+    for (const meta of components) {
+      const ids = [
+        ...meta.guidelines.map((g) => g.id),
+        ...meta.usage.map((e) => e.id),
+        ...meta.cases.map((e) => e.id),
+      ]
+      for (const id of ids) {
+        expect(id, `${meta.id}: ${id}`).toMatch(/^[a-z0-9]+(-[a-z0-9]+)*$/)
+      }
+    }
+  })
+})
