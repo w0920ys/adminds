@@ -86,7 +86,11 @@ const NAMING_RULES = [
     meaning: '그 배경 위에 놓이는 글자색',
     example: '--color-primary-foreground',
   },
-  { shape: '--spacing-<축>', meaning: '밀도 축의 고정 높이', example: '--spacing-control' },
+  {
+    shape: '--spacing-<축>[-<크기>]',
+    meaning: '밀도 축의 고정 높이, 크기 접미사는 선택',
+    example: '--spacing-control',
+  },
   { shape: '--radius-<크기>', meaning: '모서리 단계', example: '--radius-md' },
   { shape: '--shadow-<용도>', meaning: '그림자 단계', example: '--shadow-card' },
   { shape: '--z-index-<레이어>', meaning: '쌓임 순서', example: '--z-index-drawer' },
