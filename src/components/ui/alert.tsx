@@ -6,16 +6,20 @@ import { cn } from '@/lib/utils'
  * 아이콘은 CSS로 색만 물려받는다. 어떤 아이콘을 넣을지는 문서 페이지가 정하고,
  * 이 컴포넌트는 variant에 맞는 색만 [&>svg]로 물려준다 — Button이 svg에
  * 크기를 물려주는 것과 같은 방식이라 이 시스템에서 새 규칙이 아니다.
+ *
+ * 아이콘 색도 Badge와 같은 *-on-tint 토큰을 쓴다 — 옅게 탄 배경 위에
+ * 원래 색을 그대로 얹는 같은 패턴이라 대비가 낮아지는 문제를 똑같이 안고
+ * 있었다.
  */
 const alertVariants = cva(
   'relative flex w-full items-start gap-3 rounded-md border p-4 text-sm [&>svg]:mt-0.5 [&>svg]:size-4 [&>svg]:shrink-0',
   {
     variants: {
       variant: {
-        info: 'border-info/30 bg-info/10 [&>svg]:text-info',
-        success: 'border-success/30 bg-success/10 [&>svg]:text-success',
-        warning: 'border-warning/30 bg-warning/10 [&>svg]:text-warning',
-        destructive: 'border-destructive/30 bg-destructive/10 [&>svg]:text-destructive',
+        info: 'border-info/30 bg-info/10 [&>svg]:text-info-on-tint',
+        success: 'border-success/30 bg-success/10 [&>svg]:text-success-on-tint',
+        warning: 'border-warning/30 bg-warning/10 [&>svg]:text-warning-on-tint',
+        destructive: 'border-destructive/30 bg-destructive/10 [&>svg]:text-destructive-on-tint',
       },
     },
     defaultVariants: { variant: 'info' },

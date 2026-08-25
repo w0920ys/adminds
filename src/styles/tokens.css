@@ -41,6 +41,22 @@
   --input: oklch(0.922 0 0);
   --ring: oklch(0.708 0 0);
 
+  /*
+   * 옅게 탄 배경(예: bg-info/15) 위에 얹는 글자색이다. *-foreground는 이미
+   * 불투명한 배경(예: bg-info)과 짝지어 확인됐지만, 배경을 15%만 탄 다음
+   * 원래 색을 그대로 글자에 쓰면 라이트 테마에서 대비가 4.5:1을 넘지
+   * 못한다 — 채도(C)·색상(H)은 그대로 두고 명도(L)만 낮춰 각 색이 자기
+   * 몫의 옅은 배경 위에서 4.5:1을 넉넉히 넘도록 다시 잡았다. neutral은
+   * 상태색이 아니라 무채색이지만 같은 칩 패턴(Badge)에 쓰이고 muted-foreground
+   * 그대로는 11px 굵은 글자에서 이 기준에 못 미쳐 따로 둔다 — muted-foreground
+   * 자체는 이 시스템 전역에서 쓰이므로 여기서 건드리지 않는다.
+   */
+  --neutral-on-tint: oklch(0.542 0 0);
+  --info-on-tint: oklch(0.525 0.118 264.376);
+  --success-on-tint: oklch(0.492 0.145 163.225);
+  --warning-on-tint: oklch(0.542 0.188 70.08);
+  --destructive-on-tint: oklch(0.496 0.245 27.325);
+
   /* 문서 주석 전용. 제품 UI에는 쓰지 않는다 — 컴포넌트 색과 절대 겹치지 않아야 한다 */
   --annotation: oklch(0.55 0.22 285);
   --annotation-muted: oklch(0.7 0.14 285);
@@ -75,6 +91,13 @@
   --input: oklch(1 0 0 / 15%);
   --ring: oklch(0.556 0 0);
 
+  /* 다크에서는 원래 색을 옅은 배경 위에 그대로 써도 이미 4.5:1을 넘는다 — 따로 낮추지 않는다 */
+  --neutral-on-tint: var(--muted-foreground);
+  --info-on-tint: var(--info);
+  --success-on-tint: var(--success);
+  --warning-on-tint: var(--warning);
+  --destructive-on-tint: var(--destructive);
+
   --annotation: oklch(0.75 0.16 285);
   --annotation-muted: oklch(0.62 0.12 285);
 }
@@ -104,6 +127,11 @@
   --color-warning-foreground: var(--warning-foreground);
   --color-info: var(--info);
   --color-info-foreground: var(--info-foreground);
+  --color-neutral-on-tint: var(--neutral-on-tint);
+  --color-info-on-tint: var(--info-on-tint);
+  --color-success-on-tint: var(--success-on-tint);
+  --color-warning-on-tint: var(--warning-on-tint);
+  --color-destructive-on-tint: var(--destructive-on-tint);
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
