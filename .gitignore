@@ -25,3 +25,6 @@ dist-ssr
 
 # npm cache
 .npm-cache
+
+# SDD 작업용 스크래치
+.superpowers
