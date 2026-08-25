@@ -620,6 +620,91 @@ export const components: ComponentMeta[] = [
     verified: false,
   },
   {
+    id: 'breadcrumb',
+    name: 'Breadcrumb',
+    category: 'navigation',
+    status: 'stable',
+    addedIn: 'v0.8.0',
+    changedIn: 'v0.8.0',
+    purpose: '지금 어디에 있는지와 어떻게 왔는지를 보인다. 뒤로 가기의 대체물로 쓰지 않는다.',
+    anatomy: [
+      {
+        part: 'list',
+        label: 'List',
+        note: '가로로 늘어선 목록. nav aria-label로 감싸고 안은 ol이다',
+      },
+      {
+        part: 'item',
+        label: 'Item',
+        note: '지나온 계층으로 가는 링크. text-sm, text-muted-foreground, hover에서 text-foreground',
+      },
+      {
+        part: 'separator',
+        label: 'Separator',
+        note: '항목 사이의 구분 기호. aria-hidden으로 스크린리더가 읽지 않는다',
+      },
+      {
+        part: 'collapsed',
+        label: 'Collapsed',
+        note: '줄어든 가운데 계층의 자리. truncated에서만 나타나는 부위다',
+        optional: true,
+      },
+      {
+        part: 'current',
+        label: 'Current',
+        note: '지금 위치. 링크가 아닌 span이고 aria-current="page"를 단다',
+      },
+    ],
+    properties: [
+      {
+        name: 'state',
+        title: 'State',
+        description: '계층을 모두 보일지 가운데를 줄일지 정한다.',
+        display: 'grid',
+        options: [
+          { value: 'default', note: '계층이 넷 이하일 때' },
+          { value: 'truncated', note: '계층이 넷을 넘어 가운데를 줄임표로 접었을 때' },
+        ],
+      },
+    ],
+    guidelines: [
+      {
+        id: 'last-item-not-link',
+        title: 'Last item is not a link',
+        body: '마지막 항목은 지금 위치이므로 링크가 아닙니다. 누를 수 있는 것처럼 보이면 눌러도 반응이 없어 혼란을 줍니다.',
+        do: ['마지막 항목은 span과 aria-current로 나타낸다', '나머지 항목과 다른 스타일로 구분한다'],
+        dont: ['마지막 항목을 앞의 항목과 똑같은 링크로 두지 않는다'],
+      },
+      {
+        id: 'truncate-deep-hierarchy',
+        title: 'Truncate deep hierarchy',
+        body: '계층이 넷을 넘으면 가운데를 줄입니다. 모든 계층을 한 줄에 나열하면 길어져서 정작 지금 위치를 찾기 어려워집니다.',
+        do: ['첫 항목과 마지막 항목만 남기고 가운데는 줄임표로 접는다'],
+        dont: ['계층이 깊다고 모든 단계를 한 줄에 그대로 나열하지 않는다'],
+      },
+      {
+        id: 'not-a-back-button',
+        title: 'Not a back button',
+        body: 'Breadcrumb은 뒤로 가기의 대체물이 아닙니다. 방문한 순서가 아니라 콘텐츠의 계층 구조를 보여줍니다.',
+        do: ['URL이 나타내는 계층 구조를 그대로 보여준다'],
+        dont: ['브라우저 히스토리를 대신하는 용도로 쓰지 않는다'],
+      },
+    ],
+    usage: [
+      { id: 'detail-header', title: '상세 화면 상단', note: '지금 보는 항목이 어느 목록에서 왔는지 알린다' },
+      { id: 'settings-subpage', title: '설정 하위', note: '설정 안의 세부 메뉴 위치를 보인다' },
+      { id: 'nested-list', title: '중첩된 목록', note: '폴더처럼 계층을 오가는 목록에서 위치를 보인다' },
+      { id: 'from-search-result', title: '검색 결과에서 들어간 경우', note: '검색 결과로 되돌아가는 경로를 남긴다' },
+    ],
+    cases: [
+      { id: 'long-name', title: '이름이 아주 긴 경우', note: '줄바꿈하지 않고 끝을 줄임표로 자른다' },
+      { id: 'deep-hierarchy', title: '계층이 깊은 경우', note: '첫 항목과 마지막 항목만 남기고 가운데를 접는다' },
+      { id: 'top-level', title: '최상위인 경우', note: '갈 곳이 없으므로 Breadcrumb 자체를 생략하는 편이 낫다' },
+      { id: 'narrow-screen', title: '좁은 화면', note: '자리가 부족하면 다음 줄로 넘어간다' },
+    ],
+    verified: false,
+  },
+  {
     id: 'alert',
     name: 'Alert',
     category: 'feedback',

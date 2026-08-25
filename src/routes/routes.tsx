@@ -4,6 +4,7 @@ import { AppShell } from '@/components/layout/AppShell'
 import { Placeholder } from '@/routes/Placeholder'
 import { AlertPage } from '@/routes/components/AlertPage'
 import { BadgePage } from '@/routes/components/BadgePage'
+import { BreadcrumbPage } from '@/routes/components/BreadcrumbPage'
 import { ButtonPage } from '@/routes/components/ButtonPage'
 import { CheckboxPage } from '@/routes/components/CheckboxPage'
 import { ComponentsIndex } from '@/routes/components/ComponentsIndex'
@@ -52,6 +53,7 @@ export const routes: RouteObject[] = [
           { path: 'select', element: <SelectPage /> },
           { path: 'checkbox', element: <CheckboxPage /> },
           { path: 'textarea', element: <TextareaPage /> },
+          { path: 'breadcrumb', element: <BreadcrumbPage /> },
           { path: 'alert', element: <AlertPage /> },
           { path: 'badge', element: <BadgePage /> },
         ],
