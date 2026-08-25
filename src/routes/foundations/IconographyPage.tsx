@@ -23,9 +23,9 @@ const SIZES = [
 ]
 
 const STROKES = [
-  { width: 1.5, role: '완화', note: '24 이상에서 선이 굵어 보일 때. 빈 상태 안내 아이콘.' },
-  { width: 2, role: '기본', note: 'lucide 기본값이자 이 시스템의 기본값. 코드에 적지 않는다.' },
-  { width: 2.4, role: '강조', note: '12~14에서 선이 흐릴 때. 활성 탭처럼 하나만 도드라져야 할 때.' },
+  { width: 1.5, role: '완화', note: '24 이상에서 선이 굵어 보일 때. 빈 상태 안내 아이콘' },
+  { width: 2, role: '기본', note: 'lucide 기본값이자 이 시스템의 기본값. 코드에 적지 않는다' },
+  { width: 2.4, role: '강조', note: '12~14에서 선이 흐릴 때. 활성 탭처럼 하나만 도드라져야 할 때' },
 ]
 
 const MAPPING: { icon: LucideIcon; name: string; meaning: string; where: string }[] = [

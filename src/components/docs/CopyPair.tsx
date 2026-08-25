@@ -24,12 +24,16 @@ export function CopyPairs({ items }: { items: CopyExample[] }) {
             {item.situation}
           </p>
           <div className="grid md:grid-cols-2">
-            <div className="flex gap-2.5 p-4">
-              <X size={14} className="text-destructive mt-0.5 shrink-0" aria-hidden />
+            <div className="p-4">
+              <p className="text-destructive mb-2 flex items-center gap-1.5 text-2xs font-bold tracking-widest">
+                <X size={13} aria-hidden /> 쓰지 않는 문장
+              </p>
               <p className="text-muted-foreground text-sm">{item.dont}</p>
             </div>
-            <div className="flex gap-2.5 border-t p-4 md:border-t-0 md:border-l">
-              <Check size={14} className="text-success mt-0.5 shrink-0" aria-hidden />
+            <div className="border-t p-4 md:border-t-0 md:border-l">
+              <p className="text-success mb-2 flex items-center gap-1.5 text-2xs font-bold tracking-widest">
+                <Check size={13} aria-hidden /> 이 시스템이 쓰는 문장
+              </p>
               <p className="text-sm font-medium">{item.do}</p>
             </div>
           </div>

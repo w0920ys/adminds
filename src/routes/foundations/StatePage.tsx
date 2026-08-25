@@ -8,23 +8,23 @@ import { cn } from '@/lib/utils'
 const STATES = [
   {
     name: 'default',
-    line: '아무 일도 일어나지 않은 평상시. 나머지 상태는 모두 여기서 벗어난 정도로 읽힌다.',
+    line: '아무 일도 일어나지 않은 평상시. 나머지 상태는 모두 여기서 벗어난 정도로 읽힌다',
   },
   {
     name: 'hover',
-    line: '포인터가 위에 있다. 누를 수 있다는 예고일 뿐 아직 아무것도 일어나지 않았다.',
+    line: '포인터가 위에 있다. 누를 수 있다는 예고일 뿐 아직 아무것도 일어나지 않았다',
   },
   {
     name: 'focus',
-    line: '키보드가 지금 이 요소에 있다. 탭으로 이동하는 사람에게는 이것이 유일한 위치 표시다.',
+    line: '키보드가 지금 이 요소에 있다. 탭으로 이동하는 사람에게는 이것이 유일한 위치 표시다',
   },
-  { name: 'active', line: '누르고 있는 중. 손을 떼면 끝난다.' },
+  { name: 'active', line: '누르고 있는 중. 손을 떼면 끝난다' },
   {
     name: 'disabled',
-    line: '지금은 쓸 수 없다. 조건이 갖춰지면 다시 쓸 수 있다는 뜻까지 담는다.',
+    line: '지금은 쓸 수 없다. 조건이 갖춰지면 다시 쓸 수 있다는 뜻까지 담는다',
   },
-  { name: 'loading', line: '요청이 진행 중이고 결과는 아직 없다.' },
-  { name: 'error', line: '입력이나 요청이 실패했다. 사용자가 고칠 것이 남아 있다.' },
+  { name: 'loading', line: '요청이 진행 중이고 결과는 아직 없다' },
+  { name: 'error', line: '입력이나 요청이 실패했다. 사용자가 고칠 것이 남아 있다' },
 ]
 
 const DEMOS: { name: string; force?: string; node: ReactNode; note: string }[] = [
@@ -33,7 +33,7 @@ const DEMOS: { name: string; force?: string; node: ReactNode; note: string }[] =
     name: 'hover',
     force: 'state-hover',
     node: <Button>저장</Button>,
-    note: '배경이 한 단계 진해진다',
+    note: '배경이 한 단계 움직인다',
   },
   {
     name: 'focus',
@@ -66,7 +66,7 @@ const DEMOS: { name: string; force?: string; node: ReactNode; note: string }[] =
 const RULES = [
   {
     title: '포커스는 언제나 보인다',
-    body: '포커스 링을 지우는 것은 키보드로 쓰는 사람의 커서를 지우는 일과 같습니다. outline-none만 적고 끝내지 않습니다. 이 시스템의 Button은 outline-none과 focus-visible:ring-2를 함께 갖습니다 — 마우스로 누를 때는 링이 뜨지 않고 탭으로 옮겨올 때만 뜹니다. 커스텀 컨트롤을 새로 만들 때도 이 조합을 그대로 가져갑니다.',
+    body: '포커스 링을 지우는 것은 키보드로 쓰는 사람의 커서를 지우는 일과 같습니다. outline-none만 적고 끝내지 않습니다. 이 시스템의 Button에는 outline-none과 focus-visible:ring-2가 함께 걸려 있습니다 — 마우스로 누를 때는 링이 뜨지 않고 탭으로 옮겨올 때만 뜹니다. 커스텀 컨트롤을 새로 만들 때도 이 조합을 그대로 가져갑니다.',
   },
   {
     title: 'disabled는 이유를 함께 알린다',
@@ -86,7 +86,7 @@ export function StatePage() {
   return (
     <DocPage
       title="State"
-      description="상태는 컴포넌트마다 다시 정하는 것이 아니라 시스템 전체에서 같은 뜻을 갖습니다. 어드민은 같은 버튼을 하루에 수십 번 누르는 화면이라, 상태가 화면마다 다르게 보이면 매번 다시 확인하게 됩니다."
+      description="상태는 컴포넌트마다 다시 정하지 않고 시스템 전체에서 같은 뜻으로 씁니다. 어드민은 같은 버튼을 하루에 수십 번 누르는 화면이라, 상태가 화면마다 다르게 보이면 매번 다시 확인하게 됩니다."
     >
       <DocSection title="상태 목록">
         <div className="divide-y rounded-lg border">
