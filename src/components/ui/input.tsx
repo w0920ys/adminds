@@ -11,18 +11,24 @@ import { cn } from '@/lib/utils'
  * bg-background는 입력 전용이 아니라 여기 둔다 — Select trigger의 기본
  * 배경이 Input의 기본 배경과 같아야 하기 때문이다.
  *
+ * 좌우 패딩(px-3)은 기본값으로 base 문자열에 둔다 — size 변형 자체를
+ * 선택하지 않는 소비자(Textarea)도 반드시 패딩을 받아야 하기 때문이다.
+ * sm·lg는 그 기본값과 다른 자기 몫의 px를 그대로 들고 있고, cn()이
+ * tailwind-merge를 거치므로 나중에 오는 size 쪽 px가 base의 px-3을
+ * 이긴다 — Input·SelectTrigger의 sm·lg 렌더링은 그대로다.
+ *
  * size 변형에는 defaultVariants를 두지 않는다. Textarea처럼 높이가
  * 필요 없는 소비자는 size를 아예 넘기지 않아 h-control-* 클래스가
  * 붙지 않고, 그러면 h-auto로 되짚어 덮을 필요가 없다. Input·SelectTrigger는
  * 각자 size 파라미터에 자체 기본값 'default'를 둔다.
  */
 const controlShellVariants = cva(
-  'flex w-full min-w-0 rounded-md border border-input bg-background text-sm shadow-xs transition outline-none hover:border-ring/60 focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-2 disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 dark:bg-input/30',
+  'flex w-full min-w-0 rounded-md border border-input bg-background px-3 text-sm shadow-xs transition outline-none hover:border-ring/60 focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-2 disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 dark:bg-input/30',
   {
     variants: {
       size: {
         sm: 'h-control-sm px-2.5',
-        default: 'h-control px-3',
+        default: 'h-control',
         lg: 'h-control-lg px-3.5',
       },
     },
