@@ -1540,6 +1540,15 @@ export const components: ComponentMeta[] = [
         note: '누르면 화면 전체를 덮는 반투명 덮개(bg-black/50)와 가운데 정렬된 컨테이너(bg-background, 테두리, radius-lg, shadow-lg)가 뜬다. 컨테이너 안은 제목(text-lg font-semibold)·본문(text-sm text-muted-foreground)·오른쪽 정렬된 동작 버튼 순서로 쌓이고, 오른쪽 위 모서리에 닫기(X) 아이콘이 항상 있다. 쌓임 순서는 z-overlay. 컨테이너는 화면 전체를 덮어 구조도 무대 안에 담을 수 없으므로 나머지 부위는 Usage에서 실제로 눌러서 본다',
       },
     ],
+    /*
+     * size는 DialogContent에만 붙는데 DialogContent는 Portal 안에서
+     * 열려야만 DOM에 있다. Tooltip이 side를, Select·Dropdown Menu가
+     * open·align을 뺀 것과 같은 이유로 properties에 두지 않는다 —
+     * 닫힌 트리거는 size가 무엇이든 같아 보여 Properties의 세 칸이
+     * 똑같은 버튼만 남긴다. size prop 자체는 컴포넌트에 그대로 있고,
+     * sm·default·lg 세 값 모두 Usage에서 실제로 열어 확인한다
+     * (짧은 입력·상세 미리보기·대량 작업 확인).
+     */
     properties: [
       {
         name: 'variant',
@@ -1549,17 +1558,6 @@ export const components: ComponentMeta[] = [
         options: [
           { value: 'default', note: '확인이나 입력처럼 되돌릴 수 있는 동작' },
           { value: 'destructive', note: '삭제처럼 되돌릴 수 없는 동작. 실행 버튼이 destructive 색을 쓴다' },
-        ],
-      },
-      {
-        name: 'size',
-        title: 'Size',
-        description: '컨테이너의 최대 너비를 정한다.',
-        display: 'row',
-        options: [
-          { value: 'sm', note: '확인 한 줄처럼 본문이 짧을 때' },
-          { value: 'default', note: '기본. 제목·본문·폼 몇 줄' },
-          { value: 'lg', note: '표나 여러 필드가 들어갈 때' },
         ],
       },
     ],

@@ -18,18 +18,17 @@ import { getComponent } from '@/data/registry'
 import { Placeholder } from '@/routes/Placeholder'
 
 type DialogVariant = 'default' | 'destructive'
-type DialogSize = 'sm' | 'default' | 'lg'
 
 /*
- * variant·size는 컨테이너가 열려야 보이는 값이다. Dialog는 Select처럼
+ * variant는 컨테이너가 열려야 보이는 값이다. Dialog는 Select처럼
  * 모달이라 강제로 열어 두면 같은 사고가 난다. 대신 트리거 자체를 값에
- * 맞게 다르게 꾸민다 — destructive는 위험 버튼으로, size는 실제로
- * 그 크기가 어울리는 상황으로 이름 붙인다. 무엇이 다른지는 독자가
- * 눌러서 본다.
+ * 맞게 다르게 꾸민다 — destructive는 위험 버튼으로. 무엇이 다른지는
+ * 독자가 눌러서 본다. size는 여기 없다 — Properties에는 아예 두지
+ * 않는다(registry의 anatomy 옆 주석 참고), sm·default·lg는 Usage의
+ * 짧은 입력·상세 미리보기·대량 작업 확인에서 실제로 열어 본다.
  */
 function renderDialog(options: RenderOptions) {
   const variant = (options.variant ?? 'default') as DialogVariant
-  const size = (options.size ?? 'default') as DialogSize
   const isDestructive = variant === 'destructive'
 
   return (
@@ -39,7 +38,7 @@ function renderDialog(options: RenderOptions) {
           {isDestructive ? '사용자 삭제' : '상세 보기'}
         </Button>
       </DialogTrigger>
-      <DialogContent size={size}>
+      <DialogContent>
         <DialogHeader>
           <DialogTitle>{isDestructive ? "'홍길동'을 삭제하시겠습니까" : '사용자 정보'}</DialogTitle>
           <DialogDescription>
@@ -244,11 +243,18 @@ function renderExample(exampleId: string): ReactNode {
               선택 항목 삭제
             </Button>
           </DialogTrigger>
-          <DialogContent size="sm">
+          <DialogContent size="lg">
             <DialogHeader>
               <DialogTitle>'선택한 12건'을 삭제하시겠습니까</DialogTitle>
-              <DialogDescription>삭제하면 되돌릴 수 없습니다.</DialogDescription>
+              <DialogDescription>삭제하면 되돌릴 수 없습니다. 아래 목록이 함께 지워집니다.</DialogDescription>
             </DialogHeader>
+            <ul className="rounded-md border text-sm">
+              {['홍길동', '김서연', '이서준'].map((name) => (
+                <li key={name} className="border-b px-3 py-2 last:border-b-0">
+                  {name}
+                </li>
+              ))}
+            </ul>
             <DialogFooter>
               <DialogClose asChild>
                 <Button variant="outline">취소</Button>
