@@ -205,6 +205,105 @@ export const components: ComponentMeta[] = [
     ],
     verified: true,
   },
+  {
+    id: 'input',
+    name: 'Input',
+    category: 'inputs',
+    status: 'stable',
+    addedIn: 'v0.7.0',
+    changedIn: 'v0.7.0',
+    purpose: '사용자가 한 줄짜리 값을 직접 입력하도록 한다. 여러 값 중 고르게 할 때는 Select를 쓴다.',
+    anatomy: [
+      { part: 'container', label: 'Container', note: '테두리는 border-input, 높이는 size 토큰, 모서리는 radius-md' },
+      { part: 'value', label: 'Value', note: '사용자가 입력한 값. text-sm' },
+      { part: 'placeholder', label: 'Placeholder', note: '입력 전 안내 문구. text-muted-foreground' },
+      {
+        part: 'prefix-icon',
+        label: 'Prefix Icon',
+        note: '16×16, 값과 8px 간격',
+        optional: true,
+      },
+      {
+        part: 'suffix',
+        label: 'Suffix',
+        note: '지우기 버튼이나 단위 표시. 값과 8px 간격',
+        optional: true,
+      },
+    ],
+    properties: [
+      {
+        name: 'size',
+        title: 'Size',
+        description: '입력 칸의 높이를 정한다. 같은 줄에 놓이는 컨트롤끼리는 크기를 맞춘다.',
+        display: 'row',
+        options: [{ value: 'sm' }, { value: 'default' }, { value: 'lg' }],
+      },
+      {
+        name: 'state',
+        title: 'State',
+        description: '상호작용과 값의 상태를 나타낸다.',
+        display: 'grid',
+        options: [
+          { value: 'default' },
+          { value: 'hover', note: '포인터가 올라간 동안' },
+          { value: 'focus', note: '키보드 포커스. 항상 보여야 한다' },
+          { value: 'disabled', note: '지금 값을 바꿀 수 없음' },
+          { value: 'invalid', note: 'aria-invalid로 나타낸다. 테두리 색과 문구를 함께 쓴다' },
+          {
+            value: 'readonly',
+            note: '값을 읽고 복사할 수 있으나 고칠 수 없다. disabled와 다르다',
+          },
+        ],
+      },
+      {
+        name: 'width',
+        title: 'Width',
+        description: '입력 칸이 차지하는 가로 폭을 정한다. 기대하는 값의 길이에 맞춘다.',
+        display: 'row',
+        options: [
+          { value: 'hug', note: '기대하는 값 길이에 맞춘 폭. 기본' },
+          { value: 'fill', note: '부모 요소의 폭을 채운다' },
+        ],
+      },
+    ],
+    guidelines: [
+      {
+        id: 'placeholder-as-label',
+        title: 'Placeholder as label',
+        body: '자리표시자를 라벨 대신 쓰면 안 됩니다. 입력을 시작하는 순간 사라지므로 무엇을 넣는 칸인지 알 수 없게 됩니다.',
+        do: ['입력 칸마다 라벨을 둔다', '자리표시자는 형식이나 예시를 보여줄 때만 쓴다'],
+        dont: ['라벨 없이 자리표시자만으로 입력 칸의 용도를 설명하지 않는다'],
+      },
+      {
+        id: 'error-indication',
+        title: 'Error indication',
+        body: '오류는 색만으로 알리지 않습니다. 테두리 색과 함께 문구를 달아야 하며, 문구는 Writing의 오류 메시지 규칙을 따릅니다.',
+        do: ['aria-invalid와 함께 오류 문구를 보여준다', '문구는 Writing의 오류 메시지 규칙을 따른다'],
+        dont: ['테두리 색만 바꾸고 문구를 생략하지 않는다'],
+      },
+      {
+        id: 'width',
+        title: 'Width',
+        body: '폭은 기대하는 값의 길이에 맞춥니다. 우편번호 칸이 이름 칸과 같은 폭이면 무엇을 넣는 칸인지 흐려집니다.',
+        do: ['짧은 값에는 좁은 폭을 쓴다', '기대하는 값의 길이에 폭을 맞춘다'],
+        dont: ['모든 입력 칸을 같은 폭으로 맞추지 않는다'],
+      },
+    ],
+    usage: [
+      { id: 'search-box', title: '검색 상자', note: '앞에 검색 아이콘을 두고 자리표시자로 예시를 보여준다' },
+      { id: 'form-row', title: '폼 한 줄', note: '라벨 + 입력 + 도움말' },
+      { id: 'table-filter', title: '표 안 필터', note: 'sm 크기로 주변 컨트롤과 높이를 맞춘다' },
+      { id: 'amount-input', title: '금액 입력', note: '뒤에 단위를 붙인다' },
+    ],
+    cases: [
+      { id: 'overflow-value', title: '값이 칸보다 긴 경우', note: '줄바꿈하지 않고 칸 안에서 스크롤된다' },
+      { id: 'readonly', title: '읽기 전용', note: '읽고 복사할 수 있으나 고칠 수 없다. disabled와 다르다' },
+      { id: 'error-with-help', title: '오류와 도움말이 함께 있는 경우', note: '오류 문구가 도움말 자리를 대신한다' },
+      { id: 'password', title: '비밀번호', note: 'type만 다르고 시각적으로는 달라지지 않는다' },
+      { id: 'narrow-screen', title: '좁은 화면', note: '기본 폭이 부모를 채우므로 별도 처리가 필요 없다' },
+    ],
+    verified: false,
+  },
 ]
 
 export function getComponent(id: string): ComponentMeta | undefined {

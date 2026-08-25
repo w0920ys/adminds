@@ -4,6 +4,7 @@ import { AppShell } from '@/components/layout/AppShell'
 import { Placeholder } from '@/routes/Placeholder'
 import { ButtonPage } from '@/routes/components/ButtonPage'
 import { ComponentsIndex } from '@/routes/components/ComponentsIndex'
+import { InputPage } from '@/routes/components/InputPage'
 import { ColorPage } from '@/routes/foundations/ColorPage'
 import { ColorRolePage } from '@/routes/foundations/ColorRolePage'
 import { DesignTokenPage } from '@/routes/foundations/DesignTokenPage'
@@ -42,6 +43,7 @@ export const routes: RouteObject[] = [
         children: [
           { index: true, element: <ComponentsIndex /> },
           { path: 'button', element: <ButtonPage /> },
+          { path: 'input', element: <InputPage /> },
         ],
       },
 

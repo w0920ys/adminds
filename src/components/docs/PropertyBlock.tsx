@@ -1,16 +1,11 @@
 import type { ReactNode } from 'react'
 import { HeadingAnchor } from '@/components/docs/HeadingAnchor'
+import { forcedStateClass } from '@/components/docs/state-preview'
 import type { ComponentMeta, ComponentProperty } from '@/data/registry'
 import { getProperty } from '@/data/registry'
 import { cn } from '@/lib/utils'
 
 export type RenderOptions = Record<string, string>
-
-/** hover와 focus는 실제 입력 없이 나타나지 않으므로 tokens.css의 강제 변형으로 전시한다 */
-const FORCE_CLASS: Record<string, string> = {
-  hover: 'state-hover',
-  focus: 'state-focus',
-}
 
 /** 축의 첫 옵션들로 기본 조합을 만든다. 격자의 각 칸은 여기서 한 축만 바꾼다. */
 function baseOptions(meta: ComponentMeta): RenderOptions {
@@ -96,7 +91,7 @@ export function PropertyBlock({
               <div
                 className={cn(
                   'flex min-h-10 items-center',
-                  property.name === 'state' ? FORCE_CLASS[option.value] : undefined,
+                  property.name === 'state' ? forcedStateClass(option.value) : undefined,
                 )}
               >
                 {render({ ...base, [property.name]: option.value })}

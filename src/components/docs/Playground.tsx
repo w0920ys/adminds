@@ -2,6 +2,7 @@ import { useState, type ReactNode } from 'react'
 import { RotateCcw } from 'lucide-react'
 import type { ComponentMeta } from '@/data/registry'
 import type { RenderOptions } from '@/components/docs/PropertyBlock'
+import { forcedStateClass } from '@/components/docs/state-preview'
 import { cn } from '@/lib/utils'
 
 function initialOptions(meta: ComponentMeta): RenderOptions {
@@ -21,7 +22,12 @@ export function Playground({
 
   return (
     <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_16rem]">
-      <div className="bg-surface-raised grid min-h-44 place-items-center rounded-lg border p-8">
+      <div
+        className={cn(
+          'bg-surface-raised grid min-h-44 place-items-center rounded-lg border p-8',
+          forcedStateClass(options.state),
+        )}
+      >
         {render(options)}
       </div>
 
