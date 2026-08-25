@@ -15,6 +15,7 @@ import { SelectPage } from '@/routes/components/SelectPage'
 import { SwitchPage } from '@/routes/components/SwitchPage'
 import { TabsPage } from '@/routes/components/TabsPage'
 import { TextareaPage } from '@/routes/components/TextareaPage'
+import { TooltipPage } from '@/routes/components/TooltipPage'
 import { ColorPage } from '@/routes/foundations/ColorPage'
 import { ColorRolePage } from '@/routes/foundations/ColorRolePage'
 import { DesignTokenPage } from '@/routes/foundations/DesignTokenPage'
@@ -63,6 +64,7 @@ export const routes: RouteObject[] = [
           { path: 'breadcrumb', element: <BreadcrumbPage /> },
           { path: 'pagination', element: <PaginationPage /> },
           { path: 'alert', element: <AlertPage /> },
+          { path: 'tooltip', element: <TooltipPage /> },
           { path: 'badge', element: <BadgePage /> },
         ],
       },

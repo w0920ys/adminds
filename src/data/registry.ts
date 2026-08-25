@@ -1254,6 +1254,72 @@ export const components: ComponentMeta[] = [
     ],
     verified: false,
   },
+  {
+    id: 'tooltip',
+    name: 'Tooltip',
+    category: 'feedback',
+    status: 'stable',
+    addedIn: 'v0.8.0',
+    changedIn: 'v0.8.0',
+    purpose: '가리키는 것의 이름이나 짧은 설명을 보인다.',
+    anatomy: [
+      {
+        part: 'trigger',
+        label: 'Trigger',
+        note: '호버하거나 포커스하면 트리거 주변에 말풍선이 뜬다. bg-popover, 테두리, radius-md, 쌓임 순서는 z-popover. 글자는 text-xs이고 트리거를 향한 작은 꼬리(Arrow)가 함께 붙는다. 표 헤더처럼 넘침이 있는 컨테이너 안에서도 잘리지 않도록 Portal로 렌더링된다',
+      },
+    ],
+    properties: [
+      {
+        name: 'side',
+        title: 'Side',
+        description: '말풍선이 트리거의 어느 쪽에 뜨는지 정한다. 네 값을 나란히 두어야 위치 차이가 비교된다.',
+        display: 'row',
+        options: [
+          { value: 'top', note: '기본. 트리거 위에 뜬다' },
+          { value: 'right', note: '트리거 오른쪽에 뜬다' },
+          { value: 'bottom', note: '트리거 아래에 뜬다' },
+          { value: 'left', note: '트리거 왼쪽에 뜬다' },
+        ],
+      },
+    ],
+    guidelines: [
+      {
+        id: 'icon-only-button',
+        title: 'Icon-only buttons',
+        body: '아이콘만 있는 버튼에는 반드시 Tooltip을 붙입니다. 글자가 없으면 아이콘의 뜻을 짐작해야 합니다.',
+        do: ['아이콘만 있는 버튼에 Tooltip으로 이름을 붙인다', '스크린리더용 이름도 aria-label로 함께 준다'],
+        dont: ['아이콘만 두고 이름을 어디에도 남기지 않는다'],
+      },
+      {
+        id: 'not-only-source',
+        title: 'Not the only source',
+        body: '중요한 정보를 Tooltip에만 두지 않습니다. 터치 기기에는 호버가 없어 마우스를 대지 않으면 존재조차 알 수 없습니다.',
+        do: ['비활성 이유처럼 중요한 정보는 화면에 먼저 보이게 하고 Tooltip은 보조로 둔다'],
+        dont: ['비활성인 이유를 Tooltip에만 적어 두지 않는다'],
+      },
+      {
+        id: 'single-line',
+        title: 'Single line',
+        body: 'Tooltip 글은 한 줄을 넘기지 않습니다. 길어지면 본문이나 Dialog로 옮깁니다.',
+        do: ['한 줄로 끝나는 짧은 문구만 담는다'],
+        dont: ['여러 문장을 Tooltip 안에 욱여넣지 않는다'],
+      },
+    ],
+    usage: [
+      { id: 'icon-button', title: '아이콘 버튼', note: '아이콘만 있는 버튼의 이름을 밝힌다' },
+      { id: 'truncated-text', title: '줄임된 글', note: '표에서 잘린 값의 전체 글을 보인다' },
+      { id: 'disabled-reason', title: '비활성 이유', note: '화면에 보이는 안내를 보조하는 자리로만 쓴다' },
+      { id: 'table-header', title: '표 머리의 설명', note: '열 이름만으로 부족한 뜻을 덧붙인다' },
+    ],
+    cases: [
+      { id: 'long-text', title: '글이 긴 경우', note: '한 줄을 넘기면 여러 줄로 줄바꿈된다' },
+      { id: 'screen-edge', title: '화면 가장자리', note: '자리가 없으면 반대쪽으로 자동으로 뒤집힌다' },
+      { id: 'touch-device', title: '터치 기기', note: '호버가 없으므로 이름을 aria-label로도 함께 남긴다' },
+      { id: 'narrow-screen', title: '좁은 화면', note: '트리거가 줄바꿈되어도 말풍선 위치는 트리거를 따라간다' },
+    ],
+    verified: false,
+  },
 ]
 
 export function getComponent(id: string): ComponentMeta | undefined {
