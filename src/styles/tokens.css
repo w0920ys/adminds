@@ -149,6 +149,17 @@
     border-color: var(--color-border);
   }
 
+  /*
+   * 셸은 h-dvh로 화면 높이에 고정되고 스크롤은 main 혼자 맡는다.
+   * 그런데 앵커로 이동해 제목을 화면에 넣을 때 브라우저가 main뿐 아니라
+   * 문서(html)까지 함께 굴려, GNB가 위로 밀려 나간 채 돌아오지 않는다.
+   * 문서 레벨은 애초에 스크롤할 여지가 없어야 하므로 여기서 막는다.
+   */
+  html,
+  body {
+    overflow: hidden;
+  }
+
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
@@ -159,5 +170,16 @@
     /* 한글은 음절 단위로 줄바꿈한다. 어절 단위로 묶으면 좁은 화면에서 한 줄이 크게 빈다 */
     word-break: normal;
     overflow-wrap: break-word;
+  }
+}
+
+/*
+ * 스크롤 막대만 감춘다. 스크롤 자체는 막지 않는다.
+ * 두 줄이 필요하다 — 앞은 Firefox, 뒤는 WebKit이다.
+ */
+@utility scrollbar-none {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
   }
 }

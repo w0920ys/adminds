@@ -95,7 +95,7 @@ export function TableOfContents() {
   return (
     <nav
       aria-label="이 문서의 목차"
-      className="hidden w-56 shrink-0 overflow-y-auto py-8 pr-6 xl:block"
+      className="sticky top-8 hidden h-fit w-56 shrink-0 self-start xl:block"
     >
       <p className="text-muted-foreground mb-3 text-sm font-semibold">Contents</p>
       <ul className="flex flex-col gap-1">

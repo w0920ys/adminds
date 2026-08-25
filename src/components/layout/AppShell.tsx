@@ -13,13 +13,15 @@ export function AppShell() {
       <Gnb onMenuClick={() => setLnbOpen(true)} />
       <div className="flex min-h-0 flex-1">
         <Lnb open={lnbOpen} onClose={() => setLnbOpen(false)} />
-        <main className="min-w-0 flex-1 overflow-y-auto px-4 py-8 md:px-10">
-          <div className="mx-auto max-w-4xl">
-            <Outlet />
-            <DocFooterNav />
+        <main className="scrollbar-none min-w-0 flex-1 overflow-y-auto px-4 py-8 md:px-10">
+          <div className="mx-auto flex max-w-6xl gap-10">
+            <div className="min-w-0 flex-1">
+              <Outlet />
+              <DocFooterNav />
+            </div>
+            <TableOfContents />
           </div>
         </main>
-        <TableOfContents />
       </div>
     </div>
   )
