@@ -1745,6 +1745,60 @@ export const components: ComponentMeta[] = [
     ],
     verified: true,
   },
+  {
+    id: 'separator',
+    name: 'Separator',
+    category: 'data-display',
+    status: 'stable',
+    addedIn: 'v0.9.0',
+    changedIn: 'v0.9.0',
+    purpose: '가로 또는 세로로 선을 그어 화면의 영역을 나눈다. 기본은 장식이므로 뜻이 있는 경계에서만 decorative를 거짓으로 둔다.',
+    anatomy: [],
+    properties: [
+      {
+        name: 'orientation',
+        title: 'Orientation',
+        description: '선을 가로로 그을지 세로로 그을지 정한다.',
+        display: 'row',
+        options: [{ value: 'horizontal' }, { value: 'vertical' }],
+      },
+    ],
+    guidelines: [
+      {
+        id: 'meaningful-vs-decorative',
+        title: '뜻이 있는 경계와 장식을 구별한다',
+        body: '메뉴에서 성격이 다른 묶음을 가르는 선은 뜻이 있고, 카드 안 구획을 나누는 선은 장식입니다. 스크린 리더가 읽어야 하는 것은 앞의 것뿐입니다.',
+        do: ['성격이 다른 동작 묶음의 경계에는 decorative를 거짓으로 둔다'],
+        dont: ['카드 안 구획처럼 장식으로 쓰는 선에 decorative를 거짓으로 두지 않는다'],
+      },
+      {
+        id: 'no-line-when-spacing-suffices',
+        title: '여백으로 충분하면 선을 긋지 않는다',
+        body: '간격이 이미 묶음을 말하고 있으면 선은 잡음입니다.',
+        do: ['넉넉한 간격만으로 구획을 나눌 수 있는지 먼저 살핀다'],
+        dont: ['이미 여백이 구획을 나누고 있는데 선을 더하지 않는다'],
+      },
+      {
+        id: 'not-between-every-item',
+        title: '목록의 모든 항목 사이에 긋지 않는다',
+        body: '선이 많아지면 각각의 뜻이 사라집니다.',
+        do: ['성격이 다른 묶음 사이에만 선을 긋는다'],
+        dont: ['목록의 항목마다 선을 넣지 않는다'],
+      },
+    ],
+    usage: [
+      { id: 'card-section', title: '카드 안의 구획', note: '테두리 있는 상자 안에서 서로 다른 정보 구획을 나눈다' },
+      { id: 'menu-group', title: '메뉴 항목 묶음 사이', note: '성격이 다른 동작 묶음의 경계를 알린다' },
+      { id: 'toolbar-group', title: '툴바의 동작 묶음 사이', note: '관련 있는 동작끼리 묶는다' },
+      { id: 'form-section', title: '폼의 구획', note: '입력 항목이 많은 폼에서 구획을 나눈다' },
+    ],
+    cases: [
+      { id: 'vertical-height', title: '세로 구분선의 높이', note: '부모가 높이를 정해야 세로 구분선이 보인다' },
+      { id: 'spacing-sufficient', title: '여백만으로 충분한 경우', note: '선 없이 간격만으로 구획을 나눈다' },
+      { id: 'asymmetric-margin', title: '양옆 여백이 다른 경우', note: '툴바처럼 시작 여백과 끝 여백이 다르게 그어진다' },
+    ],
+    verified: false,
+  },
 ]
 
 export function getComponent(id: string): ComponentMeta | undefined {
