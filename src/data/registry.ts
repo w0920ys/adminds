@@ -310,7 +310,7 @@ export const components: ComponentMeta[] = [
       { id: 'password', title: '비밀번호', note: 'type만 다르고 시각적으로는 달라지지 않는다' },
       { id: 'narrow-screen', title: '좁은 화면', note: '기본 폭이 부모를 채우므로 별도 처리가 필요 없다' },
     ],
-    verified: false,
+    verified: true,
   },
   {
     id: 'select',
@@ -411,7 +411,7 @@ export const components: ComponentMeta[] = [
       { id: 'single-option', title: '선택지가 하나뿐인 경우', note: 'Select로 접어 두는 대신 값을 그대로 보여주는 편이 낫다' },
       { id: 'empty-list', title: '비어 있는 목록', note: '항목이 없다는 안내를 목록 자리에 보여준다' },
     ],
-    verified: false,
+    verified: true,
   },
   {
     id: 'checkbox',
@@ -519,7 +519,7 @@ export const components: ComponentMeta[] = [
       { id: 'nested-selection', title: '중첩된 선택', note: '하위 항목의 일부만 선택되면 상위는 중간 상태로 나타낸다' },
       { id: 'narrow-screen', title: '좁은 화면', note: '라벨이 줄바꿈되어도 상자와의 정렬은 유지된다' },
     ],
-    verified: false,
+    verified: true,
   },
   {
     id: 'radio',
@@ -621,7 +621,7 @@ export const components: ComponentMeta[] = [
       { id: 'two-options', title: '항목이 둘뿐', note: '둘뿐이어도 서로 배타적이면 Radio를 쓴다' },
       { id: 'narrow-screen', title: '좁은 화면', note: '라벨이 줄바꿈되어도 항목과의 정렬은 유지된다' },
     ],
-    verified: false,
+    verified: true,
   },
   {
     id: 'switch',
@@ -728,7 +728,7 @@ export const components: ComponentMeta[] = [
       { id: 'long-label', title: '라벨이 긴 경우', note: '라벨은 줄바꿈하고 트랙 위치는 그대로 둔다' },
       { id: 'narrow-screen', title: '좁은 화면', note: '라벨이 줄바꿈되어도 트랙과의 정렬은 유지된다' },
     ],
-    verified: false,
+    verified: true,
   },
   {
     id: 'textarea',
@@ -840,7 +840,7 @@ export const components: ComponentMeta[] = [
       },
       { id: 'narrow-screen', title: '좁은 화면', note: '기본 폭이 부모를 채우므로 별도 처리가 필요 없다' },
     ],
-    verified: false,
+    verified: true,
   },
   {
     id: 'tabs',
@@ -933,7 +933,7 @@ export const components: ComponentMeta[] = [
       { id: 'tab-with-badge', title: '배지가 붙는 경우', note: '탭 이름 뒤에 붙여 개수나 상태를 함께 알린다' },
       { id: 'narrow-screen', title: '좁은 화면', note: '탭이 줄어들지 않고 가로 스크롤로 대응한다' },
     ],
-    verified: false,
+    verified: true,
   },
   {
     id: 'breadcrumb',
@@ -1018,7 +1018,7 @@ export const components: ComponentMeta[] = [
       { id: 'top-level', title: '최상위인 경우', note: '갈 곳이 없으므로 Breadcrumb 자체를 생략하는 편이 낫다' },
       { id: 'narrow-screen', title: '좁은 화면', note: '자리가 부족하면 다음 줄로 넘어간다' },
     ],
-    verified: false,
+    verified: true,
   },
   {
     id: 'pagination',
@@ -1098,7 +1098,7 @@ export const components: ComponentMeta[] = [
       { id: 'no-results', title: '결과가 없는 경우', note: '보일 항목이 없으므로 Pagination도 함께 생략한다' },
       { id: 'narrow-screen', title: '좁은 화면', note: '자리가 부족하면 다음 줄로 넘어간다' },
     ],
-    verified: false,
+    verified: true,
   },
   {
     id: 'alert',
@@ -1193,7 +1193,7 @@ export const components: ComponentMeta[] = [
       { id: 'inside-list', title: '목록 안에 놓이는 경우', note: '항목마다 두지 않고 목록 위에 하나만 둔다' },
       { id: 'narrow-screen', title: '좁은 화면', note: '아이콘과 텍스트가 줄바꿈되어도 정렬은 유지된다' },
     ],
-    verified: false,
+    verified: true,
   },
   {
     id: 'toast',
@@ -1276,7 +1276,7 @@ export const components: ComponentMeta[] = [
       { id: 'error', title: '오류인 경우', note: '실패를 Toast로 알리되 반드시 확인해야 하는 오류는 Alert를 함께 쓴다' },
       { id: 'narrow-screen', title: '좁은 화면', note: '뷰포트 폭이 줄어들고 Toast는 그 폭을 채운다' },
     ],
-    verified: false,
+    verified: true,
   },
   {
     id: 'table',
@@ -1380,7 +1380,7 @@ export const components: ComponentMeta[] = [
       { id: 'missing-value', title: '값이 없는 칸', note: '빈칸으로 두지 않고 —로 값이 없음을 밝힌다' },
       { id: 'narrow-screen', title: '좁은 화면', note: '표 안에서 가로로 스크롤되고 첫 열은 고정된 채 남는다' },
     ],
-    verified: false,
+    verified: true,
   },
   {
     id: 'badge',
@@ -1460,7 +1460,7 @@ export const components: ComponentMeta[] = [
       { id: 'no-value', title: '값이 없는 경우', note: '배지를 생략하고 자리를 비운다' },
       { id: 'narrow-screen', title: '좁은 화면', note: '글자 크기를 줄이지 않고 줄바꿈으로 대응한다' },
     ],
-    verified: false,
+    verified: true,
   },
   {
     id: 'tooltip',
@@ -1523,7 +1523,7 @@ export const components: ComponentMeta[] = [
       { id: 'touch-device', title: '터치 기기', note: '호버가 없으므로 이름을 aria-label로도 함께 남긴다' },
       { id: 'narrow-screen', title: '좁은 화면', note: '트리거가 줄바꿈되어도 말풍선 위치는 트리거를 따라간다' },
     ],
-    verified: false,
+    verified: true,
   },
   {
     id: 'dialog',
@@ -1596,7 +1596,7 @@ export const components: ComponentMeta[] = [
       { id: 'stacked-dialogs', title: '겹쳐 열리는 경우', note: '안쪽 Dialog가 위에 쌓이고 닫으면 바깥 Dialog로 돌아간다' },
       { id: 'narrow-screen', title: '좁은 화면', note: '가장자리에 여백을 두고 너비를 채운다' },
     ],
-    verified: false,
+    verified: true,
   },
   {
     id: 'dropdown-menu',
@@ -1662,7 +1662,7 @@ export const components: ComponentMeta[] = [
       { id: 'destructive-only', title: '위험 항목만 있는 경우', note: '구분선 없이 항목 전체가 text-destructive를 쓴다' },
       { id: 'narrow-screen', title: '좁은 화면', note: '트리거가 줄어들지 않고 목록 너비는 트리거와 무관하게 유지된다' },
     ],
-    verified: false,
+    verified: true,
   },
   {
     id: 'avatar',
@@ -1743,7 +1743,7 @@ export const components: ComponentMeta[] = [
       { id: 'no-name', title: '이름이 없는 경우', note: '이니셜을 만들 수 없으므로 일반 사람 아이콘을 쓴다' },
       { id: 'narrow-screen', title: '좁은 화면', note: '크기가 줄지 않고 옆 글자가 줄바꿈된다' },
     ],
-    verified: false,
+    verified: true,
   },
 ]
 
