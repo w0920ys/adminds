@@ -133,7 +133,7 @@ export function StatePage() {
         </p>
       </DocSection>
 
-      <DocSection title="error 전시">
+      <DocSection title="오류 전시">
         <p className="text-muted-foreground text-xs">
           error는 버튼이 아니라 입력과 요청에 붙습니다. 버튼을 빨갛게 만드는 대신 실패한 필드와 실패한
           요청에 표시합니다.

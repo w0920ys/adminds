@@ -43,13 +43,13 @@ export function PropertyBlock({
         <div className="overflow-x-auto rounded-lg border">
           <table className="w-full text-left">
             <thead>
-              <tr className="text-muted-foreground text-2xs tracking-widest">
+              <tr className="text-muted-foreground text-xs">
                 <th scope="col" className="bg-surface sticky left-0 px-3 py-2 font-bold">
-                  {property.title.toUpperCase()}
+                  {property.title}
                 </th>
                 {cross.options.map((option) => (
                   <th key={option.value} scope="col" className="px-3 py-2 font-bold">
-                    {optionLabel(option).toUpperCase()}
+                    {optionLabel(option)}
                   </th>
                 ))}
               </tr>
@@ -63,7 +63,7 @@ export function PropertyBlock({
                   >
                     {optionLabel(option)}
                     {option.note && (
-                      <span className="text-muted-foreground block text-2xs font-normal">
+                      <span className="text-muted-foreground block text-xs font-normal">
                         {option.note}
                       </span>
                     )}
@@ -92,9 +92,7 @@ export function PropertyBlock({
         >
           {property.options.map((option) => (
             <div key={option.value} className="flex flex-col gap-2">
-              <p className="text-muted-foreground text-2xs font-bold tracking-widest">
-                {optionLabel(option).toUpperCase()}
-              </p>
+              <p className="text-muted-foreground text-xs font-bold">{optionLabel(option)}</p>
               <div
                 className={cn(
                   'flex min-h-10 items-center',
@@ -104,7 +102,7 @@ export function PropertyBlock({
                 {render({ ...base, [property.name]: option.value })}
               </div>
               {option.note && (
-                <p className="text-muted-foreground max-w-48 text-2xs">{option.note}</p>
+                <p className="text-muted-foreground max-w-48 text-xs">{option.note}</p>
               )}
             </div>
           ))}
