@@ -6,8 +6,12 @@ import { ButtonPage } from '@/routes/components/ButtonPage'
 import { ComponentsIndex } from '@/routes/components/ComponentsIndex'
 import { ColorPage } from '@/routes/foundations/ColorPage'
 import { FoundationsOverview } from '@/routes/foundations/FoundationsOverview'
+import { IconographyPage } from '@/routes/foundations/IconographyPage'
 import { SpacingPage } from '@/routes/foundations/SpacingPage'
+import { StatePage } from '@/routes/foundations/StatePage'
 import { TypographyPage } from '@/routes/foundations/TypographyPage'
+import { VoiceAndTonePage } from '@/routes/foundations/VoiceAndTonePage'
+import { WritingPage } from '@/routes/foundations/WritingPage'
 
 export const routes: RouteObject[] = [
   {
@@ -22,10 +26,10 @@ export const routes: RouteObject[] = [
       { path: 'foundations/color', element: <ColorPage /> },
       { path: 'foundations/typography', element: <TypographyPage /> },
       { path: 'foundations/spacing', element: <SpacingPage /> },
-      { path: 'foundations/iconography', element: <Placeholder title="Iconography" /> },
-      { path: 'foundations/state', element: <Placeholder title="State" /> },
-      { path: 'foundations/voice-and-tone', element: <Placeholder title="Voice and Tone" /> },
-      { path: 'foundations/writing', element: <Placeholder title="Writing" /> },
+      { path: 'foundations/iconography', element: <IconographyPage /> },
+      { path: 'foundations/state', element: <StatePage /> },
+      { path: 'foundations/voice-and-tone', element: <VoiceAndTonePage /> },
+      { path: 'foundations/writing', element: <WritingPage /> },
 
       {
         path: 'components',
