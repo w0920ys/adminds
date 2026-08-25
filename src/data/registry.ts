@@ -1265,6 +1265,110 @@ export const components: ComponentMeta[] = [
     verified: false,
   },
   {
+    id: 'table',
+    name: 'Table',
+    category: 'data-display',
+    status: 'stable',
+    addedIn: 'v0.8.0',
+    changedIn: 'v0.8.0',
+    purpose: '어드민의 중심 화면이다. 여러 행의 데이터를 칸으로 나누어 보이고, 고르거나 정렬하게 한다.',
+    anatomy: [
+      { part: 'header', label: 'Header', note: 'bg-surface. 열 이름을 담는 행. text-xs font-bold' },
+      { part: 'row', label: 'Row', note: '높이는 density가 정한다 — --spacing-row 또는 --spacing-row-compact' },
+      { part: 'cell', label: 'Cell', note: 'text-sm. 숫자 칸은 text-right에 tabular-nums' },
+      {
+        part: 'select-cell',
+        label: 'Select cell',
+        note: 'Checkbox를 그대로 재사용한다',
+        optional: true,
+      },
+      {
+        part: 'sort-indicator',
+        label: 'Sort indicator',
+        note: '정렬 가능한 열 이름 옆의 방향 아이콘. 누르면 정렬 방향이 바뀐다',
+        optional: true,
+      },
+    ],
+    /*
+     * 설계 문서는 state에 loading·empty를 함께 두었지만 코드로 옮기며
+     * 걷어냈다. default·hover·selected는 행 하나의 상호작용 상태라
+     * 격자 한 칸에 행 하나를 두면 그대로 보인다. loading과 empty는
+     * 행이 아니라 표 전체가 행 대신 무엇을 채우는지의 문제라 같은
+     * 격자에서 '한 축만 바꾼' 비교가 되지 않는다 — 격자 옆 칸은
+     * 여전히 행 하나인데 이 칸만 표 전체가 스켈레톤이나 빈 상태로
+     * 바뀌어 버린다. 설계 문서의 Cases에도 이미 '빈 목록'·'불러오는
+     * 중'이 예외 상황으로 따로 있으므로, 그 자리에서 표 전체를 실제
+     * 크기로 보인다 — 격자 한 칸보다 표 전체를 보여주는 자리가
+     * 정직하다. 같은 이유로 '빈 상태'도 anatomy 부위 목록에 두지
+     * 않는다 — 행이 있는 인스턴스와 함께 보일 수 없으니 부위가
+     * 아니라 상태다(Avatar의 image·fallback과 반대로, 이쪽은 상태
+     * 쪽을 anatomy에서 뺐다).
+     */
+    properties: [
+      {
+        name: 'density',
+        title: 'Density',
+        description: 'Foundations의 Spacing이 정한 밀도 축이다. 행 높이를 --spacing-row 계열 토큰으로 정한다.',
+        display: 'row',
+        options: [
+          { value: 'compact', note: '행이 많은 표. 목록·로그' },
+          { value: 'default', note: '기본. 담당자 사진처럼 세로 공간이 필요한 칸이 있을 때' },
+        ],
+      },
+      {
+        name: 'state',
+        title: 'State',
+        description: '행 하나의 상호작용 상태를 나타낸다. loading·empty는 행이 아니라 표 전체의 모습이라 이 축에 두지 않는다 — Cases에서 표 전체로 본다.',
+        display: 'grid',
+        options: [
+          { value: 'default' },
+          { value: 'hover', note: '포인터가 올라간 동안. 배경으로 나타낸다 — 행은 면이지 테두리 있는 컨트롤이 아니다' },
+          { value: 'selected', note: 'Checkbox로 고른 행. bg-accent' },
+        ],
+      },
+    ],
+    guidelines: [
+      {
+        id: 'numeric-align',
+        title: 'Numeric alignment',
+        body: '숫자는 오른쪽으로 정렬합니다. 자릿수가 다른 값도 한눈에 크기를 비교할 수 있습니다.',
+        do: ['금액·개수 같은 숫자 칸은 text-right로 정렬한다'],
+        dont: ['숫자 칸을 글자 칸과 같은 왼쪽 정렬로 두지 않는다'],
+      },
+      {
+        id: 'clickable-row-affordance',
+        title: 'Clickable row affordance',
+        body: '행 전체를 누를 수 있게 하려면 그 사실을 보입니다. 커서만 바뀌면 상세 화면으로 이동하는지 알기 어렵습니다.',
+        do: ['행 hover에서 배경이 바뀌는 것 외에 화살표 같은 이동 표시를 함께 둔다'],
+        dont: ['아무 표시 없이 행 전체를 누르면 다른 화면으로 이동하게 하지 않는다'],
+      },
+      {
+        id: 'horizontal-scroll-fixed-column',
+        title: 'Horizontal scroll, fixed column',
+        body: '열이 화면보다 넓으면 표 안에서 가로로 스크롤하고 첫 열은 고정합니다. 스크롤하는 동안에도 어느 행인지 놓치지 않아야 합니다.',
+        do: ['첫 열에 sticky를 켜 가로로 스크롤해도 행을 식별할 수 있게 한다'],
+        dont: ['첫 열까지 함께 흘러가게 두어 스크롤하면 어느 행인지 알 수 없게 하지 않는다'],
+      },
+    ],
+    usage: [
+      { id: 'user-list', title: '사용자 목록', note: '이름 옆에 Avatar, 상태 칸에 Badge를 쓴다' },
+      { id: 'order-history', title: '주문 내역', note: '금액은 오른쪽 정렬, 상태는 Badge로 보인다' },
+      { id: 'log', title: '로그', note: '시간순으로 쌓이는 단순한 표. 꾸밈 없이 글자만 나열한다' },
+      {
+        id: 'bulk-selection',
+        title: '선택과 대량 작업',
+        note: 'Checkbox로 고르고, 선택 개수와 대량 작업을 위에, Pagination을 아래에 둔다',
+      },
+    ],
+    cases: [
+      { id: 'empty-list', title: '빈 목록', note: '머리는 남기고 본문에 안내 문구 한 줄을 둔다' },
+      { id: 'loading', title: '불러오는 중', note: '행 자리에 스켈레톤을 두어 곧 채워질 것을 알린다' },
+      { id: 'missing-value', title: '값이 없는 칸', note: '빈칸으로 두지 않고 —로 값이 없음을 밝힌다' },
+      { id: 'narrow-screen', title: '좁은 화면', note: '표 안에서 가로로 스크롤되고 첫 열은 고정된 채 남는다' },
+    ],
+    verified: false,
+  },
+  {
     id: 'badge',
     name: 'Badge',
     category: 'data-display',

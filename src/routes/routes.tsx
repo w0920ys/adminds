@@ -16,6 +16,7 @@ import { PaginationPage } from '@/routes/components/PaginationPage'
 import { RadioPage } from '@/routes/components/RadioPage'
 import { SelectPage } from '@/routes/components/SelectPage'
 import { SwitchPage } from '@/routes/components/SwitchPage'
+import { TablePage } from '@/routes/components/TablePage'
 import { TabsPage } from '@/routes/components/TabsPage'
 import { TextareaPage } from '@/routes/components/TextareaPage'
 import { ToastPage } from '@/routes/components/ToastPage'
@@ -72,6 +73,7 @@ export const routes: RouteObject[] = [
           { path: 'toast', element: <ToastPage /> },
           { path: 'tooltip', element: <TooltipPage /> },
           { path: 'dialog', element: <DialogPage /> },
+          { path: 'table', element: <TablePage /> },
           { path: 'badge', element: <BadgePage /> },
           { path: 'avatar', element: <AvatarPage /> },
         ],
