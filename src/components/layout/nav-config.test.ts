@@ -73,14 +73,14 @@ describe('findAdjacent', () => {
 
 describe('라우트와 네비게이션의 일치', () => {
   it('LNB의 모든 경로가 라우터에 등록되어 있다', async () => {
-    const { registeredPaths } = await import('@/routes/router')
+    const { registeredPaths } = await import('@/routes/routes')
     for (const doc of docOrder) {
       expect(registeredPaths, `${doc.to} 라우트 누락`).toContain(doc.to)
     }
   })
 
   it('라우터에 LNB에 없는 문서 경로가 있지 않다', async () => {
-    const { registeredPaths } = await import('@/routes/router')
+    const { registeredPaths } = await import('@/routes/routes')
     const navPaths = new Set(docOrder.map((d) => d.to))
     for (const path of registeredPaths) {
       expect(navPaths, `${path}가 LNB에 없다`).toContain(path)
