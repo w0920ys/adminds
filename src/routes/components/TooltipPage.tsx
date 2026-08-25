@@ -2,33 +2,27 @@ import type { ReactNode } from 'react'
 import { Info, Pencil, Trash2 } from 'lucide-react'
 import { Bounds } from '@/components/docs/Bounds'
 import { ComponentPage } from '@/components/docs/ComponentPage'
-import type { RenderOptions } from '@/components/docs/PropertyBlock'
 import { Button } from '@/components/ui/button'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { getComponent } from '@/data/registry'
 import { Placeholder } from '@/routes/Placeholder'
 
-type Side = 'top' | 'right' | 'bottom' | 'left'
-
 /*
- * Properties·Playground 전용. Tooltip은 Select와 달리 모달이 아니므로
- * (react-tooltip 소스에 RemoveScroll·FocusScope·hideOthers가 없고
- * disableOutsidePointerEvents도 false로 고정되어 있다) 열어 두어도
- * body가 잠기거나 포커스가 갇히지 않는다. side의 네 값은 위치만
- * 다르므로 나란히 열어 두어야 비교가 된다 — 하나씩 호버해서 봐야 하면
- * top과 bottom을 한눈에 비교할 수 없다. defaultOpen은 여기서만 쓰고
- * Usage·Cases의 실제 사용 예는 진짜 호버로 연다.
+ * Playground 전용(Properties는 축이 없어 비어 있다). side는 열려야만
+ * 값이 갈리는 prop이라 defaultOpen으로 강제해 봤지만 Radix Tooltip은
+ * 열림 상태를 포인터·포커스가 쥐고 있어 유지되지 않았다 — 격자에
+ * 똑같이 생긴 트리거만 남고 말풍선은 뜨지 않았다. 실제 호버로 열리는
+ * 진짜 컴포넌트 하나만 보인다.
  */
-function renderTooltip(options: RenderOptions) {
-  const side = (options.side ?? 'top') as Side
+function renderTooltip() {
   return (
-    <Tooltip defaultOpen>
+    <Tooltip>
       <TooltipTrigger asChild>
-        <Button variant="outline" size="sm" className="mx-3">
+        <Button variant="outline" size="sm">
           담당자
         </Button>
       </TooltipTrigger>
-      <TooltipContent side={side}>홍길동</TooltipContent>
+      <TooltipContent>홍길동</TooltipContent>
     </Tooltip>
   )
 }
@@ -152,7 +146,7 @@ function renderExample(exampleId: string): ReactNode {
                 </Button>
               </span>
             </TooltipTrigger>
-            <TooltipContent>필수 항목을 먼저 채우세요</TooltipContent>
+            <TooltipContent side="right">필수 항목을 먼저 채우세요</TooltipContent>
           </Tooltip>
           <p className="text-muted-foreground text-xs">필수 항목을 먼저 채워야 게시할 수 있습니다</p>
         </div>
@@ -168,7 +162,7 @@ function renderExample(exampleId: string): ReactNode {
                 <Info size={13} />
               </button>
             </TooltipTrigger>
-            <TooltipContent>방문자 중 결제까지 이어진 비율입니다</TooltipContent>
+            <TooltipContent side="bottom">방문자 중 결제까지 이어진 비율입니다</TooltipContent>
           </Tooltip>
         </div>
       )
@@ -196,7 +190,7 @@ function renderExample(exampleId: string): ReactNode {
                 <Info />
               </Button>
             </TooltipTrigger>
-            <TooltipContent>화면 밖으로 나가면 반대쪽으로 뒤집힌다</TooltipContent>
+            <TooltipContent side="left">화면 밖으로 나가면 반대쪽으로 뒤집힌다</TooltipContent>
           </Tooltip>
         </Bounds>
       )

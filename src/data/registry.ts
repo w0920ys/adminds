@@ -1276,20 +1276,17 @@ export const components: ComponentMeta[] = [
         note: '호버하거나 포커스하면 트리거 주변에 말풍선이 뜬다. bg-popover, 테두리, radius-md, 쌓임 순서는 z-popover. 글자는 text-xs이고 트리거를 향한 작은 꼬리(Arrow)가 함께 붙는다. 표 헤더처럼 넘침이 있는 컨테이너 안에서도 잘리지 않도록 Portal로 렌더링된다',
       },
     ],
-    properties: [
-      {
-        name: 'side',
-        title: 'Side',
-        description: '말풍선이 트리거의 어느 쪽에 뜨는지 정한다. 네 값을 나란히 두어야 위치 차이가 비교된다.',
-        display: 'row',
-        options: [
-          { value: 'top', note: '기본. 트리거 위에 뜬다' },
-          { value: 'right', note: '트리거 오른쪽에 뜬다' },
-          { value: 'bottom', note: '트리거 아래에 뜬다' },
-          { value: 'left', note: '트리거 왼쪽에 뜬다' },
-        ],
-      },
-    ],
+    /*
+     * side는 트리거 자체에는 아무 시각 차이를 남기지 않는다 — 말풍선이
+     * 열려야만 값이 갈린다. defaultOpen으로 강제해 봤지만 Radix
+     * Tooltip은 열림 상태를 포인터·포커스가 쥐고 있어 유지되지
+     * 않았다(실측: 격자에 똑같이 생긴 트리거만 남고 말풍선은 0개).
+     * Select가 open을, Dropdown Menu가 open·align을 축에서 뺀 것과
+     * 같은 이유로 properties에 두지 않는다. side prop 자체는
+     * 컴포넌트에 그대로 있고 위치 차이는 Usage·Cases에서 실제
+     * 호버로 보인다.
+     */
+    properties: [],
     guidelines: [
       {
         id: 'icon-only-button',
