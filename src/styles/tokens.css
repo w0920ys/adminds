@@ -26,7 +26,15 @@
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);
   --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
+  /*
+   * 0.556이면 --muted(0.97) 위에서 4.34:1, Alert·Toast의 bg-destructive/10
+   * 탄 배경(가장 어두운 조합) 위에서는 3.96:1까지 떨어져 여러 곳에서 동시에
+   * 4.5:1에 못 미쳤다 — Avatar 대체 글자·Table 담당자 칸·Anatomy 번호 배지가
+   * 전부 이 토큰 하나를 물려받는다. 채도·색상은 그대로 두고 명도만 낮춰 가장
+   * 어두운 조합(destructive/10)에서도 간신히 4.5:1을 넘도록 잡았다 — 더
+   * 어둡게 하면 '덜 중요한 글자'라는 위계가 본문과 구별되지 않는다.
+   */
+  --muted-foreground: oklch(0.523 0 0);
   --accent: oklch(0.97 0 0);
   --accent-foreground: oklch(0.205 0 0);
   --destructive: oklch(0.577 0.245 27.325);
@@ -47,9 +55,10 @@
    * 원래 색을 그대로 글자에 쓰면 라이트 테마에서 대비가 4.5:1을 넘지
    * 못한다 — 채도(C)·색상(H)은 그대로 두고 명도(L)만 낮춰 각 색이 자기
    * 몫의 옅은 배경 위에서 4.5:1을 넉넉히 넘도록 다시 잡았다. neutral은
-   * 상태색이 아니라 무채색이지만 같은 칩 패턴(Badge)에 쓰이고 muted-foreground
-   * 그대로는 11px 굵은 글자에서 이 기준에 못 미쳐 따로 둔다 — muted-foreground
-   * 자체는 이 시스템 전역에서 쓰이므로 여기서 건드리지 않는다.
+   * 상태색이 아니라 무채색이지만 같은 칩 패턴(Badge)에 쓰인다. muted-foreground도
+   * 이제 라이트에서 명도를 낮췄지만(위 주석 참고) 그 값은 Alert·Toast의
+   * 더 어두운 탄 배경에 맞춘 것이라, Badge의 opaque --muted 배경 하나에만
+   * 맞춘 이 토큰과는 목표 배경이 달라 계속 따로 둔다.
    */
   --neutral-on-tint: oklch(0.542 0 0);
   --info-on-tint: oklch(0.525 0.118 264.376);
