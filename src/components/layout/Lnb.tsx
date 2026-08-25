@@ -1,6 +1,6 @@
 import { X } from 'lucide-react'
-import { NavLink, useLocation } from 'react-router'
-import { findSection } from '@/components/layout/nav-config'
+import { Link, NavLink, useLocation } from 'react-router'
+import { findSection, sections } from '@/components/layout/nav-config'
 import { currentRelease } from '@/data/releases'
 import { cn } from '@/lib/utils'
 
@@ -20,7 +20,7 @@ export function Lnb({ open, onClose }: { open: boolean; onClose: () => void }) {
       <aside
         className={cn(
           'bg-surface fixed inset-y-0 left-0 z-drawer flex w-60 flex-col border-r p-3 transition-transform',
-          'md:sticky md:top-14 md:h-[calc(100vh-3.5rem)] md:translate-x-0',
+          'md:h-full md:overflow-y-auto md:translate-x-0',
           open ? 'translate-x-0' : '-translate-x-full',
         )}
       >
@@ -35,6 +35,28 @@ export function Lnb({ open, onClose }: { open: boolean; onClose: () => void }) {
           >
             <X size={18} />
           </button>
+        </div>
+
+        <div className="mb-3 flex flex-col border-b pb-3 md:hidden">
+          <p className="text-muted-foreground mb-1.5 px-2 text-2xs font-bold tracking-widest">
+            전체 메뉴
+          </p>
+          {sections.map((item) => (
+            <Link
+              key={item.id}
+              to={item.to}
+              onClick={onClose}
+              aria-current={item.id === section.id ? 'page' : undefined}
+              className={cn(
+                'flex h-control items-center rounded-md px-2 text-sm',
+                item.id === section.id
+                  ? 'bg-accent text-accent-foreground font-semibold'
+                  : 'text-muted-foreground',
+              )}
+            >
+              {item.label}
+            </Link>
+          ))}
         </div>
 
         <nav className="mt-2 flex flex-col" aria-label={`${section.label} 문서 목록`}>

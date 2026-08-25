@@ -10,7 +10,7 @@ export function Gnb({ onMenuClick }: { onMenuClick: () => void }) {
   const active = findSection(pathname)
 
   return (
-    <header className="bg-surface/90 sticky top-0 z-sticky border-b backdrop-blur">
+    <header className="bg-surface/90 shrink-0 border-b backdrop-blur">
       <div className="flex h-14 items-center gap-2 px-4 md:px-6">
         <button className="md:hidden" onClick={onMenuClick} aria-label="메뉴 열기">
           <Menu size={20} />
