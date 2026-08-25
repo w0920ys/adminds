@@ -259,25 +259,19 @@ export function CheckboxPage() {
       meta={meta}
       render={renderCheckbox}
       preview={
-        <div className="flex flex-wrap items-center justify-center gap-8">
-          <Checkbox data-anatomy="box" aria-label="선택" />
-          <Checkbox data-anatomy="indicator" aria-label="선택" defaultChecked />
-          <label className="flex items-center gap-2 text-sm">
-            <Checkbox defaultChecked />
-            <span data-anatomy="label">마케팅 이메일 수신 동의</span>
-          </label>
-          <label className="flex items-start gap-2">
-            <span className="pt-0.5">
-              <Checkbox defaultChecked />
+        <label className="flex items-start gap-2">
+          <span className="pt-0.5">
+            <Checkbox data-anatomy="box" defaultChecked />
+          </span>
+          <span className="flex flex-col">
+            <span data-anatomy="label" className="text-sm">
+              자동 백업
             </span>
-            <span className="flex flex-col">
-              <span className="text-sm">자동 백업</span>
-              <span data-anatomy="description" className="text-muted-foreground text-xs">
-                매일 오전 3시에 백업을 실행합니다
-              </span>
+            <span data-anatomy="description" className="text-muted-foreground text-xs">
+              매일 오전 3시에 백업을 실행합니다
             </span>
-          </label>
-        </div>
+          </span>
+        </label>
       }
       renderGuidelineExample={renderGuidelineExample}
       renderExample={renderExample}

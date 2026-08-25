@@ -215,8 +215,11 @@ export const components: ComponentMeta[] = [
     purpose: '사용자가 한 줄짜리 값을 직접 입력하도록 한다. 여러 값 중 고르게 할 때는 Select를 쓴다.',
     anatomy: [
       { part: 'container', label: 'Container', note: '테두리는 border-input, 높이는 size 토큰, 모서리는 radius-md' },
-      { part: 'value', label: 'Value', note: '사용자가 입력한 값. text-sm' },
-      { part: 'placeholder', label: 'Placeholder', note: '입력 전 안내 문구. text-muted-foreground' },
+      {
+        part: 'value',
+        label: 'Value',
+        note: '사용자가 입력한 값. text-sm. 비어 있으면 이 자리에 자리표시자가 대신 보인다',
+      },
       {
         part: 'prefix-icon',
         label: 'Prefix Icon',
@@ -316,9 +319,8 @@ export const components: ComponentMeta[] = [
       {
         part: 'box',
         label: 'Box',
-        note: '4×4(16px), 꺼짐은 border-input, 켜짐은 bg-primary, 모서리는 radius-sm',
+        note: '4×4(16px), 꺼짐은 border-input, 켜짐은 bg-primary, 모서리는 radius-sm. 켜지거나 중간 상태면 안쪽에 Check 또는 Minus가 그려진다',
       },
-      { part: 'indicator', label: 'Indicator', note: 'lucide-react의 Check, 중간 상태는 Minus' },
       { part: 'label', label: 'Label', note: 'text-sm. 상자와 함께 눌리는 자리', optional: true },
       {
         part: 'description',

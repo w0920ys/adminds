@@ -212,21 +212,18 @@ export function InputPage() {
       meta={meta}
       render={renderInput}
       preview={
-        <div className="flex flex-wrap items-center justify-center gap-6">
-          <div className="relative" data-anatomy="container">
-            <Search
-              data-anatomy="prefix-icon"
-              aria-hidden
-              className="text-muted-foreground pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2"
-            />
-            <X
-              data-anatomy="suffix"
-              aria-hidden
-              className="text-muted-foreground pointer-events-none absolute top-1/2 right-3 size-4 -translate-y-1/2"
-            />
-            <Input data-anatomy="value" defaultValue="김민준" className="w-48 pr-9 pl-9" />
-          </div>
-          <Input data-anatomy="placeholder" placeholder="이름을 입력하세요" className="w-48" />
+        <div className="relative w-48" data-anatomy="container">
+          <Search
+            data-anatomy="prefix-icon"
+            aria-hidden
+            className="text-muted-foreground pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2"
+          />
+          <X
+            data-anatomy="suffix"
+            aria-hidden
+            className="text-muted-foreground pointer-events-none absolute top-1/2 right-3 size-4 -translate-y-1/2"
+          />
+          <Input data-anatomy="value" defaultValue="김민준" className="pr-9 pl-9" />
         </div>
       }
       renderGuidelineExample={renderGuidelineExample}
