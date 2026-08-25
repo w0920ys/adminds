@@ -128,7 +128,8 @@ export function TableOfContents() {
               onClick={(event) => {
                 event.preventDefault()
                 scrollToHeading(heading.id)
-                history.replaceState(null, '', `#${heading.id}`)
+                /* 라우터가 이 항목의 state에 자기 장부를 넣어 둔다. null로 덮으면 지워진다 */
+                history.replaceState(history.state, '', `#${heading.id}`)
               }}
               className={cn(
                 'block border-l py-1.5 text-sm',
