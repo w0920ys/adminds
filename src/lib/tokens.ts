@@ -24,12 +24,18 @@ export function parseTokenNames(cssText: string, prefix: string): string[] {
 /**
  * 현재 문서에서 토큰의 계산값을 실측한다.
  * 라이트/다크 어느 쪽이든 지금 적용된 값이 그대로 나온다.
+ *
+ * prefix를 주면 표시용 이름에서 그것을 떼어낸다. 정규식으로 추측하면
+ * --z-index-sticky 처럼 접두사가 여러 세그먼트인 경우를 틀리게 자른다.
  */
-export function readTokens(names: string[]): TokenRow[] {
+export function readTokens(names: string[], prefix?: string): TokenRow[] {
   const computed = getComputedStyle(document.documentElement)
   return names.map((cssVar) => ({
     cssVar,
-    name: cssVar.replace(/^--[a-z]+-/, ''),
+    name:
+      prefix && cssVar.startsWith(prefix)
+        ? cssVar.slice(prefix.length)
+        : cssVar.replace(/^--/, ''),
     value: computed.getPropertyValue(cssVar).trim(),
   }))
 }
