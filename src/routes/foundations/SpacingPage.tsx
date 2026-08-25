@@ -24,6 +24,14 @@ export function SpacingPage() {
       title="Spacing"
       description="간격은 4px 배수로만 씁니다. 어드민은 정보 밀도가 높아 임의 값이 하나 섞이면 정렬이 눈에 띄게 어긋납니다."
     >
+      <DocSection title="개요">
+        <p className="text-muted-foreground text-sm">
+          요소 사이 간격을 4px 배수 스케일로 정하고, 밀도에 따라 그 스케일을 어떻게 조절하는지
+          정합니다. 간격이 아닌 값 — 색이나 글자 크기 — 은 Color와 Typography에서 다룹니다.
+          컴포넌트나 레이아웃에 여백을 넣을 때 이 문서에서 값을 고릅니다.
+        </p>
+      </DocSection>
+
       <DocSection title="기본 스케일">
         <div className="flex flex-col gap-2 rounded-lg border p-4">
           {STEPS.map((step) => (

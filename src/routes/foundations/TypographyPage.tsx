@@ -23,6 +23,14 @@ export function TypographyPage() {
       title="Typography"
       description="어드민은 한 화면에 많은 정보를 담습니다. 크기를 늘리기보다 굵기와 색으로 위계를 만드는 편이 밀도를 지키면서 읽히게 합니다."
     >
+      <DocSection title="개요">
+        <p className="text-muted-foreground text-sm">
+          글자 크기와 굵기로 정보 위계를 표현하는 규칙을 정합니다. 글자에 쓰는 색은 Color에서,
+          글줄이나 요소 사이의 여백은 Spacing에서 다룹니다. 화면에 새 텍스트를 넣을 때 어떤
+          크기와 굵기를 쓸지 이 문서에서 찾습니다.
+        </p>
+      </DocSection>
+
       <DocSection title="크기 스케일">
         <div className="divide-y rounded-lg border">
           {SCALE.map((item) => (

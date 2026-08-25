@@ -88,6 +88,15 @@ export function StatePage() {
       title="State"
       description="상태는 컴포넌트마다 다시 정하지 않고 시스템 전체에서 같은 뜻으로 씁니다. 어드민은 같은 버튼을 하루에 수십 번 누르는 화면이라, 상태가 화면마다 다르게 보이면 매번 다시 확인하게 됩니다."
     >
+      <DocSection title="개요">
+        <p className="text-muted-foreground text-sm">
+          hover·focus·disabled 같은 상호작용 상태의 종류와 표현 규칙을 정합니다. 상태를
+          표현하는 색상값 자체는 Color에서, 상태 전환에 쓰는 문구는 Writing에서 다룹니다.
+          컴포넌트에 새 상태를 추가하거나 상태 표현이 화면마다 다르게 보일 때 이 문서를
+          확인합니다.
+        </p>
+      </DocSection>
+
       <DocSection title="상태 목록">
         <div className="divide-y rounded-lg border">
           {STATES.map((state) => (

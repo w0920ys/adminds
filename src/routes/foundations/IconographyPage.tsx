@@ -46,6 +46,14 @@ export function IconographyPage() {
       title="Iconography"
       description="아이콘은 글자를 대신하지 않습니다. 이미 읽은 라벨을 다음에 더 빨리 찾게 해주는 표시입니다. 그래서 같은 뜻에 화면마다 다른 아이콘을 쓰면 읽는 속도가 오히려 느려집니다."
     >
+      <DocSection title="개요">
+        <p className="text-muted-foreground text-sm">
+          아이콘의 크기와 스트로크, 뜻과 아이콘을 짝짓는 규칙을 정합니다. 아이콘 옆에 붙는
+          문구의 표기는 Writing에서, 아이콘 주변 여백은 Spacing에서 다룹니다. 새 아이콘을
+          고르거나 기존 아이콘의 뜻이 화면마다 다르게 읽힐 때 이 문서를 봅니다.
+        </p>
+      </DocSection>
+
       <DocSection title="크기">
         <p className="text-muted-foreground text-xs">
           크기는 아이콘이 아니라 옆에 붙는 글자가 정합니다. 아래 다섯 단계 밖의 값은 쓰지 않습니다.

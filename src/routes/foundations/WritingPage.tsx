@@ -101,6 +101,14 @@ export function WritingPage() {
       title="Writing"
       description="화면에 들어가는 문구를 매번 새로 고민하지 않기 위한 규칙입니다. 판단이 갈릴 만한 자리에서는 이 시스템의 표기를 하나로 정해 두었으니, 고민이 생기면 아래 표기 규칙을 먼저 봅니다."
     >
+      <DocSection title="개요">
+        <p className="text-muted-foreground text-sm">
+          버튼 라벨, 에러 메시지 같은 실제 문구의 표기 규칙을 정합니다. 어떤 태도와 톤으로
+          말할지는 Voice and Tone에서 다루고, 이 문서는 그 톤을 구체적 문장으로 옮기는 표기만
+          다룹니다. 화면에 넣을 문구의 정확한 표현이 궁금할 때 이 문서를 찾습니다.
+        </p>
+      </DocSection>
+
       <DocSection title="버튼 라벨">
         <p className="text-muted-foreground text-xs">
           동사로 시작하고 누른 뒤의 결과를 말합니다. 다이얼로그의 확인 버튼은 제목에 쓴 동사와 같은 낱말을

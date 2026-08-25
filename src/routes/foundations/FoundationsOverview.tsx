@@ -3,7 +3,10 @@ import { DocPage } from '@/components/docs/DocPage'
 import { sections } from '@/components/layout/nav-config'
 
 const NOTES: Record<string, string> = {
+  '/foundations/design-token': '토큰의 층과 이름 규칙, 전체 목록',
   '/foundations/color': '역할 기반 시맨틱 색 토큰과 라이트·다크 대응',
+  '/foundations/color-role': '역할 사이의 위계와 짝',
+  '/foundations/palette': '원시 색 스케일과 시맨틱 연결',
   '/foundations/typography': '크기 스케일과 굵기, 정보 위계',
   '/foundations/spacing': '4px 기반 간격과 어드민 밀도 축',
   '/foundations/iconography': '아이콘 크기·스트로크·사용 규칙',
@@ -23,8 +26,11 @@ export function FoundationsOverview() {
     >
       <ul className="grid gap-3 sm:grid-cols-2">
         {pages.map((page) => (
-          <li key={page.to}>
-            <Link to={page.to} className="hover:bg-accent/50 block rounded-lg border p-4">
+          <li key={page.to} className="h-full">
+            <Link
+              to={page.to}
+              className="hover:bg-accent/50 flex h-full flex-col rounded-lg border p-4"
+            >
               <strong className="text-sm">{page.label}</strong>
               <p className="text-muted-foreground mt-1 text-xs">{NOTES[page.to]}</p>
             </Link>

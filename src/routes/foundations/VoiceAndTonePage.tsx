@@ -70,6 +70,14 @@ export function VoiceAndTonePage() {
       title="Voice and Tone"
       description="이 어드민은 운영 도구입니다. 사용자는 무언가를 하러 왔고, 문장은 그 일을 방해하지 않는 선에서 필요한 것만 말합니다. 목소리는 어느 화면에서나 같고, 톤만 상황에 따라 조절합니다."
     >
+      <DocSection title="개요">
+        <p className="text-muted-foreground text-sm">
+          이 시스템이 사용자에게 말하는 태도와 상황별 톤의 원칙을 정합니다. 문장 부호나 종결
+          어미 같은 실제 표기 규칙은 Writing에서 다룹니다. 새 문구를 쓰기 전에 어떤 태도로
+          말할지 정하고 싶을 때 이 문서를 봅니다.
+        </p>
+      </DocSection>
+
       <DocSection title="원칙">
         <div className="grid gap-3 md:grid-cols-3">
           {PRINCIPLES.map((principle, index) => (

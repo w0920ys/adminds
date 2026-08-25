@@ -34,6 +34,14 @@ export function ColorPage() {
       title="Color"
       description="색은 blue-500 같은 원시 이름이 아니라 primary·destructive 같은 역할 이름으로 씁니다. 역할로 쓰면 라이트·다크 전환과 브랜드 교체가 토큰 한 곳에서 끝납니다."
     >
+      <DocSection title="개요">
+        <p className="text-muted-foreground text-sm">
+          역할 이름으로 색을 쓰는 규칙을 정합니다. 개별 색상값의 원본은 Palette에서, 역할 사이의
+          위계는 Color Role에서 다룹니다. 새 색이 필요하다고 느낄 때 먼저 이 문서에서 맞는 역할이
+          있는지 봅니다.
+        </p>
+      </DocSection>
+
       <DocSection title="표면">
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
           {surfaces.map((row) => <Swatch key={row.cssVar} row={row} />)}
