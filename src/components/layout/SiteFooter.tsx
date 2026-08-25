@@ -6,7 +6,8 @@ const EMAIL = 'w0920ys@gmail.com'
 
 export function SiteFooter() {
   return (
-    <footer className="mt-24 flex flex-col gap-6 border-t pt-8">
+    // main 안에 있어 암묵적 contentinfo 역할을 잃으므로 역할을 명시해 랜드마크로 남긴다
+    <footer role="contentinfo" className="mt-24 flex flex-col gap-6 border-t pt-8">
       <div className="flex flex-wrap gap-x-6 gap-y-3">
         <nav aria-label="섹션 이동" className="flex flex-wrap gap-x-4 gap-y-2">
           {sections.map((section) => (
@@ -37,7 +38,7 @@ export function SiteFooter() {
         </nav>
       </div>
       <p className="text-muted-foreground text-2xs">
-        © 2026 sunwooyoon. All rights reserved.
+        © {new Date().getFullYear()} sunwooyoon. All rights reserved.
       </p>
     </footer>
   )
