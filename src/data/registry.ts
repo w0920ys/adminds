@@ -122,10 +122,10 @@ export const components: ComponentMeta[] = [
         description: '아이콘과 라벨의 배치를 정한다. 아이콘은 라벨의 뜻을 보강할 때만 쓴다.',
         display: 'row',
         options: [
-          { value: 'label-only', label: '라벨만', note: '기본' },
-          { value: 'icon-leading', label: '앞 아이콘', note: '동작의 종류를 아이콘으로 먼저 알릴 때' },
-          { value: 'icon-trailing', label: '뒤 아이콘', note: '이동·펼침처럼 결과를 암시할 때' },
-          { value: 'icon-only', label: '아이콘만', note: '자리가 좁을 때. aria-label이 반드시 필요' },
+          { value: 'label-only', note: '기본' },
+          { value: 'icon-leading', note: '동작의 종류를 아이콘으로 먼저 알릴 때' },
+          { value: 'icon-trailing', note: '이동·펼침처럼 결과를 암시할 때' },
+          { value: 'icon-only', note: '자리가 좁을 때. aria-label이 반드시 필요' },
         ],
       },
       {
@@ -134,8 +134,8 @@ export const components: ComponentMeta[] = [
         description: '버튼이 차지하는 가로 폭을 정한다.',
         display: 'row',
         options: [
-          { value: 'hug', label: '내용에 맞춤', note: '기본' },
-          { value: 'fill', label: '가득 채움', note: '모바일 하단 고정 동작, 좁은 폼' },
+          { value: 'hug', note: '기본' },
+          { value: 'fill', note: '모바일 하단 고정 동작, 좁은 폼' },
         ],
       },
       {
