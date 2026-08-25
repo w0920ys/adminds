@@ -1169,9 +1169,16 @@ export const components: ComponentMeta[] = [
         do: ['가장 중요한 알림 하나만 남긴다'],
         dont: ['같은 화면에 Alert를 여러 개 쌓아두지 않는다'],
       },
+      {
+        id: 'live-announcement',
+        title: 'Live announcement',
+        body: "live prop이 role을 정합니다. 기본값 'off'는 role을 두지 않고, 'assertive'는 alert 역할, 'polite'는 status 역할을 얹습니다. Alert 대부분은 화면에 계속 머무르는 정적인 배너라 실시간 알림이 필요 없습니다.",
+        do: ["사용자의 행동 직후 결과를 즉시 알려야 할 때만 'assertive'나 'polite'를 켠다"],
+        dont: ['권한 안내·점검 공지처럼 계속 머무르는 배너에 live를 켜 스크린 리더의 흐름을 끊지 않는다'],
+      },
     ],
     usage: [
-      { id: 'save-result', title: '저장 결과', note: '성공했을 때 화면 위쪽에 보인다' },
+      { id: 'save-result', title: '저장 결과', note: '성공했을 때 화면 위쪽에 보인다. live="assertive"로 즉시 알린다' },
       { id: 'permission-notice', title: '권한 안내', note: '해당 기능을 쓸 수 없는 이유를 알린다' },
       { id: 'expiry-notice', title: '만료 예고', note: '만료 전에 무엇을 해야 하는지 알린다' },
       { id: 'maintenance-notice', title: '점검 공지', note: '점검 시간과 영향 범위를 알린다' },

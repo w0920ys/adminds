@@ -26,13 +26,36 @@ const alertVariants = cva(
   },
 )
 
+/*
+ * role="alert"는 aria-live="assertive"를 뜻한다 — 마운트되는 순간 스크린
+ * 리더가 하던 일을 끊고 읽는다. Alert 대부분은 화면에 계속 머무르는
+ * 정적인 배너(권한 안내, 점검 공지)이고 그런 곳에는 실시간 알림이 전혀
+ * 어울리지 않는다. 그래서 기본값은 role을 아예 두지 않는 'off'다.
+ * 저장 완료처럼 사용자의 행동 직후에 결과를 즉시 알려야 하는 예외적인
+ * 경우에만 호출한 쪽이 'assertive'(role="alert")나 'polite'(role="status")를
+ * 골라 켠다.
+ */
+type AlertLive = 'assertive' | 'polite' | 'off'
+
+const ALERT_LIVE_ROLE: Record<AlertLive, React.AriaRole | undefined> = {
+  assertive: 'alert',
+  polite: 'status',
+  off: undefined,
+}
+
 function Alert({
   className,
   variant,
+  live = 'off',
   ...props
-}: React.ComponentProps<'div'> & VariantProps<typeof alertVariants>) {
+}: React.ComponentProps<'div'> & VariantProps<typeof alertVariants> & { live?: AlertLive }) {
   return (
-    <div role="alert" data-slot="alert" className={cn(alertVariants({ variant, className }))} {...props} />
+    <div
+      role={ALERT_LIVE_ROLE[live]}
+      data-slot="alert"
+      className={cn(alertVariants({ variant, className }))}
+      {...props}
+    />
   )
 }
 

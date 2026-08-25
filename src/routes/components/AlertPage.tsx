@@ -136,7 +136,7 @@ function renderExample(exampleId: string): ReactNode {
   switch (exampleId) {
     case 'save-result':
       return (
-        <Alert variant="success" className="w-72">
+        <Alert variant="success" className="w-72" live="assertive">
           <CheckCircle2 aria-hidden />
           <div className="flex flex-1 flex-col gap-1">
             <AlertTitle>변경 사항이 저장되었습니다</AlertTitle>
