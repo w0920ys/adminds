@@ -23,24 +23,20 @@ type Placed = {
 const LABEL_SLOT = 56
 /** 무대 가장자리에서 라벨까지의 여백 */
 const GUTTER = 12
-/** 이 폭 미만에서는 라벨을 놓을 자리가 없어 지시선을 그리지 않는다 */
+/** 이 폭 미만에서는 라벨을 놓을 자리가 없어 번호 배지로 대신한다 */
 const MIN_WIDTH_FOR_LINES = 640
 
 export function Anatomy({ meta, preview }: { meta: ComponentMeta; preview: ReactNode }) {
   const stageRef = useRef<HTMLDivElement>(null)
   const [placed, setPlaced] = useState<Placed[]>([])
   const [size, setSize] = useState({ width: 0, height: 0 })
+  const [narrow, setNarrow] = useState(false)
   const [active, setActive] = useState<string | null>(null)
 
   const measure = useCallback(() => {
     const stage = stageRef.current
     if (!stage) return
     const stageBox = stage.getBoundingClientRect()
-
-    if (stageBox.width < MIN_WIDTH_FOR_LINES) {
-      setPlaced([])
-      return
-    }
 
     const found = meta.anatomy
       .map((part, index) => {
@@ -60,6 +56,16 @@ export function Anatomy({ meta, preview }: { meta: ComponentMeta; preview: React
       })
       .filter((item): item is Omit<Placed, 'side' | 'labelY'> => item !== null)
 
+    const isNarrow = stageBox.width < MIN_WIDTH_FOR_LINES
+    setNarrow(isNarrow)
+    setSize({ width: stageBox.width, height: stageBox.height })
+
+    if (isNarrow) {
+      /** 좁은 화면에서는 지시선 대신 부위 위에 번호 배지를 올린다 */
+      setPlaced(found.map((item) => ({ ...item, side: 'left' as const, labelY: 0 })))
+      return
+    }
+
     const mid = stageBox.width / 2
     const sided = found.map((item) => ({
       ...item,
@@ -78,7 +84,6 @@ export function Anatomy({ meta, preview }: { meta: ComponentMeta; preview: React
       group.forEach((item, i) => next.push({ ...item, labelY: start + i * LABEL_SLOT }))
     }
 
-    setSize({ width: stageBox.width, height: stageBox.height })
     setPlaced(next.sort((a, b) => a.index - b.index))
   }, [meta])
 
@@ -94,6 +99,9 @@ export function Anatomy({ meta, preview }: { meta: ComponentMeta; preview: React
     return () => observer.disconnect()
   }, [measure])
 
+  /** 선택된 부위가 있으면 그것만 그린다. 흐리게 두면 무엇을 가리키는지 흐려진다 */
+  const shown = active === null ? placed : placed.filter((item) => item.part.part === active)
+
   return (
     <div className="flex flex-col gap-5">
       <div
@@ -102,37 +110,29 @@ export function Anatomy({ meta, preview }: { meta: ComponentMeta; preview: React
       >
         <div className="grid min-h-56 place-items-center px-6 py-12 sm:px-44">{preview}</div>
 
-        {placed.length > 0 && (
+        {shown.length > 0 && !narrow && (
           <>
             <svg
-              className="pointer-events-none absolute inset-0"
+              className="pointer-events-none absolute inset-0 text-annotation"
               width={size.width}
               height={size.height}
               aria-hidden
             >
-              {placed.map((item) => {
+              {shown.map((item) => {
                 const cy = item.box.y + item.box.height / 2
                 const edgeX = item.side === 'left' ? item.box.x : item.box.x + item.box.width
-                const anchorX =
-                  item.side === 'left' ? GUTTER + 140 : size.width - GUTTER - 140
+                const anchorX = item.side === 'left' ? GUTTER + 140 : size.width - GUTTER - 140
                 const bendX = (anchorX + edgeX) / 2
                 const isActive = active === item.part.part
-                const isDimmed = active !== null && !isActive
                 return (
-                  <g
-                    key={item.part.part}
-                    className={cn(
-                      isActive ? 'text-primary' : 'text-muted-foreground',
-                      isDimmed && 'opacity-20',
-                    )}
-                  >
+                  <g key={item.part.part}>
                     <polyline
                       points={`${anchorX},${item.labelY} ${bendX},${item.labelY} ${bendX},${cy} ${edgeX},${cy}`}
                       fill="none"
                       stroke="currentColor"
-                      strokeWidth={isActive ? 1.5 : 1}
+                      strokeWidth={isActive ? 1.25 : 0.75}
                     />
-                    <circle cx={edgeX} cy={cy} r="2.5" fill="currentColor" />
+                    <circle cx={edgeX} cy={cy} r="2" fill="currentColor" />
                     {isActive && (
                       <rect
                         x={item.box.x - 4}
@@ -142,7 +142,7 @@ export function Anatomy({ meta, preview }: { meta: ComponentMeta; preview: React
                         rx="5"
                         fill="none"
                         stroke="currentColor"
-                        strokeWidth="1.5"
+                        strokeWidth="1.25"
                       />
                     )}
                   </g>
@@ -151,35 +151,40 @@ export function Anatomy({ meta, preview }: { meta: ComponentMeta; preview: React
             </svg>
 
             <div aria-hidden className="contents">
-              {placed.map((item) => {
-                const isActive = active === item.part.part
-                const isDimmed = active !== null && !isActive
-                return (
-                  <div
-                    key={item.part.part}
-                    className={cn(
-                      'pointer-events-none absolute w-32 -translate-y-1/2',
-                      item.side === 'left' ? 'text-right' : 'text-left',
-                      isDimmed && 'opacity-20',
-                    )}
-                    style={{
-                      top: item.labelY,
-                      [item.side]: GUTTER,
-                    }}
-                  >
-                    <strong
-                      className={cn('block text-xs', isActive ? 'text-primary' : undefined)}
-                    >
-                      {item.part.label}
-                    </strong>
-                    {item.part.optional && (
-                      <span className="text-muted-foreground text-2xs">(Optional)</span>
-                    )}
-                  </div>
-                )
-              })}
+              {shown.map((item) => (
+                <div
+                  key={item.part.part}
+                  className={cn(
+                    'text-annotation pointer-events-none absolute w-32 -translate-y-1/2',
+                    item.side === 'left' ? 'text-right' : 'text-left',
+                  )}
+                  style={{ top: item.labelY, [item.side]: GUTTER }}
+                >
+                  <strong className="block text-xs font-medium">{item.part.label}</strong>
+                  {item.part.optional && <span className="text-2xs">(Optional)</span>}
+                </div>
+              ))}
             </div>
           </>
+        )}
+
+        {shown.length > 0 && narrow && (
+          <div aria-hidden className="contents">
+            {shown.map((item) => (
+              <span
+                key={item.part.part}
+                className={cn(
+                  'absolute grid size-5 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full text-2xs font-bold',
+                  active === item.part.part
+                    ? 'bg-annotation text-background'
+                    : 'bg-annotation-muted text-background',
+                )}
+                style={{ left: item.box.x + item.box.width / 2, top: item.box.y }}
+              >
+                {item.index + 1}
+              </span>
+            ))}
+          </div>
         )}
       </div>
 
@@ -202,7 +207,7 @@ export function Anatomy({ meta, preview }: { meta: ComponentMeta; preview: React
                   className={cn(
                     'mt-0.5 grid size-5 shrink-0 place-items-center rounded-full text-2xs font-bold',
                     isActive
-                      ? 'bg-primary text-primary-foreground'
+                      ? 'bg-annotation text-background'
                       : 'bg-muted text-muted-foreground',
                   )}
                 >
