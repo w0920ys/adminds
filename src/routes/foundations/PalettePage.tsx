@@ -272,6 +272,12 @@ export function PalettePage() {
           이 표도 따라 바뀝니다. 차이가 0이면 그 원시 값을 그대로 쓴 것이고, 차이가 크면 팔레트
           밖에서 온 색이라는 뜻입니다. 알파가 섞인 토큰은 알파를 뺀 색으로 비교합니다.
         </p>
+        <p className="text-muted-foreground text-sm">
+          차이는 RGB 좌표 사이의 거리입니다. 사람이 느끼는 색 차이와 정확히 비례하지 않으므로
+          두 값의 크기를 견주는 잣대로 쓰지 않고, 가장 가까운 원시 값을 찾는 실마리로만 씁니다.
+          같은 이유로 차이가 0이 아닌 대응은 그 색이 팔레트의 어느 근처에서 왔는지 알려줄 뿐,
+          그 원시 값으로 바꿔도 된다는 뜻은 아닙니다.
+        </p>
         <div className="overflow-x-auto rounded-lg border">
           <table className="w-full text-left text-sm">
             <thead>

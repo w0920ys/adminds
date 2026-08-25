@@ -18,11 +18,21 @@ export function toHex(color: string): string {
     canvas.height = 1
     const ctx = canvas.getContext('2d', { willReadFrequently: true })
     if (!ctx) return ''
-    ctx.clearRect(0, 0, 1, 1)
+
+    /*
+     * 해석하지 못한 값은 fillStyle 대입이 무시되고 이전 값이 남는다.
+     * 서로 다른 두 초기값에서 각각 대입해 결과가 갈리면 해석되지 않은 것이다.
+     */
+    ctx.fillStyle = '#000000'
     ctx.fillStyle = color
+    const fromBlack = ctx.fillStyle
+    ctx.fillStyle = '#ffffff'
+    ctx.fillStyle = color
+    if (fromBlack !== ctx.fillStyle) return ''
+
+    ctx.clearRect(0, 0, 1, 1)
     ctx.fillRect(0, 0, 1, 1)
     const [r, g, b, a] = ctx.getImageData(0, 0, 1, 1).data
-    /* 브라우저가 해석하지 못한 색은 칠해지지 않아 알파가 0으로 남는다 */
     if (a === 0) return ''
     return rgbToHex(r, g, b)
   } catch {

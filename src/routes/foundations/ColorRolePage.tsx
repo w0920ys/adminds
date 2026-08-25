@@ -55,7 +55,7 @@ const BRANCHES: { id: string; title: string; lead: string }[] = [
   {
     id: 'doc',
     title: '문서 전용',
-    lead: '이 문서 사이트에서 주석을 그릴 때만 씁니다. 제품 UI의 어떤 역할도 맡지 않으므로 위 다섯 갈래에 넣지 않고, 컴포넌트에서는 쓰지 않습니다.',
+    lead: '이 문서 사이트에서 주석을 그릴 때만 씁니다. 제품 UI의 어떤 역할도 맡지 않으므로 앞의 갈래들과 나란히 놓고 고르지 않고, 컴포넌트에서는 쓰지 않습니다.',
   },
 ]
 
@@ -179,7 +179,7 @@ export function ColorRolePage() {
   return (
     <DocPage
       title="Color Role"
-      description="색 토큰을 다섯 갈래로 나누고 갈래 사이의 위계를 정합니다. 어느 색을 쓸지 고민하기 전에, 그 색이 무슨 역할을 맡는지부터 정합니다."
+      description={`색 토큰을 ${BRANCHES.length}개 갈래로 나누고 갈래 사이의 위계를 정합니다. 어느 색을 쓸지 고민하기 전에, 그 색이 무슨 역할을 맡는지부터 정합니다.`}
     >
       <DocSection title="개요">
         <p className="text-muted-foreground text-sm">
@@ -198,7 +198,7 @@ export function ColorRolePage() {
         </p>
       </DocSection>
 
-      <DocSection title="다섯 갈래">
+      <DocSection title={`${BRANCHES.length}개 갈래`}>
         <p className="text-muted-foreground text-sm">
           새 색을 어느 갈래에 넣을지는 아래 질문을 위에서부터 던져 답이 나오는 곳에서 멈추면
           정해집니다. 순서가 중요합니다 — 삭제 버튼의 글자색은 상태이기 전에 전경이고,
@@ -211,6 +211,11 @@ export function ColorRolePage() {
             </li>
           ))}
         </ol>
+        <p className="text-muted-foreground text-sm">
+          이 절차는 제품 UI에 쓰는 색만 가릅니다. 마지막 갈래인 문서 전용은 절차에 걸리지 않는
+          예외이고, 이 문서 사이트에서 주석을 그릴 때만 씁니다. 목록에 함께 두는 이유는 그
+          토큰이 조용히 사라지지 않게 하기 위해서입니다.
+        </p>
         <div className="flex flex-col gap-3">
           {BRANCHES.map((branch) => {
             const members = rows.filter((row) => classify(row.name) === branch.id)
