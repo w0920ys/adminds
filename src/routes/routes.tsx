@@ -5,6 +5,7 @@ import { Placeholder } from '@/routes/Placeholder'
 import { ButtonPage } from '@/routes/components/ButtonPage'
 import { ComponentsIndex } from '@/routes/components/ComponentsIndex'
 import { ColorPage } from '@/routes/foundations/ColorPage'
+import { DesignTokenPage } from '@/routes/foundations/DesignTokenPage'
 import { FoundationsOverview } from '@/routes/foundations/FoundationsOverview'
 import { IconographyPage } from '@/routes/foundations/IconographyPage'
 import { SpacingPage } from '@/routes/foundations/SpacingPage'
@@ -23,7 +24,7 @@ export const routes: RouteObject[] = [
       { path: 'get-started/principles', element: <Placeholder title="원칙" /> },
 
       { path: 'foundations', element: <FoundationsOverview /> },
-      { path: 'foundations/design-token', element: <Placeholder title="Design Token" /> },
+      { path: 'foundations/design-token', element: <DesignTokenPage /> },
       { path: 'foundations/color', element: <ColorPage /> },
       { path: 'foundations/color-role', element: <Placeholder title="Color Role" /> },
       { path: 'foundations/palette', element: <Placeholder title="Palette" /> },

@@ -1,3 +1,4 @@
+import { CopyValue } from '@/components/docs/CopyValue'
 import type { TokenRow } from '@/lib/tokens'
 
 export function TokenTable({ rows }: { rows: TokenRow[] }) {
@@ -15,9 +16,16 @@ export function TokenTable({ rows }: { rows: TokenRow[] }) {
           {rows.map((row) => (
             <tr key={row.cssVar}>
               <th scope="row" className="border-t px-3 py-2 font-medium">{row.name}</th>
-              <td className="text-muted-foreground border-t px-3 py-2">{row.cssVar}</td>
-              <td className="text-muted-foreground border-t px-3 py-2">
-                {row.value || '(정의되지 않음)'}
+              <td className="text-muted-foreground border-t px-1.5 py-1">
+                <CopyValue value={row.cssVar} />
+              </td>
+              <td className="text-muted-foreground border-t px-1.5 py-1">
+                {/* 값이 없으면 복사할 것도 없으므로 버튼을 두지 않는다 */}
+                {row.value ? (
+                  <CopyValue value={row.value} />
+                ) : (
+                  <span className="px-1.5 py-0.5">(정의되지 않음)</span>
+                )}
               </td>
             </tr>
           ))}
