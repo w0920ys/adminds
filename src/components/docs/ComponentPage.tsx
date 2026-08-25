@@ -38,17 +38,21 @@ export function ComponentPage({
   renderExample,
 }: ComponentPageProps) {
   return (
-    <DocPage title={meta.name} description={meta.purpose}>
-      <div className="-mt-6 flex flex-wrap items-center gap-2">
-        <span className={cn('rounded px-2 py-0.5 text-2xs font-bold', STATUS_STYLE[meta.status])}>
-          {meta.status}
-        </span>
-        <span className="text-muted-foreground text-2xs">
-          {meta.addedIn}에 추가 · {meta.changedIn}에서 마지막 변경
-          {meta.verified ? ' · 검증 완료' : ' · 검증 필요'}
-        </span>
-      </div>
-
+    <DocPage
+      title={meta.name}
+      description={meta.purpose}
+      meta={
+        <div className="flex flex-wrap items-center gap-2">
+          <span className={cn('rounded px-2 py-0.5 text-2xs font-bold', STATUS_STYLE[meta.status])}>
+            {meta.status}
+          </span>
+          <span className="text-muted-foreground text-2xs">
+            {meta.addedIn}에 추가 · {meta.changedIn}에서 마지막 변경
+            {meta.verified ? ' · 검증 완료' : ' · 검증 필요'}
+          </span>
+        </div>
+      }
+    >
       <DocSection title="Anatomy">
         <Anatomy meta={meta} preview={preview} />
       </DocSection>

@@ -4,10 +4,13 @@ import { HeadingAnchor } from '@/components/docs/HeadingAnchor'
 export function DocPage({
   title,
   description,
+  meta,
   children,
 }: {
   title: string
   description?: string
+  /** 제목 아래에 붙는 짧은 표시. 상태 배지처럼 이 문서 자체를 설명하는 것을 둔다 */
+  meta?: ReactNode
   children: ReactNode
 }) {
   return (
@@ -15,6 +18,7 @@ export function DocPage({
       <header className="flex flex-col gap-4">
         <h1 className="text-3xl font-bold tracking-tight">{title}</h1>
         {description && <p className="text-muted-foreground text-base">{description}</p>}
+        {meta}
       </header>
       {children}
     </article>
