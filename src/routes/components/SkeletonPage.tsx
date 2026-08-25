@@ -6,6 +6,7 @@ import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { getComponent } from '@/data/registry'
+import { cn } from '@/lib/utils'
 import { Placeholder } from '@/routes/Placeholder'
 
 type SkeletonShape = NonNullable<ComponentProps<typeof Skeleton>['shape']>
@@ -24,6 +25,14 @@ function renderSkeleton(options: RenderOptions) {
  * Separator의 SeparatorPage와 같은 이유다. 나머지는 모두 이미 있는
  * Table·Avatar와 Skeleton 자체로 만든 어드민 화면의 한 조각이다.
  * ------------------------------------------------------------------ */
+
+/** 'surface' 케이스가 나란히 보이는 표면 세 가지. bg-muted 채움은 표면의 명도가
+ * 다를 때만 도형으로 읽히므로, 표면마다 실제로 렌더링해 차이를 눈으로 보인다. */
+const SURFACES = [
+  { label: 'background', className: 'bg-background' },
+  { label: 'surface', className: 'bg-surface' },
+  { label: 'surface-raised', className: 'bg-surface-raised' },
+] as const
 
 function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): ReactNode {
   switch (guidelineId) {
@@ -215,12 +224,18 @@ function renderExample(exampleId: string): ReactNode {
         </div>
       )
 
-    case 'dark-theme':
+    case 'surface':
       return (
-        <div className="dark bg-background flex w-56 flex-col gap-2 rounded-md p-4">
-          <Skeleton shape="title" />
-          <Skeleton shape="text" />
-          <Skeleton shape="text" className="w-2/3" />
+        <div className="flex gap-3">
+          {SURFACES.map((surface) => (
+            <div
+              key={surface.label}
+              className={cn('flex flex-col gap-2 rounded-md border p-3', surface.className)}
+            >
+              <p className="text-muted-foreground text-2xs">{surface.label}</p>
+              <Skeleton shape="text" className="w-20" />
+            </div>
+          ))}
         </div>
       )
 

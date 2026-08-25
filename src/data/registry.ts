@@ -1870,7 +1870,11 @@ export const components: ComponentMeta[] = [
       },
       { id: 'partial-arrival', title: '일부만 도착한 경우', note: '일부 항목만 먼저 도착하면 나머지 자리만 뼈대로 남는다' },
       { id: 'repeat-count', title: '반복 횟수를 정하는 경우', note: '반복 횟수는 배열에서 파생하고 손으로 적지 않는다' },
-      { id: 'dark-theme', title: '다크 테마', note: 'bg-muted가 다크 테마에서도 배경과 구분되는 밝기를 유지한다' },
+      {
+        id: 'surface',
+        title: '놓이는 표면이 다른 경우',
+        note: 'bg-muted 채움이라 놓이는 표면의 명도가 다를 때만 도형으로 읽힌다',
+      },
     ],
     verified: false,
   },
