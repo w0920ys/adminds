@@ -14,7 +14,7 @@ export function Anatomy({ meta, preview }: { meta: ComponentMeta; preview: React
               {index + 1}
             </span>
             <div>
-              <strong className="text-sm">{part.part}</strong>
+              <strong className="text-sm">{part.label}</strong>
               <p className="text-muted-foreground text-xs">{part.note}</p>
             </div>
           </li>
