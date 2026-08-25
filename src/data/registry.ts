@@ -518,6 +518,118 @@ export const components: ComponentMeta[] = [
     ],
     verified: true,
   },
+  {
+    id: 'textarea',
+    name: 'Textarea',
+    category: 'inputs',
+    status: 'stable',
+    addedIn: 'v0.8.0',
+    changedIn: 'v0.8.0',
+    purpose: '여러 줄짜리 값을 직접 입력하도록 한다. 한 줄이면 Input을 쓴다.',
+    anatomy: [
+      {
+        part: 'container',
+        label: 'Container',
+        note: '테두리는 border-input, 최소 높이는 min-h-20, 모서리는 radius-md',
+      },
+      {
+        part: 'value',
+        label: 'Value',
+        note: '사용자가 입력한 값. text-sm. 비어 있으면 이 자리에 자리표시자가 대신 보인다',
+      },
+      {
+        part: 'handle',
+        label: 'Resize Handle',
+        note: 'resize가 vertical일 때 우측 하단에 브라우저가 그리는 손잡이. 별도 DOM 요소가 아니라 지시선은 없다',
+        optional: true,
+      },
+      {
+        part: 'char-count',
+        label: 'Character Count',
+        note: '글자 수 제한이 있을 때 남은 수를 보인다. text-muted-foreground / text-xs',
+        optional: true,
+      },
+    ],
+    properties: [
+      {
+        name: 'state',
+        title: 'State',
+        description: '상호작용과 값의 상태를 나타낸다.',
+        display: 'grid',
+        options: [
+          { value: 'default' },
+          { value: 'hover', note: '포인터가 올라간 동안' },
+          { value: 'focus', note: '키보드 포커스. 항상 보여야 한다' },
+          { value: 'disabled', note: '지금 값을 바꿀 수 없음' },
+          { value: 'invalid', note: 'aria-invalid로 나타낸다. 테두리 색과 문구를 함께 쓴다' },
+          {
+            value: 'readonly',
+            note: '값을 읽고 복사할 수 있으나 고칠 수 없다. disabled와 다르다',
+          },
+        ],
+      },
+      {
+        name: 'resize',
+        title: 'Resize',
+        description: '사용자가 크기를 조절할 수 있는 방향을 정한다. size 축 대신 이 축을 둔다.',
+        display: 'row',
+        options: [
+          { value: 'none', note: '자리가 정해진 곳. 표 안, 좁은 패널' },
+          { value: 'vertical', note: '세로로만 늘릴 수 있다. 기본' },
+          { value: 'auto', note: '내용에 맞춰 자란다. field-sizing-content를 쓴다' },
+        ],
+      },
+    ],
+    guidelines: [
+      {
+        id: 'no-horizontal-resize',
+        title: 'No horizontal resize',
+        body: '가로 크기 조절은 허용하지 않습니다. 폭이 바뀌면 옆 요소와의 정렬이 흐트러지고 폼의 레이아웃이 무너집니다.',
+        do: ['세로로만 크기를 조절하게 한다', '내용에 따라 자라야 하면 resize를 auto로 둔다'],
+        dont: ['className으로 가로 크기 조절을 강제로 허용하지 않는다'],
+      },
+      {
+        id: 'min-height',
+        title: 'Min height',
+        body: '최소 높이는 기대하는 글의 길이에 맞춥니다. 여러 문단이 오가는 자리에 기본 높이만 두면 계속 스크롤하며 써야 합니다.',
+        do: ['긴 본문이 예상되면 min-height를 늘린다', '짧은 메모는 기본 높이로 충분하다'],
+        dont: ['글의 길이와 무관하게 모든 Textarea를 같은 높이로 두지 않는다'],
+      },
+      {
+        id: 'character-limit',
+        title: 'Character limit',
+        body: '글자 수 제한이 있으면 남은 수를 함께 보입니다. 제한을 넘기면 그 사실이 먼저 눈에 띄어야 합니다.',
+        do: ['입력 칸 아래에 남은 글자 수를 보인다', '제한을 넘으면 색으로 알린다'],
+        dont: ['제한이 있는데 남은 수를 보이지 않는다'],
+      },
+      {
+        id: 'shared-rules',
+        title: 'Shared rules',
+        body: 'Input과 테두리·포커스 링·오류 표현을 공유합니다. inputVariants를 그대로 재사용하므로 두 컴포넌트의 테두리 색과 포커스 링은 항상 같은 모양입니다. 오류는 aria-invalid로 나타내고 색과 문구를 함께 씁니다.',
+      },
+    ],
+    usage: [
+      { id: 'memo', title: '메모', note: '내부용 짧은 기록. 기본 높이로 충분하다' },
+      {
+        id: 'rejection-reason',
+        title: '반려 사유',
+        note: '다음 사람이 무엇을 고쳐야 하는지 알 수 있게 구체적으로 적도록 안내한다',
+      },
+      { id: 'notice-body', title: '공지 본문', note: '여러 문단이 될 수 있으므로 최소 높이를 넉넉히 둔다' },
+      { id: 'address-supplement', title: '주소 보조', note: '한 줄로도 충분하지만 긴 입력을 막지 않는다' },
+    ],
+    cases: [
+      { id: 'very-long-text', title: '아주 긴 글', note: '세로로 스크롤되고 가로로는 늘어나지 않는다' },
+      { id: 'over-limit', title: '글자 수 초과', note: '남은 수가 음수로 바뀌고 색으로 알린다' },
+      {
+        id: 'readonly',
+        title: '읽기 전용',
+        note: '값을 읽고 복사할 수 있으나 고칠 수 없다. disabled와 다르다',
+      },
+      { id: 'narrow-screen', title: '좁은 화면', note: '기본 폭이 부모를 채우므로 별도 처리가 필요 없다' },
+    ],
+    verified: false,
+  },
 ]
 
 export function getComponent(id: string): ComponentMeta | undefined {

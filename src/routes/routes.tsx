@@ -7,6 +7,7 @@ import { CheckboxPage } from '@/routes/components/CheckboxPage'
 import { ComponentsIndex } from '@/routes/components/ComponentsIndex'
 import { InputPage } from '@/routes/components/InputPage'
 import { SelectPage } from '@/routes/components/SelectPage'
+import { TextareaPage } from '@/routes/components/TextareaPage'
 import { ColorPage } from '@/routes/foundations/ColorPage'
 import { ColorRolePage } from '@/routes/foundations/ColorRolePage'
 import { DesignTokenPage } from '@/routes/foundations/DesignTokenPage'
@@ -48,6 +49,7 @@ export const routes: RouteObject[] = [
           { path: 'input', element: <InputPage /> },
           { path: 'select', element: <SelectPage /> },
           { path: 'checkbox', element: <CheckboxPage /> },
+          { path: 'textarea', element: <TextareaPage /> },
         ],
       },
 
