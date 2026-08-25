@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useLocation } from 'react-router'
 import { assignHeadingIds } from '@/lib/heading-id'
+import { readHash, scrollToHeading } from '@/lib/scroll'
 import { cn } from '@/lib/utils'
 
 type Heading = {
@@ -8,18 +9,6 @@ type Heading = {
   text: string
   /** 2 또는 3 */
   level: 2 | 3
-}
-
-/*
- * 브라우저의 기본 앵커 이동은 어느 조상을 굴릴지 스스로 정해 문서까지 함께 굴린다.
- * 그러면 GNB가 화면 밖으로 밀리고, 문서 스크롤은 막혀 있어 되돌아오지도 않는다.
- * 스크롤 컨테이너가 main이므로 이동도 우리가 맡는다.
- */
-function scrollToHeading(id: string) {
-  const root = document.querySelector('main')
-  const target = document.getElementById(id)
-  if (!root || !target) return
-  root.scrollTop += target.getBoundingClientRect().top - root.getBoundingClientRect().top
 }
 
 export function TableOfContents() {
@@ -47,14 +36,30 @@ export function TableOfContents() {
     const nodes = collect()
     if (nodes.length === 0) return
 
+    const cleanups: Array<() => void> = []
+
     /*
      * 복사해 둔 주소로 들어온 경우. id는 방금 collect()가 붙였으므로
      * 그 전에는 대상을 찾을 수 없다 — 이 순서가 중요하다.
-     * id에 한글이 들어가므로(예: 사용-규칙) 주소창에서는 퍼센트 인코딩된 형태로
-     * 돌아와 decodeURIComponent가 필요하다.
      */
-    const hash = decodeURIComponent(location.hash.slice(1))
-    if (hash) scrollToHeading(hash)
+    const hash = readHash()
+    if (hash && document.getElementById(hash)) {
+      scrollToHeading(hash)
+      /*
+       * 토큰을 실측해 채우는 문서는 마운트 뒤에도 내용이 자라 대상이 아래로 밀린다.
+       * 시간을 재는 대신 크기가 바뀔 때마다 다시 맞추고, 자라기를 멈추면 손을 뗀다.
+       */
+      const content = main.firstElementChild
+      if (content) {
+        const settle = new ResizeObserver(() => scrollToHeading(hash))
+        settle.observe(content)
+        const release = setTimeout(() => settle.disconnect(), 1000)
+        cleanups.push(() => {
+          settle.disconnect()
+          clearTimeout(release)
+        })
+      }
+    }
 
     /*
      * 교차 여부만 보면 관찰 시작 시의 초기 콜백에서 여러 제목이 한꺼번에 보고되어
@@ -105,10 +110,11 @@ export function TableOfContents() {
     const observer = new IntersectionObserver(pick, { root, threshold: 0 })
     nodes.forEach((node) => observer.observe(node))
     root?.addEventListener('scroll', pick, { passive: true })
-    return () => {
+    cleanups.push(() => {
       observer.disconnect()
       root?.removeEventListener('scroll', pick)
-    }
+    })
+    return () => cleanups.forEach((cleanup) => cleanup())
   }, [pathname])
 
   if (headings.length < 2) return null
