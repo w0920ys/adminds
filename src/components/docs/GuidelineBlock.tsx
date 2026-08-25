@@ -53,10 +53,10 @@ export function GuidelineBlock({
   return (
     <section className="flex flex-col gap-4">
       <div>
-        <h3 className="group text-base font-semibold">
-          {guideline.title}
+        <div className="group flex items-center">
+          <h3 className="text-base font-semibold">{guideline.title}</h3>
           <HeadingAnchor />
-        </h3>
+        </div>
         <p className="text-muted-foreground mt-1 text-sm">{guideline.body}</p>
       </div>
 

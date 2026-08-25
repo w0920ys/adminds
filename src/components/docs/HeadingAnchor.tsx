@@ -5,6 +5,8 @@ type CopyState = 'idle' | 'copied' | 'failed'
 
 /**
  * 제목 옆에 놓여 그 절의 URL을 복사한다.
+ * 제목(h2/h3) 안이 아니라 옆 형제로 둔다 — 안에 두면 스크린리더가
+ * 제목을 훑을 때마다 이 버튼의 이름까지 제목 이름에 합쳐 읽는다.
  * id는 렌더 시점에 아직 없을 수 있으므로 누를 때 DOM에서 읽는다 —
  * 목차가 마운트 뒤에 붙이기 때문이다.
  */
@@ -18,7 +20,7 @@ export function HeadingAnchor() {
   }, [state])
 
   const copy = async (event: React.MouseEvent<HTMLButtonElement>) => {
-    const heading = event.currentTarget.closest('h2, h3')
+    const heading = event.currentTarget.parentElement?.querySelector('h2, h3')
     if (!heading?.id) {
       setState('failed')
       return

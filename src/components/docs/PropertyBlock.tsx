@@ -36,10 +36,10 @@ export function PropertyBlock({
   return (
     <section className="flex flex-col gap-3">
       <div>
-        <h3 className="group text-base font-semibold">
-          {property.title}
+        <div className="group flex items-center">
+          <h3 className="text-base font-semibold">{property.title}</h3>
           <HeadingAnchor />
-        </h3>
+        </div>
         <p className="text-muted-foreground text-sm">{property.description}</p>
       </div>
 

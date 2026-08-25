@@ -29,10 +29,10 @@ export function DocPage({
 export function DocSection({ title, children }: { title: string; children: ReactNode }) {
   return (
     <section className="flex flex-col gap-4">
-      <h2 className="group text-xl font-semibold tracking-tight">
-        {title}
+      <div className="group flex items-center">
+        <h2 className="text-xl font-semibold tracking-tight">{title}</h2>
         <HeadingAnchor />
-      </h2>
+      </div>
       {children}
     </section>
   )
