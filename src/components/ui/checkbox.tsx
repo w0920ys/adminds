@@ -14,6 +14,12 @@ function Checkbox({
         'peer size-4 shrink-0 rounded-sm border border-input shadow-xs outline-none transition-shadow',
         'data-[state=checked]:bg-primary data-[state=checked]:border-primary data-[state=checked]:text-primary-foreground',
         'data-[state=indeterminate]:bg-primary data-[state=indeterminate]:border-primary data-[state=indeterminate]:text-primary-foreground',
+        /*
+         * hover는 배경을 한 단계 옮겨 Input · Select 트리거와 같은 생각을 쓴다.
+         * checked·indeterminate는 이미 bg-primary를 쓰므로 unchecked에서만 건다 —
+         * 그렇지 않으면 켜진 상자 위에서 색이 뒤섞인다.
+         */
+        'data-[state=unchecked]:hover:bg-accent',
         'focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-2',
         'disabled:cursor-not-allowed disabled:opacity-50',
         'aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40',

@@ -1,4 +1,4 @@
-import { useState, type ComponentProps, type ReactNode } from 'react'
+import type { ComponentProps, ReactNode } from 'react'
 import { Bounds } from '@/components/docs/Bounds'
 import { ComponentPage } from '@/components/docs/ComponentPage'
 import type { RenderOptions } from '@/components/docs/PropertyBlock'
@@ -228,7 +228,7 @@ function renderExample(exampleId: string): ReactNode {
 
     case 'many-items':
       return (
-        <Select defaultOpen defaultValue="kr">
+        <Select defaultValue="kr">
           <SelectTrigger id="ex-many-items" className="w-40">
             <SelectValue />
           </SelectTrigger>
@@ -266,7 +266,7 @@ function renderExample(exampleId: string): ReactNode {
     case 'long-item-text':
       return (
         <Bounds className="w-40">
-          <Select defaultValue="b" defaultOpen>
+          <Select defaultValue="b">
             <SelectTrigger id="ex-long-item" className="w-full">
               <SelectValue className="truncate" />
             </SelectTrigger>
@@ -296,7 +296,7 @@ function renderExample(exampleId: string): ReactNode {
 
     case 'empty-list':
       return (
-        <Select defaultOpen>
+        <Select>
           <SelectTrigger id="ex-empty-list" className="w-40">
             <SelectValue placeholder="담당자 선택" />
           </SelectTrigger>
@@ -312,40 +312,24 @@ function renderExample(exampleId: string): ReactNode {
 }
 
 /**
- * Anatomy 무대는 preview의 DOM 서브트리 안에서 각 부위 표시 속성을 찾아
- * 지시선을 그린다. SelectContent가 기본값대로 document.body에 포탈되면
- * 목록·항목은 무대 바깥에 렌더링되어 지시선이 그 부위를 찾지 못한다.
- * 무대 안의 노드를 Portal 컨테이너로 지정해 한 인스턴스 전체가 무대
- * 서브트리 안에 머물게 한다.
+ * Anatomy 무대에는 trigger와 value만 남는다. list·item은 열렸을 때만
+ * 존재하는 상태이지 항상 있는 부위가 아니라서 Anatomy에 지시선을 그리지
+ * 않는다 — 독자는 실제 컴포넌트처럼 클릭해서 열린 목록을 본다.
  */
 function AnatomyPreview() {
-  const [container, setContainer] = useState<HTMLDivElement | null>(null)
-
   return (
-    /*
-     * Anatomy 무대는 preview를 grid place-items-center로 한가운데 놓는다.
-     * 트리거가 무대 중앙에 있으면 열린 목록이 아래로 펼쳐질 자리가 모자라
-     * Radix가 위로 열어 버린다 — 무대 위 경계를 뚫고 나간다.
-     * self-start로 트리거를 무대 위쪽에 붙여 목록이 펼쳐질 자리를 아래에
-     * 확보하고, side="bottom"으로 아래쪽으로 열리는 방향을 명시한다.
-     */
     <div className="relative w-52 self-start">
-      <div ref={setContainer} className="contents" />
-      {container && (
-        <Select defaultValue="active" defaultOpen>
-          <SelectTrigger data-anatomy="trigger" className="w-52">
-            <SelectValue data-anatomy="value" />
-          </SelectTrigger>
-          <SelectContent data-anatomy="list" container={container} side="bottom">
-            <SelectItem value="all">전체</SelectItem>
-            <SelectItem data-anatomy="item" value="active">
-              활성
-            </SelectItem>
-            <SelectItem value="suspended">정지</SelectItem>
-            <SelectItem value="withdrawn">탈퇴</SelectItem>
-          </SelectContent>
-        </Select>
-      )}
+      <Select defaultValue="active">
+        <SelectTrigger data-anatomy="trigger" className="w-52">
+          <SelectValue data-anatomy="value" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="all">전체</SelectItem>
+          <SelectItem value="active">활성</SelectItem>
+          <SelectItem value="suspended">정지</SelectItem>
+          <SelectItem value="withdrawn">탈퇴</SelectItem>
+        </SelectContent>
+      </Select>
     </div>
   )
 }

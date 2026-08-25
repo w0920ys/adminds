@@ -203,7 +203,7 @@ export const components: ComponentMeta[] = [
       { id: 'in-progress', title: '처리 중', note: 'disabled + 스피너. 라벨을 진행형으로 바꿔 상태를 알린다' },
       { id: 'narrow-screen', title: '좁은 화면', note: '라벨을 숨기고 아이콘만 남길 때는 aria-label을 유지한다' },
     ],
-    verified: true,
+    verified: false,
   },
   {
     id: 'input',
@@ -211,7 +211,7 @@ export const components: ComponentMeta[] = [
     category: 'inputs',
     status: 'stable',
     addedIn: 'v0.7.0',
-    changedIn: 'v0.7.0',
+    changedIn: 'v0.8.0',
     purpose: '사용자가 한 줄짜리 값을 직접 입력하도록 한다. 여러 값 중 고르게 할 때는 Select를 쓴다.',
     anatomy: [
       { part: 'container', label: 'Container', note: '테두리는 border-input, 높이는 size 토큰, 모서리는 radius-md' },
@@ -310,7 +310,7 @@ export const components: ComponentMeta[] = [
       { id: 'password', title: '비밀번호', note: 'type만 다르고 시각적으로는 달라지지 않는다' },
       { id: 'narrow-screen', title: '좁은 화면', note: '기본 폭이 부모를 채우므로 별도 처리가 필요 없다' },
     ],
-    verified: true,
+    verified: false,
   },
   {
     id: 'select',
@@ -318,30 +318,18 @@ export const components: ComponentMeta[] = [
     category: 'inputs',
     status: 'stable',
     addedIn: 'v0.7.0',
-    changedIn: 'v0.7.0',
+    changedIn: 'v0.8.0',
     purpose: '여러 값 중 하나를 고르게 한다. 선택지가 둘셋뿐이면 Radio를 쓴다.',
     anatomy: [
       {
         part: 'trigger',
         label: 'Trigger',
-        note: '테두리·높이·포커스 링은 Input과 같은 토큰을 쓴다. 나란히 놓여도 어긋나지 않는다. 오른쪽 끝에 16×16 ChevronDown이 열림 여부와 무관하게 항상 보인다',
+        note: '테두리·높이·포커스 링은 Input과 같은 토큰을 쓴다. 나란히 놓여도 어긋나지 않는다. 오른쪽 끝에 16×16 ChevronDown이 열림 여부와 무관하게 항상 보인다. 열리면 트리거 아래에 목록이 뜬다. bg-popover, 모서리는 radius-md, 쌓임 순서는 z-popover. 목록의 각 줄은 text-sm이고 포커스되면 bg-accent, 고른 항목에는 오른쪽에 16×16 Check 아이콘이 함께 보인다',
       },
       {
         part: 'value',
         label: 'Value',
         note: '선택된 항목의 문구. 아직 고르지 않았으면 이 자리에 자리표시자가 대신 보인다',
-      },
-      {
-        part: 'list',
-        label: 'List',
-        note: '열렸을 때 트리거 아래에 뜨는 목록. bg-popover, 모서리는 radius-md, 쌓임 순서는 z-popover',
-        optional: true,
-      },
-      {
-        part: 'item',
-        label: 'Item',
-        note: '목록의 한 줄. text-sm. 포커스되면 bg-accent. 고른 항목에는 오른쪽에 16×16 Check 아이콘이 함께 보인다',
-        optional: true,
       },
     ],
     properties: [
@@ -355,7 +343,7 @@ export const components: ComponentMeta[] = [
       {
         name: 'state',
         title: 'State',
-        description: '상호작용 상태를 나타낸다. 열린 목록은 Anatomy에서 이미 보여준다.',
+        description: '상호작용 상태를 나타낸다.',
         display: 'grid',
         options: [
           { value: 'default' },
@@ -416,7 +404,7 @@ export const components: ComponentMeta[] = [
       { id: 'single-option', title: '선택지가 하나뿐인 경우', note: 'Select로 접어 두는 대신 값을 그대로 보여주는 편이 낫다' },
       { id: 'empty-list', title: '비어 있는 목록', note: '항목이 없다는 안내를 목록 자리에 보여준다' },
     ],
-    verified: true,
+    verified: false,
   },
   {
     id: 'checkbox',
@@ -424,7 +412,7 @@ export const components: ComponentMeta[] = [
     category: 'inputs',
     status: 'stable',
     addedIn: 'v0.7.0',
-    changedIn: 'v0.7.0',
+    changedIn: 'v0.8.0',
     purpose: '여러 값 중 하나 이상을 켜고 끄도록 한다. 하나만 고를 수 있으면 Radio를 쓴다.',
     anatomy: [
       {
@@ -448,6 +436,7 @@ export const components: ComponentMeta[] = [
         display: 'grid',
         options: [
           { value: 'unchecked' },
+          { value: 'hover', note: '포인터가 올라간 동안. 켜진 상자에는 걸지 않는다' },
           { value: 'checked' },
           {
             value: 'indeterminate',
@@ -516,7 +505,7 @@ export const components: ComponentMeta[] = [
       { id: 'nested-selection', title: '중첩된 선택', note: '하위 항목의 일부만 선택되면 상위는 중간 상태로 나타낸다' },
       { id: 'narrow-screen', title: '좁은 화면', note: '라벨이 줄바꿈되어도 상자와의 정렬은 유지된다' },
     ],
-    verified: true,
+    verified: false,
   },
   {
     id: 'textarea',
