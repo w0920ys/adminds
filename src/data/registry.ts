@@ -304,6 +304,95 @@ export const components: ComponentMeta[] = [
     ],
     verified: false,
   },
+  {
+    id: 'checkbox',
+    name: 'Checkbox',
+    category: 'inputs',
+    status: 'stable',
+    addedIn: 'v0.7.0',
+    changedIn: 'v0.7.0',
+    purpose: '여러 값 중 하나 이상을 켜고 끄도록 한다. 하나만 고를 수 있으면 Radio를 쓴다.',
+    anatomy: [
+      {
+        part: 'box',
+        label: 'Box',
+        note: '4×4(16px), 꺼짐은 border-input, 켜짐은 bg-primary, 모서리는 radius-sm',
+      },
+      { part: 'indicator', label: 'Indicator', note: 'lucide-react의 Check, 중간 상태는 Minus' },
+      { part: 'label', label: 'Label', note: 'text-sm. 상자와 함께 눌리는 자리', optional: true },
+      {
+        part: 'description',
+        label: 'Description',
+        note: '라벨 아래의 보조 설명. text-muted-foreground / text-xs',
+        optional: true,
+      },
+    ],
+    properties: [
+      {
+        name: 'state',
+        title: 'State',
+        description: '선택 여부와 상호작용을 나타낸다.',
+        display: 'grid',
+        options: [
+          { value: 'unchecked' },
+          { value: 'checked' },
+          {
+            value: 'indeterminate',
+            note: "일부만 선택됨. '모름'이나 '해당 없음'을 뜻하지 않는다",
+          },
+          { value: 'disabled', note: '지금 상태를 바꿀 수 없음' },
+          { value: 'focus', note: '키보드 포커스. 항상 보여야 한다' },
+        ],
+      },
+      {
+        name: 'layout',
+        title: 'Layout',
+        description: '라벨과 설명을 붙이는 방식을 정한다.',
+        display: 'row',
+        options: [
+          { value: 'standalone', note: '표의 행처럼 라벨이 다른 곳에 이미 있을 때' },
+          { value: 'with-label', note: '기본. 라벨 전체가 눌리는 자리다' },
+          { value: 'with-description', note: '라벨만으로 부족할 때 아래에 설명을 더한다' },
+        ],
+      },
+    ],
+    guidelines: [
+      {
+        id: 'label-click-target',
+        title: 'Label as click target',
+        body: '라벨이 있으면 라벨 전체가 누를 수 있는 자리여야 합니다. 상자만 누르게 하면 어드민의 조밀한 표에서 맞히기 어렵습니다.',
+        do: ['Checkbox와 라벨 문구를 label 요소로 함께 감싼다', '라벨을 누르면 상자도 함께 반응하는지 확인한다'],
+        dont: ['상자만 클릭 영역으로 두고 라벨 문구는 별도 텍스트로 두지 않는다'],
+      },
+      {
+        id: 'indeterminate-meaning',
+        title: 'Indeterminate meaning',
+        body: "중간 상태는 '일부 선택'에만 씁니다. '모름'이나 '해당 없음'을 뜻하지 않습니다.",
+        do: ['표 전체 선택에서 일부 행만 선택되었을 때 중간 상태를 쓴다'],
+        dont: ["'모름'이나 '해당 없음'을 나타내는 데 중간 상태를 쓰지 않는다"],
+      },
+      {
+        id: 'checkbox-vs-radio',
+        title: 'Checkbox vs radio',
+        body: '체크박스와 라디오를 바꿔 쓰지 않습니다. 여럿 고를 수 있으면 체크박스, 하나만 고를 수 있으면 라디오입니다.',
+        do: ['여럿을 고를 수 있는 목록에는 Checkbox를 쓴다', '하나만 고를 수 있는 목록에는 Radio를 쓴다'],
+        dont: ['하나만 고를 수 있는 목록에 Checkbox를 쓰지 않는다'],
+      },
+    ],
+    usage: [
+      { id: 'row-select', title: '표의 행 선택', note: '라벨 없이 상자만 두고, 스크린리더용 이름은 따로 붙인다' },
+      { id: 'select-all', title: '표 머리의 전체 선택', note: '일부만 선택되었을 때 중간 상태로 나타낸다' },
+      { id: 'terms-agreement', title: '약관 동의', note: '라벨 전체를 눌러 동의할 수 있어야 한다' },
+      { id: 'setting-toggle', title: '설정 켜고 끄기', note: '라벨 아래에 설명을 더해 무엇이 바뀌는지 알린다' },
+    ],
+    cases: [
+      { id: 'multiline-label', title: '라벨이 두 줄 이상', note: '상자는 첫 줄에 맞춰 위쪽에 정렬한다' },
+      { id: 'disabled-checked', title: '비활성인데 켜져 있는 경우', note: '색은 흐려지지만 켜진 상태 자체는 그대로 보인다' },
+      { id: 'nested-selection', title: '중첩된 선택', note: '하위 항목의 일부만 선택되면 상위는 중간 상태로 나타낸다' },
+      { id: 'narrow-screen', title: '좁은 화면', note: '라벨이 줄바꿈되어도 상자와의 정렬은 유지된다' },
+    ],
+    verified: false,
+  },
 ]
 
 export function getComponent(id: string): ComponentMeta | undefined {

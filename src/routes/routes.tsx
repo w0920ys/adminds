@@ -3,6 +3,7 @@ import type { RouteObject } from 'react-router'
 import { AppShell } from '@/components/layout/AppShell'
 import { Placeholder } from '@/routes/Placeholder'
 import { ButtonPage } from '@/routes/components/ButtonPage'
+import { CheckboxPage } from '@/routes/components/CheckboxPage'
 import { ComponentsIndex } from '@/routes/components/ComponentsIndex'
 import { InputPage } from '@/routes/components/InputPage'
 import { ColorPage } from '@/routes/foundations/ColorPage'
@@ -44,6 +45,7 @@ export const routes: RouteObject[] = [
           { index: true, element: <ComponentsIndex /> },
           { path: 'button', element: <ButtonPage /> },
           { path: 'input', element: <InputPage /> },
+          { path: 'checkbox', element: <CheckboxPage /> },
         ],
       },
 
