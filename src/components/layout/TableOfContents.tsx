@@ -10,6 +10,18 @@ type Heading = {
   level: 2 | 3
 }
 
+/*
+ * 브라우저의 기본 앵커 이동은 어느 조상을 굴릴지 스스로 정해 문서까지 함께 굴린다.
+ * 그러면 GNB가 화면 밖으로 밀리고, 문서 스크롤은 막혀 있어 되돌아오지도 않는다.
+ * 스크롤 컨테이너가 main이므로 이동도 우리가 맡는다.
+ */
+function scrollToHeading(id: string) {
+  const root = document.querySelector('main')
+  const target = document.getElementById(id)
+  if (!root || !target) return
+  root.scrollTop += target.getBoundingClientRect().top - root.getBoundingClientRect().top
+}
+
 export function TableOfContents() {
   const { pathname } = useLocation()
   const [headings, setHeadings] = useState<Heading[]>([])
@@ -34,6 +46,15 @@ export function TableOfContents() {
 
     const nodes = collect()
     if (nodes.length === 0) return
+
+    /*
+     * 복사해 둔 주소로 들어온 경우. id는 방금 collect()가 붙였으므로
+     * 그 전에는 대상을 찾을 수 없다 — 이 순서가 중요하다.
+     * id에 한글이 들어가므로(예: 사용-규칙) 주소창에서는 퍼센트 인코딩된 형태로
+     * 돌아와 decodeURIComponent가 필요하다.
+     */
+    const hash = decodeURIComponent(location.hash.slice(1))
+    if (hash) scrollToHeading(hash)
 
     /*
      * 교차 여부만 보면 관찰 시작 시의 초기 콜백에서 여러 제목이 한꺼번에 보고되어
@@ -104,6 +125,11 @@ export function TableOfContents() {
             <a
               href={`#${heading.id}`}
               aria-current={active === heading.id ? 'location' : undefined}
+              onClick={(event) => {
+                event.preventDefault()
+                scrollToHeading(heading.id)
+                history.replaceState(null, '', `#${heading.id}`)
+              }}
               className={cn(
                 'block border-l py-1.5 text-sm',
                 heading.level === 3 ? 'pl-6' : 'pl-3',
