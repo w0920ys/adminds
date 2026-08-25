@@ -11,8 +11,8 @@ export function DocPage({
   children: ReactNode
 }) {
   return (
-    <article className="flex flex-col gap-12">
-      <header className="flex flex-col gap-3">
+    <article className="flex flex-col gap-30">
+      <header className="flex flex-col gap-4">
         <h1 className="text-3xl font-bold tracking-tight">{title}</h1>
         {description && <p className="text-muted-foreground text-base">{description}</p>}
       </header>
@@ -28,7 +28,7 @@ export function DocPage({
  */
 export function DocSection({ title, children }: { title: string; children: ReactNode }) {
   return (
-    <section className="flex flex-col gap-4">
+    <section className="flex flex-col gap-6">
       <div className="group flex items-center">
         <h2 className="text-xl font-semibold tracking-tight">{title}</h2>
         <HeadingAnchor />

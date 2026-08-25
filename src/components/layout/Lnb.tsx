@@ -22,8 +22,8 @@ function LnbItem({
         onClick={onClose}
         className={({ isActive }) =>
           cn(
-            'flex h-control items-center rounded-md text-sm',
-            depth === 0 ? 'px-2' : 'ml-2 border-l pl-3',
+            'flex h-control items-center text-sm',
+            depth === 0 ? 'rounded-md px-2' : 'ml-2 border-l pl-3',
             isActive
               ? 'bg-accent text-accent-foreground font-semibold'
               : 'text-muted-foreground hover:bg-accent/60',

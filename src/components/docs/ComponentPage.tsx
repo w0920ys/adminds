@@ -58,7 +58,7 @@ export function ComponentPage({
       </DocSection>
 
       <DocSection title="Properties">
-        <div className="flex flex-col gap-8">
+        <div className="flex flex-col gap-12">
           {meta.properties.map((property) => (
             <PropertyBlock
               key={property.name}
@@ -71,7 +71,7 @@ export function ComponentPage({
       </DocSection>
 
       <DocSection title="Guidelines">
-        <div className="flex flex-col gap-8">
+        <div className="flex flex-col gap-12">
           {meta.guidelines.map((guideline) => (
             <GuidelineBlock
               key={guideline.id}
