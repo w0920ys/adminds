@@ -66,10 +66,20 @@ export function Anatomy({ meta, preview }: { meta: ComponentMeta; preview: React
       return
     }
 
-    const mid = stageBox.width / 2
+    /**
+     * 중심 x로 좌우를 나누면 컨테이너처럼 전체를 감싸는 부위와 가운데 정렬된 라벨이
+     * 경계값에서 같은 쪽으로 몰린다. 중심 x로 정렬한 뒤 절반씩 나눠 균형을 맞춘다.
+     */
+    const byX = [...found].sort(
+      (a, b) => a.box.x + a.box.width / 2 - (b.box.x + b.box.width / 2),
+    )
+    const half = Math.ceil(byX.length / 2)
+    const sideOf = new Map<string, 'left' | 'right'>(
+      byX.map((item, i) => [item.part.part, i < half ? 'left' : 'right'] as const),
+    )
     const sided = found.map((item) => ({
       ...item,
-      side: (item.box.x + item.box.width / 2 < mid ? 'left' : 'right') as 'left' | 'right',
+      side: sideOf.get(item.part.part) ?? 'right',
     }))
 
     const next: Placed[] = []
@@ -170,16 +180,16 @@ export function Anatomy({ meta, preview }: { meta: ComponentMeta; preview: React
 
         {shown.length > 0 && narrow && (
           <div aria-hidden className="contents">
-            {shown.map((item) => (
+            {placeBadges(shown).map(({ item, x, y }) => (
               <span
                 key={item.part.part}
                 className={cn(
-                  'absolute grid size-5 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full text-2xs font-bold',
+                  'absolute grid size-5 place-items-center rounded-full text-2xs font-bold',
                   active === item.part.part
                     ? 'bg-annotation text-background'
                     : 'bg-annotation-muted text-background',
                 )}
-                style={{ left: item.box.x + item.box.width / 2, top: item.box.y }}
+                style={{ left: x, top: y }}
               >
                 {item.index + 1}
               </span>
@@ -229,4 +239,29 @@ export function Anatomy({ meta, preview }: { meta: ComponentMeta; preview: React
       </ol>
     </div>
   )
+}
+
+/** 배지 지름과 최소 간격 */
+const BADGE = 20
+
+/**
+ * 배지를 부위의 좌상단 바깥에 놓는다.
+ * 부위가 겹쳐 있으면(컨테이너와 그 안의 라벨처럼) 배지도 겹치므로,
+ * 이미 놓인 배지와 가까우면 위로 밀어 올린다.
+ */
+function placeBadges(items: Placed[]): { item: Placed; x: number; y: number }[] {
+  const placedBadges: { x: number; y: number }[] = []
+  return items.map((item) => {
+    const x = item.box.x - BADGE / 2
+    let y = item.box.y - BADGE / 2
+    while (
+      placedBadges.some(
+        (b) => Math.abs(b.x - x) < BADGE && Math.abs(b.y - y) < BADGE,
+      )
+    ) {
+      y -= BADGE
+    }
+    placedBadges.push({ x, y })
+    return { item, x, y }
+  })
 }
