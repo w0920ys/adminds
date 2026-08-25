@@ -54,7 +54,15 @@ export function TableOfContents() {
      * 돌아와 decodeURIComponent가 필요하다.
      */
     const hash = decodeURIComponent(location.hash.slice(1))
-    if (hash) scrollToHeading(hash)
+    if (hash && document.getElementById(hash)) {
+      scrollToHeading(hash)
+      /*
+       * 주소에 해시를 달고 들어오면 브라우저가 마운트 전에 자기 방식대로 한 번 굴린다.
+       * 그때 문서가 헤더 높이만큼 밀리는데, 문서 스크롤은 막혀 있어 되돌아오지 못한다.
+       * 이동은 위에서 우리가 했으므로 문서 쪽은 원위치로 돌린다.
+       */
+      window.scrollTo(0, 0)
+    }
 
     /*
      * 교차 여부만 보면 관찰 시작 시의 초기 콜백에서 여러 제목이 한꺼번에 보고되어
