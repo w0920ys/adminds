@@ -127,6 +127,13 @@
 
   --text-2xs: 0.6875rem;
 
+  /* Pretendard를 앞에 두고 시스템 폰트를 폴백으로 남긴다.
+     CDN이 막히거나 폰트가 아직 오지 않아도 한글이 깨지지 않게 한다. */
+  --font-sans:
+    'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto,
+    'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic',
+    sans-serif;
+
   /* z-index 레이어. 값이 컴포넌트마다 흩어지지 않게 한 곳에 모은다.
      Tailwind v4는 --z-index-* 네임스페이스를 z-* 유틸리티로 노출한다. */
   --z-index-sticky: 10;
@@ -146,5 +153,10 @@
     color: var(--color-foreground);
     -webkit-font-smoothing: antialiased;
     margin: 0;
+    /* font-sans 유틸리티를 쓰지 않은 곳까지 같은 스택으로 덮는다 */
+    font-family: var(--font-sans);
+    /* 한글은 음절 단위로 줄바꿈한다. 어절 단위로 묶으면 좁은 화면에서 한 줄이 크게 빈다 */
+    word-break: normal;
+    overflow-wrap: anywhere;
   }
 }
