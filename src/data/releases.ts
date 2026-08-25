@@ -29,6 +29,64 @@ export type Release = {
 /** 최신 버전이 배열의 맨 앞이다. */
 export const releases: Release[] = [
   {
+    version: 'v0.6.0',
+    publishedAt: '2026-08-25',
+    title: '구조를 가리키는 이름을 다시 영문으로 돌렸어요',
+    purpose:
+      'v0.5.0에서 섹션 제목을 전부 한국어로 통일했는데, 결과를 본 사용자가 방향을 뒤집었어요. 구조를 가리키는 이름은 영문으로, 설명은 한국어로 다시 정리하고, 목차·간격·footer 같은 읽는 경험도 함께 다듬었어요.',
+    changes: [
+      { target: 'Writing / 섹션 제목', type: 'Updated', note: '구조를 가리키는 이름은 영문으로, 설명은 한국어로 다시 정리했어요. Writing 문서의 Language 절도 새 규칙으로 다시 썼어요.' },
+      { target: 'Anatomy', type: 'Fixed', note: '지시선이 부위 가장자리에서 꺾이도록 고쳐 서로 겹치지 않게 했어요.' },
+      { target: 'HeadingAnchor', type: 'New', note: '제목에 마우스를 올리면 그 절의 주소를 복사하는 아이콘이 나타나요.' },
+      { target: 'AppShell / TableOfContents', type: 'Updated', note: '목차를 main 안에 sticky로 옮기고 스크롤바를 감췄고, 스크롤을 다루는 코드를 한 모듈로 모아 해시 안착과 문서 전환 위치를 고쳤어요.' },
+      { target: 'DocPage / ComponentPage', type: 'Updated', note: '섹션 사이 간격을 넓히고, LNB 하위 항목의 모서리를 없앴어요.' },
+      { target: 'Foundations / Components Overview', type: 'New', note: '카드 목록 위에 그 섹션이 무엇을 다루는지 설명하는 개요를 실었어요.' },
+      { target: 'SiteFooter', type: 'New', note: '모든 페이지 최하단에 저작권·메뉴·연락처를 담은 footer를 추가했어요.' },
+      { target: 'PropertyOption', type: 'Fixed', note: '값이 남지 않은 label 필드와 optionLabel 함수를 지웠어요.' },
+    ],
+    requests: [
+      { label: '구조를 가리키는 이름은 영문으로, 설명은 한국어로 다시 정리해주세요', done: true },
+      { label: 'Anatomy 지시선이 겹치지 않게 고쳐주세요', done: true },
+      { label: '제목에서 그 절의 주소를 복사할 수 있게 해주세요', done: true },
+      { label: '목차를 컨테이너 위에 sticky로 붙이고 스크롤바는 감춰주세요', done: true },
+      { label: 'LNB 하위 항목의 모서리를 없애고 섹션 사이 간격을 넓혀주세요', done: true },
+      { label: 'Overview 페이지에 그 섹션의 개요를 실어주세요', done: true },
+      { label: '모든 페이지에 footer를 넣어주세요', done: true },
+    ],
+    reviewItems: [
+      { label: 'useMeasuredTokens가 여러 Foundations 페이지에 중복되는 것을 걷어낼 수 있는가', category: 'Foundations', completed: false },
+      { label: '해시로 안착한 뒤 문서가 자라는 동안 사용자가 직접 스크롤하면 그 조작이 다시 덮어써지는가', category: 'Patterns', completed: false },
+    ],
+    impact: ['전체 화면', 'Foundations', 'Components', 'Patterns'],
+  },
+  {
+    version: 'v0.5.0',
+    publishedAt: '2026-08-25',
+    title: '읽는 경험을 다듬었어요',
+    purpose:
+      '문서가 늘어나면서 드러난 문제들을 손봤어요. 섹션 제목을 한국어로 통일하고 제목 위계를 세우고, 목차를 붙이고, 지침의 do와 don\'t를 한데 묶고, Color의 하위 문서를 LNB에서 들여썼어요.',
+    changes: [
+      { target: 'Writing / 섹션 제목', type: 'Updated', note: '섹션 제목을 한국어로 통일하고, 이 규칙을 Writing 문서에 적었어요. 페이지 이름과 코드 식별자만 영어로 남겼어요.' },
+      { target: 'DocPage / ComponentPage', type: 'Updated', note: '섹션 제목 크기를 본문보다 크게 키워 위계를 세웠어요.' },
+      { target: 'TableOfContents', type: 'New', note: 'PC 화면 오른쪽에 문서 목차를 추가했어요. 스크롤하면 현재 위치가 따라 강조돼요.' },
+      { target: 'GuidelineBlock', type: 'Updated', note: "지침의 do와 don't를 하나의 열로 묶고 같은 줄의 높이를 맞췄어요." },
+      { target: 'Lnb / nav-config', type: 'Updated', note: 'Color Role과 Palette를 Color 아래로 들여썼어요.' },
+      { target: 'PropertyBlock', type: 'Updated', note: '속성 표 헤더와 옵션 라벨 크기를 제목 위계에 맞췄어요.' },
+    ],
+    requests: [
+      { label: '한 페이지 안에서 한글과 영어가 섞이지 않게 해주세요', done: true },
+      { label: '섹션 제목이 본문보다 작아 보이는 문제를 고쳐주세요', done: true },
+      { label: '긴 문서에서 지금 어디를 읽고 있는지 알려주세요', done: true },
+      { label: "지침의 do와 don't가 따로 노는 것처럼 보이지 않게 해주세요", done: true },
+      { label: 'Color Role과 Palette가 Color의 하위 문서라는 것을 목록에서도 보여주세요', done: true },
+    ],
+    reviewItems: [
+      { label: 'useMeasuredTokens가 여러 Foundations 페이지에 중복되는 것을 걷어낼 수 있는가', category: 'Foundations', completed: false },
+      { label: '섹션 제목을 전부 한국어로 통일한 방향이 실제 기대와 맞는가', category: 'Foundations', completed: false },
+    ],
+    impact: ['전체 화면', 'Foundations', 'Components'],
+  },
+  {
     version: 'v0.4.0',
     publishedAt: '2026-08-25',
     title: '토큰 문서를 완성했어요',
