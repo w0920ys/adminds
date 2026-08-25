@@ -3,6 +3,7 @@ import { Outlet } from 'react-router'
 import { DocFooterNav } from '@/components/layout/DocFooterNav'
 import { Gnb } from '@/components/layout/Gnb'
 import { Lnb } from '@/components/layout/Lnb'
+import { SiteFooter } from '@/components/layout/SiteFooter'
 import { TableOfContents } from '@/components/layout/TableOfContents'
 
 export function AppShell() {
@@ -32,6 +33,7 @@ export function AppShell() {
             <div className="min-w-0 flex-1">
               <Outlet />
               <DocFooterNav />
+              <SiteFooter />
             </div>
             <TableOfContents />
           </div>
