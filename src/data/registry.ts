@@ -827,6 +827,98 @@ export const components: ComponentMeta[] = [
     verified: false,
   },
   {
+    id: 'tabs',
+    name: 'Tabs',
+    category: 'navigation',
+    status: 'stable',
+    addedIn: 'v0.8.0',
+    changedIn: 'v0.8.0',
+    purpose: '같은 자리에서 내용을 바꿔 보인다.',
+    anatomy: [
+      {
+        part: 'list',
+        label: 'List',
+        note: "role='tablist'. 탭들을 감싸고 variant에 따라 밑줄이나 배경 그릇을 그린다",
+      },
+      {
+        part: 'tab',
+        label: 'Tab',
+        note: "role='tab'. text-sm / font-medium, 기본은 text-muted-foreground, 활성이면 text-foreground",
+      },
+      {
+        part: 'active-indicator',
+        label: 'Active Indicator',
+        note: '활성 탭의 위치를 가리킨다. line은 탭 아래의 2px 밑줄(bg-primary)로, enclosed는 활성 탭 자체의 배경(bg-background)과 그림자로 나타난다',
+      },
+      { part: 'panel', label: 'Panel', note: "role='tabpanel'. 선택된 탭의 내용을 담는다" },
+    ],
+    properties: [
+      {
+        name: 'variant',
+        title: 'Variant',
+        description: '활성 표시의 자리를 정한다.',
+        display: 'row',
+        options: [
+          { value: 'line', note: '기본. 콘텐츠와 가벼운 경계로 이어질 때' },
+          { value: 'enclosed', note: '탭 자체가 그릇처럼 보여 구분된 패널 여럿을 다룰 때' },
+        ],
+      },
+      {
+        name: 'state',
+        title: 'State',
+        description: '탭 하나의 선택 여부와 상호작용을 나타낸다.',
+        display: 'grid',
+        options: [
+          { value: 'default' },
+          { value: 'active', note: '지금 열려 있는 탭' },
+          { value: 'disabled', note: '지금 고를 수 없음' },
+          { value: 'focus', note: '키보드 포커스. 항상 보여야 한다' },
+        ],
+      },
+    ],
+    guidelines: [
+      {
+        id: 'url-sync',
+        title: 'URL synchronization',
+        body: '탭 사이를 오갈 때 주소가 함께 바뀌어야 합니다. 새로고침하거나 링크를 공유해도 같은 탭이 열려 있어야 합니다.',
+        do: ['탭 값을 주소의 경로나 쿼리와 동기화한다', '주소로 바로 들어왔을 때 그 탭이 먼저 열리게 한다'],
+        dont: ['탭 상태를 컴포넌트 안에만 두고 주소와 연결하지 않는다'],
+      },
+      {
+        id: 'noun-naming',
+        title: 'Tab naming',
+        body: '탭 이름은 명사로 적습니다. 동사로 적으면 탭이 지금 눌러야 하는 동작처럼 보입니다.',
+        do: ["'개요'처럼 명사로 적는다"],
+        dont: ["'개요 보기'처럼 동사를 붙이지 않는다"],
+      },
+      {
+        id: 'tab-count-limit',
+        title: 'Tab count limit',
+        body: '탭이 일곱을 넘으면 Tabs 대신 다른 구조(Select나 사이드 메뉴)를 씁니다. 너무 많으면 한 줄에 담기 어렵고 훑어보기도 힘듭니다.',
+        do: ['탭이 일곱 이하일 때 Tabs를 쓴다'],
+        dont: ['탭이 일곱을 넘는데 한 줄에 욱여넣지 않는다'],
+      },
+      {
+        id: 'shared-rules',
+        title: 'Shared rules',
+        body: '포커스 링은 다른 컨트롤과 같은 모양입니다. 자세한 규칙은 Foundations의 State 문서를 따릅니다.',
+      },
+    ],
+    usage: [
+      { id: 'detail-sections', title: '상세 화면의 정보 구분', note: '한 대상의 여러 면을 같은 자리에서 오가며 본다' },
+      { id: 'settings-groups', title: '설정 묶음', note: '주제별로 나눈 설정을 한 화면에서 전환한다' },
+      { id: 'log-types', title: '로그 종류', note: '종류가 정해져 있고 한 번에 하나씩만 본다' },
+      { id: 'period-stats', title: '기간별 통계', note: '일간·주간·월간처럼 같은 화면을 다른 기준으로 본다' },
+    ],
+    cases: [
+      { id: 'long-tab-name', title: '탭 이름이 긴 경우', note: '줄바꿈하지 않고 한 줄로 두어 목록의 높이를 지킨다' },
+      { id: 'overflow-tabs', title: '탭이 화면보다 많은 경우', note: '목록이 가로로 스크롤되고 밑줄은 스크롤을 따라간다' },
+      { id: 'tab-with-badge', title: '배지가 붙는 경우', note: '탭 이름 뒤에 붙여 개수나 상태를 함께 알린다' },
+      { id: 'narrow-screen', title: '좁은 화면', note: '탭이 줄어들지 않고 가로 스크롤로 대응한다' },
+    ],
+    verified: false,
+  },
+  {
     id: 'breadcrumb',
     name: 'Breadcrumb',
     category: 'navigation',

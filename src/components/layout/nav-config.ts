@@ -66,6 +66,7 @@ export const sections: NavSection[] = [
       { to: '/components/radio', label: 'Radio', updatedAt: '2026-08-26' },
       { to: '/components/switch', label: 'Switch', updatedAt: '2026-08-26' },
       { to: '/components/textarea', label: 'Textarea', updatedAt: '2026-08-26' },
+      { to: '/components/tabs', label: 'Tabs', updatedAt: '2026-08-26' },
       { to: '/components/breadcrumb', label: 'Breadcrumb', updatedAt: '2026-08-26' },
       { to: '/components/pagination', label: 'Pagination', updatedAt: '2026-08-26' },
       { to: '/components/alert', label: 'Alert', updatedAt: '2026-08-26' },

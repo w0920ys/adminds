@@ -13,6 +13,7 @@ import { PaginationPage } from '@/routes/components/PaginationPage'
 import { RadioPage } from '@/routes/components/RadioPage'
 import { SelectPage } from '@/routes/components/SelectPage'
 import { SwitchPage } from '@/routes/components/SwitchPage'
+import { TabsPage } from '@/routes/components/TabsPage'
 import { TextareaPage } from '@/routes/components/TextareaPage'
 import { ColorPage } from '@/routes/foundations/ColorPage'
 import { ColorRolePage } from '@/routes/foundations/ColorRolePage'
@@ -58,6 +59,7 @@ export const routes: RouteObject[] = [
           { path: 'radio', element: <RadioPage /> },
           { path: 'switch', element: <SwitchPage /> },
           { path: 'textarea', element: <TextareaPage /> },
+          { path: 'tabs', element: <TabsPage /> },
           { path: 'breadcrumb', element: <BreadcrumbPage /> },
           { path: 'pagination', element: <PaginationPage /> },
           { path: 'alert', element: <AlertPage /> },
