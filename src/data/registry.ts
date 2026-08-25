@@ -27,7 +27,7 @@ export type PropertyOption = {
 }
 
 export type ComponentProperty = {
-  /** 코드상의 prop 이름 */
+  /** 축의 식별자. 컴포넌트의 실제 prop일 수도 있고(variant, size), 조합으로 표현되는 축일 수도 있다(layout, width, state) */
   name: string
   /** 문서에 표시할 제목 */
   title: string

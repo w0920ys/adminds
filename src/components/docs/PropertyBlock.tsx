@@ -1,8 +1,15 @@
 import type { ReactNode } from 'react'
 import type { ComponentMeta, ComponentProperty, PropertyOption } from '@/data/registry'
 import { getProperty } from '@/data/registry'
+import { cn } from '@/lib/utils'
 
 export type RenderOptions = Record<string, string>
+
+/** hover와 focus는 실제 입력 없이 나타나지 않으므로 tokens.css의 강제 변형으로 전시한다 */
+const FORCE_CLASS: Record<string, string> = {
+  hover: 'state-hover',
+  focus: 'state-focus',
+}
 
 function optionLabel(option: PropertyOption) {
   return option.label ?? option.value
@@ -88,7 +95,12 @@ export function PropertyBlock({
               <p className="text-muted-foreground text-2xs font-bold tracking-widest">
                 {optionLabel(option).toUpperCase()}
               </p>
-              <div className="flex min-h-10 items-center">
+              <div
+                className={cn(
+                  'flex min-h-10 items-center',
+                  property.name === 'state' ? FORCE_CLASS[option.value] : undefined,
+                )}
+              >
                 {render({ ...base, [property.name]: option.value })}
               </div>
               {option.note && (
