@@ -2,7 +2,7 @@ import { Construction } from 'lucide-react'
 
 export function Placeholder({ title }: { title: string }) {
   return (
-    <div className="flex min-h-[60vh] flex-col items-center justify-center gap-3 text-center">
+    <div className="flex min-h-80 flex-col items-center justify-center gap-3 text-center">
       <div className="bg-muted text-muted-foreground grid size-12 place-items-center rounded-full">
         <Construction size={22} />
       </div>
