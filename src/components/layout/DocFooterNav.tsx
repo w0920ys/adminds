@@ -1,42 +1,51 @@
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { Link, useLocation } from 'react-router'
-import { findAdjacent, findSection, type DocLink } from '@/components/layout/nav-config'
+import { findAdjacent, findDoc, findSection } from '@/components/layout/nav-config'
 
 export function DocFooterNav() {
   const { pathname } = useLocation()
+  const section = findSection(pathname)
+  const doc = findDoc(pathname)
   const { prev, next } = findAdjacent(pathname)
-  if (!prev && !next) return null
 
-  const current = findSection(pathname)
-  /** 섹션을 넘어가는 경우에만 어느 섹션인지 함께 보여준다 */
-  const labelFor = (link: DocLink) => {
-    const section = findSection(link.to)
-    return section.id === current.id ? link.label : `${section.label} · ${link.label}`
-  }
+  /** Overview는 섹션의 입구이므로 순서상의 이동을 두지 않는다 */
+  const isOverview = pathname === section.to
+  if (isOverview) return null
+  if (!doc && !prev && !next) return null
 
   return (
-    <nav className="mt-16 grid gap-3 border-t pt-6 sm:grid-cols-2" aria-label="문서 이동">
-      {prev ? (
-        <Link to={prev.to} className="hover:bg-accent/50 flex flex-col gap-1 rounded-lg border p-4">
-          <span className="text-muted-foreground flex items-center gap-1 text-2xs">
-            <ChevronLeft size={12} /> 이전 문서
-          </span>
-          <strong className="text-sm">{labelFor(prev)}</strong>
-        </Link>
-      ) : (
-        <span />
+    <footer className="mt-16 flex flex-col gap-4 border-t pt-6">
+      {doc && (
+        <p className="text-muted-foreground text-2xs">최종 수정 {doc.updatedAt}</p>
       )}
-      {next && (
-        <Link
-          to={next.to}
-          className="hover:bg-accent/50 flex flex-col items-end gap-1 rounded-lg border p-4 sm:text-right"
-        >
-          <span className="text-muted-foreground flex items-center gap-1 text-2xs">
-            다음 문서 <ChevronRight size={12} />
-          </span>
-          <strong className="text-sm">{labelFor(next)}</strong>
-        </Link>
+      {(prev || next) && (
+        <nav className="grid gap-3 sm:grid-cols-2" aria-label="문서 이동">
+          {prev ? (
+            <Link
+              to={prev.to}
+              className="bg-secondary/60 hover:bg-secondary flex flex-col gap-1 rounded-lg p-4"
+            >
+              <span className="text-muted-foreground flex items-center gap-1 text-2xs">
+                <ChevronLeft size={12} aria-hidden /> 이전 문서
+              </span>
+              <strong className="text-sm">{prev.label}</strong>
+            </Link>
+          ) : (
+            <span />
+          )}
+          {next && (
+            <Link
+              to={next.to}
+              className="bg-secondary/60 hover:bg-secondary flex flex-col items-end gap-1 rounded-lg p-4 sm:text-right"
+            >
+              <span className="text-muted-foreground flex items-center gap-1 text-2xs">
+                다음 문서 <ChevronRight size={12} aria-hidden />
+              </span>
+              <strong className="text-sm">{next.label}</strong>
+            </Link>
+          )}
+        </nav>
       )}
-    </nav>
+    </footer>
   )
 }

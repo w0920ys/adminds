@@ -1,6 +1,8 @@
 export type DocLink = {
   to: string
   label: string
+  /** 문서 최종 수정일. YYYY-MM-DD */
+  updatedAt: string
 }
 
 export type NavSection = {
@@ -19,9 +21,9 @@ export const sections: NavSection[] = [
     label: 'Get started',
     to: '/',
     items: [
-      { to: '/', label: 'Overview' },
-      { to: '/get-started/install', label: '설치' },
-      { to: '/get-started/principles', label: '원칙' },
+      { to: '/', label: 'Overview', updatedAt: '2026-08-25' },
+      { to: '/get-started/install', label: '설치', updatedAt: '2026-08-25' },
+      { to: '/get-started/principles', label: '원칙', updatedAt: '2026-08-25' },
     ],
   },
   {
@@ -29,14 +31,17 @@ export const sections: NavSection[] = [
     label: 'Foundations',
     to: '/foundations',
     items: [
-      { to: '/foundations', label: 'Overview' },
-      { to: '/foundations/color', label: 'Color' },
-      { to: '/foundations/typography', label: 'Typography' },
-      { to: '/foundations/spacing', label: 'Spacing' },
-      { to: '/foundations/iconography', label: 'Iconography' },
-      { to: '/foundations/state', label: 'State' },
-      { to: '/foundations/voice-and-tone', label: 'Voice and Tone' },
-      { to: '/foundations/writing', label: 'Writing' },
+      { to: '/foundations', label: 'Overview', updatedAt: '2026-08-25' },
+      { to: '/foundations/design-token', label: 'Design Token', updatedAt: '2026-08-25' },
+      { to: '/foundations/color', label: 'Color', updatedAt: '2026-08-25' },
+      { to: '/foundations/color-role', label: 'Color Role', updatedAt: '2026-08-25' },
+      { to: '/foundations/palette', label: 'Palette', updatedAt: '2026-08-25' },
+      { to: '/foundations/typography', label: 'Typography', updatedAt: '2026-08-25' },
+      { to: '/foundations/spacing', label: 'Spacing', updatedAt: '2026-08-25' },
+      { to: '/foundations/iconography', label: 'Iconography', updatedAt: '2026-08-25' },
+      { to: '/foundations/state', label: 'State', updatedAt: '2026-08-25' },
+      { to: '/foundations/voice-and-tone', label: 'Voice and Tone', updatedAt: '2026-08-25' },
+      { to: '/foundations/writing', label: 'Writing', updatedAt: '2026-08-25' },
     ],
   },
   {
@@ -44,21 +49,21 @@ export const sections: NavSection[] = [
     label: 'Components',
     to: '/components',
     items: [
-      { to: '/components', label: 'Overview' },
-      { to: '/components/button', label: 'Button' },
+      { to: '/components', label: 'Overview', updatedAt: '2026-08-25' },
+      { to: '/components/button', label: 'Button', updatedAt: '2026-08-25' },
     ],
   },
   {
     id: 'patterns',
     label: 'Patterns',
     to: '/patterns',
-    items: [{ to: '/patterns', label: 'Overview' }],
+    items: [{ to: '/patterns', label: 'Overview', updatedAt: '2026-08-25' }],
   },
   {
     id: 'updates',
     label: 'Updates',
     to: '/updates',
-    items: [{ to: '/updates', label: 'Overview' }],
+    items: [{ to: '/updates', label: 'Overview', updatedAt: '2026-08-25' }],
   },
 ]
 
@@ -79,11 +84,25 @@ export function findSection(pathname: string): NavSection {
   return match ?? sections[0]
 }
 
+export function findDoc(pathname: string): DocLink | undefined {
+  return docOrder.find((doc) => doc.to === pathname)
+}
+
+/**
+ * 이전·다음 문서. 같은 섹션 안에서만 이동한다.
+ * 섹션이 바뀌면 맥락도 바뀌므로 경계를 넘지 않는다.
+ * 각 섹션의 Overview는 그 섹션의 입구이지 순서상의 한 문서가 아니므로 목록에서 뺀다.
+ */
 export function findAdjacent(pathname: string): { prev?: DocLink; next?: DocLink } {
-  const index = docOrder.findIndex((doc) => doc.to === pathname)
+  const section = findSection(pathname)
+  if (pathname === section.to) return { prev: undefined, next: undefined }
+
+  const docs = section.items.filter((item) => item.to !== section.to)
+  const index = docs.findIndex((doc) => doc.to === pathname)
   if (index === -1) return { prev: undefined, next: undefined }
+
   return {
-    prev: index > 0 ? docOrder[index - 1] : undefined,
-    next: index < docOrder.length - 1 ? docOrder[index + 1] : undefined,
+    prev: index > 0 ? docs[index - 1] : undefined,
+    next: index < docs.length - 1 ? docs[index + 1] : undefined,
   }
 }

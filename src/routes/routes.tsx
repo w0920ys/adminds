@@ -23,7 +23,10 @@ export const routes: RouteObject[] = [
       { path: 'get-started/principles', element: <Placeholder title="원칙" /> },
 
       { path: 'foundations', element: <FoundationsOverview /> },
+      { path: 'foundations/design-token', element: <Placeholder title="Design Token" /> },
       { path: 'foundations/color', element: <ColorPage /> },
+      { path: 'foundations/color-role', element: <Placeholder title="Color Role" /> },
+      { path: 'foundations/palette', element: <Placeholder title="Palette" /> },
       { path: 'foundations/typography', element: <TypographyPage /> },
       { path: 'foundations/spacing', element: <SpacingPage /> },
       { path: 'foundations/iconography', element: <IconographyPage /> },

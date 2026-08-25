@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { docOrder, findAdjacent, findSection, sections } from '@/components/layout/nav-config'
+import { docOrder, findAdjacent, findDoc, findSection, sections } from '@/components/layout/nav-config'
 
 describe('sections', () => {
   it('모든 섹션의 첫 LNB 항목은 Overview다', () => {
@@ -47,27 +47,72 @@ describe('findSection', () => {
 })
 
 describe('findAdjacent', () => {
-  it('첫 문서에는 이전이 없다', () => {
-    expect(findAdjacent(docOrder[0].to).prev).toBeUndefined()
-    expect(findAdjacent(docOrder[0].to).next).toBe(docOrder[1])
+  it('Overview에는 이전도 다음도 없다', () => {
+    for (const section of sections) {
+      expect(findAdjacent(section.to), `${section.id} Overview`).toEqual({
+        prev: undefined,
+        next: undefined,
+      })
+    }
   })
 
-  it('마지막 문서에는 다음이 없다', () => {
-    const last = docOrder[docOrder.length - 1]
-    expect(findAdjacent(last.to).next).toBeUndefined()
-    expect(findAdjacent(last.to).prev).toBe(docOrder[docOrder.length - 2])
-  })
-
-  it('섹션 경계를 넘어 이어진다', () => {
+  it('섹션의 첫 문서에는 이전이 없다', () => {
     const foundations = sections.find((s) => s.id === 'foundations')!
-    const lastOfFoundations = foundations.items[foundations.items.length - 1]
-    const next = findAdjacent(lastOfFoundations.to).next
-    expect(next).toBeDefined()
-    expect(findSection(next!.to).id).not.toBe('foundations')
+    const first = foundations.items[1]
+    expect(findAdjacent(first.to).prev).toBeUndefined()
+    expect(findAdjacent(first.to).next).toBe(foundations.items[2])
+  })
+
+  it('섹션의 마지막 문서에는 다음이 없다', () => {
+    const foundations = sections.find((s) => s.id === 'foundations')!
+    const last = foundations.items[foundations.items.length - 1]
+    expect(findAdjacent(last.to).next).toBeUndefined()
+    expect(findAdjacent(last.to).prev).toBe(foundations.items[foundations.items.length - 2])
+  })
+
+  it('섹션 경계를 넘지 않는다', () => {
+    for (const section of sections) {
+      for (const doc of section.items) {
+        const { prev, next } = findAdjacent(doc.to)
+        for (const link of [prev, next]) {
+          if (!link) continue
+          expect(findSection(link.to).id, `${doc.to} -> ${link.to}`).toBe(section.id)
+        }
+      }
+    }
+  })
+
+  it('이동 대상에 Overview가 포함되지 않는다', () => {
+    const overviewPaths = new Set(sections.map((s) => s.to))
+    for (const doc of docOrder) {
+      const { prev, next } = findAdjacent(doc.to)
+      for (const link of [prev, next]) {
+        if (!link) continue
+        expect(overviewPaths.has(link.to), `${doc.to} -> ${link.to}`).toBe(false)
+      }
+    }
   })
 
   it('목록에 없는 경로는 양쪽 모두 없다', () => {
     expect(findAdjacent('/nope')).toEqual({ prev: undefined, next: undefined })
+  })
+})
+
+describe('findDoc', () => {
+  it('경로로 문서를 찾는다', () => {
+    expect(findDoc('/foundations/color')?.label).toBe('Color')
+  })
+
+  it('없는 경로는 undefined다', () => {
+    expect(findDoc('/nope')).toBeUndefined()
+  })
+})
+
+describe('updatedAt', () => {
+  it('모든 문서에 최종 수정일이 있다', () => {
+    for (const doc of docOrder) {
+      expect(doc.updatedAt, doc.to).toMatch(/^\d{4}-\d{2}-\d{2}$/)
+    }
   })
 })
 
