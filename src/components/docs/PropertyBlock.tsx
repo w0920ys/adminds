@@ -35,8 +35,8 @@ export function PropertyBlock({
   return (
     <section className="flex flex-col gap-3">
       <div>
-        <h3 className="text-sm font-semibold">{property.title}</h3>
-        <p className="text-muted-foreground text-xs">{property.description}</p>
+        <h3 className="text-base font-semibold">{property.title}</h3>
+        <p className="text-muted-foreground text-sm">{property.description}</p>
       </div>
 
       {property.display === 'matrix' && cross ? (

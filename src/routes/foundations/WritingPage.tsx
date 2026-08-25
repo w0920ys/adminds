@@ -74,6 +74,15 @@ const EMPTY_EXAMPLES: CopyExample[] = [
   },
 ]
 
+const LANGUAGE_EXAMPLES: CopyExample[] = [
+  {
+    situation: '섹션 제목',
+    dont: 'ANATOMY',
+    do: '구조',
+    why: '구조는 화면에서 클릭하거나 검색할 일이 없는 일반 낱말입니다. 코드 어디에도 이 이름으로 대응하는 식별자가 없으므로 한국어로 씁니다.',
+  },
+]
+
 const NOTATION = [
   { item: '문체', rule: '~합니다체. 행동을 요청할 때만 ~하세요', avoid: '~해 주세요, ~하십시오, ~해요' },
   { item: '숫자', rule: '아라비아 숫자, 천 단위 쉼표 — 12,400', avoid: '1.2만, 일만 이천' },
@@ -93,6 +102,7 @@ const NOTATION = [
   { item: '말줄임표', rule: '누르면 추가 입력을 받는 창이 열릴 때만 — 내보내기…', avoid: '내보내기...' },
   { item: '영문', rule: '기술 고유명사는 원문 그대로 — API, Webhook, OAuth', avoid: '에이피아이, 웹훅' },
   { item: '필수 표시', rule: '필수가 기본. 선택 항목에만 (선택)을 붙인다', avoid: '필수 라벨마다 별표' },
+  { item: '문서 구조', rule: '한국어 — 구조, 속성, 지침', avoid: 'Anatomy, Properties, Guidelines' },
 ]
 
 export function WritingPage() {
@@ -141,6 +151,30 @@ export function WritingPage() {
           지킵니다. 검색이나 필터로 비워진 목록에는 만들기 버튼 대신 조건을 되돌리는 버튼을 둡니다.
         </p>
         <CopyPairs items={EMPTY_EXAMPLES} />
+      </DocSection>
+
+      <DocSection title="한국어와 영어">
+        <p className="text-muted-foreground text-xs">
+          문서의 구조와 설명은 한국어로 씁니다. 다만 두 가지는 영어로 둡니다.
+        </p>
+        <ul className="text-muted-foreground flex list-disc flex-col gap-1.5 pl-5 text-xs">
+          <li>
+            페이지 이름은 영어로 둡니다 — LNB, GNB, URL과 한 벌로 움직이기 때문입니다.
+          </li>
+          <li>
+            코드 식별자는 영어로 둡니다 — 코드와 1:1로 대응해야 찾을 수 있기 때문입니다.{' '}
+            <code className="text-xs">variant</code>, <code className="text-xs">--color-primary</code>,{' '}
+            <code className="text-xs">text-2xs</code>
+          </li>
+        </ul>
+        <p className="text-muted-foreground text-xs">
+          기술 고유명사는 원문 그대로 씁니다 — 아래 표기 규칙의 영문 행을 봅니다.
+        </p>
+        <p className="text-muted-foreground text-xs">
+          판단이 갈리면 화면에서 그 낱말을 클릭하거나 검색할 일이 있는지로 정합니다. 있으면
+          영어, 없으면 한국어입니다.
+        </p>
+        <CopyPairs items={LANGUAGE_EXAMPLES} />
       </DocSection>
 
       <DocSection title="표기 규칙">

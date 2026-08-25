@@ -49,15 +49,15 @@ export function ComponentPage({
         </span>
       </div>
 
-      <DocSection title="Anatomy">
+      <DocSection title="구조">
         <Anatomy meta={meta} preview={preview} />
       </DocSection>
 
-      <DocSection title="Playground">
+      <DocSection title="조합해보기">
         <Playground meta={meta} render={render} />
       </DocSection>
 
-      <DocSection title="Properties">
+      <DocSection title="속성">
         <div className="flex flex-col gap-8">
           {meta.properties.map((property) => (
             <PropertyBlock
@@ -70,7 +70,7 @@ export function ComponentPage({
         </div>
       </DocSection>
 
-      <DocSection title="Guidelines">
+      <DocSection title="지침">
         <div className="flex flex-col gap-3">
           {meta.guidelines.map((guideline) => (
             <GuidelineBlock
@@ -82,11 +82,11 @@ export function ComponentPage({
         </div>
       </DocSection>
 
-      <DocSection title="Usage">
+      <DocSection title="사용 예">
         <ExampleList examples={meta.usage} renderExample={renderExample} />
       </DocSection>
 
-      <DocSection title="Cases">
+      <DocSection title="예외 상황">
         <ExampleList examples={meta.cases} renderExample={renderExample} />
       </DocSection>
 

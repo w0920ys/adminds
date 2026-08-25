@@ -16,8 +16,8 @@ export function GuidelineBlock({
   return (
     <section className="flex flex-col gap-3 rounded-lg border p-4">
       <div>
-        <h3 className="text-sm font-semibold">{guideline.title}</h3>
-        <p className="text-muted-foreground mt-1 text-xs">{guideline.body}</p>
+        <h3 className="text-base font-semibold">{guideline.title}</h3>
+        <p className="text-muted-foreground mt-1 text-sm">{guideline.body}</p>
       </div>
 
       {(doExample || dontExample) && (
