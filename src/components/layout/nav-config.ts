@@ -60,8 +60,9 @@ export const sections: NavSection[] = [
     items: [
       { to: '/components', label: 'Overview', updatedAt: '2026-08-25' },
       { to: '/components/button', label: 'Button', updatedAt: '2026-08-25' },
+      { to: '/components/dropdown-menu', label: 'Dropdown Menu', updatedAt: '2026-08-26' },
       { to: '/components/input', label: 'Input', updatedAt: '2026-08-25' },
-      { to: '/components/select', label: 'Select', updatedAt: '2026-08-25' },
+      { to: '/components/select', label: 'Select', updatedAt: '2026-08-26' },
       { to: '/components/checkbox', label: 'Checkbox', updatedAt: '2026-08-25' },
       { to: '/components/radio', label: 'Radio', updatedAt: '2026-08-26' },
       { to: '/components/switch', label: 'Switch', updatedAt: '2026-08-26' },

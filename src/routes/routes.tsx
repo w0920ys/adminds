@@ -9,6 +9,7 @@ import { ButtonPage } from '@/routes/components/ButtonPage'
 import { CheckboxPage } from '@/routes/components/CheckboxPage'
 import { ComponentsIndex } from '@/routes/components/ComponentsIndex'
 import { DialogPage } from '@/routes/components/DialogPage'
+import { DropdownMenuPage } from '@/routes/components/DropdownMenuPage'
 import { InputPage } from '@/routes/components/InputPage'
 import { PaginationPage } from '@/routes/components/PaginationPage'
 import { RadioPage } from '@/routes/components/RadioPage'
@@ -55,6 +56,7 @@ export const routes: RouteObject[] = [
         children: [
           { index: true, element: <ComponentsIndex /> },
           { path: 'button', element: <ButtonPage /> },
+          { path: 'dropdown-menu', element: <DropdownMenuPage /> },
           { path: 'input', element: <InputPage /> },
           { path: 'select', element: <SelectPage /> },
           { path: 'checkbox', element: <CheckboxPage /> },

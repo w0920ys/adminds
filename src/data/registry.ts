@@ -319,7 +319,7 @@ export const components: ComponentMeta[] = [
     status: 'stable',
     addedIn: 'v0.7.0',
     changedIn: 'v0.8.0',
-    purpose: '여러 값 중 하나를 고르게 한다. 선택지가 둘셋뿐이면 Radio를 쓴다.',
+    purpose: '여러 값 중 하나를 고르게 한다. 선택지가 둘셋뿐이면 Radio를, 동작을 실행하는 자리에는 Dropdown Menu를 쓴다.',
     anatomy: [
       {
         part: 'trigger',
@@ -385,6 +385,13 @@ export const components: ComponentMeta[] = [
         body: '항목 순서에 뜻을 담습니다. 빈도나 크기 순이 알파벳순보다 나은 자리가 많습니다.',
         do: ['빈도나 단계가 있으면 그 순서를 따른다', '자주 쓰는 항목을 위로 올린다'],
         dont: ['뜻 없이 알파벳순으로만 늘어놓지 않는다'],
+      },
+      {
+        id: 'select-vs-dropdown-menu',
+        title: 'Select vs Dropdown Menu',
+        body: 'Select와 Dropdown Menu를 바꿔 쓰지 않습니다. Select는 값을 고르고 Dropdown Menu는 동작을 실행합니다.',
+        do: ['상태나 분류처럼 값을 고르는 자리에는 Select를 쓴다', '삭제·수정처럼 동작을 실행하는 자리에는 Dropdown Menu를 쓴다'],
+        dont: ['동작을 실행하는 자리에 Select를 쓰지 않는다'],
       },
       {
         id: 'shared-rules',
@@ -1392,6 +1399,72 @@ export const components: ComponentMeta[] = [
       { id: 'form-inside', title: '안에 폼이 있는 경우', note: '바깥 클릭으로 닫히지 않고 취소 버튼으로만 닫힌다' },
       { id: 'stacked-dialogs', title: '겹쳐 열리는 경우', note: '안쪽 Dialog가 위에 쌓이고 닫으면 바깥 Dialog로 돌아간다' },
       { id: 'narrow-screen', title: '좁은 화면', note: '가장자리에 여백을 두고 너비를 채운다' },
+    ],
+    verified: false,
+  },
+  {
+    id: 'dropdown-menu',
+    name: 'Dropdown Menu',
+    category: 'actions',
+    status: 'stable',
+    addedIn: 'v0.8.0',
+    changedIn: 'v0.8.0',
+    purpose: '한 자리에서 여러 동작을 고르게 한다. 값을 고르는 자리에는 Select를 쓴다.',
+    anatomy: [
+      {
+        part: 'trigger',
+        label: 'Trigger',
+        note: "누르면 트리거 아래에 목록이 뜬다. bg-popover, 테두리, radius-md, 쌓임 순서는 z-popover. 각 항목은 text-sm이고 포커스되면 bg-accent, 위험한 항목은 text-destructive다. 위험한 항목은 구분선(bg-border, 1px) 아래로 모은다. Select와 달리 고른 항목에 Check 표시가 남지 않는다 — 여기서는 값을 고르는 것이 아니라 동작을 실행하는 것이고, 실행되면 메뉴가 닫힌다. Radix DropdownMenu는 기본이 modal이라(RemoveScroll·FocusScope·hideOthers) 열린 목록은 구조도 무대에 담지 않는다",
+      },
+    ],
+    properties: [
+      {
+        name: 'state',
+        title: 'State',
+        description: '트리거의 상호작용 상태를 나타낸다. 열림·정렬은 열려야만 보이는 값이라 이 격자에는 없다 — Usage에서 실제로 눌러서 본다.',
+        display: 'grid',
+        options: [
+          { value: 'default' },
+          { value: 'hover', note: '포인터가 올라간 동안' },
+          { value: 'focus', note: '키보드 포커스. 항상 보여야 한다' },
+          { value: 'disabled', note: '지금 열 수 없음' },
+        ],
+      },
+    ],
+    guidelines: [
+      {
+        id: 'select-for-values',
+        title: 'Select for values',
+        body: '값을 고르는 자리에는 Dropdown Menu 대신 Select를 씁니다. Dropdown Menu의 항목은 눌리는 순간 실행되고 메뉴가 닫힙니다.',
+        do: ['상태나 분류처럼 값을 고르는 자리에는 Select를 쓴다', '삭제·수정처럼 동작을 실행하는 자리에는 Dropdown Menu를 쓴다'],
+        dont: ['값을 고르는 용도로 Dropdown Menu를 쓰지 않는다'],
+      },
+      {
+        id: 'destructive-grouping',
+        title: 'Destructive grouping',
+        body: '위험한 항목은 구분선 아래로 모으고 text-destructive를 씁니다. 일반 동작 사이에 섞여 있으면 실수로 누르기 쉽습니다.',
+        do: ['위험한 항목을 구분선 아래로 모은다', '위험한 항목에 text-destructive를 쓴다'],
+        dont: ['위험한 항목을 일반 항목 사이에 섞어 두지 않는다'],
+      },
+      {
+        id: 'few-items-buttons',
+        title: 'Few items, buttons',
+        body: '항목이 셋 이하면 Dropdown Menu 대신 버튼을 나란히 두는 편이 낫습니다. 누르는 수가 하나 줄고 선택지가 바로 보입니다.',
+        do: ['항목이 셋 이하면 버튼을 나란히 둔다'],
+        dont: ['항목이 둘뿐인데 그것을 감추려고 Dropdown Menu로 접지 않는다'],
+      },
+    ],
+    usage: [
+      { id: 'row-actions', title: '표 행의 더보기', note: '행마다 반복되는 동작을 아이콘 버튼 뒤에 모은다' },
+      { id: 'page-header-actions', title: '페이지 헤더의 보조 동작', note: '주 동작 옆에 부수적인 동작을 모은다. align="end"로 오른쪽 끝에 맞춘다' },
+      { id: 'bulk-actions', title: '대량 작업', note: '선택한 행에 적용할 동작을 모은다' },
+      { id: 'account-menu', title: '계정 메뉴', note: '설정·로그아웃처럼 계정에 관한 동작을 모은다' },
+    ],
+    cases: [
+      { id: 'many-items', title: '항목이 아주 많은 경우', note: '목록이 뷰포트를 넘으면 목록 안에서 스크롤된다' },
+      { id: 'bottom-of-screen', title: '화면 아래쪽에서 열리는 경우', note: '자리가 없으면 위쪽으로 뒤집혀 열린다' },
+      { id: 'destructive-only', title: '위험 항목만 있는 경우', note: '구분선 없이 항목 전체가 text-destructive를 쓴다' },
+      { id: 'narrow-screen', title: '좁은 화면', note: '트리거가 줄어들지 않고 목록 너비는 트리거와 무관하게 유지된다' },
     ],
     verified: false,
   },

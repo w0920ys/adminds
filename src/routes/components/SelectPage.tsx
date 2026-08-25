@@ -155,6 +155,29 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
         </Select>
       )
 
+    case 'select-vs-dropdown-menu':
+      return kind === 'do' ? (
+        <Select defaultValue="active">
+          <SelectTrigger id="pg-dropdown-do" className="w-32">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <StatusItems />
+          </SelectContent>
+        </Select>
+      ) : (
+        <Select>
+          <SelectTrigger id="pg-dropdown-dont" className="w-32">
+            <SelectValue placeholder="동작 선택" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="edit">수정</SelectItem>
+            <SelectItem value="duplicate">복제</SelectItem>
+            <SelectItem value="delete">삭제</SelectItem>
+          </SelectContent>
+        </Select>
+      )
+
     default:
       return null
   }
