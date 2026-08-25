@@ -31,7 +31,7 @@ function StatusItems() {
 function renderSelect(options: RenderOptions) {
   const { size, state, width } = options
   return (
-    <Select disabled={state === 'disabled'} defaultOpen={state === 'open'}>
+    <Select disabled={state === 'disabled'}>
       <SelectTrigger
         size={size as SelectSize}
         aria-invalid={state === 'invalid' || undefined}
@@ -316,24 +316,31 @@ function renderExample(exampleId: string): ReactNode {
 }
 
 /**
- * Anatomy 무대는 preview의 DOM 서브트리 안에서 data-anatomy를 찾는다.
- * SelectContent가 기본값대로 document.body에 포탈되면 목록·항목·선택 표시는
- * 무대 바깥에 렌더링되어 자동 지시선이 그 부위를 찾지 못한다.
- * 무대 안의 노드를 Portal 컨테이너로 지정해 한 인스턴스 전체가 무대 서브트리
- * 안에 머물게 한다.
+ * Anatomy 무대는 preview의 DOM 서브트리 안에서 각 부위 표시 속성을 찾아
+ * 지시선을 그린다. SelectContent가 기본값대로 document.body에 포탈되면
+ * 목록·항목은 무대 바깥에 렌더링되어 지시선이 그 부위를 찾지 못한다.
+ * 무대 안의 노드를 Portal 컨테이너로 지정해 한 인스턴스 전체가 무대
+ * 서브트리 안에 머물게 한다.
  */
 function AnatomyPreview() {
   const [container, setContainer] = useState<HTMLDivElement | null>(null)
 
   return (
-    <div className="relative w-52">
+    /*
+     * Anatomy 무대는 preview를 grid place-items-center로 한가운데 놓는다.
+     * 트리거가 무대 중앙에 있으면 열린 목록이 아래로 펼쳐질 자리가 모자라
+     * Radix가 위로 열어 버린다 — 무대 위 경계를 뚫고 나간다.
+     * self-start로 트리거를 무대 위쪽에 붙여 목록이 펼쳐질 자리를 아래에
+     * 확보하고, side="bottom"으로 아래쪽으로 열리는 방향을 명시한다.
+     */
+    <div className="relative w-52 self-start">
       <div ref={setContainer} className="contents" />
       {container && (
         <Select defaultValue="active" defaultOpen>
           <SelectTrigger data-anatomy="trigger" className="w-52">
             <SelectValue data-anatomy="value" />
           </SelectTrigger>
-          <SelectContent data-anatomy="list" container={container}>
+          <SelectContent data-anatomy="list" container={container} side="bottom">
             <SelectItem value="all">전체</SelectItem>
             <SelectItem data-anatomy="item" value="active">
               활성

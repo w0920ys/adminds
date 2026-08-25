@@ -319,17 +319,12 @@ export const components: ComponentMeta[] = [
       {
         part: 'trigger',
         label: 'Trigger',
-        note: '테두리·높이·포커스 링은 Input과 같은 토큰을 쓴다. 나란히 놓여도 어긋나지 않는다',
+        note: '테두리·높이·포커스 링은 Input과 같은 토큰을 쓴다. 나란히 놓여도 어긋나지 않는다. 오른쪽 끝에 16×16 ChevronDown이 열림 여부와 무관하게 항상 보인다',
       },
       {
         part: 'value',
         label: 'Value',
         note: '선택된 항목의 문구. 아직 고르지 않았으면 이 자리에 자리표시자가 대신 보인다',
-      },
-      {
-        part: 'arrow',
-        label: 'Arrow',
-        note: '16×16 ChevronDown. 열림 여부와 무관하게 항상 보인다',
       },
       {
         part: 'list',
@@ -340,13 +335,7 @@ export const components: ComponentMeta[] = [
       {
         part: 'item',
         label: 'Item',
-        note: '목록의 한 줄. text-sm. 포커스되면 bg-accent',
-        optional: true,
-      },
-      {
-        part: 'selected-indicator',
-        label: 'Selected indicator',
-        note: '고른 항목에 표시되는 Check 아이콘. 16×16',
+        note: '목록의 한 줄. text-sm. 포커스되면 bg-accent. 고른 항목에는 오른쪽에 16×16 Check 아이콘이 함께 보인다',
         optional: true,
       },
     ],
@@ -361,13 +350,12 @@ export const components: ComponentMeta[] = [
       {
         name: 'state',
         title: 'State',
-        description: '상호작용과 열림 상태를 나타낸다.',
+        description: '상호작용 상태를 나타낸다. 열린 목록은 Anatomy에서 이미 보여준다.',
         display: 'grid',
         options: [
           { value: 'default' },
           { value: 'hover', note: '포인터가 올라간 동안' },
           { value: 'focus', note: '키보드 포커스. 항상 보여야 한다' },
-          { value: 'open', note: '목록이 펼쳐진 상태. 전시하지 않으면 컴포넌트의 절반이 문서에서 빠진다' },
           { value: 'disabled', note: '지금 선택을 바꿀 수 없다' },
           { value: 'invalid', note: 'aria-invalid로 나타낸다. 테두리 색과 함께 문구를 쓴다' },
         ],
