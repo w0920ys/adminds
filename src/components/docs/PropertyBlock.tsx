@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 import { HeadingAnchor } from '@/components/docs/HeadingAnchor'
-import type { ComponentMeta, ComponentProperty, PropertyOption } from '@/data/registry'
+import type { ComponentMeta, ComponentProperty } from '@/data/registry'
 import { getProperty } from '@/data/registry'
 import { cn } from '@/lib/utils'
 
@@ -10,10 +10,6 @@ export type RenderOptions = Record<string, string>
 const FORCE_CLASS: Record<string, string> = {
   hover: 'state-hover',
   focus: 'state-focus',
-}
-
-function optionLabel(option: PropertyOption) {
-  return option.label ?? option.value
 }
 
 /** 축의 첫 옵션들로 기본 조합을 만든다. 격자의 각 칸은 여기서 한 축만 바꾼다. */
@@ -53,7 +49,7 @@ export function PropertyBlock({
                 </th>
                 {cross.options.map((option) => (
                   <th key={option.value} scope="col" className="px-3 py-2 font-bold">
-                    {optionLabel(option)}
+                    {option.value}
                   </th>
                 ))}
               </tr>
@@ -65,7 +61,7 @@ export function PropertyBlock({
                     scope="row"
                     className="bg-surface sticky left-0 border-t px-3 py-3 text-sm font-medium"
                   >
-                    {optionLabel(option)}
+                    {option.value}
                     {option.note && (
                       <span className="text-muted-foreground block text-xs font-normal">
                         {option.note}
@@ -96,7 +92,7 @@ export function PropertyBlock({
         >
           {property.options.map((option) => (
             <div key={option.value} className="flex flex-col gap-2">
-              <p className="text-muted-foreground text-xs font-bold">{optionLabel(option)}</p>
+              <p className="text-muted-foreground text-xs font-bold">{option.value}</p>
               <div
                 className={cn(
                   'flex min-h-10 items-center',

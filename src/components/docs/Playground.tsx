@@ -60,7 +60,7 @@ export function Playground({
                         : 'hover:bg-accent/60',
                     )}
                   >
-                    {option.label ?? option.value}
+                    {option.value}
                   </button>
                 )
               })}

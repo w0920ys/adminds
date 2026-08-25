@@ -20,8 +20,6 @@ export type AnatomyPart = {
 
 export type PropertyOption = {
   value: string
-  /** 표시용. 없으면 value를 쓴다 */
-  label?: string
   /** 이 옵션을 언제 쓰는가 */
   note?: string
 }
