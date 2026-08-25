@@ -25,8 +25,8 @@ export const sections: NavSection[] = [
     to: '/',
     items: [
       { to: '/', label: 'Overview', updatedAt: '2026-08-25' },
-      { to: '/get-started/install', label: '설치', updatedAt: '2026-08-25' },
-      { to: '/get-started/principles', label: '원칙', updatedAt: '2026-08-25' },
+      { to: '/get-started/install', label: 'Install', updatedAt: '2026-08-25' },
+      { to: '/get-started/principles', label: 'Principles', updatedAt: '2026-08-25' },
     ],
   },
   {

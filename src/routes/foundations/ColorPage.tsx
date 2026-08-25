@@ -33,7 +33,7 @@ export function ColorPage() {
       title="Color"
       description="색은 blue-500 같은 원시 이름이 아니라 primary·destructive 같은 역할 이름으로 씁니다. 역할로 쓰면 라이트·다크 전환과 브랜드 교체가 토큰 한 곳에서 끝납니다."
     >
-      <DocSection title="개요">
+      <DocSection title="Overview">
         <p className="text-muted-foreground text-sm">
           역할 이름으로 색을 쓰는 규칙을 정합니다. 개별 색상값의 원본은{' '}
           <Link to="/foundations/palette" className="underline underline-offset-2">
@@ -74,14 +74,14 @@ export function ColorPage() {
         ),
       )}
 
-      <DocSection title="전체 토큰">
+      <DocSection title="All tokens">
         <p className="text-muted-foreground text-xs">
           아래 값은 지금 적용된 테마에서 실측한 것입니다. 테마를 바꾸면 값도 바뀝니다.
         </p>
         <TokenTable rows={rows} />
       </DocSection>
 
-      <DocSection title="사용 규칙">
+      <DocSection title="Guidelines">
         <DoDont
           do={[
             '역할 토큰(primary, destructive)을 쓴다',

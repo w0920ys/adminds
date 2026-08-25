@@ -74,15 +74,6 @@ const EMPTY_EXAMPLES: CopyExample[] = [
   },
 ]
 
-const LANGUAGE_EXAMPLES: CopyExample[] = [
-  {
-    situation: '섹션 제목',
-    dont: 'ANATOMY',
-    do: '구조',
-    why: '구조는 화면에서 클릭하거나 검색할 일이 없는 일반 낱말입니다. 코드 어디에도 이 이름으로 대응하는 식별자가 없으므로 한국어로 씁니다.',
-  },
-]
-
 const NOTATION = [
   { item: '문체', rule: '~합니다체. 행동을 요청할 때만 ~하세요', avoid: '~해 주세요, ~하십시오, ~해요' },
   { item: '숫자', rule: '아라비아 숫자, 천 단위 쉼표 — 12,400', avoid: '1.2만, 일만 이천' },
@@ -103,16 +94,16 @@ const NOTATION = [
   { item: '영문', rule: '기술 고유명사는 원문 그대로 — API, Webhook, OAuth', avoid: '에이피아이, 웹훅' },
   { item: '필수 표시', rule: '필수가 기본. 선택 항목에만 (선택)을 붙인다', avoid: '필수 라벨마다 별표' },
   { item: '오류', rule: '오류', avoid: '에러' },
-  { item: '문서 구조', rule: '한국어 — 구조, 속성, 지침', avoid: 'Anatomy, Properties, Guidelines' },
+  { item: '문서 구조', rule: '영문 — Anatomy, Properties, Guidelines', avoid: '구조, 속성, 지침' },
 ]
 
 export function WritingPage() {
   return (
     <DocPage
       title="Writing"
-      description="화면에 들어가는 문구를 매번 새로 고민하지 않기 위한 규칙입니다. 판단이 갈릴 만한 자리에서는 이 시스템의 표기를 하나로 정해 두었으니, 고민이 생기면 아래 표기 규칙을 먼저 봅니다."
+      description="화면에 들어가는 문구를 매번 새로 고민하지 않기 위한 규칙입니다. 판단이 갈릴 만한 자리에서는 이 시스템의 표기를 하나로 정해 두었으니, 고민이 생기면 아래 Notation을 먼저 봅니다."
     >
-      <DocSection title="개요">
+      <DocSection title="Overview">
         <p className="text-muted-foreground text-sm">
           버튼 라벨, 오류 메시지 같은 실제 문구의 표기 규칙을 정합니다. 어떤 태도와 톤으로
           말할지는 Voice and Tone에서 다루고, 이 문서는 그 톤을 구체적 문장으로 옮기는 표기만
@@ -120,7 +111,7 @@ export function WritingPage() {
         </p>
       </DocSection>
 
-      <DocSection title="버튼 라벨">
+      <DocSection title="Button labels">
         <p className="text-muted-foreground text-xs">
           동사로 시작하고 누른 뒤의 결과를 말합니다. 다이얼로그의 확인 버튼은 제목에 쓴 동사와 같은 낱말을
           씁니다. 길이는 두 자에서 여섯 자 사이로 두고, 아이콘 전용 버튼의 aria-label에는 같은 문구를
@@ -129,7 +120,7 @@ export function WritingPage() {
         <CopyPairs items={BUTTON_EXAMPLES} />
       </DocSection>
 
-      <DocSection title="폼 라벨과 도움말">
+      <DocSection title="Form labels">
         <p className="text-muted-foreground text-xs">
           라벨은 조사 없는 명사입니다. 도움말은 입력 전에 필요한 정보만 담고, 한 줄을 넘기지 않습니다. 어드민
           폼은 대부분 필수이므로 별표를 다는 대신 선택 항목에만 (선택)을 붙입니다.
@@ -137,7 +128,7 @@ export function WritingPage() {
         <CopyPairs items={FORM_EXAMPLES} />
       </DocSection>
 
-      <DocSection title="오류 메시지">
+      <DocSection title="Error messages">
         <p className="text-muted-foreground text-xs">
           무엇이 잘못됐는지와 어떻게 고치는지를 한 문장씩 씁니다. 필드 오류는 필드 바로 아래에, 요청 오류는
           토스트나 화면 상단 배너에 둡니다. 예외 이름과 스택은 화면에 노출하지 않습니다 — 지원 요청에 필요한
@@ -146,7 +137,7 @@ export function WritingPage() {
         <CopyPairs items={ERROR_EXAMPLES} />
       </DocSection>
 
-      <DocSection title="빈 상태">
+      <DocSection title="Empty states">
         <p className="text-muted-foreground text-xs">
           제목은 없다는 사실, 설명은 채우는 방법, 버튼은 다음 행동 하나. 이 세 줄 구조를 모든 빈 상태에서
           지킵니다. 검색이나 필터로 비워진 목록에는 만들기 버튼 대신 조건을 되돌리는 버튼을 둡니다.
@@ -154,31 +145,21 @@ export function WritingPage() {
         <CopyPairs items={EMPTY_EXAMPLES} />
       </DocSection>
 
-      <DocSection title="한국어와 영어">
+      <DocSection title="Language">
         <p className="text-muted-foreground text-xs">
-          문서의 구조와 설명은 한국어로 씁니다. 다만 두 가지는 영어로 둡니다.
+          구조를 가리키는 이름은 영문으로, 설명은 한국어로 씁니다.
         </p>
         <ul className="text-muted-foreground flex list-disc flex-col gap-1.5 pl-5 text-xs">
           <li>
-            페이지 이름은 영어로 둡니다 — LNB, GNB, URL과 한 벌로 움직이기 때문입니다.
+            영문으로 두는 것 — 섹션 제목, 페이지 이름, 버튼과 배지 같은 UI 라벨, 속성 이름,
+            코드 식별자
           </li>
-          <li>
-            코드 식별자는 영어로 둡니다 — 코드와 1:1로 대응해야 찾을 수 있기 때문입니다.{' '}
-            <code className="text-xs">variant</code>, <code className="text-xs">--color-primary</code>,{' '}
-            <code className="text-xs">text-2xs</code>
-          </li>
+          <li>한국어로 두는 것 — 설명문, 표 안의 서술, 지침의 규칙 문장</li>
+          <li>이미 영문으로 굳은 용어는 그대로 둡니다. 그 용어를 살린 채 나머지를 한국어로 풉니다</li>
         </ul>
-        <p className="text-muted-foreground text-xs">
-          기술 고유명사는 원문 그대로 씁니다 — 아래 표기 규칙의 영문 행을 봅니다.
-        </p>
-        <p className="text-muted-foreground text-xs">
-          판단이 갈리면 화면에서 그 낱말을 클릭하거나 검색할 일이 있는지로 정합니다. 있으면
-          영어, 없으면 한국어입니다.
-        </p>
-        <CopyPairs items={LANGUAGE_EXAMPLES} />
       </DocSection>
 
-      <DocSection title="표기 규칙">
+      <DocSection title="Notation">
         <p className="text-muted-foreground text-xs">
           아래는 이 시스템에서 하나로 정한 표기입니다. 취향 문제로 보이더라도 화면마다 다르게 쓰면 같은
           데이터가 다른 것처럼 보입니다.
@@ -201,7 +182,7 @@ export function WritingPage() {
         </div>
       </DocSection>
 
-      <DocSection title="사용 규칙">
+      <DocSection title="Guidelines">
         <DoDont
           do={[
             '버튼 라벨은 동사로 시작하고 결과를 말한다',

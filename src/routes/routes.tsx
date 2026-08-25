@@ -22,8 +22,8 @@ export const routes: RouteObject[] = [
     element: <AppShell />,
     children: [
       { index: true, element: <Placeholder title="Get started" /> },
-      { path: 'get-started/install', element: <Placeholder title="설치" /> },
-      { path: 'get-started/principles', element: <Placeholder title="원칙" /> },
+      { path: 'get-started/install', element: <Placeholder title="Install" /> },
+      { path: 'get-started/principles', element: <Placeholder title="Principles" /> },
 
       { path: 'foundations', element: <FoundationsOverview /> },
       { path: 'foundations/design-token', element: <DesignTokenPage /> },

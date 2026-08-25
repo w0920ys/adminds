@@ -186,7 +186,7 @@ export function PalettePage() {
       title="Palette"
       description="시맨틱 토큰이 가리키는 원시 색의 원본입니다. Tailwind v4의 기본 팔레트에서 이 시스템이 쓰는 색상만 골라 단계별로 늘어놓았습니다."
     >
-      <DocSection title="개요">
+      <DocSection title="Overview">
         <p className="text-muted-foreground text-sm">
           개별 색상값이 어디서 왔는지 확인하는 곳입니다. 여기 있는 색은 원시 값이고 역할이
           없습니다. 컴포넌트는 이 값을 직접 쓰지 않고 시맨틱 토큰을 거칩니다 — 원시 값을 화면에
@@ -209,7 +209,7 @@ export function PalettePage() {
         </p>
       </DocSection>
 
-      <DocSection title="스케일">
+      <DocSection title="Scale">
         <p className="text-muted-foreground text-sm">
           세로는 단계, 가로는 색상입니다. 단계는 밝기 계층이고 숫자가 커질수록 어두워집니다.
           같은 단계끼리는 밝기가 비슷해 색상을 바꿔 놓아도 화면의 명암 구조가 흔들리지 않습니다.
@@ -265,7 +265,7 @@ export function PalettePage() {
         </div>
       </DocSection>
 
-      <DocSection title="시맨틱 연결">
+      <DocSection title="Semantic mapping">
         <p className="text-muted-foreground text-sm">
           지금 테마의 시맨틱 토큰을 hex로 바꿔 위 팔레트와 비교하고, 가장 가까운 원시 색을 찾은
           결과입니다. 손으로 적은 대응표가 아니라 볼 때마다 다시 계산하는 값이라 토큰을 고치면
@@ -330,7 +330,7 @@ export function PalettePage() {
         </p>
       </DocSection>
 
-      <DocSection title="사용 규칙">
+      <DocSection title="Guidelines">
         <DoDont
           do={[
             '새 색이 필요하면 팔레트 단계에서 고르고 시맨틱 토큰으로 등록한다',

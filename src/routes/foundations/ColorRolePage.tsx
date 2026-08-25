@@ -34,7 +34,7 @@ export const BRANCHES: { id: string; title: string; lead: string }[] = [
   {
     id: 'surface',
     title: '표면',
-    lead: '무언가를 담는 바닥입니다. 이 갈래끼리는 색조를 바꾸지 않고 밝기 차이만으로 층을 만듭니다. 새 면이 필요하면 새 토큰을 만들기 전에 아래 위계에서 그 높이를 이미 맡은 토큰이 있는지 봅니다.',
+    lead: '무언가를 담는 바닥입니다. 이 갈래끼리는 색조를 바꾸지 않고 밝기 차이만으로 층을 만듭니다. 새 면이 필요하면 새 토큰을 만들기 전에 아래 Hierarchy에서 그 높이를 이미 맡은 토큰이 있는지 봅니다.',
   },
   {
     id: 'foreground',
@@ -185,7 +185,7 @@ export function ColorRolePage() {
       title="Color Role"
       description={`색 토큰을 ${BRANCHES.length}개 갈래로 나누고 갈래 사이의 위계를 정합니다. 어느 색을 쓸지 고민하기 전에, 그 색이 무슨 역할을 맡는지부터 정합니다.`}
     >
-      <DocSection title="개요">
+      <DocSection title="Overview">
         <p className="text-muted-foreground text-sm">
           역할 사이의 위계와 짝 규칙을 정합니다. 개별 색상값의 원본과 시맨틱 토큰이 어느 원시
           값을 가리키는지는{' '}
@@ -243,7 +243,7 @@ export function ColorRolePage() {
         </div>
       </DocSection>
 
-      <DocSection title="위계">
+      <DocSection title="Hierarchy">
         <p className="text-muted-foreground text-sm">
           표면은 바닥에서 위로 네 층입니다. 층이 올라갈수록 바닥에서 멀어지고, 같은 높이에
           값이 둘이면 층이 무너집니다. 새 면을 만들 때는 새 토큰을 만들기 전에 이 순서에서
@@ -260,7 +260,7 @@ export function ColorRolePage() {
         </p>
       </DocSection>
 
-      <DocSection title="짝 규칙">
+      <DocSection title="Pairing">
         <p className="text-muted-foreground text-sm">
           배경 토큰을 쓰면 글자색은 그 배경의 짝을 씁니다. 짝은 이름으로 찾습니다 —
           배경 이름 뒤에 <code>-foreground</code>를 붙인 토큰이 있으면 그것이 짝입니다.
@@ -332,7 +332,7 @@ export function ColorRolePage() {
         </p>
       </DocSection>
 
-      <DocSection title="상태 색의 뜻">
+      <DocSection title="Status colors">
         <p className="text-muted-foreground text-sm">
           상태 색은 뜻이 정해져 있습니다. 뜻과 다르게 쓰면 그 색이 나올 때마다 사용자가 뜻을
           다시 확인해야 하고, 결국 색을 읽지 않게 됩니다.
@@ -370,7 +370,7 @@ export function ColorRolePage() {
         </p>
       </DocSection>
 
-      <DocSection title="사용 규칙">
+      <DocSection title="Guidelines">
         <DoDont
           do={[
             '배경 토큰을 쓰면 그 짝이 되는 전경을 함께 쓴다',

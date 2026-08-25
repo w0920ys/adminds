@@ -109,7 +109,7 @@ export function TableOfContents() {
       aria-label="이 문서의 목차"
       className="hidden w-56 shrink-0 overflow-y-auto py-8 pr-6 xl:block"
     >
-      <p className="text-muted-foreground mb-3 text-sm font-semibold">목차</p>
+      <p className="text-muted-foreground mb-3 text-sm font-semibold">Contents</p>
       <ul className="flex flex-col gap-1">
         {headings.map((heading) => (
           <li key={heading.id}>

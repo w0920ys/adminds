@@ -120,7 +120,7 @@ export function DesignTokenPage() {
       title="Design Token"
       description="토큰은 원시값에서 시작해 역할 이름을 거쳐 유틸리티 클래스로 내려옵니다. 이 문서는 그 층과 이름 규칙, 지금 정의된 토큰 전체를 담습니다."
     >
-      <DocSection title="개요">
+      <DocSection title="Overview">
         <p className="text-muted-foreground text-sm">
           토큰이 어떤 층으로 나뉘고 이름의 각 부분이 무엇을 뜻하는지 정합니다. 개별 색을 무엇으로
           할지는 Color와 Palette에서 다루고, 이 문서는 그 값이 어떤 이름으로 어디에 적히는지만
@@ -128,7 +128,7 @@ export function DesignTokenPage() {
         </p>
       </DocSection>
 
-      <DocSection title="세 개의 층">
+      <DocSection title="Layers">
         <div className="divide-y rounded-lg border">
           {LAYERS.map((layer) => (
             <div key={layer.step} className="flex flex-wrap gap-x-4 gap-y-1 p-4 md:flex-nowrap">
@@ -157,7 +157,7 @@ export function DesignTokenPage() {
         </p>
       </DocSection>
 
-      <DocSection title="이름 규칙">
+      <DocSection title="Naming">
         <p className="text-muted-foreground text-xs">
           이름은 접두사와 역할로 이루어집니다. 접두사가 그 값이 어떤 종류인지를, 뒤에 붙는 낱말이
           어디에 쓰이는지를 말합니다. 값을 가리키는 낱말은 이름에 넣지 않습니다.
@@ -195,7 +195,7 @@ export function DesignTokenPage() {
         </p>
       </DocSection>
 
-      <DocSection title="전체 토큰">
+      <DocSection title="All tokens">
         <p className="text-muted-foreground text-xs">
           아래 목록은 tokens.css를 읽어 만들고, 값은 지금 적용된 테마에서 실측한 것입니다. 테마를
           바꾸면 색 값도 함께 바뀝니다. 값이나 변수 이름에 마우스를 올린 뒤 누르면 복사됩니다.
@@ -215,13 +215,13 @@ export function DesignTokenPage() {
         ))}
       </DocSection>
 
-      <DocSection title="사용 규칙">
+      <DocSection title="Guidelines">
         <DoDont
           do={[
             '컴포넌트에서는 역할 이름에서 나온 유틸리티만 쓴다',
             '배경 토큰을 쓰면 짝이 되는 -foreground를 글자색으로 쓴다',
             '테마에 따라 달라지는 값은 라이트와 다크에 같은 이름으로 한 벌씩 둔다',
-            '새 토큰의 이름은 위 이름 규칙의 형태에 맞춰 짓는다',
+            '새 토큰의 이름은 위 Naming의 형태에 맞춰 짓는다',
           ]}
           dont={[
             '컴포넌트에 색·간격·모서리 값을 직접 적지 않는다',

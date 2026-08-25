@@ -46,7 +46,7 @@ export function IconographyPage() {
       title="Iconography"
       description="아이콘은 글자를 대신하지 않습니다. 이미 읽은 라벨을 다음에 더 빨리 찾게 해주는 표시입니다. 그래서 같은 뜻에 화면마다 다른 아이콘을 쓰면 읽는 속도가 오히려 느려집니다."
     >
-      <DocSection title="개요">
+      <DocSection title="Overview">
         <p className="text-muted-foreground text-sm">
           아이콘의 크기와 스트로크, 뜻과 아이콘을 짝짓는 규칙을 정합니다. 아이콘 옆에 붙는
           문구의 표기는 Writing에서, 아이콘 주변 여백은 Spacing에서 다룹니다. 새 아이콘을
@@ -54,7 +54,7 @@ export function IconographyPage() {
         </p>
       </DocSection>
 
-      <DocSection title="크기">
+      <DocSection title="Size">
         <p className="text-muted-foreground text-xs">
           크기는 아이콘이 아니라 옆에 붙는 글자가 정합니다. 아래 다섯 단계 밖의 값은 쓰지 않습니다.
         </p>
@@ -74,7 +74,7 @@ export function IconographyPage() {
         </div>
       </DocSection>
 
-      <DocSection title="스트로크">
+      <DocSection title="Stroke">
         <p className="text-muted-foreground text-xs">
           기본은 2입니다. strokeWidth를 코드에 적었다면 왜 적었는지 한 줄로 말할 수 있어야 하고, 말할 수
           없으면 지웁니다.
@@ -96,7 +96,7 @@ export function IconographyPage() {
         </div>
       </DocSection>
 
-      <DocSection title="의미의 일관성">
+      <DocSection title="Consistency">
         <p className="text-muted-foreground text-xs">
           아래 매핑은 고정입니다. 새 화면에서 뜻이 겹치면 새 아이콘을 고르지 말고 이 표에서 찾습니다. 표에
           없는 뜻이 생기면 아이콘부터 고르지 말고 이 표에 한 줄을 먼저 추가합니다.
@@ -120,7 +120,7 @@ export function IconographyPage() {
         </p>
       </DocSection>
 
-      <DocSection title="접근성">
+      <DocSection title="Accessibility">
         <p className="text-muted-foreground text-xs">
           아이콘은 스크린리더에 아무 이름도 주지 않습니다. 둘 중 하나는 반드시 붙습니다 — 아이콘이 유일한
           라벨이면 <code className="text-xs">aria-label</code>, 옆에 글자가 있으면{' '}
@@ -159,7 +159,7 @@ export function IconographyPage() {
         </div>
       </DocSection>
 
-      <DocSection title="사용 규칙">
+      <DocSection title="Guidelines">
         <DoDont
           do={[
             '같은 뜻에는 매핑 표의 아이콘을 그대로 쓴다',

@@ -70,7 +70,7 @@ export function VoiceAndTonePage() {
       title="Voice and Tone"
       description="이 어드민은 운영 도구입니다. 사용자는 무언가를 하러 왔고, 문장은 그 일을 방해하지 않는 선에서 필요한 것만 말합니다. 목소리는 어느 화면에서나 같고, 톤만 상황에 따라 조절합니다."
     >
-      <DocSection title="개요">
+      <DocSection title="Overview">
         <p className="text-muted-foreground text-sm">
           이 시스템이 사용자에게 말하는 태도와 상황별 톤의 원칙을 정합니다. 문장 부호나 종결
           어미 같은 실제 표기 규칙은 Writing에서 다룹니다. 새 문구를 쓰기 전에 어떤 태도로
@@ -78,7 +78,7 @@ export function VoiceAndTonePage() {
         </p>
       </DocSection>
 
-      <DocSection title="원칙">
+      <DocSection title="Principles">
         <div className="grid gap-3 md:grid-cols-3">
           {PRINCIPLES.map((principle, index) => (
             <div key={principle.title} className="flex flex-col gap-2 rounded-lg border p-4">
@@ -92,7 +92,7 @@ export function VoiceAndTonePage() {
         </div>
       </DocSection>
 
-      <DocSection title="상황별 톤">
+      <DocSection title="Tone by situation">
         <div className="divide-y rounded-lg border">
           {TONES.map((row) => (
             <div key={row.situation} className="flex flex-wrap items-baseline gap-x-4 gap-y-1 p-4">
@@ -108,11 +108,11 @@ export function VoiceAndTonePage() {
         </p>
       </DocSection>
 
-      <DocSection title="좋은 예와 나쁜 예">
+      <DocSection title="Do and Don't">
         <CopyPairs items={EXAMPLES} />
       </DocSection>
 
-      <DocSection title="사용 규칙">
+      <DocSection title="Guidelines">
         <DoDont
           do={[
             '무슨 일이 일어났는지를 첫 문장에 쓴다',

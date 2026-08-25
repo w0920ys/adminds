@@ -17,7 +17,7 @@ export function DocFooterNav() {
     <footer className="mt-16 flex flex-col gap-4 border-t pt-6">
       {doc && (
         <time className="text-muted-foreground text-2xs" dateTime={doc.updatedAt}>
-          최종 수정 {doc.updatedAt}
+          Last updated {doc.updatedAt}
         </time>
       )}
       {(prev || next) && (

@@ -187,7 +187,7 @@ export function TypographyPage() {
       title="Typography"
       description="어드민은 한 화면에 많은 정보를 담습니다. 크기를 늘리기보다 굵기와 색으로 위계를 만드는 편이 밀도를 지키면서 읽히게 합니다."
     >
-      <DocSection title="개요">
+      <DocSection title="Overview">
         <p className="text-muted-foreground text-sm">
           글자 크기와 굵기로 정보 위계를 표현하는 규칙을 정합니다. 어떤 글꼴을 쓰고 한글을 어디서
           끊어 줄을 바꿀지도 여기서 정합니다. 글자에 쓰는 색은{' '}
@@ -202,12 +202,12 @@ export function TypographyPage() {
         </p>
       </DocSection>
 
-      <DocSection title="폰트">
+      <DocSection title="Font">
         <p className="text-muted-foreground text-sm">
           기본 글꼴은 Pretendard입니다. 어드민 화면은 한 줄에 한글과 영문, 숫자가 섞이는데 시스템
           기본 글꼴은 기기마다 달라 같은 표가 맥과 윈도우에서 다른 밀도로 보입니다. Pretendard는
           한글 자소의 크기와 무게를 고르게 맞춰 놓아 12px 언저리에서도 획이 뭉치지 않습니다. 또
-          가변 폰트라 아래 굵기 네 단계가 모두 글꼴이 실제로 가진 굵기입니다 — 중간 굵기가 없는
+          가변 폰트라 아래 Weight 네 단계가 모두 글꼴이 실제로 가진 굵기입니다 — 중간 굵기가 없는
           글꼴에서는 브라우저가 획을 부풀려 흉내 내고, 작은 글자에서 그 차이가 지저분하게
           보입니다.
         </p>
@@ -242,7 +242,7 @@ export function TypographyPage() {
         </div>
       </DocSection>
 
-      <DocSection title="크기 스케일">
+      <DocSection title="Scale">
         <p className="text-muted-foreground text-sm">
           여섯 단계로 끝냅니다. 크기·행간·자간은 화면 밖에 숨긴 요소에 각 클래스를 걸고 실측한
           값이고, 표의 순서도 실측한 크기가 정합니다 — 스케일을 바꾸면 이 표의 순서까지
@@ -287,7 +287,7 @@ export function TypographyPage() {
         </div>
       </DocSection>
 
-      <DocSection title="굵기">
+      <DocSection title="Weight">
         <p className="text-muted-foreground text-sm">
           네 단계만 씁니다. 더 얇거나 더 두꺼운 단계는 본문 크기에서 차이가 거의 보이지 않으면서
           고를 것만 늘립니다. 값은 실측한 <code>font-weight</code>이고, 순서도 그 값이 정합니다.
@@ -322,7 +322,7 @@ export function TypographyPage() {
         </div>
       </DocSection>
 
-      <DocSection title="줄바꿈">
+      <DocSection title="Line breaking">
         <p className="text-muted-foreground text-sm">
           한글은 음절 단위로 끊습니다. <code>word-break: normal</code>이 브라우저 기본값이지만{' '}
           <code>body</code>에 명시해 두어 어디서도 뒤집히지 않게 했습니다. 이 값에서 브라우저는
@@ -361,7 +361,7 @@ export function TypographyPage() {
         </div>
       </DocSection>
 
-      <DocSection title="사용 가이드라인">
+      <DocSection title="Guidelines">
         <p className="text-muted-foreground text-sm">
           새 텍스트에 무엇을 쓸지는 아래 순서로 정합니다. 위에서부터 내려오다가 답이 나오면 거기서
           멈춥니다.

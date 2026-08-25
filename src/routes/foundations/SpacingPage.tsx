@@ -24,7 +24,7 @@ export function SpacingPage() {
       title="Spacing"
       description="간격은 4px 배수로만 씁니다. 어드민은 정보 밀도가 높아 임의 값이 하나 섞이면 정렬이 눈에 띄게 어긋납니다."
     >
-      <DocSection title="개요">
+      <DocSection title="Overview">
         <p className="text-muted-foreground text-sm">
           요소 사이 간격을 4px 배수 스케일로 정하고, 밀도에 따라 그 스케일을 어떻게 조절하는지
           정합니다. 간격이 아닌 값 — 색이나 글자 크기 — 은 Color와 Typography에서 다룹니다.
@@ -32,7 +32,7 @@ export function SpacingPage() {
         </p>
       </DocSection>
 
-      <DocSection title="기본 스케일">
+      <DocSection title="Scale">
         <div className="flex flex-col gap-2 rounded-lg border p-4">
           {STEPS.map((step) => (
             <div key={step} className="flex items-center gap-3">
@@ -44,18 +44,18 @@ export function SpacingPage() {
         </div>
       </DocSection>
 
-      <DocSection title="밀도 축">
+      <DocSection title="Density">
         <p className="text-muted-foreground text-xs">
           컨트롤과 테이블 행의 높이를 토큰으로 묶어 화면마다 흔들리지 않게 합니다.
         </p>
         <TokenTable rows={density} />
       </DocSection>
 
-      <DocSection title="모서리">
+      <DocSection title="Radius">
         <TokenTable rows={radius} />
       </DocSection>
 
-      <DocSection title="사용 규칙">
+      <DocSection title="Guidelines">
         <DoDont
           do={[
             '간격은 4px 배수로만 쓴다',

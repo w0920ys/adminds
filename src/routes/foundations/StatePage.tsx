@@ -88,16 +88,16 @@ export function StatePage() {
       title="State"
       description="상태는 컴포넌트마다 다시 정하지 않고 시스템 전체에서 같은 뜻으로 씁니다. 어드민은 같은 버튼을 하루에 수십 번 누르는 화면이라, 상태가 화면마다 다르게 보이면 매번 다시 확인하게 됩니다."
     >
-      <DocSection title="개요">
+      <DocSection title="Overview">
         <p className="text-muted-foreground text-sm">
           hover·focus·disabled 같은 상호작용 상태의 종류와 표현 규칙을 정합니다. 상태를
           표현하는 색상값은 Color에서, 문장 부호나 종결 어미 같은 표기 형식은 Writing에서
-          다루고, 상태에 따라 쓰는 문구 자체는 아래 규칙에서 이 문서가 정합니다. 컴포넌트에
+          다루고, 상태에 따라 쓰는 문구 자체는 아래 Rules에서 이 문서가 정합니다. 컴포넌트에
           새 상태를 추가하거나 상태 표현이 화면마다 다르게 보일 때 이 문서를 확인합니다.
         </p>
       </DocSection>
 
-      <DocSection title="상태 목록">
+      <DocSection title="States">
         <div className="divide-y rounded-lg border">
           {STATES.map((state) => (
             <div key={state.name} className="flex flex-wrap items-baseline gap-x-4 gap-y-1 p-4">
@@ -108,7 +108,7 @@ export function StatePage() {
         </div>
       </DocSection>
 
-      <DocSection title="실물 비교">
+      <DocSection title="Comparison">
         <p className="text-muted-foreground text-xs">
           hover와 focus는 실제 입력이 있어야 나타나므로 문서에서는 보이지 않습니다. tokens.css가 hover와
           focus-visible 변형을 .state-hover / .state-focus 컨테이너 안에서도 적용되도록 확장해 두었고, 아래
@@ -133,7 +133,7 @@ export function StatePage() {
         </p>
       </DocSection>
 
-      <DocSection title="오류 전시">
+      <DocSection title="Error">
         <p className="text-muted-foreground text-xs">
           error는 버튼이 아니라 입력과 요청에 붙습니다. 버튼을 빨갛게 만드는 대신 실패한 필드와 실패한
           요청에 표시합니다.
@@ -162,7 +162,7 @@ export function StatePage() {
         </div>
       </DocSection>
 
-      <DocSection title="규칙">
+      <DocSection title="Rules">
         <div className="flex flex-col gap-3">
           {RULES.map((rule) => (
             <div key={rule.title} className="rounded-lg border p-4">
@@ -173,7 +173,7 @@ export function StatePage() {
         </div>
       </DocSection>
 
-      <DocSection title="사용 규칙">
+      <DocSection title="Guidelines">
         <DoDont
           do={[
             '포커스 링을 그대로 둔다',
