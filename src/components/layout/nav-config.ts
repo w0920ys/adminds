@@ -3,6 +3,8 @@ export type DocLink = {
   label: string
   /** 문서 최종 수정일. YYYY-MM-DD */
   updatedAt: string
+  /** LNB에서 이 항목 아래 들여쓰기로 놓이는 하위 문서. 순서에서는 부모 바로 뒤에 온다 */
+  children?: DocLink[]
 }
 
 export type NavSection = {
@@ -34,9 +36,15 @@ export const sections: NavSection[] = [
     items: [
       { to: '/foundations', label: 'Overview', updatedAt: '2026-08-25' },
       { to: '/foundations/design-token', label: 'Design Token', updatedAt: '2026-08-25' },
-      { to: '/foundations/color', label: 'Color', updatedAt: '2026-08-25' },
-      { to: '/foundations/color-role', label: 'Color Role', updatedAt: '2026-08-25' },
-      { to: '/foundations/palette', label: 'Palette', updatedAt: '2026-08-25' },
+      {
+        to: '/foundations/color',
+        label: 'Color',
+        updatedAt: '2026-08-25',
+        children: [
+          { to: '/foundations/color-role', label: 'Color Role', updatedAt: '2026-08-25' },
+          { to: '/foundations/palette', label: 'Palette', updatedAt: '2026-08-25' },
+        ],
+      },
       { to: '/foundations/typography', label: 'Typography', updatedAt: '2026-08-25' },
       { to: '/foundations/spacing', label: 'Spacing', updatedAt: '2026-08-25' },
       { to: '/foundations/iconography', label: 'Iconography', updatedAt: '2026-08-25' },
@@ -68,12 +76,17 @@ export const sections: NavSection[] = [
   },
 ]
 
+/** 부모 다음에 자식이 오도록 평탄화한다. 순서가 필요한 곳은 모두 이것을 쓴다. */
+export function flattenDocs(items: DocLink[]): DocLink[] {
+  return items.flatMap((item) => [item, ...flattenDocs(item.children ?? [])])
+}
+
 /**
  * LNB 순서를 평탄화한 전체 문서 목록.
  * 경로로 문서를 찾거나(findDoc) 라우트와 대조하는 데 쓴다.
  * 이전·다음 이동은 여기서 나오지 않는다 — findAdjacent가 섹션 안에서만 계산한다.
  */
-export const docOrder: DocLink[] = sections.flatMap((section) => section.items)
+export const docOrder: DocLink[] = sections.flatMap((section) => flattenDocs(section.items))
 
 /**
  * 현재 경로가 속한 섹션.
@@ -99,7 +112,7 @@ export function findAdjacent(pathname: string): { prev?: DocLink; next?: DocLink
   const section = findSection(pathname)
   if (pathname === section.to) return { prev: undefined, next: undefined }
 
-  const docs = section.items.filter((item) => item.to !== section.to)
+  const docs = flattenDocs(section.items).filter((item) => item.to !== section.to)
   const index = docs.findIndex((doc) => doc.to === pathname)
   if (index === -1) return { prev: undefined, next: undefined }
 

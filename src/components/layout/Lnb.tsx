@@ -1,8 +1,43 @@
 import { X } from 'lucide-react'
 import { Link, NavLink, useLocation } from 'react-router'
+import type { DocLink } from '@/components/layout/nav-config'
 import { findSection, sections } from '@/components/layout/nav-config'
 import { currentRelease } from '@/data/releases'
 import { cn } from '@/lib/utils'
+
+function LnbItem({
+  doc,
+  depth,
+  onClose,
+}: {
+  doc: DocLink
+  depth: number
+  onClose: () => void
+}) {
+  return (
+    <>
+      <NavLink
+        to={doc.to}
+        end
+        onClick={onClose}
+        className={({ isActive }) =>
+          cn(
+            'flex h-control items-center rounded-md text-sm',
+            depth === 0 ? 'px-2' : 'ml-2 border-l pl-3',
+            isActive
+              ? 'bg-accent text-accent-foreground font-semibold'
+              : 'text-muted-foreground hover:bg-accent/60',
+          )
+        }
+      >
+        {doc.label}
+      </NavLink>
+      {doc.children?.map((child) => (
+        <LnbItem key={child.to} doc={child} depth={depth + 1} onClose={onClose} />
+      ))}
+    </>
+  )
+}
 
 export function Lnb({ open, onClose }: { open: boolean; onClose: () => void }) {
   const { pathname } = useLocation()
@@ -61,22 +96,7 @@ export function Lnb({ open, onClose }: { open: boolean; onClose: () => void }) {
 
         <nav className="mt-2 flex flex-col" aria-label={`${section.label} 문서 목록`}>
           {section.items.map((item) => (
-            <NavLink
-              key={item.to}
-              to={item.to}
-              end
-              onClick={onClose}
-              className={({ isActive }) =>
-                cn(
-                  'flex h-control items-center rounded-md px-2 text-sm',
-                  isActive
-                    ? 'bg-accent text-accent-foreground font-semibold'
-                    : 'text-muted-foreground hover:bg-accent/60',
-                )
-              }
-            >
-              {item.label}
-            </NavLink>
+            <LnbItem key={item.to} doc={item} depth={0} onClose={onClose} />
           ))}
         </nav>
 
