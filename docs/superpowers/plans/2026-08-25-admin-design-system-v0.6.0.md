@@ -790,7 +790,7 @@ EOF
         </p>
         <p className="text-muted-foreground text-sm">
           여기서 정하지 않는 것도 있습니다. 개별 컴포넌트의 구조와 속성은 Components에서,
-          여러 컴포넌트를 엮는 화면 단위의 규칙은 Patterns에서 다룹니다.
+          여러 컴포넌트를 엮는 화면 단위의 규칙은 Patterns의 몫입니다. 그 문서는 아직 준비 중입니다.
         </p>
       </DocSection>
 
@@ -833,7 +833,7 @@ EOF
         </p>
         <p className="text-muted-foreground text-sm">
           여기서 정하지 않는 것도 있습니다. 색과 간격 같은 값은 Foundations에서,
-          여러 부품을 엮는 화면 단위의 규칙은 Patterns에서 다룹니다.
+          여러 부품을 엮는 화면 단위의 규칙은 Patterns의 몫입니다. 그 문서는 아직 준비 중입니다.
         </p>
       </DocSection>
 ```
