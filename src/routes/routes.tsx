@@ -8,6 +8,7 @@ import { BreadcrumbPage } from '@/routes/components/BreadcrumbPage'
 import { ButtonPage } from '@/routes/components/ButtonPage'
 import { CheckboxPage } from '@/routes/components/CheckboxPage'
 import { ComponentsIndex } from '@/routes/components/ComponentsIndex'
+import { DialogPage } from '@/routes/components/DialogPage'
 import { InputPage } from '@/routes/components/InputPage'
 import { PaginationPage } from '@/routes/components/PaginationPage'
 import { RadioPage } from '@/routes/components/RadioPage'
@@ -65,6 +66,7 @@ export const routes: RouteObject[] = [
           { path: 'pagination', element: <PaginationPage /> },
           { path: 'alert', element: <AlertPage /> },
           { path: 'tooltip', element: <TooltipPage /> },
+          { path: 'dialog', element: <DialogPage /> },
           { path: 'badge', element: <BadgePage /> },
         ],
       },

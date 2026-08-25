@@ -1320,6 +1320,81 @@ export const components: ComponentMeta[] = [
     ],
     verified: false,
   },
+  {
+    id: 'dialog',
+    name: 'Dialog',
+    category: 'feedback',
+    status: 'stable',
+    addedIn: 'v0.8.0',
+    changedIn: 'v0.8.0',
+    purpose: '흐름을 멈추고 확인이나 입력을 받는다.',
+    anatomy: [
+      {
+        part: 'trigger',
+        label: 'Trigger',
+        note: '누르면 화면 전체를 덮는 반투명 덮개(bg-black/50)와 가운데 정렬된 컨테이너(bg-background, 테두리, radius-lg, shadow-lg)가 뜬다. 컨테이너 안은 제목(text-lg font-semibold)·본문(text-sm text-muted-foreground)·오른쪽 정렬된 동작 버튼 순서로 쌓이고, 오른쪽 위 모서리에 닫기(X) 아이콘이 항상 있다. 쌓임 순서는 z-overlay. 컨테이너는 화면 전체를 덮어 구조도 무대 안에 담을 수 없으므로 나머지 부위는 Usage에서 실제로 눌러서 본다',
+      },
+    ],
+    properties: [
+      {
+        name: 'variant',
+        title: 'Variant',
+        description: '되돌릴 수 없는 동작인지에 따라 실행 버튼의 색과 제목의 문구가 달라진다.',
+        display: 'row',
+        options: [
+          { value: 'default', note: '확인이나 입력처럼 되돌릴 수 있는 동작' },
+          { value: 'destructive', note: '삭제처럼 되돌릴 수 없는 동작. 실행 버튼이 destructive 색을 쓴다' },
+        ],
+      },
+      {
+        name: 'size',
+        title: 'Size',
+        description: '컨테이너의 최대 너비를 정한다.',
+        display: 'row',
+        options: [
+          { value: 'sm', note: '확인 한 줄처럼 본문이 짧을 때' },
+          { value: 'default', note: '기본. 제목·본문·폼 몇 줄' },
+          { value: 'lg', note: '표나 여러 필드가 들어갈 때' },
+        ],
+      },
+    ],
+    guidelines: [
+      {
+        id: 'action-order',
+        title: 'Action order',
+        body: '오른쪽에 실행, 왼쪽에 취소를 둡니다. 눈이 마지막에 닿는 자리에 지금 진행 중인 동작을 끝맺는 버튼을 놓습니다.',
+        do: ['실행 버튼을 오른쪽 끝에 둔다', '취소나 닫기는 그 왼쪽에 둔다'],
+        dont: ['실행 버튼을 왼쪽에 두고 취소를 오른쪽에 두지 않는다'],
+      },
+      {
+        id: 'destructive-title',
+        title: 'Destructive title',
+        body: "위험한 동작은 무엇이 지워지는지 제목에 적습니다. '정말 삭제하시겠습니까'만으로는 무엇이 사라지는지 알 수 없습니다.",
+        do: ["'게시글 12건을 삭제하시겠습니까'처럼 대상을 제목에 밝힌다"],
+        dont: ["'정말 삭제하시겠습니까'처럼 대상 없이 묻지 않는다"],
+      },
+      {
+        id: 'outside-click',
+        title: 'Outside click',
+        body: '바깥을 눌러 닫는 것은 잃을 것이 없을 때만 허용합니다. 입력 중인 폼이 있으면 실수로 닫혀 내용을 잃을 수 있습니다.',
+        do: ['확인만 하는 Dialog는 바깥 클릭으로 닫히게 둔다'],
+        dont: ['입력 중인 폼이 있는 Dialog를 바깥 클릭 한 번으로 닫히게 두지 않는다'],
+      },
+    ],
+    usage: [
+      { id: 'delete-confirm', title: '삭제 확인', note: '무엇이 지워지는지 제목에 밝히고 destructive 색을 쓴다' },
+      { id: 'short-input', title: '짧은 입력', note: '필드 한둘만 있는 폼은 sm이나 default로 충분하다' },
+      { id: 'detail-preview', title: '상세 미리보기', note: '목록을 벗어나지 않고 항목의 내용을 확인한다' },
+      { id: 'bulk-confirm', title: '대량 작업 확인', note: '몇 건에 어떤 일이 일어나는지 본문에 적는다' },
+    ],
+    cases: [
+      { id: 'long-body', title: '본문이 긴 경우', note: '컨테이너는 늘어나지 않고 본문 안에서 세로로 스크롤된다' },
+      { id: 'form-inside', title: '안에 폼이 있는 경우', note: '바깥 클릭으로 닫히지 않고 취소 버튼으로만 닫힌다' },
+      { id: 'stacked-dialogs', title: '겹쳐 열리는 경우', note: '안쪽 Dialog가 위에 쌓이고 닫으면 바깥 Dialog로 돌아간다' },
+      { id: 'narrow-screen', title: '좁은 화면', note: '가장자리에 여백을 두고 너비를 채운다' },
+    ],
+    verified: false,
+  },
 ]
 
 export function getComponent(id: string): ComponentMeta | undefined {
