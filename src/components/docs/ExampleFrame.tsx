@@ -15,7 +15,7 @@ export function ExampleFrame({
   children: ReactNode
 }) {
   return (
-    <div className="overflow-hidden rounded-lg border">
+    <div className="flex h-full flex-col overflow-hidden rounded-lg border">
       {kind !== 'plain' && (
         <p
           className={cn(
@@ -27,7 +27,7 @@ export function ExampleFrame({
           {KIND_LABEL[kind]}
         </p>
       )}
-      <div className="bg-surface-raised p-4">{children}</div>
+      <div className="bg-surface-raised flex-1 p-4">{children}</div>
     </div>
   )
 }

@@ -71,7 +71,7 @@ export function ComponentPage({
       </DocSection>
 
       <DocSection title="지침">
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-8">
           {meta.guidelines.map((guideline) => (
             <GuidelineBlock
               key={guideline.id}
