@@ -80,7 +80,8 @@ Task 1~8은 모두 같은 모양이다. 컴포넌트 하나마다:
 | 6 | `Steps` | Navigation | 없음 |
 | 7 | `Accordion` | Data Display | `@radix-ui/react-accordion` |
 | 8 | `Progress` | Feedback | `@radix-ui/react-progress` |
-| 9 | 전체 정합성 | — | — |
+| 9 | 표면 대비 토큰 | — | — |
+| 10 | 전체 정합성 | — | — |
 
 `Separator`를 맨 앞에 둔다. 가장 작아서 Task의 모양을 확인하기 좋고, `Card`와 `Description List`가 예시에서 쓴다.
 
@@ -334,13 +335,65 @@ Radix의 `Progress`를 감싼다. `role="progressbar"`와 `aria-valuenow`를 Rad
 
 ---
 
-## Task 9: 전체 정합성
+## Task 9: 뼈대가 보이는 표면
+
+**Files:**
+- Modify: `src/styles/tokens.css`
+
+Task 2가 실물에서 찾아낸 결함이다. 다크에서 `--muted`와 `--surface-raised`가 **같은 값**(`oklch(0.269 0 0)`)이고, 라이트에서도 `0.97`과 `0.985`로 거의 같다. `Skeleton`은 `bg-muted` 한 겹뿐이라 그 위에 얹히면 아무것도 보이지 않는다.
+
+`Skeleton`만의 문제가 아니다. 두 토큰은 역할이 다르다 — `--muted`는 **채움**이고 `--surface-raised`는 **표면**이다. 같은 값이면 그 구별이 화면에 없는 것이고, `Progress`의 트랙(Task 8)도 카드 위에서 같은 일을 겪는다.
+
+- [ ] **Step 1: 지금 값을 잰다**
+
+브라우저로 `/components/skeleton`을 열고 라이트와 다크 양쪽에서 `--muted`와 `--surface-raised`의 실제 색을 읽어 명도 대비를 계산한다. 눈으로 짐작하지 않는다.
+
+이 저장소에는 합성된 색을 캔버스로 재는 방식이 이미 쓰였다. 반투명이 섞이지 않은 값이므로 `getComputedStyle`로 충분하다.
+
+- [ ] **Step 2: `--muted`를 옮긴다**
+
+`--surface-raised`는 건드리지 않는다. 그 토큰은 카드·무대·표 머리 등 훨씬 넓게 쓰이고, 표면을 옮기면 그 위 글자의 대비가 전부 흔들린다. 옮길 것은 채움 쪽이다.
+
+목표는 **`--muted`와 `--surface-raised`가 1.15:1 이상**으로 갈라지는 것이다. 뼈대는 원래 은은한 것이므로 크게 벌리지 않는다.
+
+- [ ] **Step 3: 딸려 오는 대비를 다시 잰다**
+
+`--muted`를 옮기면 그 위에 얹힌 글자의 대비가 함께 바뀐다. 최소한 다음을 다시 재고 **모두 4.5:1을 넘어야 한다**:
+
+- `--muted-foreground` on `--muted` — `Badge`의 `neutral`, `ComponentPage`의 `draft` 상태 칩이 이 조합이다
+- `--neutral-on-tint` on `--muted` — 같은 조합의 다른 이름이다
+- `--foreground` on `--muted`
+
+기준을 넘기지 못하면 `--muted-foreground`도 함께 옮긴다. `tokens.css`의 주석이 이 계산의 근거를 이미 담고 있으므로 **그 주석의 숫자도 새 값으로 고친다** — 주석이 옛 숫자를 말하면 그것도 코드에 대해 사실이 아닌 문서다.
+
+- [ ] **Step 4: 스물여섯 문서에 미치는 영향을 확인한다**
+
+`bg-muted`를 쓰는 자리를 전부 찾아 라이트와 다크에서 확인한다.
+
+```bash
+grep -rn "bg-muted" src/ | grep -v "bg-muted-foreground"
+```
+
+`Progress`(Task 8)의 트랙, `Badge`의 `neutral`, `Skeleton`의 네 모양, 문서 무대의 칩이 모두 이 토큰 위에 선다.
+
+- [ ] **Step 5: 검증과 커밋**
+
+```bash
+npm run build && npm test
+grep -rnE '\[calc\(|\[[0-9]+(px|rem|vh|vw)\]|\[#|\[[0-9.]+rem\]' src/
+```
+
+커밋: `fix: 채움과 표면이 같은 값이던 것을 갈라 놓는다`
+
+---
+
+## Task 10: 전체 정합성
 
 **Files:**
 - Modify: `src/data/registry.ts`, `src/data/releases.ts`, `src/data/registry.test.ts`
 - Create: `src/data/registry-order.test.ts`
 
-여덟 개가 다 들어온 뒤 전체가 어긋나지 않았는지 확인한다.
+여덟 개가 다 들어오고 토큰이 자리를 잡은 뒤, 전체가 어긋나지 않았는지 확인한다.
 
 - [ ] **Step 1: registry 배열 순서를 LNB 순서에 맞춘다**
 
@@ -432,6 +485,7 @@ grep -rnE '\[calc\(|\[[0-9]+(px|rem|vh|vw)\]|\[#|\[[0-9.]+rem\]' src/
 - `npm run build`와 `npm test`가 통과한다
 - 대괄호 grep이 비어 있다
 - 라이트와 다크 양쪽에서 17px 이하 글자가 4.5:1을 넘는다 (컨트롤러가 브라우저로 확인)
+- 다크에서 `Skeleton`과 `Progress`의 트랙이 놓인 표면과 갈라져 보인다
 
 ## v0.9.0 범위 밖
 
