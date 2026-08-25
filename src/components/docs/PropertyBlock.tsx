@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import { HeadingAnchor } from '@/components/docs/HeadingAnchor'
 import type { ComponentMeta, ComponentProperty, PropertyOption } from '@/data/registry'
 import { getProperty } from '@/data/registry'
 import { cn } from '@/lib/utils'
@@ -35,7 +36,10 @@ export function PropertyBlock({
   return (
     <section className="flex flex-col gap-3">
       <div>
-        <h3 className="text-base font-semibold">{property.title}</h3>
+        <h3 className="group text-base font-semibold">
+          {property.title}
+          <HeadingAnchor />
+        </h3>
         <p className="text-muted-foreground text-sm">{property.description}</p>
       </div>
 

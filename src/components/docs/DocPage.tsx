@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import { HeadingAnchor } from '@/components/docs/HeadingAnchor'
 
 export function DocPage({
   title,
@@ -28,7 +29,10 @@ export function DocPage({
 export function DocSection({ title, children }: { title: string; children: ReactNode }) {
   return (
     <section className="flex flex-col gap-4">
-      <h2 className="text-xl font-semibold tracking-tight">{title}</h2>
+      <h2 className="group text-xl font-semibold tracking-tight">
+        {title}
+        <HeadingAnchor />
+      </h2>
       {children}
     </section>
   )

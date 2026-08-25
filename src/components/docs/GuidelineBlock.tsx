@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react'
 import { Check, X } from 'lucide-react'
 import { ExampleFrame } from '@/components/docs/ExampleFrame'
+import { HeadingAnchor } from '@/components/docs/HeadingAnchor'
 import type { Guideline } from '@/data/registry'
 import { cn } from '@/lib/utils'
 
@@ -52,7 +53,10 @@ export function GuidelineBlock({
   return (
     <section className="flex flex-col gap-4">
       <div>
-        <h3 className="text-base font-semibold">{guideline.title}</h3>
+        <h3 className="group text-base font-semibold">
+          {guideline.title}
+          <HeadingAnchor />
+        </h3>
         <p className="text-muted-foreground mt-1 text-sm">{guideline.body}</p>
       </div>
 

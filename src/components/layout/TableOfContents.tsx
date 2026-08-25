@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useLocation } from 'react-router'
+import { assignHeadingIds } from '@/lib/heading-id'
 import { cn } from '@/lib/utils'
 
 type Heading = {
@@ -7,16 +8,6 @@ type Heading = {
   text: string
   /** 2 또는 3 */
   level: 2 | 3
-}
-
-/** 제목 텍스트에서 id를 만든다. 한글을 그대로 두면 URL 조각이 길어지므로 순번을 섞는다 */
-function makeId(text: string, index: number): string {
-  const slug = text
-    .trim()
-    .toLowerCase()
-    .replace(/[^a-z0-9가-힣]+/g, '-')
-    .replace(/^-|-$/g, '')
-  return `section-${index}-${slug || 'x'}`
 }
 
 export function TableOfContents() {
@@ -30,15 +21,12 @@ export function TableOfContents() {
 
     /* 렌더가 끝난 뒤 훑는다. 측정이 아니라 목록 수집이므로 한 프레임 뒤로 미뤄도 된다 */
     const collect = () => {
-      const nodes = [...main.querySelectorAll('h2, h3')]
-      const found = nodes.map((node, index): Heading => {
-        if (!node.id) node.id = makeId(node.textContent ?? '', index)
-        return {
-          id: node.id,
-          text: node.textContent?.trim() ?? '',
-          level: node.tagName === 'H2' ? 2 : 3,
-        }
-      })
+      const nodes = assignHeadingIds(main)
+      const found = nodes.map((node): Heading => ({
+        id: node.id,
+        text: node.textContent?.trim() ?? '',
+        level: node.tagName === 'H2' ? 2 : 3,
+      }))
       setHeadings(found)
       setActive(found[0]?.id ?? null)
       return nodes
