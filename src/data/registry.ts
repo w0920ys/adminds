@@ -542,6 +542,7 @@ export const components: ComponentMeta[] = [
         display: 'grid',
         options: [
           { value: 'unselected' },
+          { value: 'hover', note: '포인터가 올라간 동안. 선택된 항목에서는 보이지 않는다' },
           { value: 'selected' },
           { value: 'disabled', note: '지금 상태를 바꿀 수 없음' },
           { value: 'focus', note: '키보드 포커스. 항상 보여야 한다' },
@@ -644,6 +645,7 @@ export const components: ComponentMeta[] = [
         display: 'grid',
         options: [
           { value: 'off' },
+          { value: 'hover', note: '포인터가 올라간 동안' },
           { value: 'on' },
           { value: 'disabled', note: '지금 상태를 바꿀 수 없음' },
           { value: 'focus', note: '키보드 포커스. 항상 보여야 한다' },
@@ -870,6 +872,7 @@ export const components: ComponentMeta[] = [
         display: 'grid',
         options: [
           { value: 'default' },
+          { value: 'hover', note: '포인터가 올라간 동안. 활성 탭에서는 보이지 않는다' },
           { value: 'active', note: '지금 열려 있는 탭' },
           { value: 'disabled', note: '지금 고를 수 없음' },
           { value: 'focus', note: '키보드 포커스. 항상 보여야 한다' },

@@ -8,9 +8,15 @@ import { Placeholder } from '@/routes/Placeholder'
 import { cn } from '@/lib/utils'
 
 /**
- * 격자의 각 칸은 그룹 하나에 항목 둘을 넣는다. 항목 하나만 그리면
- * '여럿 중 하나'라는 라디오의 뜻이 사라진다 — 두 번째 항목은 그
- * 맥락을 위해서만 있고 강조되지 않는다.
+ * state 축의 칸은 항목 하나로 충분하다 — 선택 여부는 채워진 점 하나로
+ * 이미 드러나고, 옆에 항목을 더 두어도 그 자체가 더 뜻을 보태지 않는다
+ * (Checkbox가 인스턴스 하나로 checked를 보이는 것과 같다). 오히려 둘을
+ * 그리면 focus 칸에서 강제 포커스 링(.state-focus)이 두 항목 모두에
+ * 걸려 '포커스는 한 번에 하나'라는 사실이 흐려진다.
+ *
+ * layout 축의 horizontal만 항목을 둘 그린다 — 가로로 늘어놓은 모습은
+ * 견줄 항목이 있어야 보인다. vertical과 with-description은 항목
+ * 하나로도 뜻이 선다.
  */
 function renderRadio(options: RenderOptions) {
   const { state, layout } = options
@@ -50,7 +56,7 @@ function renderRadio(options: RenderOptions) {
       className={cn(horizontal ? 'flex-row gap-4' : 'flex-col gap-2')}
     >
       {item('a', '표준 배포', '모든 사용자에게 즉시 배포합니다')}
-      {item('b', '단계적 배포', '일부 사용자에게 먼저 배포합니다')}
+      {horizontal && item('b', '단계적 배포', '일부 사용자에게 먼저 배포합니다')}
     </RadioGroup>
   )
 }
