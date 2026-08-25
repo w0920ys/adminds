@@ -31,7 +31,7 @@ export function Anatomy({ meta, preview }: { meta: ComponentMeta; preview: React
   const [placed, setPlaced] = useState<Placed[]>([])
   const [size, setSize] = useState({ width: 0, height: 0 })
   const [narrow, setNarrow] = useState(false)
-  const [active, setActive] = useState<string | null>(null)
+  const [active, setActive] = useState<number | null>(null)
 
   const measure = useCallback(() => {
     const stage = stageRef.current
@@ -69,17 +69,18 @@ export function Anatomy({ meta, preview }: { meta: ComponentMeta; preview: React
     /**
      * 중심 x로 좌우를 나누면 컨테이너처럼 전체를 감싸는 부위와 가운데 정렬된 라벨이
      * 경계값에서 같은 쪽으로 몰린다. 중심 x로 정렬한 뒤 절반씩 나눠 균형을 맞춘다.
+     * part 이름이 아니라 인덱스를 키로 쓴다 — 이름이 겹쳐도 항목이 서로를 덮지 않는다.
      */
     const byX = [...found].sort(
       (a, b) => a.box.x + a.box.width / 2 - (b.box.x + b.box.width / 2),
     )
     const half = Math.ceil(byX.length / 2)
-    const sideOf = new Map<string, 'left' | 'right'>(
-      byX.map((item, i) => [item.part.part, i < half ? 'left' : 'right'] as const),
+    const sideOf = new Map<number, 'left' | 'right'>(
+      byX.map((item, i) => [item.index, i < half ? 'left' : 'right'] as const),
     )
     const sided = found.map((item) => ({
       ...item,
-      side: sideOf.get(item.part.part) ?? 'right',
+      side: sideOf.get(item.index) ?? 'right',
     }))
 
     const next: Placed[] = []
@@ -110,7 +111,7 @@ export function Anatomy({ meta, preview }: { meta: ComponentMeta; preview: React
   }, [measure])
 
   /** 선택된 부위가 있으면 그것만 그린다. 흐리게 두면 무엇을 가리키는지 흐려진다 */
-  const shown = active === null ? placed : placed.filter((item) => item.part.part === active)
+  const shown = active === null ? placed : placed.filter((item) => item.index === active)
 
   return (
     <div className="flex flex-col gap-5">
@@ -133,9 +134,9 @@ export function Anatomy({ meta, preview }: { meta: ComponentMeta; preview: React
                 const edgeX = item.side === 'left' ? item.box.x : item.box.x + item.box.width
                 const anchorX = item.side === 'left' ? GUTTER + 140 : size.width - GUTTER - 140
                 const bendX = (anchorX + edgeX) / 2
-                const isActive = active === item.part.part
+                const isActive = active === item.index
                 return (
-                  <g key={item.part.part}>
+                  <g key={item.index}>
                     <polyline
                       points={`${anchorX},${item.labelY} ${bendX},${item.labelY} ${bendX},${cy} ${edgeX},${cy}`}
                       fill="none"
@@ -163,7 +164,7 @@ export function Anatomy({ meta, preview }: { meta: ComponentMeta; preview: React
             <div aria-hidden className="contents">
               {shown.map((item) => (
                 <div
-                  key={item.part.part}
+                  key={item.index}
                   className={cn(
                     'text-annotation pointer-events-none absolute w-32 -translate-y-1/2',
                     item.side === 'left' ? 'text-right' : 'text-left',
@@ -180,12 +181,12 @@ export function Anatomy({ meta, preview }: { meta: ComponentMeta; preview: React
 
         {shown.length > 0 && narrow && (
           <div aria-hidden className="contents">
-            {placeBadges(shown).map(({ item, x, y }) => (
+            {placeBadges(shown, size.height).map(({ item, x, y }) => (
               <span
-                key={item.part.part}
+                key={item.index}
                 className={cn(
                   'absolute grid size-5 place-items-center rounded-full text-2xs font-bold',
-                  active === item.part.part
+                  active === item.index
                     ? 'bg-annotation text-background'
                     : 'bg-annotation-muted text-background',
                 )}
@@ -201,12 +202,12 @@ export function Anatomy({ meta, preview }: { meta: ComponentMeta; preview: React
       {/* 번호 목록. 지시선이 없어도 문서가 성립하는 기본 층이다. */}
       <ol className="flex flex-col gap-2">
         {meta.anatomy.map((part, index) => {
-          const isActive = active === part.part
+          const isActive = active === index
           return (
-            <li key={part.part}>
+            <li key={index}>
               <button
                 type="button"
-                onClick={() => setActive(isActive ? null : part.part)}
+                onClick={() => setActive(isActive ? null : index)}
                 aria-pressed={isActive}
                 className={cn(
                   'flex w-full items-start gap-2.5 rounded-md p-2 text-left',
@@ -246,21 +247,30 @@ const BADGE = 20
 
 /**
  * 배지를 부위의 좌상단 바깥에 놓는다.
- * 부위가 겹쳐 있으면(컨테이너와 그 안의 라벨처럼) 배지도 겹치므로,
- * 이미 놓인 배지와 가까우면 위로 밀어 올린다.
+ * 부위가 겹쳐 있으면(컨테이너와 그 안의 라벨처럼) 배지도 겹치므로 밀어낸다.
+ * 위로 밀 자리가 없으면 아래로 민다 — 무대 밖으로 나가면 잘려서 사라지기 때문이다.
  */
-function placeBadges(items: Placed[]): { item: Placed; x: number; y: number }[] {
+function placeBadges(
+  items: Placed[],
+  stageHeight: number,
+): { item: Placed; x: number; y: number }[] {
   const placedBadges: { x: number; y: number }[] = []
+  const collides = (x: number, y: number) =>
+    placedBadges.some((b) => Math.abs(b.x - x) < BADGE && Math.abs(b.y - y) < BADGE)
+
   return items.map((item) => {
     const x = item.box.x - BADGE / 2
-    let y = item.box.y - BADGE / 2
-    while (
-      placedBadges.some(
-        (b) => Math.abs(b.x - x) < BADGE && Math.abs(b.y - y) < BADGE,
-      )
-    ) {
-      y -= BADGE
+    const start = item.box.y - BADGE / 2
+    let y = start
+
+    while (y >= 0 && collides(x, y)) y -= BADGE
+    if (y < 0) {
+      /* 위쪽이 가득 찼으면 아래로 내려간다 */
+      y = start
+      while (y + BADGE <= stageHeight && collides(x, y)) y += BADGE
+      y = Math.min(y, Math.max(0, stageHeight - BADGE))
     }
+
     placedBadges.push({ x, y })
     return { item, x, y }
   })
