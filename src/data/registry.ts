@@ -88,8 +88,7 @@ export const components: ComponentMeta[] = [
         name: 'variant',
         title: 'Variant',
         description: '동작의 위계와 성격을 정한다. 한 화면의 주요 동작에만 default를 쓴다.',
-        display: 'matrix',
-        crossWith: 'size',
+        display: 'row',
         options: [
           { value: 'default', note: '이 화면에서 가장 중요한 동작' },
           { value: 'secondary', note: '주요 동작 옆의 보조 동작' },

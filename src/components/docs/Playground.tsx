@@ -1,7 +1,12 @@
 import { useState, type ReactNode } from 'react'
+import { RotateCcw } from 'lucide-react'
 import type { ComponentMeta } from '@/data/registry'
 import type { RenderOptions } from '@/components/docs/PropertyBlock'
 import { cn } from '@/lib/utils'
+
+function initialOptions(meta: ComponentMeta): RenderOptions {
+  return Object.fromEntries(meta.properties.map((p) => [p.name, p.options[0].value]))
+}
 
 export function Playground({
   meta,
@@ -10,9 +15,9 @@ export function Playground({
   meta: ComponentMeta
   render: (options: RenderOptions) => ReactNode
 }) {
-  const [options, setOptions] = useState<RenderOptions>(() =>
-    Object.fromEntries(meta.properties.map((p) => [p.name, p.options[0].value])),
-  )
+  const [options, setOptions] = useState<RenderOptions>(() => initialOptions(meta))
+  const base = initialOptions(meta)
+  const isInitial = meta.properties.every((p) => options[p.name] === base[p.name])
 
   return (
     <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_16rem]">
@@ -21,6 +26,17 @@ export function Playground({
       </div>
 
       <div className="flex flex-col gap-4 rounded-lg border p-4">
+        <div className="flex items-center justify-between">
+          <p className="text-muted-foreground text-2xs font-bold tracking-widest">조합</p>
+          <button
+            type="button"
+            onClick={() => setOptions(initialOptions(meta))}
+            disabled={isInitial}
+            className="text-muted-foreground hover:bg-accent flex items-center gap-1 rounded-md px-2 py-1 text-2xs disabled:pointer-events-none disabled:opacity-50"
+          >
+            <RotateCcw size={12} aria-hidden /> 초기값으로
+          </button>
+        </div>
         {meta.properties.map((property) => (
           <fieldset key={property.name} className="flex flex-col gap-1.5">
             <legend className="text-muted-foreground text-2xs font-bold tracking-widest">
