@@ -57,9 +57,15 @@
   --warning-on-tint: oklch(0.542 0.188 70.08);
   --destructive-on-tint: oklch(0.496 0.245 27.325);
 
-  /* 문서 주석 전용. 제품 UI에는 쓰지 않는다 — 컴포넌트 색과 절대 겹치지 않아야 한다 */
+  /*
+   * 문서 주석 전용. 제품 UI에는 쓰지 않는다 — 컴포넌트 색과 절대 겹치지 않아야 한다.
+   * annotation-muted는 Anatomy의 좁은 화면 번호 배지(bg-annotation-muted
+   * text-background)에서 흰 글자를 얹는 바탕으로도 쓰인다 — 원래 명도(0.7)로는
+   * 2.77:1이라 라이트에서 명도를 낮췄다. 이 토큰은 그 배지 하나에만 쓰여 다른
+   * 곳에 번지지 않는다.
+   */
   --annotation: oklch(0.55 0.22 285);
-  --annotation-muted: oklch(0.7 0.14 285);
+  --annotation-muted: oklch(0.573 0.14 285);
 }
 
 .dark {

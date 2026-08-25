@@ -31,7 +31,8 @@ export function CopyPairs({ items }: { items: CopyExample[] }) {
               <p className="text-muted-foreground text-sm">{item.dont}</p>
             </div>
             <div className="border-t p-4 md:border-t-0 md:border-l">
-              <p className="text-success mb-2 flex items-center gap-1.5 text-2xs font-bold tracking-widest">
+              {/* success-on-tint를 쓴다 — 원래 success 색은 흰 바탕에서도 3.67:1이다 */}
+              <p className="text-success-on-tint mb-2 flex items-center gap-1.5 text-2xs font-bold tracking-widest">
                 <Check size={13} aria-hidden /> 이 시스템이 쓰는 문장
               </p>
               <p className="text-sm font-medium">{item.do}</p>

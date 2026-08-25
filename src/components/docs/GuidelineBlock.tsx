@@ -18,10 +18,15 @@ function Side({
 
   return (
     <div className="flex h-full flex-col gap-3 rounded-lg border p-4">
+      {/*
+       * DO 글자는 success-on-tint를 쓴다 — 원래 success 색은 흰 바탕
+       * 위에서도 3.67:1로 4.5:1에 못 미친다. destructive는 4.76:1로
+       * 이미 넘어 그대로 둔다.
+       */}
       <p
         className={cn(
           'flex items-center gap-1.5 text-2xs font-bold tracking-widest',
-          kind === 'do' ? 'text-success' : 'text-destructive',
+          kind === 'do' ? 'text-success-on-tint' : 'text-destructive',
         )}
       >
         {kind === 'do' ? <Check size={13} aria-hidden /> : <X size={13} aria-hidden />}

@@ -17,10 +17,11 @@ export function ExampleFrame({
   return (
     <div className="flex h-full flex-col overflow-hidden rounded-lg border">
       {kind !== 'plain' && (
+        // DO 글자는 success-on-tint를 쓴다 — 원래 success 색은 흰 바탕에서도 3.67:1이다
         <p
           className={cn(
             'flex items-center gap-1.5 border-b px-3 py-2 text-2xs font-bold tracking-widest',
-            kind === 'do' ? 'text-success' : 'text-destructive',
+            kind === 'do' ? 'text-success-on-tint' : 'text-destructive',
           )}
         >
           {kind === 'do' ? <Check size={13} aria-hidden /> : <X size={13} aria-hidden />}

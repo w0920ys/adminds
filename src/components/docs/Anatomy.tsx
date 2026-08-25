@@ -246,7 +246,7 @@ export function Anatomy({ meta, preview }: { meta: ComponentMeta; preview: React
                     'mt-0.5 grid size-5 shrink-0 place-items-center rounded-full text-2xs font-bold',
                     isActive
                       ? 'bg-annotation text-background'
-                      : 'bg-muted text-muted-foreground',
+                      : 'bg-muted text-neutral-on-tint',
                   )}
                 >
                   {index + 1}
