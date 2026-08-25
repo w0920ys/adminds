@@ -246,8 +246,8 @@ export function TypographyPage() {
         <p className="text-muted-foreground text-sm">
           여섯 단계로 끝냅니다. 크기·행간·자간은 화면 밖에 숨긴 요소에 각 클래스를 걸고 실측한
           값이고, 표의 순서도 실측한 크기가 정합니다 — 스케일을 바꾸면 이 표의 순서까지
-          따라옵니다. 자간은 단계마다 따로 정하지 않습니다. 자간이나 행간 칸의 <code>normal</code>
-          은 그 단계에 값을 정하지 않아 글꼴이 잡은 간격을 그대로 쓴다는 뜻입니다.
+          따라옵니다. 자간은 단계마다 따로 정하지 않습니다. 자간 칸의 <code>normal</code>은 그 단계에 값을
+          정하지 않아 글꼴이 잡은 자간을 그대로 쓴다는 뜻입니다.
         </p>
         <div className="overflow-x-auto rounded-lg border">
           <table className="w-full text-left text-sm">

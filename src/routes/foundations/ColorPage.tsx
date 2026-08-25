@@ -5,6 +5,7 @@ import { DocPage, DocSection } from '@/components/docs/DocPage'
 import { DoDont } from '@/components/docs/DoDont'
 import { Swatch } from '@/components/docs/Swatch'
 import { TokenTable } from '@/components/docs/TokenTable'
+import { BRANCHES, classify } from '@/routes/foundations/ColorRolePage'
 import { parseTokenNames, readTokens, type TokenRow } from '@/lib/tokens'
 
 const COLOR_NAMES = parseTokenNames(tokensCss, '--color-')
@@ -26,9 +27,6 @@ function useMeasuredTokens(names: string[]): TokenRow[] {
 
 export function ColorPage() {
   const rows = useMeasuredTokens(COLOR_NAMES)
-  const surfaces = rows.filter((r) => /background|surface|card|popover|muted|accent/.test(r.name))
-  const roles = rows.filter((r) => /primary|secondary|destructive|success|warning|info/.test(r.name))
-  const lines = rows.filter((r) => /border|input|ring/.test(r.name))
 
   return (
     <DocPage
@@ -46,26 +44,35 @@ export function ColorPage() {
             Color Role
           </Link>
           에서 다룹니다. 새 색이 필요하다고 느낄 때 먼저 이 문서에서 맞는 역할이 있는지 봅니다.
+          견본은 Color Role과 같은 분류(<code>classify</code>)로 묶어서, 두 문서가 같은 토큰을
+          다르게 부르지 않습니다.
         </p>
       </DocSection>
 
-      <DocSection title="표면">
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-          {surfaces.map((row) => <Swatch key={row.cssVar} row={row} />)}
-        </div>
-      </DocSection>
-
-      <DocSection title="역할">
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-          {roles.map((row) => <Swatch key={row.cssVar} row={row} />)}
-        </div>
-      </DocSection>
-
-      <DocSection title="선과 포커스">
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-          {lines.map((row) => <Swatch key={row.cssVar} row={row} />)}
-        </div>
-      </DocSection>
+      {BRANCHES.map((branch) =>
+        branch.id === 'doc' ? (
+          <DocSection key={branch.id} title={branch.title}>
+            <p className="text-muted-foreground text-sm">
+              annotation 계열은 이 문서 사이트에서 주석을 그릴 때만 쓰는 문서 전용 갈래라 제품
+              UI 역할이 아닙니다. 여기서는 견본으로 다루지 않고,{' '}
+              <Link to="/foundations/color-role" className="underline underline-offset-2">
+                Color Role
+              </Link>
+              에서 따로 다룹니다.
+            </p>
+          </DocSection>
+        ) : (
+          <DocSection key={branch.id} title={branch.title}>
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+              {rows
+                .filter((row) => classify(row.name) === branch.id)
+                .map((row) => (
+                  <Swatch key={row.cssVar} row={row} />
+                ))}
+            </div>
+          </DocSection>
+        ),
+      )}
 
       <DocSection title="전체 토큰">
         <p className="text-muted-foreground text-xs">

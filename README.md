@@ -31,10 +31,10 @@ npm test          # vitest run
 src/
   components/
     ui/       # shadcn 스타일 원자 컴포넌트 (Button 등)
-    docs/     # 전시 페이지를 구성하는 문서용 컴포넌트 (VariantGrid, StateGrid, ComponentPage 등)
-    layout/   # 앱 셸, 사이드바 등 레이아웃
+    docs/     # 전시 페이지를 구성하는 문서용 컴포넌트 (PropertyBlock, Anatomy, ComponentPage 등)
+    layout/   # 앱 셸, GNB·LNB 등 레이아웃
   data/       # registry.ts(컴포넌트 메타), releases.ts(버전별 changelog)
-  routes/     # 라우트별 페이지 (routes/components/ButtonPage.tsx 등)
+  routes/     # 라우트별 페이지 (routes/components/ButtonPage.tsx, routes/foundations/ 문서 10개 등)
   styles/     # tokens.css — 색·간격·radius·shadow 등 전역 디자인 토큰
   lib/        # 유틸리티
 ```
@@ -43,7 +43,7 @@ src/
 
 1. `src/components/ui/`에 컴포넌트를 직접 작성합니다 (shadcn CLI로 생성한 것과 같은 형태를 손으로 맞춰 넣습니다).
 2. `src/data/registry.ts`에 컴포넌트 메타(설명, variants, sizes, anatomy, guidelines 등)를 등록합니다.
-3. `src/routes/components/`에 전시 페이지를 만듭니다 (`VariantGrid`, `StateGrid` 등 `components/docs`의 도구를 사용).
+3. `src/routes/components/`에 전시 페이지를 만듭니다 (`PropertyBlock`, `Anatomy` 등 `components/docs`의 도구를 사용).
 4. `src/routes/router.tsx`에 라우트를 한 줄 추가합니다.
 
 ## 제약

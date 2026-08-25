@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+import type { ComponentProps, ReactNode } from 'react'
 import { ChevronRight, Loader2, Plus, Search, Settings2, Trash2 } from 'lucide-react'
 import { ComponentPage } from '@/components/docs/ComponentPage'
 import type { RenderOptions } from '@/components/docs/PropertyBlock'
@@ -7,8 +7,8 @@ import { getComponent } from '@/data/registry'
 import { Placeholder } from '@/routes/Placeholder'
 import { cn } from '@/lib/utils'
 
-type ButtonVariant = React.ComponentProps<typeof Button>['variant']
-type ButtonSize = React.ComponentProps<typeof Button>['size']
+type ButtonVariant = ComponentProps<typeof Button>['variant']
+type ButtonSize = ComponentProps<typeof Button>['size']
 
 const LABEL = '버튼'
 

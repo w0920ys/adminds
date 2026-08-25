@@ -61,7 +61,9 @@ export type ComponentMeta = {
   name: string
   category: ComponentCategory
   status: ComponentStatus
+  /** 컴포넌트나 그 문서가 처음 실린 버전. */
   addedIn: string
+  /** 컴포넌트나 그 문서가 마지막으로 바뀐 버전. 구현과 이 메타(문서) 중 어느 쪽이 바뀌었든 갱신한다. */
   changedIn: string
   purpose: string
   anatomy: AnatomyPart[]
@@ -79,7 +81,7 @@ export const components: ComponentMeta[] = [
     category: 'actions',
     status: 'stable',
     addedIn: 'v0.2.0',
-    changedIn: 'v0.3.0',
+    changedIn: 'v0.4.0',
     purpose: '사용자가 즉시 실행할 수 있는 동작을 나타낸다. 페이지 이동은 링크를 쓴다.',
     anatomy: [
       { part: 'container', label: 'Container', note: '높이는 size 토큰, 모서리는 radius-md' },

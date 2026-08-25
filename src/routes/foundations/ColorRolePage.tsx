@@ -15,8 +15,11 @@ const COLOR_NAMES = parseTokenNames(tokensCss, '--color-')
  * 토큰이 어느 갈래에 속하는지 이름만 보고 정한다.
  * 위에서부터 먼저 맞는 곳에서 멈춘다 — 'accent-foreground'는 강조가 아니라 전경이므로
  * '-foreground' 검사가 나머지보다 앞에 있어야 한다.
+ *
+ * Color 페이지도 이 함수로 견본을 묶는다 — 분류 로직이 두 곳에 따로 있으면
+ * 같은 토큰을 두고 두 문서가 다른 말을 하게 된다.
  */
-function classify(name: string): string {
+export function classify(name: string): string {
   if (name.startsWith('annotation')) return 'doc'
   if (name.endsWith('foreground')) return 'foreground'
   if (/^(border|input|ring)$/.test(name)) return 'line'
@@ -25,8 +28,9 @@ function classify(name: string): string {
   return 'surface'
 }
 
-/** 화면에 보이는 순서. classify의 판단 순서와는 다르다 */
-const BRANCHES: { id: string; title: string; lead: string }[] = [
+/** 화면에 보이는 순서. classify의 판단 순서와는 다르다.
+ * Color 페이지도 같은 순서로 갈래를 늘어놓는다. */
+export const BRANCHES: { id: string; title: string; lead: string }[] = [
   {
     id: 'surface',
     title: '표면',
