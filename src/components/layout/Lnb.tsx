@@ -20,7 +20,7 @@ export function Lnb({ open, onClose }: { open: boolean; onClose: () => void }) {
       <aside
         className={cn(
           'bg-surface fixed inset-y-0 left-0 z-drawer flex w-60 flex-col border-r p-3 transition-transform',
-          'md:h-full md:overflow-y-auto md:translate-x-0',
+          'md:static md:h-full md:shrink-0 md:translate-x-0 md:overflow-y-auto',
           open ? 'translate-x-0' : '-translate-x-full',
         )}
       >
