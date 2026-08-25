@@ -13,7 +13,11 @@
 ## Global Constraints
 
 - 작업 브랜치는 `v0.3.0`. `main`에 직접 커밋하지 않는다.
-- 색·간격·radius·shadow 값을 하드코딩하지 않는다. `src/styles/tokens.css`의 토큰 유틸리티만 쓴다. 임의 값 대괄호 표기(`[3px]`, `[#abc]`)도 금지. 단, `[&_svg]:size-4` 같은 임의 **셀렉터** 변형은 값이 아니므로 허용된다.
+- 색·간격·radius·shadow 값을 하드코딩하지 않는다. `src/styles/tokens.css`의 토큰 유틸리티만 쓴다. 임의 값 대괄호 표기(`[3px]`, `[#abc]`, `[calc(...)]`)도 금지. 단, `[&_svg]:size-4` 같은 임의 **셀렉터** 변형은 값이 아니므로 허용된다. 각 Task 완료 전 다음으로 확인한다 — 출력이 없어야 한다:
+
+  ```bash
+  grep -rnE '\[calc\(|\[[0-9]+(px|rem|vh|vw)\]|\[#' src/
+  ```
 - 비주얼은 shadcn 기본 톤(neutral). 브랜드 색을 임의로 넣지 않는다.
 - **화면에 나오는 목록·순서·숫자를 손으로 적지 않는다.** 네비게이션 순서는 `nav-config.ts`에서, 컴포넌트 수는 `registry.ts`에서, 토큰 값은 `tokens.css` 실측에서 온다.
 - 전시 컴포넌트(`components/docs/*`)는 어떤 컴포넌트를 그리는지 몰라야 한다. 구체적 UI 컴포넌트를 import하지 않고 `render` 콜백으로 주입받는다.
@@ -292,7 +296,7 @@ export function findAdjacent(pathname: string): { prev?: DocLink; next?: DocLink
 - [ ] **Step 4: 테스트 통과 확인**
 
 Run: `npm test`
-Expected: PASS — 15개(기존) + 13개(신규) = 28 tests.
+Expected: PASS — 15개(기존) + 14개(신규) = 29 tests.
 
 - [ ] **Step 5: GNB 작성**
 
@@ -311,7 +315,7 @@ export function Gnb({ onMenuClick }: { onMenuClick: () => void }) {
   const active = findSection(pathname)
 
   return (
-    <header className="bg-surface/90 sticky top-0 z-sticky border-b backdrop-blur">
+    <header className="bg-surface/90 shrink-0 border-b backdrop-blur">
       <div className="flex h-14 items-center gap-2 px-4 md:px-6">
         <button className="md:hidden" onClick={onMenuClick} aria-label="메뉴 열기">
           <Menu size={20} />
@@ -361,8 +365,8 @@ Create `src/components/layout/Lnb.tsx`:
 
 ```tsx
 import { X } from 'lucide-react'
-import { NavLink, useLocation } from 'react-router'
-import { findSection } from '@/components/layout/nav-config'
+import { Link, NavLink, useLocation } from 'react-router'
+import { findSection, sections } from '@/components/layout/nav-config'
 import { currentRelease } from '@/data/releases'
 import { cn } from '@/lib/utils'
 
@@ -382,7 +386,8 @@ export function Lnb({ open, onClose }: { open: boolean; onClose: () => void }) {
       <aside
         className={cn(
           'bg-surface fixed inset-y-0 left-0 z-drawer flex w-60 flex-col border-r p-3 transition-transform',
-          'md:sticky md:top-14 md:h-[calc(100vh-3.5rem)] md:translate-x-0',
+          // md:static이 fixed를 상쇄해 flex 흐름으로 되돌린다. 빠지면 데스크톱에서 LNB가 GNB를 덮는다
+          'md:static md:h-full md:shrink-0 md:translate-x-0 md:overflow-y-auto',
           open ? 'translate-x-0' : '-translate-x-full',
         )}
       >
@@ -397,6 +402,29 @@ export function Lnb({ open, onClose }: { open: boolean; onClose: () => void }) {
           >
             <X size={18} />
           </button>
+        </div>
+
+        {/* 좁은 화면에서는 GNB의 섹션 목록이 숨겨지므로, 드로어가 유일한 섹션 전환 경로다 */}
+        <div className="mb-3 flex flex-col border-b pb-3 md:hidden">
+          <p className="text-muted-foreground mb-1.5 px-2 text-2xs font-bold tracking-widest">
+            전체 메뉴
+          </p>
+          {sections.map((item) => (
+            <Link
+              key={item.id}
+              to={item.to}
+              onClick={onClose}
+              aria-current={item.id === section.id ? 'page' : undefined}
+              className={cn(
+                'flex h-control items-center rounded-md px-2 text-sm',
+                item.id === section.id
+                  ? 'bg-accent text-accent-foreground font-semibold'
+                  : 'text-muted-foreground',
+              )}
+            >
+              {item.label}
+            </Link>
+          ))}
         </div>
 
         <nav className="mt-2 flex flex-col" aria-label={`${section.label} 문서 목록`}>
@@ -443,12 +471,19 @@ Create `src/components/layout/DocFooterNav.tsx`:
 ```tsx
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { Link, useLocation } from 'react-router'
-import { findAdjacent } from '@/components/layout/nav-config'
+import { findAdjacent, findSection, type DocLink } from '@/components/layout/nav-config'
 
 export function DocFooterNav() {
   const { pathname } = useLocation()
   const { prev, next } = findAdjacent(pathname)
   if (!prev && !next) return null
+
+  const current = findSection(pathname)
+  /** 섹션을 넘어가는 경우에만 어느 섹션인지 함께 보여준다 */
+  const labelFor = (link: DocLink) => {
+    const section = findSection(link.to)
+    return section.id === current.id ? link.label : `${section.label} · ${link.label}`
+  }
 
   return (
     <nav className="mt-16 grid gap-3 border-t pt-6 sm:grid-cols-2" aria-label="문서 이동">
@@ -460,7 +495,7 @@ export function DocFooterNav() {
           <span className="text-muted-foreground flex items-center gap-1 text-2xs">
             <ChevronLeft size={12} /> 이전 문서
           </span>
-          <strong className="text-sm">{prev.label}</strong>
+          <strong className="text-sm">{labelFor(prev)}</strong>
         </Link>
       ) : (
         <span />
@@ -473,7 +508,7 @@ export function DocFooterNav() {
           <span className="text-muted-foreground flex items-center gap-1 text-2xs">
             다음 문서 <ChevronRight size={12} />
           </span>
-          <strong className="text-sm">{next.label}</strong>
+          <strong className="text-sm">{labelFor(next)}</strong>
         </Link>
       )}
     </nav>
@@ -496,11 +531,11 @@ export function AppShell() {
   const [lnbOpen, setLnbOpen] = useState(false)
 
   return (
-    <div className="bg-background text-foreground min-h-screen">
+    <div className="bg-background text-foreground flex h-dvh flex-col">
       <Gnb onMenuClick={() => setLnbOpen(true)} />
-      <div className="flex">
+      <div className="flex min-h-0 flex-1">
         <Lnb open={lnbOpen} onClose={() => setLnbOpen(false)} />
-        <main className="min-w-0 flex-1 px-4 py-8 md:px-10">
+        <main className="min-w-0 flex-1 overflow-y-auto px-4 py-8 md:px-10">
           <div className="mx-auto max-w-4xl">
             <Outlet />
             <DocFooterNav />
@@ -590,10 +625,41 @@ export const registeredPaths: string[] = (() => {
       </p>
 ```
 
-- [ ] **Step 12: 빌드와 테스트**
+- [ ] **Step 12: 빌드·테스트와 레이아웃 실측**
 
 Run: `npm run build && npm test`
-Expected: 둘 다 성공. 28 tests.
+Expected: 둘 다 성공. 29 tests.
+
+임의 값 표기가 없는지 확인한다. 출력이 없어야 한다:
+
+```bash
+grep -rnE '\[calc\(|\[[0-9]+(px|rem|vh|vw)\]|\[#' src/
+```
+
+**레이아웃은 코드만 봐서는 검증되지 않는다.** `aside`가 모바일에서는 `fixed` 드로어,
+데스크톱에서는 flex 흐름의 정상 자식이어야 하는데, 둘은 같은 클래스 문자열에서 갈린다.
+dev 서버를 띄우고 `/foundations/writing`에서 다음을 두 폭에서 각각 실행한다.
+
+```js
+(() => {
+  const aside = document.querySelector('aside')
+  const main = document.querySelector('main')
+  const header = document.querySelector('header')
+  return {
+    viewport: [innerWidth, innerHeight],
+    asidePosition: getComputedStyle(aside).position,
+    overlapsHeader: aside.getBoundingClientRect().top < header.getBoundingClientRect().bottom,
+    mainStartsAfterAside: main.getBoundingClientRect().left >= aside.getBoundingClientRect().right,
+    asideWidth: aside.getBoundingClientRect().width,
+  }
+})()
+```
+
+데스크톱(폭 ≥ 768) 기대값: `asidePosition: "static"`, `overlapsHeader: false`,
+`mainStartsAfterAside: true`, `asideWidth: 240`.
+
+모바일(폭 375) 기대값: `asidePosition: "fixed"`. 이 폭에서는 드로어가 화면을 덮는 것이
+의도이므로 `overlapsHeader`가 true여도 정상이다.
 
 - [ ] **Step 13: 커밋**
 
@@ -626,7 +692,7 @@ EOF
 - Produces:
   - `type TokenRow = { name: string; cssVar: string; value: string }`
   - `parseTokenNames(cssText: string, prefix: string): string[]` — 순수 함수, 테스트 대상
-  - `readTokens(names: string[]): TokenRow[]` — `getComputedStyle(document.documentElement)` 실측
+  - `readTokens(names: string[], prefix?: string): TokenRow[]` — `getComputedStyle(document.documentElement)` 실측. `prefix`를 주면 표시용 이름에서 떼어낸다 (정규식 추측은 `--z-index-*` 같은 다중 세그먼트에서 틀린다)
   - `DocPage({ title, description, children }: { title: string; description?: string; children: ReactNode })`
   - `DoDont({ do: string[]; dont: string[] })`
   - `TokenTable({ rows }: { rows: TokenRow[] })`
@@ -716,11 +782,14 @@ export function parseTokenNames(cssText: string, prefix: string): string[] {
  * 현재 문서에서 토큰의 계산값을 실측한다.
  * 라이트/다크 어느 쪽이든 지금 적용된 값이 그대로 나온다.
  */
-export function readTokens(names: string[]): TokenRow[] {
+export function readTokens(names: string[], prefix?: string): TokenRow[] {
   const computed = getComputedStyle(document.documentElement)
   return names.map((cssVar) => ({
     cssVar,
-    name: cssVar.replace(/^--[a-z]+-/, ''),
+    name:
+      prefix && cssVar.startsWith(prefix)
+        ? cssVar.slice(prefix.length)
+        : cssVar.replace(/^--/, ''),
     value: computed.getPropertyValue(cssVar).trim(),
   }))
 }
@@ -732,7 +801,7 @@ export function readTokens(names: string[]): TokenRow[] {
 - [ ] **Step 4: 테스트 통과 확인**
 
 Run: `npm test`
-Expected: PASS — 28 + 5 = 33 tests.
+Expected: PASS — 29 + 5 = 34 tests.
 
 - [ ] **Step 5: 문서 틀 작성**
 
@@ -783,25 +852,37 @@ import { Check, X } from 'lucide-react'
 export function DoDont({ do: dos, dont: donts }: { do: string[]; dont: string[] }) {
   return (
     <div className="grid gap-3 md:grid-cols-2">
-      <ul className="flex flex-col gap-2 rounded-lg border p-4">
-        {dos.map((line) => (
-          <li key={line} className="flex gap-2 text-sm">
-            <Check size={15} className="text-success mt-0.5 shrink-0" aria-hidden />
-            {line}
-          </li>
-        ))}
-      </ul>
-      <ul className="flex flex-col gap-2 rounded-lg border p-4">
-        {donts.map((line) => (
-          <li key={line} className="flex gap-2 text-sm">
-            <X size={15} className="text-destructive mt-0.5 shrink-0" aria-hidden />
-            {line}
-          </li>
-        ))}
-      </ul>
+      <div className="rounded-lg border p-4">
+        <p className="text-success mb-2.5 flex items-center gap-1.5 text-2xs font-bold tracking-widest">
+          <Check size={13} aria-hidden /> DO
+        </p>
+        <ul className="flex flex-col gap-2">
+          {dos.map((line) => (
+            <li key={line} className="text-sm">
+              {line}
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div className="rounded-lg border p-4">
+        <p className="text-destructive mb-2.5 flex items-center gap-1.5 text-2xs font-bold tracking-widest">
+          <X size={13} aria-hidden /> DON'T
+        </p>
+        <ul className="flex flex-col gap-2">
+          {donts.map((line) => (
+            <li key={line} className="text-sm">
+              {line}
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   )
 }
+
+두 목록을 아이콘 색으로만 구분하면 스크린리더에는 라벨 없는 목록 두 개로 읽힌다.
+제목을 실제 텍스트로 두어 아이콘은 장식으로만 남긴다 — 색만으로 의미를 전달하지 않는다는
+규범을 이 시스템이 Color 문서에서 스스로 내세우기 때문이다.
 ```
 
 - [ ] **Step 7: TokenTable / Swatch 작성**
@@ -866,7 +947,7 @@ export function Swatch({ row }: { row: TokenRow }) {
 - [ ] **Step 8: 빌드와 테스트**
 
 Run: `npm run build && npm test`
-Expected: 둘 다 성공. 33 tests. 아직 사용처가 없어 화면 변화는 없다.
+Expected: 둘 다 성공. 34 tests. 아직 사용처가 없어 화면 변화는 없다.
 
 - [ ] **Step 9: 커밋**
 
@@ -976,7 +1057,7 @@ function useMeasuredTokens(names: string[]): TokenRow[] {
   const [rows, setRows] = useState<TokenRow[]>([])
 
   useEffect(() => {
-    const measure = () => setRows(readTokens(names))
+    const measure = () => setRows(readTokens(names, '--color-'))
     measure()
     const observer = new MutationObserver(measure)
     observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] })
@@ -1136,8 +1217,8 @@ export function SpacingPage() {
   const [radius, setRadius] = useState<TokenRow[]>([])
 
   useEffect(() => {
-    setDensity(readTokens(SPACING_NAMES))
-    setRadius(readTokens(RADIUS_NAMES))
+    setDensity(readTokens(SPACING_NAMES, '--spacing-'))
+    setRadius(readTokens(RADIUS_NAMES, '--radius-'))
   }, [])
 
   return (
@@ -1208,7 +1289,7 @@ import { TypographyPage } from '@/routes/foundations/TypographyPage'
 - [ ] **Step 7: 실측이 실제로 동작하는지 확인**
 
 Run: `npm run build && npm test`
-Expected: 둘 다 성공. 33 tests.
+Expected: 둘 다 성공. 34 tests.
 
 빌드 산출물에 토큰 이름이 들어갔는지 확인한다 (`?raw` import가 동작했다는 증거):
 
@@ -1312,7 +1393,7 @@ Create `src/routes/foundations/WritingPage.tsx`.
 - [ ] **Step 6: 빌드와 테스트**
 
 Run: `npm run build && npm test`
-Expected: 둘 다 성공. 33 tests.
+Expected: 둘 다 성공. 34 tests.
 
 Foundations LNB의 8개 항목 중 `Placeholder`로 남은 것이 없는지 확인한다:
 
@@ -1704,7 +1785,7 @@ export function componentStats(): { total: number; verified: number; stable: num
 - [ ] **Step 4: 테스트 통과 확인**
 
 Run: `npm test`
-Expected: PASS — 33 - 5(옛 registry 테스트) + 11(새 registry 테스트) = 39 tests.
+Expected: PASS — 34 - 5(옛 registry 테스트) + 11(새 registry 테스트) = 40 tests.
 
 숫자가 다르면 실제 결과를 보고서에 적고 어떤 테스트가 늘거나 줄었는지 밝힌다.
 
@@ -2053,7 +2134,7 @@ export function Anatomy({ meta, preview }: { meta: ComponentMeta; preview: React
 - [ ] **Step 2: 빌드와 테스트**
 
 Run: `npm run build && npm test`
-Expected: 둘 다 성공. 39 tests. `ComponentPage`가 아직 `Anatomy`를 쓰지 않으므로 화면 변화는 없다.
+Expected: 둘 다 성공. 40 tests. `ComponentPage`가 아직 `Anatomy`를 쓰지 않으므로 화면 변화는 없다.
 
 - [ ] **Step 3: 커밋**
 
@@ -2271,7 +2352,7 @@ export function Playground({
 - [ ] **Step 3: 빌드와 테스트**
 
 Run: `npm run build && npm test`
-Expected: 둘 다 성공. 39 tests. 아직 사용처가 없어 화면 변화는 없다.
+Expected: 둘 다 성공. 40 tests. 아직 사용처가 없어 화면 변화는 없다.
 
 - [ ] **Step 4: 커밋**
 
@@ -2543,7 +2624,7 @@ const FORCE_CLASS: Record<string, string> = {
 - [ ] **Step 7: 빌드와 테스트**
 
 Run: `npm run build && npm test`
-Expected: 둘 다 성공. 39 tests.
+Expected: 둘 다 성공. 40 tests.
 
 강제 클래스가 빌드 CSS에 남아 있는지 확인한다:
 
