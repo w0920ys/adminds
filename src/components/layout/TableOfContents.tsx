@@ -56,6 +56,22 @@ export function TableOfContents() {
     const root = document.querySelector('main')
     const pick = () => {
       if (!root) return
+
+      /*
+       * 스크롤 양 끝은 판정선으로 정하지 않는다.
+       * 첫 절이 짧으면 맨 위에서도 다음 제목이 판정선을 넘고,
+       * 마지막 절이 짧으면 끝까지 내려도 그 제목이 판정선까지 올라오지 못한다.
+       */
+      const EDGE = 8
+      if (root.scrollTop <= EDGE) {
+        setActive(nodes[0]?.id ?? null)
+        return
+      }
+      if (root.scrollHeight - root.scrollTop - root.clientHeight <= EDGE) {
+        setActive(nodes[nodes.length - 1]?.id ?? null)
+        return
+      }
+
       const line = root.getBoundingClientRect().top + root.clientHeight / 3
       let current = nodes[0]?.id ?? null
       for (const node of nodes) {
@@ -67,7 +83,11 @@ export function TableOfContents() {
     pick()
     const observer = new IntersectionObserver(pick, { root, threshold: 0 })
     nodes.forEach((node) => observer.observe(node))
-    return () => observer.disconnect()
+    root?.addEventListener('scroll', pick, { passive: true })
+    return () => {
+      observer.disconnect()
+      root?.removeEventListener('scroll', pick)
+    }
   }, [pathname])
 
   if (headings.length < 2) return null
