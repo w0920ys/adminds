@@ -5,6 +5,7 @@ import { Gnb } from '@/components/layout/Gnb'
 import { Lnb } from '@/components/layout/Lnb'
 import { SiteFooter } from '@/components/layout/SiteFooter'
 import { TableOfContents } from '@/components/layout/TableOfContents'
+import { ToastProvider, ToastViewport } from '@/components/ui/toast'
 import { TooltipProvider } from '@/components/ui/tooltip'
 import { scrollRoot } from '@/lib/scroll'
 
@@ -15,6 +16,14 @@ import { scrollRoot } from '@/lib/scroll'
  * 무심코 지나가는 호버는 걸러내면서도 답을 오래 기다리게 하지 않는다.
  */
 const TOOLTIP_DELAY_MS = 300
+
+/*
+ * Toast 한 줄(대략 20자 안팎)을 읽고, 되돌리기가 있으면 그것까지 누를
+ * 여유를 준다. Radix 기본값과 같은 5000ms를 그대로 쓴다 — 이 값을
+ * 새로 정할 근거가 이 시스템에는 없고, 짧은 문장 하나를 읽기에
+ * 부족하지도 넘치지도 않는다.
+ */
+const TOAST_DURATION_MS = 5000
 
 export function AppShell() {
   const [lnbOpen, setLnbOpen] = useState(false)
@@ -46,22 +55,25 @@ export function AppShell() {
 
   return (
     <TooltipProvider delayDuration={TOOLTIP_DELAY_MS}>
-      <div className="bg-background text-foreground flex h-dvh flex-col">
-        <Gnb onMenuClick={() => setLnbOpen(true)} />
-        <div className="flex min-h-0 flex-1">
-          <Lnb open={lnbOpen} onClose={() => setLnbOpen(false)} />
-          <main className="scrollbar-none min-w-0 flex-1 overflow-y-auto px-4 py-8 md:px-10">
-            <div className="mx-auto flex max-w-6xl gap-10">
-              <div className="min-w-0 flex-1">
-                <Outlet />
-                <DocFooterNav />
-                <SiteFooter />
+      <ToastProvider duration={TOAST_DURATION_MS}>
+        <div className="bg-background text-foreground flex h-dvh flex-col">
+          <Gnb onMenuClick={() => setLnbOpen(true)} />
+          <div className="flex min-h-0 flex-1">
+            <Lnb open={lnbOpen} onClose={() => setLnbOpen(false)} />
+            <main className="scrollbar-none min-w-0 flex-1 overflow-y-auto px-4 py-8 md:px-10">
+              <div className="mx-auto flex max-w-6xl gap-10">
+                <div className="min-w-0 flex-1">
+                  <Outlet />
+                  <DocFooterNav />
+                  <SiteFooter />
+                </div>
+                <TableOfContents />
               </div>
-              <TableOfContents />
-            </div>
-          </main>
+            </main>
+          </div>
+          <ToastViewport />
         </div>
-      </div>
+      </ToastProvider>
     </TooltipProvider>
   )
 }
