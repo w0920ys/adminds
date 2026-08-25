@@ -2,6 +2,7 @@ import {
   BookOpen, Box, Clock3, Component, FileText, LayoutDashboard,
   type LucideIcon,
 } from 'lucide-react'
+import { components } from '@/data/registry'
 
 export type NavItem = {
   to: string
@@ -21,7 +22,12 @@ export const navGroups: NavGroup[] = [
     items: [
       { to: '/', label: 'Overview', icon: LayoutDashboard },
       { to: '/foundations', label: 'Foundations', icon: Box },
-      { to: '/components', label: 'Components', icon: Component },
+      {
+        to: '/components',
+        label: 'Components',
+        icon: Component,
+        badge: String(components.length).padStart(2, '0'),
+      },
       { to: '/patterns', label: 'Patterns', icon: BookOpen },
       { to: '/templates', label: 'Templates', icon: FileText },
     ],
