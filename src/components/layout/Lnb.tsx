@@ -74,7 +74,7 @@ export function Lnb({ open, onClose }: { open: boolean; onClose: () => void }) {
 
         <div className="mb-3 flex flex-col border-b pb-3 md:hidden">
           <p className="text-muted-foreground mb-1.5 px-2 text-2xs font-bold tracking-widest">
-            전체 메뉴
+            Sections
           </p>
           {sections.map((item) => (
             <Link

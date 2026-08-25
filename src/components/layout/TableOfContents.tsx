@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useLocation } from 'react-router'
 import { assignHeadingIds } from '@/lib/heading-id'
-import { readHash, scrollToHeading } from '@/lib/scroll'
+import { readHash, scrollRoot, scrollToHeading } from '@/lib/scroll'
 import { cn } from '@/lib/utils'
 
 type Heading = {
@@ -17,7 +17,7 @@ export function TableOfContents() {
   const [active, setActive] = useState<string | null>(null)
 
   useEffect(() => {
-    const main = document.querySelector('main')
+    const main = scrollRoot()
     if (!main) return
 
     /* 렌더가 끝난 뒤 훑는다. 측정이 아니라 목록 수집이므로 한 프레임 뒤로 미뤄도 된다 */
@@ -41,18 +41,26 @@ export function TableOfContents() {
     /*
      * 복사해 둔 주소로 들어온 경우. id는 방금 collect()가 붙였으므로
      * 그 전에는 대상을 찾을 수 없다 — 이 순서가 중요하다.
+     * scrollToHeading은 대상이 없으면 스스로 아무것도 하지 않으므로 미리 걸러
+     * 부르지 않는다 — 여기서 하는 조회는 오직 옵저버를 붙일지 정하기 위한 것이다.
      */
     const hash = readHash()
-    if (hash && document.getElementById(hash)) {
+    if (hash) {
       scrollToHeading(hash)
-      /*
-       * 토큰을 실측해 채우는 문서는 마운트 뒤에도 내용이 자라 대상이 아래로 밀린다.
-       * 시간을 재는 대신 크기가 바뀔 때마다 다시 맞추고, 자라기를 멈추면 손을 뗀다.
-       */
+      const target = document.getElementById(hash)
       const content = main.firstElementChild
-      if (content) {
+      if (target && content) {
+        /*
+         * 토큰을 실측해 채우는 문서는 마운트 뒤에도 내용이 자라 대상이 아래로 밀린다.
+         * 시간을 재는 대신 크기가 바뀔 때마다 다시 맞추고, 자라기를 멈추면 손을 뗀다.
+         */
         const settle = new ResizeObserver(() => scrollToHeading(hash))
         settle.observe(content)
+        /*
+         * 튜닝한 값이 아니다. 실측해 채우는 문서는 값을 읽고, 거기서 파생값(hex 등)을
+         * 다시 계산하는 순서로 커밋이 두어 번 이어지고 나면 자라기가 끝난다.
+         * 1000ms는 그보다 넉넉히 잡은 상한이다.
+         */
         const release = setTimeout(() => settle.disconnect(), 1000)
         cleanups.push(() => {
           settle.disconnect()

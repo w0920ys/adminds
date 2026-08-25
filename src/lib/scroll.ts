@@ -7,25 +7,28 @@ export function scrollRoot(): HTMLElement | null {
 }
 
 /** 제목을 스크롤 컨테이너의 맨 위로 올린다. 대상을 찾지 못하면 아무것도 하지 않는다 */
-export function scrollToHeading(id: string): boolean {
+export function scrollToHeading(id: string): void {
   const root = scrollRoot()
   const target = document.getElementById(id)
-  if (!root || !target) return false
+  if (!root || !target) return
   root.scrollTop += target.getBoundingClientRect().top - root.getBoundingClientRect().top
-  return true
 }
 
 /**
- * 주소가 가리키는 절의 id를 읽는다.
+ * 주소 조각을 id로 되돌린다.
  * 인코딩이 깨져 있으면 원문 그대로 본다 — 잘린 붙여넣기로 '%'가 홀로 남으면
  * decodeURIComponent가 던지고, 그 예외가 화면 전체를 오류 페이지로 바꾼다.
  */
-export function readHash(): string {
-  const raw = window.location.hash.slice(1)
+export function decodeHashFragment(raw: string): string {
   if (!raw) return ''
   try {
     return decodeURIComponent(raw)
   } catch {
     return raw
   }
+}
+
+/** 주소가 가리키는 절의 id를 읽는다 */
+export function readHash(): string {
+  return decodeHashFragment(window.location.hash.slice(1))
 }
