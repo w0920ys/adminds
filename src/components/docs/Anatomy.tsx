@@ -17,6 +17,8 @@ type Placed = {
   box: { x: number; y: number; width: number; height: number }
   /** 라벨의 세로 중심 */
   labelY: number
+  /** 같은 쪽에서 위에서부터 몇 번째인가. 꺾임점을 어긋나게 하는 데 쓴다 */
+  lane: number
 }
 
 /** 라벨 하나가 차지하는 세로 공간 */
@@ -25,6 +27,10 @@ const LABEL_SLOT = 56
 const GUTTER = 12
 /** 이 폭 미만에서는 라벨을 놓을 자리가 없어 번호 배지로 대신한다 */
 const MIN_WIDTH_FOR_LINES = 640
+/** 라벨에서 첫 꺾임점까지의 거리 */
+const LANE_START = 24
+/** 같은 쪽 지시선끼리 벌리는 간격. 세로 구간이 서로 다른 선 위에 놓이게 한다 */
+const LANE_GAP = 14
 
 export function Anatomy({ meta, preview }: { meta: ComponentMeta; preview: ReactNode }) {
   const stageRef = useRef<HTMLDivElement>(null)
@@ -62,7 +68,7 @@ export function Anatomy({ meta, preview }: { meta: ComponentMeta; preview: React
 
     if (isNarrow) {
       /** 좁은 화면에서는 지시선 대신 부위 위에 번호 배지를 올린다 */
-      setPlaced(found.map((item) => ({ ...item, side: 'left' as const, labelY: 0 })))
+      setPlaced(found.map((item) => ({ ...item, side: 'left' as const, labelY: 0, lane: 0 })))
       return
     }
 
@@ -92,7 +98,9 @@ export function Anatomy({ meta, preview }: { meta: ComponentMeta; preview: React
         LABEL_SLOT / 2,
         stageBox.height / 2 - (group.length * LABEL_SLOT) / 2 + LABEL_SLOT / 2,
       )
-      group.forEach((item, i) => next.push({ ...item, labelY: start + i * LABEL_SLOT }))
+      group.forEach((item, i) =>
+        next.push({ ...item, labelY: start + i * LABEL_SLOT, lane: i }),
+      )
     }
 
     setPlaced(next.sort((a, b) => a.index - b.index))
@@ -133,7 +141,16 @@ export function Anatomy({ meta, preview }: { meta: ComponentMeta; preview: React
                 const cy = item.box.y + item.box.height / 2
                 const edgeX = item.side === 'left' ? item.box.x : item.box.x + item.box.width
                 const anchorX = item.side === 'left' ? GUTTER + 140 : size.width - GUTTER - 140
-                const bendX = (anchorX + edgeX) / 2
+                /*
+                 * 꺾임점을 레인마다 어긋나게 둔다. 같은 쪽 선들이 한 세로선 위에
+                 * 겹치면 어느 선이 어느 라벨의 것인지 분간되지 않는다.
+                 * 위에서부터 순서대로 라벨에서 멀어지므로 선끼리 교차하지도 않는다.
+                 */
+                const lane = LANE_START + item.lane * LANE_GAP
+                const bendX =
+                  item.side === 'left'
+                    ? Math.min(anchorX + lane, edgeX - 8)
+                    : Math.max(anchorX - lane, edgeX + 8)
                 const isActive = active === item.index
                 return (
                   <g key={item.index}>
