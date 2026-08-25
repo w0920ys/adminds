@@ -284,9 +284,9 @@ export function PalettePage() {
               <tr className="text-muted-foreground text-2xs tracking-widest">
                 <th scope="col" className="px-3 py-2 font-bold">TOKEN</th>
                 <th scope="col" className="px-3 py-2 font-bold">HEX</th>
-                <th scope="col" className="px-3 py-2 font-bold">가장 가까운 원시</th>
-                <th scope="col" className="px-3 py-2 font-bold">원시 HEX</th>
-                <th scope="col" className="px-3 py-2 font-bold">차이</th>
+                <th scope="col" className="px-3 py-2 font-bold">Nearest raw</th>
+                <th scope="col" className="px-3 py-2 font-bold">Raw HEX</th>
+                <th scope="col" className="px-3 py-2 font-bold">Diff</th>
               </tr>
             </thead>
             <tbody>

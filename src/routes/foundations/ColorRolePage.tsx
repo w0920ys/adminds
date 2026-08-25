@@ -270,9 +270,9 @@ export function ColorRolePage() {
           <table className="w-full text-left text-sm">
             <thead>
               <tr className="text-muted-foreground text-2xs tracking-widest">
-                <th scope="col" className="px-3 py-2 font-bold">배경</th>
+                <th scope="col" className="px-3 py-2 font-bold">Background</th>
                 <th scope="col" className="px-3 py-2 font-bold">Foreground</th>
-                <th scope="col" className="px-3 py-2 font-bold">배경 HEX</th>
+                <th scope="col" className="px-3 py-2 font-bold">Background HEX</th>
                 <th scope="col" className="px-3 py-2 font-bold">Foreground HEX</th>
               </tr>
             </thead>
