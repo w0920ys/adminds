@@ -18,6 +18,7 @@ import { DialogPage } from '@/routes/components/DialogPage'
 import { DropdownMenuPage } from '@/routes/components/DropdownMenuPage'
 import { EmptyStatePage } from '@/routes/components/EmptyStatePage'
 import { FieldPage } from '@/routes/components/FieldPage'
+import { FileUploadPage } from '@/routes/components/FileUploadPage'
 import { InputPage } from '@/routes/components/InputPage'
 import { PaginationPage } from '@/routes/components/PaginationPage'
 import { PopoverPage } from '@/routes/components/PopoverPage'
@@ -75,6 +76,7 @@ export const routes: RouteObject[] = [
           { path: 'dropdown-menu', element: <DropdownMenuPage /> },
           { path: 'input', element: <InputPage /> },
           { path: 'field', element: <FieldPage /> },
+          { path: 'file-upload', element: <FileUploadPage /> },
           { path: 'select', element: <SelectPage /> },
           { path: 'slider', element: <SliderPage /> },
           { path: 'checkbox', element: <CheckboxPage /> },
