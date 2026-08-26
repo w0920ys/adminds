@@ -60,7 +60,13 @@ const ACTIVITIES: Activity[] = [
 /** 탭이 많은 경우를 보이려고 늘린 목록. 실제 탭 구성(정보·주문·활동)과는 다르다 */
 const MANY_TABS = ['정보', '주문', '활동', '결제', '문서', '메모', '이력', '권한']
 
-/** 어디서 들어왔는지 잇는 세 칸. 마지막 칸은 링크가 아니라 현재 위치다 */
+/**
+ * 어디서 들어왔는지 잇는 세 칸. 마지막 칸은 링크가 아니라 현재 위치다.
+ *
+ * 앞의 두 칸이 href='#'인 것은 ListPatternPage의 ScreenHeader와 같은 이유다 —
+ * 이 Example은 목업이라 그 위 갈래에 해당하는 라우트가 없고, asChild에 Link를
+ * 넣으면 목업에서 유일하게 문서 밖 없는 페이지로 나가는 자리가 된다.
+ */
 function OriginBreadcrumb() {
   return (
     <Breadcrumb>

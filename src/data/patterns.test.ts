@@ -16,10 +16,19 @@ describe('patterns', () => {
     expect(new Set(ids).size).toBe(ids.length)
   })
 
-  it('집계 숫자를 배열에서 센다', () => {
-    const stats = patternStats()
-    expect(stats.total).toBe(patterns.length)
-    expect(stats.verified).toBe(patterns.filter((p) => p.verified).length)
+  /*
+   * 답을 아는 목록을 넣어 센다. 그전에는 patterns.length와
+   * patterns.filter(...)를 기대값 자리에 그대로 다시 적었는데, 그것은
+   * 구현과 같은 식이라 구현이 틀리면 기대값도 같이 틀렸다.
+   */
+  it('넘긴 목록에서 전체와 검증 완료를 센다', () => {
+    const sample = patterns.slice(0, 2).map((pattern, i) => ({ ...pattern, verified: i === 0 }))
+    expect(patternStats(sample)).toEqual({ total: 2, verified: 1 })
+  })
+
+  /* 기본값이 실제 목록이어야 화면의 '패턴 N개'가 0으로 비지 않는다 */
+  it('인자가 없으면 실제 패턴 목록을 센다', () => {
+    expect(patternStats().total).toBeGreaterThan(0)
   })
 })
 

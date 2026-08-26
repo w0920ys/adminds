@@ -30,8 +30,8 @@ export function PrinciplesPage() {
       <DocSection title="Overview">
         <p className="text-muted-foreground text-sm">
           컴포넌트마다, 화면마다 규칙이 있지만 그 규칙들이 왜 그렇게 정해졌는지는 한 문장으로
-          겹칩니다. 그 겹치는 문장 여섯 개를 여기 모았습니다. 아래 각 항목은 새 규칙이 아니라
-          다른 문서가 이미 말하고 있는 것을 가리키는 이름표입니다.
+          겹칩니다. 그 겹치는 문장 {principles.length}개를 여기 모았습니다. 아래 각 항목은 새
+          규칙이 아니라 다른 문서가 이미 말하고 있는 것을 가리키는 이름표입니다.
         </p>
         <p className="text-muted-foreground text-sm">
           그래서 이 문서는 혼자 서지 않습니다. 각 원칙 아래의 링크가 그 원칙을 실제로 다루는
@@ -49,8 +49,9 @@ export function PrinciplesPage() {
 
       <DocSection title="About this workbench">
         <p className="text-muted-foreground text-sm">
-          앞의 다섯은 이 시스템으로 만드는 <strong className="text-foreground font-medium">제품
-          화면</strong>에 거는 규칙입니다. 마지막 하나는 성격이 다릅니다 —{' '}
+          앞의 {productPrinciples.length}개는 이 시스템으로 만드는{' '}
+          <strong className="text-foreground font-medium">제품 화면</strong>에 거는 규칙입니다.
+          마지막 하나는 성격이 다릅니다 —{' '}
           <strong className="text-foreground font-medium">이 작업대 자체</strong>에 거는
           규칙입니다. 이 사이트는 문서가 곧 제품이므로, 문서가 코드에 대해 사실이 아닌 것을
           말하면 그것이 곧 결함입니다.

@@ -154,7 +154,7 @@ export const sections: NavSection[] = [
     id: 'updates',
     label: 'Updates',
     to: '/updates',
-    items: [{ to: '/updates', label: 'Overview', summary: '버전마다 무엇이 바뀌었는가', updatedAt: '2026-08-25' }],
+    items: [{ to: '/updates', label: 'Overview', summary: '버전마다 무엇이 바뀌었는가', updatedAt: '2026-08-27' }],
   },
 ]
 

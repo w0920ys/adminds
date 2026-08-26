@@ -38,6 +38,14 @@ const ROWS: Row[] = [
 
 const TABLE_COLUMNS = 6
 
+/*
+ * 아래 Breadcrumb 첫 칸의 href가 '#'인 것은 의도다. BreadcrumbPage는 asChild에 react-router
+ * Link를 넣지만, 그쪽이 가리키는 /users·/teams는 이 사이트의 라우트가 아니라
+ * 눌리면 "페이지를 찾을 수 없습니다"로 떨어진다. 여기 Example은 어드민 화면
+ * 하나를 통째로 흉내낸 목업이고, 안의 버튼·필터·표 어느 것도 이동하지 않는다.
+ * 이 칸만 Link로 바꾸면 목업에서 유일하게 문서 밖으로 나가는 자리가 되고,
+ * 그 끝이 없는 페이지다. 없는 곳을 가리키느니 아무 데도 가지 않는 편이 낫다.
+ */
 function ScreenHeader() {
   return (
     <div className="flex flex-col gap-4">

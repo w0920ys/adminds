@@ -328,9 +328,20 @@ export function getPattern(id: string): PatternMeta | undefined {
   return patterns.find((p) => p.id === id)
 }
 
-export function patternStats(): { total: number; verified: number } {
+/**
+ * Overview 문장과 Get started의 Status 칸에 그대로 나가는 두 숫자.
+ *
+ * 셀 목록을 인자로 받는다. 기본값이 patterns이라 부르는 쪽은 그대로지만,
+ * 이렇게 두어야 테스트가 답을 아는 목록을 넣어 셈이 맞는지 볼 수 있다 —
+ * 모듈 바깥의 patterns를 직접 읽으면 테스트가 구현과 같은 식을 다시 쓰는
+ * 수밖에 없고, 그런 검사는 구현이 틀릴 때 같이 틀린다.
+ */
+export function patternStats(list: PatternMeta[] = patterns): {
+  total: number
+  verified: number
+} {
   return {
-    total: patterns.length,
-    verified: patterns.filter((p) => p.verified).length,
+    total: list.length,
+    verified: list.filter((p) => p.verified).length,
   }
 }
