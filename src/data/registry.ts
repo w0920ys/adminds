@@ -410,6 +410,133 @@ export const components: ComponentMeta[] = [
     verified: true,
   },
   {
+    id: 'field',
+    name: 'Field',
+    aliases: ['필드', '폼 필드', '입력 항목', 'form field', 'label'],
+    category: 'inputs',
+    status: 'stable',
+    addedIn: 'v0.10.0',
+    changedIn: 'v0.10.0',
+    purpose:
+      '라벨·도움말·오류를 입력 하나에 묶습니다. id를 잇는 일이 이 컴포넌트의 존재 이유입니다 — Field가 useId로 만든 id를 컨텍스트에 담아 FieldLabel의 htmlFor와 FieldControl의 aria-describedby·aria-invalid로 손 대지 않고 이어 줍니다.',
+    anatomy: [
+      {
+        part: 'container',
+        label: 'Container',
+        note: 'layout이 stacked면 세로로 쌓고, horizontal이면 grid-cols-[auto_1fr]로 라벨과 값 칸을 나눈다',
+      },
+      { part: 'label', label: 'Label', note: 'FieldLabel. htmlFor로 Control과 이어진다. text-sm font-medium' },
+      {
+        part: 'requirement-mark',
+        label: 'Requirement Mark',
+        note: "필수는 '*', 선택은 '(선택)'. 라벨 문구 뒤에 붙는다",
+        optional: true,
+      },
+      {
+        part: 'control',
+        label: 'Control',
+        note: 'FieldControl. Slot으로 자식 하나에 id · aria-describedby · aria-invalid를 내려 준다',
+      },
+      {
+        part: 'help',
+        label: 'Help',
+        note: 'FieldHelp. text-muted-foreground / text-xs. 자기 id를 Field에 등록해 aria-describedby에 실린다',
+        optional: true,
+      },
+      {
+        part: 'error',
+        label: 'Error',
+        note: 'FieldError. text-destructive / text-xs. 도움말이 있어도 지우지 않고 함께 등록된다',
+        optional: true,
+      },
+    ],
+    properties: [
+      {
+        name: 'layout',
+        title: 'Layout',
+        description: '라벨을 입력 위에 둘지, 왼쪽 고정 폭에 둘지 정한다.',
+        display: 'row',
+        options: [
+          { value: 'stacked', note: '기본. 라벨이 입력 위에 온다' },
+          { value: 'horizontal', note: '라벨이 왼쪽 고정 폭. 설정 화면처럼 라벨이 짧고 항목이 많을 때' },
+        ],
+      },
+      {
+        name: 'state',
+        title: 'State',
+        description: '입력의 상호작용과 값의 상태를 나타낸다.',
+        display: 'grid',
+        options: [
+          { value: 'default' },
+          { value: 'error', note: 'aria-invalid가 켜지고 FieldError가 함께 온다' },
+          { value: 'disabled', note: '라벨도 함께 흐려진다' },
+        ],
+      },
+      {
+        name: 'label',
+        title: 'Label',
+        description: '필수·선택 표시 여부를 정한다. 한 폼에서는 하나만 고른다.',
+        display: 'row',
+        options: [
+          { value: 'plain', note: '표시 없음' },
+          { value: 'required', note: "필수가 드문 폼에서 '*'로 표시" },
+          { value: 'optional', note: "선택이 드문 폼에서 '(선택)'으로 표시" },
+        ],
+      },
+    ],
+    guidelines: [
+      {
+        id: 'label-above-input',
+        title: 'Label above input',
+        body: '라벨을 입력 위에 둡니다. 시선이 아래로 내려가는 흐름과 맞고, 번역으로 라벨이 길어져도 자리가 흔들리지 않습니다.',
+        do: ['라벨을 입력 칸 바로 위에 놓는다'],
+        dont: ['입력 옆이나 아래에 라벨을 두어 시선의 흐름을 거스르지 않는다'],
+      },
+      {
+        id: 'help-before-error-after',
+        title: 'Help before, error after',
+        body: '도움말은 입력 앞에, 오류는 입력 뒤에 둡니다. 도움말은 적기 전에 읽어야 하고 오류는 적은 뒤에 나옵니다.',
+        do: ['도움말을 입력 위에, 오류를 입력 아래에 놓는다'],
+        dont: ['오류 문구를 입력 위에 두어 도움말과 자리를 다투게 하지 않는다'],
+      },
+      {
+        id: 'single-requirement-mark',
+        title: 'One requirement mark per form',
+        body: '필수 표시와 선택 표시 중 하나만 씁니다. 한 폼에서 둘을 섞으면 표시가 없는 항목이 무엇인지 알 수 없습니다.',
+        do: ['필수가 드문 폼에서는 필수만, 선택이 드문 폼에서는 선택만 표시한다'],
+        dont: ['같은 폼 안에서 필수 표시와 선택 표시를 함께 쓰지 않는다'],
+      },
+      {
+        id: 'keep-help-with-error',
+        title: "Don't clear help on error",
+        body: '오류가 나와도 도움말을 지우지 않습니다. 무엇이 틀렸는지와 무엇을 넣어야 하는지는 둘 다 필요합니다.',
+        do: ['오류가 나타난 뒤에도 도움말을 그대로 둔다'],
+        dont: ['오류 문구가 나타나면 도움말을 없애지 않는다'],
+      },
+    ],
+    usage: [
+      { id: 'form-row', title: '폼 한 줄', note: '라벨과 입력 하나를 세로로 묶은 가장 흔한 자리' },
+      { id: 'setting-item', title: '설정 항목', note: '라벨이 왼쪽 고정 폭인 가로 배치' },
+      { id: 'table-filter', title: '표 위의 필터', note: '라벨 없이 입력만 두고 aria-label로 이름을 붙인다' },
+      {
+        id: 'grouped-inputs',
+        title: '여러 입력을 한 라벨로 묶는 경우',
+        note: 'htmlFor가 하나를 가리킬 수 없으므로 FieldControl 대신 fieldset·legend로 묶는다',
+      },
+    ],
+    cases: [
+      {
+        id: 'error-with-help',
+        title: '오류와 도움말이 함께 있는 경우',
+        note: 'aria-describedby가 두 id를 공백으로 이어 붙여 함께 가리킨다',
+      },
+      { id: 'long-label', title: '라벨이 긴 경우', note: 'horizontal에서도 라벨은 줄바꿈되고 값 칸의 폭은 그대로다' },
+      { id: 'no-label', title: '라벨이 필요 없는 입력', note: 'FieldLabel 없이 FieldControl만 두고 aria-label로 이름을 대신한다' },
+      { id: 'narrow-screen', title: '좁은 화면', note: '폭이 좁아지면 값 칸이 함께 줄어든다' },
+    ],
+    verified: false,
+  },
+  {
     id: 'input',
     name: 'Input',
     aliases: ['텍스트 필드', '입력', '인풋', 'text field', 'textfield'],

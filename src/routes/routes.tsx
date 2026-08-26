@@ -15,6 +15,7 @@ import { DescriptionListPage } from '@/routes/components/DescriptionListPage'
 import { DialogPage } from '@/routes/components/DialogPage'
 import { DropdownMenuPage } from '@/routes/components/DropdownMenuPage'
 import { EmptyStatePage } from '@/routes/components/EmptyStatePage'
+import { FieldPage } from '@/routes/components/FieldPage'
 import { InputPage } from '@/routes/components/InputPage'
 import { PaginationPage } from '@/routes/components/PaginationPage'
 import { PopoverPage } from '@/routes/components/PopoverPage'
@@ -70,6 +71,7 @@ export const routes: RouteObject[] = [
           { path: 'button', element: <ButtonPage /> },
           { path: 'dropdown-menu', element: <DropdownMenuPage /> },
           { path: 'input', element: <InputPage /> },
+          { path: 'field', element: <FieldPage /> },
           { path: 'select', element: <SelectPage /> },
           { path: 'checkbox', element: <CheckboxPage /> },
           { path: 'radio', element: <RadioPage /> },
