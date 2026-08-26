@@ -146,6 +146,7 @@ export const sections: NavSection[] = [
       { to: '/patterns/list', label: 'List', summary: '여러 항목을 훑고 걸러 하나를 고르는 화면', updatedAt: '2026-08-27' },
       { to: '/patterns/detail', label: 'Detail', summary: '항목 하나를 갈래로 나눠 보이는 화면', updatedAt: '2026-08-27' },
       { to: '/patterns/form', label: 'Form', summary: '라벨·도움말·오류의 배치를 정하는 입력 화면', updatedAt: '2026-08-27' },
+      { to: '/patterns/empty-and-error', label: 'Empty and error', summary: '비어 있을 때와 실패했을 때의 화면', updatedAt: '2026-08-27' },
     ],
   },
   {

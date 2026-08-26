@@ -214,6 +214,56 @@ export const patterns: PatternMeta[] = [
     ],
     verified: false,
   },
+  {
+    id: 'empty-and-error',
+    name: 'Empty and error',
+    aliases: ['빈 상태', '빈 화면', '오류 화면', 'empty state', 'error state'],
+    status: 'draft',
+    addedIn: 'v0.11.0',
+    changedIn: 'v0.11.0',
+    purpose:
+      '보여줄 것이 없거나 불러오지 못했을 때의 화면이다. 어드민에서 자주 나오는데 자주 빠뜨린다.',
+    structure: [
+      { slot: '아이콘', note: '무슨 종류의 자리인지 한눈에 가른다. 뜻은 아이콘이 아니라 글이 전한다', components: ['empty-state'] },
+      { slot: '무슨 일인지', note: '한 줄로 상황을 적는다. 원인을 아는 경우에만 원인을 적는다', components: ['empty-state'] },
+      { slot: '무엇을 할 수 있는지', note: '다음에 할 일을 적는다. 할 일이 없으면 이 줄을 비운다', components: ['empty-state'], optional: true },
+      { slot: '동작', note: '사용자가 할 수 있는 일이 있을 때만 둔다', components: ['button'], optional: true },
+    ],
+    guidelines: [
+      {
+        id: 'empty-is-not-error',
+        title: '빈 것과 실패한 것을 구별한다',
+        body: '아직 아무것도 없는 것은 정상이고, 불러오지 못한 것은 사고다. 같은 화면으로 보이면 사용자가 없는 문제를 고치려 든다.',
+        do: ['빈 상태는 안내하는 말로, 실패는 무엇이 잘못됐는지로'],
+        dont: ['둘 다 "데이터가 없습니다"로 적는다'],
+      },
+      {
+        id: 'give-an-action',
+        title: '사용자가 할 수 있는 일이 있으면 동작을 둔다',
+        body: '빈 화면에서 다음에 무엇을 눌러야 하는지 알려 주는 것이 이 자리의 값이다. 할 일이 없으면 억지로 버튼을 만들지 않는다.',
+        do: ['첫 항목 만들기 · 조건 지우기 · 다시 시도'],
+        dont: ['할 일이 없는데 "확인" 버튼을 둔다'],
+      },
+      {
+        id: 'first-visit-is-guidance',
+        title: '첫 방문의 빈 상태는 안내이지 오류가 아니다',
+        body: '아직 만들지 않은 것은 잘못이 아니다. 붉은 색과 경고 아이콘을 쓰면 처음 온 사람이 자기가 무언가 망가뜨렸다고 읽는다.',
+        do: ['중립 색으로, 무엇을 만들 수 있는지 적는다'],
+        dont: ['destructive 색이나 경고 아이콘을 쓴다'],
+      },
+    ],
+    example: {
+      title: '네 가지 빈 자리',
+      note: '아직 없음 · 검색 결과 없음 · 권한 없음 · 불러오기 실패를 나란히 놓아 문구와 색이 어떻게 갈리는지 본다.',
+    },
+    cases: [
+      { id: 'nothing-yet', title: '아직 아무것도 없음', note: '첫 항목을 만드는 길을 준다. 경고가 아니다.' },
+      { id: 'no-search-results', title: '검색 결과 없음', note: '무엇으로 걸렀는지 되짚고 조건을 지우는 길을 준다.' },
+      { id: 'no-permission', title: '권한 없음', note: '누구에게 요청해야 하는지 적는다. 다시 시도는 두지 않는다.' },
+      { id: 'load-failed', title: '불러오기 실패', note: '다시 시도를 둔다. 원인을 모르면 원인을 지어내지 않는다.' },
+    ],
+    verified: false,
+  },
 ]
 
 export function getPattern(id: string): PatternMeta | undefined {

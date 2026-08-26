@@ -48,6 +48,7 @@ import { TypographyPage } from '@/routes/foundations/TypographyPage'
 import { VoiceAndTonePage } from '@/routes/foundations/VoiceAndTonePage'
 import { WritingPage } from '@/routes/foundations/WritingPage'
 import { DetailPatternPage } from '@/routes/patterns/DetailPatternPage'
+import { EmptyAndErrorPatternPage } from '@/routes/patterns/EmptyAndErrorPatternPage'
 import { FormPatternPage } from '@/routes/patterns/FormPatternPage'
 import { ListPatternPage } from '@/routes/patterns/ListPatternPage'
 
@@ -118,6 +119,7 @@ export const routes: RouteObject[] = [
           { path: 'list', element: <ListPatternPage /> },
           { path: 'detail', element: <DetailPatternPage /> },
           { path: 'form', element: <FormPatternPage /> },
+          { path: 'empty-and-error', element: <EmptyAndErrorPatternPage /> },
         ],
       },
       { path: 'updates', element: <UpdatesPage /> },
