@@ -47,6 +47,7 @@ import { StatePage } from '@/routes/foundations/StatePage'
 import { TypographyPage } from '@/routes/foundations/TypographyPage'
 import { VoiceAndTonePage } from '@/routes/foundations/VoiceAndTonePage'
 import { WritingPage } from '@/routes/foundations/WritingPage'
+import { DestructiveConfirmPatternPage } from '@/routes/patterns/DestructiveConfirmPatternPage'
 import { DetailPatternPage } from '@/routes/patterns/DetailPatternPage'
 import { EmptyAndErrorPatternPage } from '@/routes/patterns/EmptyAndErrorPatternPage'
 import { FormPatternPage } from '@/routes/patterns/FormPatternPage'
@@ -120,6 +121,7 @@ export const routes: RouteObject[] = [
           { path: 'detail', element: <DetailPatternPage /> },
           { path: 'form', element: <FormPatternPage /> },
           { path: 'empty-and-error', element: <EmptyAndErrorPatternPage /> },
+          { path: 'destructive-confirm', element: <DestructiveConfirmPatternPage /> },
         ],
       },
       { path: 'updates', element: <UpdatesPage /> },

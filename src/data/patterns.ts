@@ -264,6 +264,64 @@ export const patterns: PatternMeta[] = [
     ],
     verified: false,
   },
+  {
+    id: 'destructive-confirm',
+    name: 'Destructive confirm',
+    aliases: ['삭제 확인', '위험 동작', '확인 대화상자', '되돌릴 수 없는 동작'],
+    status: 'draft',
+    addedIn: 'v0.11.0',
+    changedIn: 'v0.11.0',
+    purpose:
+      '되돌릴 수 없는 동작을 실행하기 전에 한 번 멈추는 흐름이다. Dialog로 묻고 Toast로 결과를 알린다.',
+    structure: [
+      { slot: '위험 동작 Button', note: 'destructive 버튼이거나 Dropdown Menu 안의 항목이다', components: ['button', 'dropdown-menu'] },
+      { slot: 'Dialog 제목', note: '무엇이 지워지는지 적는다. "삭제하시겠습니까"만으로는 대상을 알 수 없다', components: ['dialog'] },
+      { slot: 'Dialog 본문', note: '영향 범위를 적는다. 되돌릴 수 없으면 그 사실을 여기에 적는다', components: ['dialog'] },
+      { slot: '취소와 실행', note: '취소는 왼쪽 outline, 실행은 오른쪽 destructive', components: ['button'] },
+      { slot: 'Toast', note: '실행한 뒤에 결과를 알린다. 되돌릴 수 있으면 여기에 되돌리기를 둔다', components: ['toast'] },
+    ],
+    guidelines: [
+      {
+        id: 'name-the-target',
+        title: '제목에 무엇이 지워지는지 적는다',
+        body: '대화상자는 목록에서 멀리 떨어져 뜬다. 방금 무엇을 눌렀는지 제목이 다시 말해 주지 않으면 확인이 확인이 아니다.',
+        do: ["'홍길동'을 삭제하시겠습니까"],
+        dont: ['삭제하시겠습니까'],
+      },
+      {
+        id: 'show-the-count',
+        title: '영향 범위가 넓으면 개수를 보인다',
+        body: '여럿을 한꺼번에 지울 때 몇 건인지가 판단의 전부다. 목록을 다 늘어놓을 수 없으면 개수라도 적는다.',
+        do: ['선택한 12건을 삭제합니다'],
+        dont: ['선택한 항목을 삭제합니다'],
+      },
+      {
+        id: 'undo-in-toast',
+        title: '되돌릴 수 있으면 Toast에 되돌리기를 둔다',
+        body: '되돌릴 수 있는 동작에는 확인 단계를 줄이고 되돌리기를 준다. 묻는 단계와 되돌리는 단계를 둘 다 두면 확인이 소음이 된다.',
+        do: ['ToastAction으로 되돌리기를 둔다'],
+        dont: ['되돌릴 수 있는데도 대화상자로 한 번 더 묻는다'],
+      },
+      {
+        id: 'say-when-irreversible',
+        title: '되돌릴 수 없으면 그 사실을 본문에 적는다',
+        body: '되돌릴 수 없다는 말은 제목이 아니라 본문에 둔다. 제목은 대상을 말하는 자리다.',
+        do: ['삭제하면 되돌릴 수 없습니다.'],
+        dont: ['본문 없이 제목만 두고 실행 버튼을 붉게 칠한다'],
+      },
+    ],
+    example: {
+      title: '사용자 삭제',
+      note: '버튼을 눌러 Dialog를 열고, 삭제를 누르면 그 자리에 Toast가 뜨는 흐름 전체다.',
+    },
+    cases: [
+      { id: 'delete-one', title: '하나 삭제', note: '제목에 대상의 이름을 적는다.' },
+      { id: 'delete-many', title: '여럿 삭제', note: '제목에 개수를 적고 본문에 무엇이 함께 지워지는지 적는다.' },
+      { id: 'irreversible', title: '되돌릴 수 없는 삭제', note: '본문에 되돌릴 수 없다고 적고 Toast에 되돌리기를 두지 않는다.' },
+      { id: 'failed', title: '실행 실패', note: 'destructive Toast로 알린다. 대화상자는 닫지 않고 다시 시도할 수 있게 둔다.' },
+    ],
+    verified: false,
+  },
 ]
 
 export function getPattern(id: string): PatternMeta | undefined {
