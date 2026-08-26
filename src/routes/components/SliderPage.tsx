@@ -43,6 +43,18 @@ function SliderField({
   )
 }
 
+/*
+ * Playground는 옵션 버튼을 누를 때마다 이 함수가 돌려주는 트리를 같은
+ * 자리에서 갈아 끼운다(Playground.tsx의 {render(options)}) — Slider
+ * 엘리먼트 자체는 리액트 입장에서 그대로 남고 defaultValue prop만
+ * 바뀐다. Slider는 비제어라 Radix가 defaultValue를 마운트 시점에만
+ * 읽으므로, layout을 single에서 range로 눌러도 내부 값 배열은 그대로
+ * 남아 손잡이가 하나뿐인 채 두 번째 손잡이의 aria-valuenow가 null이
+ * 되는 유령 손잡이가 생겼다. defaultValue의 모양(배열 길이)을 정하는
+ * 축은 layout뿐이므로 key={layout}로 그 축이 바뀔 때만 강제로
+ * 다시 마운트한다 — size·state는 defaultValue의 모양에 영향을 주지
+ * 않아 key에 넣지 않는다.
+ */
 function renderSlider(options: RenderOptions) {
   const { size, state, layout } = options
   const disabled = state === 'disabled'
@@ -50,7 +62,7 @@ function renderSlider(options: RenderOptions) {
 
   return (
     <div className="w-64">
-      <Slider size={size as SliderSize} disabled={disabled} defaultValue={defaultValue} />
+      <Slider key={layout} size={size as SliderSize} disabled={disabled} defaultValue={defaultValue} />
     </div>
   )
 }
