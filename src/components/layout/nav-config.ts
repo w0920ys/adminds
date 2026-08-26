@@ -145,6 +145,7 @@ export const sections: NavSection[] = [
       { to: '/patterns', label: 'Overview', summary: '여러 부품을 엮는 화면 단위의 규칙', updatedAt: '2026-08-25' },
       { to: '/patterns/list', label: 'List', summary: '여러 항목을 훑고 걸러 하나를 고르는 화면', updatedAt: '2026-08-27' },
       { to: '/patterns/detail', label: 'Detail', summary: '항목 하나를 갈래로 나눠 보이는 화면', updatedAt: '2026-08-27' },
+      { to: '/patterns/form', label: 'Form', summary: '라벨·도움말·오류의 배치를 정하는 입력 화면', updatedAt: '2026-08-27' },
     ],
   },
   {

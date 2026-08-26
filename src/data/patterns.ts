@@ -155,6 +155,65 @@ export const patterns: PatternMeta[] = [
     ],
     verified: false,
   },
+  {
+    id: 'form',
+    name: 'Form',
+    aliases: ['폼', '입력 화면', '등록 화면', '수정 화면'],
+    status: 'draft',
+    addedIn: 'v0.11.0',
+    changedIn: 'v0.11.0',
+    purpose:
+      '값을 입력받아 저장하는 화면이다. 라벨·도움말·오류가 컨트롤과 어떻게 이어지는지를 정한다.',
+    structure: [
+      { slot: 'Field', note: '라벨·컨트롤·도움말·오류를 하나의 id 계약으로 묶는다. htmlFor와 aria-describedby를 손으로 맞추지 않는다', components: ['field'] },
+      { slot: '컨트롤', note: '값의 모양에 따라 고른다 — 짧은 글은 Input, 고르는 값은 Select, 긴 글은 Textarea', components: ['input', 'select', 'textarea'] },
+      { slot: '켜고 끄는 값', note: '저장을 눌러야 반영되면 Checkbox, 누르는 순간 반영되면 Switch', components: ['checkbox', 'radio', 'switch'] },
+      { slot: '도움말', note: '입력하기 전에 알아야 할 것. 컨트롤 아래 첫 줄에 둔다', components: ['field'] },
+      { slot: '오류 문구', note: '입력한 뒤에 알게 되는 것. 도움말 아래에 둔다', components: ['field'], optional: true },
+      { slot: '저장과 취소', note: '저장은 오른쪽, 취소는 왼쪽. Dialog의 동작 순서와 같다', components: ['button'] },
+    ],
+    guidelines: [
+      {
+        id: 'label-above-control',
+        title: '라벨은 입력 위에 둔다',
+        body: '어드민 폼은 길다. 라벨이 왼쪽에 있으면 라벨 열과 입력 열의 폭을 둘 다 맞춰야 하고, 긴 라벨 하나가 모든 행의 폭을 정한다.',
+        do: ['Field의 stacked 배치를 기본으로 쓴다'],
+        dont: ['긴 라벨이 섞인 폼에 horizontal을 쓴다'],
+      },
+      {
+        id: 'help-before-error-after',
+        title: '도움말은 입력 전에, 오류는 입력 후에 보인다',
+        body: '도움말은 늘 있고 오류는 틀렸을 때만 나온다. 둘을 같은 자리에서 갈아 끼우면 도움말이 사라져 무엇을 고쳐야 하는지 알 수 없다.',
+        do: ['도움말을 남긴 채 그 아래에 오류를 더한다'],
+        dont: ['오류가 나면 도움말을 지운다'],
+      },
+      {
+        id: 'save-right-cancel-left',
+        title: '저장은 오른쪽, 취소는 왼쪽',
+        body: '읽는 방향의 끝에 확정하는 동작을 둔다. Dialog의 취소·실행 순서와 같아야 손이 헷갈리지 않는다.',
+        do: ['취소는 outline, 저장은 채운 버튼'],
+        dont: ['저장을 왼쪽에 둔다'],
+      },
+      {
+        id: 'switch-vs-checkbox',
+        title: '즉시 반영되는 것에는 Switch를, 저장이 필요한 것에는 Checkbox를 쓴다',
+        body: '두 컨트롤은 모양이 아니라 시점이 다르다. Switch는 누르는 순간 값이 바뀌고, Checkbox는 저장을 눌러야 바뀐다.',
+        do: ['폼 안의 동의·선택은 Checkbox로', '설정 화면의 켜고 끄기는 Switch로'],
+        dont: ['저장 버튼이 있는 폼 안에 Switch를 둔다'],
+      },
+    ],
+    example: {
+      title: '사용자 등록',
+      note: 'Field로 묶은 컨트롤 다섯과 저장·취소까지, 입력 화면 하나를 조립한 것이다.',
+    },
+    cases: [
+      { id: 'multiple-errors', title: '오류가 여럿인 경우', note: '각 Field가 자기 오류를 갖고, 폼 위에 몇 건인지 Alert로 한 번 더 보인다.' },
+      { id: 'saving', title: '저장 중', note: '저장 버튼을 비활성으로 두고 무엇이 진행 중인지 적는다.' },
+      { id: 'unsaved-changes', title: '나가려 할 때 저장하지 않은 변경이 있는 경우', note: 'Dialog로 묻는다. 되돌릴 수 없는 것이 아니므로 문구는 삭제 확인과 다르다.' },
+      { id: 'narrow-screen', title: '좁은 화면', note: '컨트롤이 한 열로 쌓이고 저장·취소가 가로폭을 채운다.' },
+    ],
+    verified: false,
+  },
 ]
 
 export function getPattern(id: string): PatternMeta | undefined {
