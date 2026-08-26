@@ -47,6 +47,7 @@ import { StatePage } from '@/routes/foundations/StatePage'
 import { TypographyPage } from '@/routes/foundations/TypographyPage'
 import { VoiceAndTonePage } from '@/routes/foundations/VoiceAndTonePage'
 import { WritingPage } from '@/routes/foundations/WritingPage'
+import { DetailPatternPage } from '@/routes/patterns/DetailPatternPage'
 import { ListPatternPage } from '@/routes/patterns/ListPatternPage'
 
 export const routes: RouteObject[] = [
@@ -114,6 +115,7 @@ export const routes: RouteObject[] = [
         children: [
           { index: true, element: <Placeholder title="Patterns" /> },
           { path: 'list', element: <ListPatternPage /> },
+          { path: 'detail', element: <DetailPatternPage /> },
         ],
       },
       { path: 'updates', element: <UpdatesPage /> },

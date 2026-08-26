@@ -104,6 +104,57 @@ export const patterns: PatternMeta[] = [
     ],
     verified: false,
   },
+  {
+    id: 'detail',
+    name: 'Detail',
+    aliases: ['상세', '상세 화면', '단건 조회'],
+    status: 'draft',
+    addedIn: 'v0.11.0',
+    changedIn: 'v0.11.0',
+    purpose:
+      '목록에서 항목 하나로 들어간 뒤의 화면이다. 한 대상의 정보를 갈래로 나눠 보이고 그 대상에 걸리는 동작을 한자리에 모은다.',
+    structure: [
+      { slot: 'Breadcrumb', note: '어느 목록에서 들어왔는지 보인다', components: ['breadcrumb'] },
+      { slot: '제목과 Badge', note: '대상의 이름과 그 상태를 한 줄에 둔다', components: ['badge'] },
+      { slot: '동작', note: '자주 쓰는 동작은 버튼으로, 위험하거나 드문 동작은 Dropdown Menu 안쪽에 둔다', components: ['button', 'dropdown-menu'] },
+      { slot: 'Tabs', note: '정보를 갈래로 나눈다. 탭을 바꿔도 위의 제목과 동작은 남는다', components: ['tabs'] },
+      { slot: '탭 내용', note: '읽기 위주 정보는 Description List로, 딸린 목록은 Table로 보인다', components: ['description-list', 'table'] },
+    ],
+    guidelines: [
+      {
+        id: 'breadcrumb-shows-origin',
+        title: '어디서 왔는지 Breadcrumb으로 보인다',
+        body: '상세 화면은 늘 어딘가의 아래에 있다. 돌아갈 길이 보이지 않으면 뒤로 가기 말고는 방법이 없다.',
+        do: ['목록 → 대상 이름 순으로 잇는다', '마지막 칸은 링크가 아니라 현재 위치로 둔다'],
+        dont: ['제목만 두고 상위 갈래를 지운다'],
+      },
+      {
+        id: 'danger-in-menu',
+        title: '위험한 동작은 Dropdown Menu 안쪽에 둔다',
+        body: '삭제·정지처럼 되돌리기 어려운 동작은 한 번 더 열어야 닿게 한다. 자주 쓰는 동작 옆에 나란히 두면 손이 미끄러진다.',
+        do: ['수정은 버튼으로, 삭제는 메뉴 안에'],
+        dont: ['삭제를 제목 줄에 채운 버튼으로 둔다'],
+      },
+      {
+        id: 'header-persists-across-tabs',
+        title: '탭을 바꿔도 제목과 동작은 남는다',
+        body: '탭은 한 대상의 정보를 나누는 것이지 다른 화면으로 가는 것이 아니다. 머리가 함께 바뀌면 같은 대상을 보고 있다는 감각이 끊어진다.',
+        do: ['Tabs를 제목과 동작 아래에 둔다'],
+        dont: ['탭마다 제목 줄을 다시 그린다'],
+      },
+    ],
+    example: {
+      title: '사용자 상세',
+      note: '제목과 상태, 동작, 그리고 세 갈래의 탭까지 상세 화면 하나를 조립한 것이다.',
+    },
+    cases: [
+      { id: 'long-title', title: '제목이 긴 경우', note: '제목은 줄바꿈하고 동작은 오른쪽 끝에 남는다.' },
+      { id: 'many-tabs', title: '탭이 많은 경우', note: '탭 줄이 가로로 구른다. 탭을 접어 숨기지 않는다.' },
+      { id: 'locked-tab', title: '권한이 없어 일부 탭이 잠긴 경우', note: '탭은 남기고 비활성으로 둔다. 왜 잠겼는지 내용에 적는다.' },
+      { id: 'narrow-screen', title: '좁은 화면', note: '제목과 동작이 세로로 쌓이고 Description List가 한 줄씩 놓인다.' },
+    ],
+    verified: false,
+  },
 ]
 
 export function getPattern(id: string): PatternMeta | undefined {
