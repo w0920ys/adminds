@@ -22,9 +22,9 @@ function addDays(date: Date, amount: number): Date {
 
 /*
  * 실제 화면이라면 이 DatePicker 옆에 라벨이 있다 — Combobox의 ComboboxField와
- * 같은 얼개다. DatePicker의 트리거도 진짜 button이 아니라 role="button"을
- * 단 div라 label을 눌러도 브라우저가 자동으로 포커스를 옮겨 주지 않는다 —
- * 그래서 FieldLabel의 onClick에서 트리거에 직접 포커스를 준다.
+ * 같은 얼개다. 트리거가 role="button"을 단 div라 라벨과 이어지지 않던 문제는
+ * Field가 aria-labelledby와 라벨 클릭 포커스로 함께 푼다 — 페이지에서 손으로
+ * 얹던 onClick은 없앴다.
  */
 function DatePickerField({
   label,
@@ -33,14 +33,7 @@ function DatePickerField({
 }: { label: string; className?: string } & ComponentProps<typeof DatePicker>) {
   return (
     <Field className={className ?? 'w-56'}>
-      <FieldLabel
-        onClick={(event) => {
-          const controlId = event.currentTarget.htmlFor
-          document.getElementById(controlId)?.focus()
-        }}
-      >
-        {label}
-      </FieldLabel>
+      <FieldLabel>{label}</FieldLabel>
       <FieldControl>
         <DatePicker {...datePickerProps} />
       </FieldControl>

@@ -52,8 +52,9 @@ type SliderProps = Omit<React.ComponentProps<typeof SliderPrimitive.Root>, 'defa
     /*
      * Track·Range·Thumb는 Root 안에 있어 소비자가 직접 닿을 수 없다.
      * Progress의 indicatorProps, Switch의 thumbProps와 같은 통로다.
-     * 손잡이가 둘인 range에서는 두 Thumb 모두 같은 thumbProps를 받는다 —
-     * 둘을 구별해 가리켜야 할 만큼 서로 다른 부위가 아니다.
+     * 손잡이가 둘인 range에서도 두 Thumb 모두 같은 thumbProps를 받는다 —
+     * 모양·동작 면에서 둘을 구별해 꾸밀 일이 없다. 손잡이마다 달라지는
+     * 것은 이름뿐이고, 그건 아래에서 따로 계산해 단다.
      */
     trackProps?: React.ComponentProps<typeof SliderPrimitive.Track> & {
       [dataAttr: `data-${string}`]: string
@@ -65,6 +66,24 @@ type SliderProps = Omit<React.ComponentProps<typeof SliderPrimitive.Root>, 'defa
       [dataAttr: `data-${string}`]: string
     }
   }
+
+/*
+ * role="slider"를 다는 것은 Root가 아니라 Thumb다 — Root는 역할 없는
+ * span이라 거기 붙은 이름·설명은 어디에도 닿지 않는다. 그래서 Slider는
+ * 자기가 받은 aria-label·aria-labelledby·aria-describedby를 Root에 두지
+ * 않고 Thumb으로 옮겨 단다. Field가 FieldControl로 내려준 이름과 설명이
+ * 이 통로를 지나 실제 컨트롤에 닿는다.
+ *
+ * 손잡이가 둘 이상이면 이름이 서로 같아서는 안 된다 — 어느 쪽을 잡고
+ * 있는지 구별되지 않는다. 위치 이름(시작·종료)을 덧붙여 가른다.
+ * aria-labelledby로 이름을 받은 경우에는 문자열을 이어 붙일 수 없으므로
+ * 위치 이름을 담은 요소를 따로 그려 두고 그 id를 뒤에 잇는다.
+ */
+function thumbPositionLabel(index: number, total: number): string | undefined {
+  if (total < 2) return undefined
+  if (total === 2) return index === 0 ? '시작' : '종료'
+  return `${index + 1}번째 손잡이`
+}
 
 /*
  * 손잡이가 둘인 range는 value의 길이로 정해진다 — Radix가 value 배열마다
@@ -81,9 +100,14 @@ function Slider({
   trackProps,
   rangeProps,
   thumbProps,
+  'aria-label': ariaLabel,
+  'aria-labelledby': ariaLabelledBy,
+  'aria-describedby': ariaDescribedBy,
   ...props
 }: SliderProps) {
   const thumbValues = value ?? defaultValue ?? [0]
+  const positionId = React.useId()
+  const hasPositionLabels = thumbValues.length > 1
 
   return (
     <SliderPrimitive.Root
@@ -107,14 +131,39 @@ function Slider({
           className={cn('bg-primary absolute h-full', rangeProps?.className)}
         />
       </SliderPrimitive.Track>
-      {thumbValues.map((_, index) => (
-        <SliderPrimitive.Thumb
-          key={index}
-          data-slot="slider-thumb"
-          {...thumbProps}
-          className={cn(sliderThumbVariants({ size }), thumbProps?.className)}
-        />
-      ))}
+      {thumbValues.map((_, index) => {
+        const position = thumbPositionLabel(index, thumbValues.length)
+        return (
+          <SliderPrimitive.Thumb
+            key={index}
+            data-slot="slider-thumb"
+            aria-labelledby={
+              ariaLabelledBy
+                ? [ariaLabelledBy, position && `${positionId}-${index}`].filter(Boolean).join(' ')
+                : undefined
+            }
+            aria-label={
+              ariaLabelledBy ? undefined : [ariaLabel, position].filter(Boolean).join(' ') || undefined
+            }
+            aria-describedby={ariaDescribedBy}
+            {...thumbProps}
+            className={cn(sliderThumbVariants({ size }), thumbProps?.className)}
+          />
+        )
+      })}
+      {/*
+        aria-labelledby로 이름을 받았을 때만 필요한 조각이다 — 라벨 문구
+        뒤에 이을 위치 이름을 담아 둔다. display:none이나 aria-hidden으로
+        감추면 브라우저의 이름 계산 규칙에 한 겹 더 기대야 해서, 화면에서만
+        감추는 sr-only로 둔다.
+      */}
+      {ariaLabelledBy &&
+        hasPositionLabels &&
+        thumbValues.map((_, index) => (
+          <span key={index} id={`${positionId}-${index}`} className="sr-only">
+            {thumbPositionLabel(index, thumbValues.length)}
+          </span>
+        ))}
     </SliderPrimitive.Root>
   )
 }

@@ -43,11 +43,11 @@ const FEW_OPTIONS = [
 /*
  * 실제 화면이라면 이 Combobox 옆에 라벨이 있다 — Field·FieldLabel로
  * 감싸 id를 손으로 잇지 않는다(Slider의 SliderField와 같은 얼개다).
- * Combobox의 트리거는 진짜 button이 아니라 role="button"을 단 div라
- * label을 눌러도 브라우저가 자동으로 포커스를 옮겨 주지 않는다 —
- * 그래서 Combobox 쪽에서 label 클릭 시 트리거에 직접 포커스를 주는
- * onClick을 FieldLabel에 얹는다. width는 Field가 정하고 Combobox
- * 자신은 트리거의 기본 w-full을 그대로 받는다.
+ * 트리거가 진짜 button이 아니라 role="button"을 단 div라 라벨과 이어지지
+ * 않던 문제는 이제 Field 쪽에서 푼다 — FieldControl이 aria-labelledby로
+ * 이름을 내려주고 FieldLabel이 라벨 클릭 때 직접 포커스를 옮긴다.
+ * 그래서 여기서 손으로 얹던 onClick은 없앴다. width는 Field가 정하고
+ * Combobox 자신은 트리거의 기본 w-full을 그대로 받는다.
  */
 function ComboboxField({
   label,
@@ -56,14 +56,7 @@ function ComboboxField({
 }: { label: string; className?: string } & ComponentProps<typeof Combobox>) {
   return (
     <Field className={className ?? 'w-48'}>
-      <FieldLabel
-        onClick={(event) => {
-          const controlId = event.currentTarget.htmlFor
-          document.getElementById(controlId)?.focus()
-        }}
-      >
-        {label}
-      </FieldLabel>
+      <FieldLabel>{label}</FieldLabel>
       <FieldControl>
         <Combobox {...comboboxProps} />
       </FieldControl>

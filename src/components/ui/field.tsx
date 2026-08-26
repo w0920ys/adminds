@@ -20,12 +20,16 @@ type FieldContextValue = {
   id: string
   layout: FieldLayout
   state: FieldState
+  /** FieldLabel 자신이 달 id. FieldControl의 aria-labelledby가 이 값을 가리킨다 */
+  labelId: string
   helpId: string
   errorId: string
-  /** FieldHelp·FieldError가 실제로 마운트되어 있는지. FieldControl이 자식 개수를 세지 않고 이 값만 읽는다 */
+  /** FieldLabel·FieldHelp·FieldError가 실제로 마운트되어 있는지. FieldControl이 자식 개수를 세지 않고 이 값만 읽는다 */
+  hasLabel: boolean
   hasHelp: boolean
   hasError: boolean
-  /** FieldHelp·FieldError가 마운트될 때 스스로 호출한다. 돌려주는 함수가 언마운트시 등록을 지운다 */
+  /** FieldLabel·FieldHelp·FieldError가 마운트될 때 스스로 호출한다. 돌려주는 함수가 언마운트시 등록을 지운다 */
+  registerLabel: () => () => void
   registerHelp: () => () => void
   registerError: () => () => void
 }
@@ -36,12 +40,24 @@ type FieldContextValue = {
  * 각자 이 컨텍스트를 읽어 자기 몫의 id를 스스로 단다 — 손으로 htmlFor와
  * aria-describedby를 맞추는 일이 사라진다.
  *
- * hasHelp·hasError는 FieldControl이 도움말·오류의 존재를 직접 세지
- * 않도록 하는 장치다. FieldHelp·FieldError가 마운트될 때 스스로
- * registerHelp·registerError를 불러 등록하고, 언마운트되면 그 함수가
+ * htmlFor 하나로는 부족하다. <label for>는 labelable 요소(button·input·
+ * select·textarea·output·meter·progress 등)에만 걸린다 — Combobox·DatePicker의
+ * 트리거는 role="button"을 단 div고 Slider의 Root는 역할 없는 span이라
+ * 라벨과 이어지지 않는다. 그래서 FieldLabel은 자기 id(labelId)도 달고
+ * FieldControl은 그 id를 aria-labelledby로 내려준다 — labelable이든
+ * 아니든 같은 방식으로 이름이 붙는다. Field는 자식이 어떤 컴포넌트인지
+ * 여전히 모른다.
+ *
+ * hasLabel·hasHelp·hasError는 FieldControl이 라벨·도움말·오류의 존재를
+ * 직접 세지 않도록 하는 장치다. FieldLabel·FieldHelp·FieldError가
+ * 마운트될 때 스스로 registerLabel·registerHelp·registerError를 불러
+ * 등록하고, 언마운트되면 그 함수가
  * 돌려준 정리 함수로 스스로 등록을 지운다. Field는 그 결과값만 읽으므로
  * FieldControl의 자식이 무엇인지, 형제가 몇 개인지 몰라도 된다 — Steps가
- * 자식의 개수를 세지 않는 것과 같은 이유다.
+ * 자식의 개수를 세지 않는 것과 같은 이유다. 라벨이 없는 Field(스스로
+ * aria-label을 단 컨트롤을 감싼 경우)에서 aria-labelledby를 내려주지
+ * 않는 것도 이 값 덕분이다 — 가리킬 곳 없는 죽은 id가 컨트롤의 제
+ * 이름을 덮지 않는다.
  *
  * Provider 없이 쓰였을 때를 대비해 기본값을 둔다 — id가 비어 있으면
  * htmlFor·id가 그저 비게 되어 라벨과 컨트롤이 이어지지 않을 뿐, 예외를
@@ -52,10 +68,13 @@ const FieldContext = React.createContext<FieldContextValue>({
   id: '',
   layout: 'stacked',
   state: 'default',
+  labelId: '',
   helpId: '',
   errorId: '',
+  hasLabel: false,
   hasHelp: false,
   hasError: false,
+  registerLabel: () => () => {},
   registerHelp: () => () => {},
   registerError: () => () => {},
 })
@@ -93,9 +112,14 @@ type FieldProps = Omit<React.ComponentProps<'div'>, 'children'> & {
  */
 function Field({ className, layout = 'stacked', state = 'default', children, ...props }: FieldProps) {
   const id = React.useId()
+  const [hasLabel, setHasLabel] = React.useState(false)
   const [hasHelp, setHasHelp] = React.useState(false)
   const [hasError, setHasError] = React.useState(false)
 
+  const registerLabel = React.useCallback(() => {
+    setHasLabel(true)
+    return () => setHasLabel(false)
+  }, [])
   const registerHelp = React.useCallback(() => {
     setHasHelp(true)
     return () => setHasHelp(false)
@@ -110,14 +134,17 @@ function Field({ className, layout = 'stacked', state = 'default', children, ...
       id,
       layout,
       state,
+      labelId: `${id}-label`,
       helpId: `${id}-help`,
       errorId: `${id}-error`,
+      hasLabel,
       hasHelp,
       hasError,
+      registerLabel,
       registerHelp,
       registerError,
     }),
-    [id, layout, state, hasHelp, hasError, registerHelp, registerError],
+    [id, layout, state, hasLabel, hasHelp, hasError, registerLabel, registerHelp, registerError],
   )
 
   return (
@@ -139,12 +166,29 @@ function Field({ className, layout = 'stacked', state = 'default', children, ...
   )
 }
 
-function FieldLabel({ className, ...props }: React.ComponentProps<'label'>) {
-  const { id, layout, state } = React.useContext(FieldContext)
+/*
+ * htmlFor는 그대로 둔다 — labelable 컨트롤(Input·Textarea·Select 트리거·
+ * Checkbox·Switch·File Upload 버튼)에서는 브라우저가 이 속성으로 라벨과
+ * 컨트롤을 스스로 이어(label.control이 그 컨트롤을 가리킨다) 라벨 클릭도
+ * 브라우저 몫으로 남는다. labelable이 아닌 컨트롤에서는 그 잇기 자체가
+ * 일어나지 않아(label.control이 null이다) 라벨을 눌러도 포커스가 옮겨
+ * 가지 않는다 — 그래서 onClick에서 직접 옮긴다. 어떤 컴포넌트인지
+ * 이름으로 가르지 않고 label.control이 비었는지만 본다.
+ */
+function FieldLabel({ className, onClick, ...props }: React.ComponentProps<'label'>) {
+  const { id, layout, state, labelId, registerLabel } = React.useContext(FieldContext)
+  React.useLayoutEffect(() => registerLabel(), [registerLabel])
+
   return (
     <label
       data-slot="field-label"
+      id={labelId}
       htmlFor={id}
+      onClick={(event) => {
+        onClick?.(event)
+        if (event.currentTarget.control) return
+        document.getElementById(id)?.focus()
+      }}
       className={cn(
         'text-sm font-medium',
         state === 'disabled' && 'text-muted-foreground',
@@ -162,18 +206,21 @@ type FieldControlProps = Omit<React.ComponentProps<'div'>, 'children'> & {
 }
 
 /*
- * 자식의 존재를 세지 않는다 — hasHelp·hasError는 FieldHelp·FieldError가
- * 스스로 등록한 값을 읽을 뿐이다. 둘 다 있으면 공백으로 이어 붙이고,
- * 하나도 없으면 aria-describedby 자체를 내려주지 않는다 — 스크린
- * 리더가 가리킬 곳 없는 죽은 id를 읽지 않도록 한다.
+ * 자식의 존재를 세지 않는다 — hasLabel·hasHelp·hasError는 FieldLabel·
+ * FieldHelp·FieldError가 스스로 등록한 값을 읽을 뿐이다. 둘 다 있으면
+ * 공백으로 이어 붙이고, 하나도 없으면 aria-describedby 자체를 내려주지
+ * 않는다 — 스크린 리더가 가리킬 곳 없는 죽은 id를 읽지 않도록 한다.
+ * aria-labelledby도 같은 규칙을 따른다.
  */
 function FieldControl({ className, ...props }: FieldControlProps) {
-  const { id, layout, state, helpId, errorId, hasHelp, hasError } = React.useContext(FieldContext)
+  const { id, layout, state, labelId, helpId, errorId, hasLabel, hasHelp, hasError } =
+    React.useContext(FieldContext)
   const describedBy = [hasHelp && helpId, hasError && errorId].filter(Boolean).join(' ')
 
   return (
     <FieldControlSlot
       id={id}
+      aria-labelledby={hasLabel ? labelId : undefined}
       aria-invalid={state === 'error' || undefined}
       aria-describedby={describedBy || undefined}
       disabled={state === 'disabled' || undefined}

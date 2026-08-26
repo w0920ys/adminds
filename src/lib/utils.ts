@@ -26,6 +26,15 @@ import { extendTailwindMerge } from 'tailwind-merge'
  * 덧붙일 때 똑같은 틈에 빠진다 — h·min-h와 다르게 세 토큰을
  * 고르지 않고 전부 등록해야 이 그룹이 실제로 안전하다.
  *
+ * --spacing-row·--spacing-row-compact(Table의 행 높이)도 같은 종류의
+ * 토큰이라 같은 틈에 빠져 있었다 — TableRow가 h-row를 className보다
+ * 먼저 내보내므로 호출처가 뒤에 h-auto를 붙여도 둘 다 살아남는다.
+ * h·min-h 두 그룹에 함께 등록해 컨트롤 높이 토큰과 정책을 하나로
+ * 맞춘다. size 그룹에는 넣지 않는다 — 행 높이 토큰으로 정사각형
+ * 크기를 잡는 자리가 없고, 실제로 이 저장소에 size-row·size-row-compact
+ * 를 쓰는 곳이 없다(control 쪽은 size-control·size-control-sm·
+ * size-control-lg를 Button·Avatar·Breadcrumb가 실제로 쓴다).
+ *
  * theme.spacing 쪽의 일반 매처를 넓히는 대신 classGroups를 직접
  * 확장한 것은 의도적이다 — theme.spacing을 건드리면 p-·m-·gap-·w-
  * 등 스페이싱 스케일을 쓰는 모든 그룹이 영향을 받아 파급 범위를
@@ -35,8 +44,8 @@ import { extendTailwindMerge } from 'tailwind-merge'
 const twMerge = extendTailwindMerge({
   extend: {
     classGroups: {
-      h: [{ h: ['control', 'control-sm', 'control-lg'] }],
-      'min-h': [{ 'min-h': ['control', 'control-sm', 'control-lg'] }],
+      h: [{ h: ['control', 'control-sm', 'control-lg', 'row', 'row-compact'] }],
+      'min-h': [{ 'min-h': ['control', 'control-sm', 'control-lg', 'row', 'row-compact'] }],
       size: [{ size: ['control', 'control-sm', 'control-lg'] }],
     },
   },

@@ -99,6 +99,8 @@ function Combobox(props: ComboboxProps) {
     value,
     defaultValue,
     onValueChange,
+    id,
+    'aria-labelledby': ariaLabelledBy,
     ...rest
   } = props as ComboboxInternalProps
 
@@ -118,7 +120,19 @@ function Combobox(props: ComboboxProps) {
   }, [isMultiple, selected])
 
   const listId = React.useId()
+  const fallbackTriggerId = React.useId()
   const inputRef = React.useRef<HTMLInputElement>(null)
+
+  /*
+   * Field가 내려준 aria-labelledby가 라벨 문구만 가리키면 트리거 안에
+   * 보이는 값(고른 항목·자리표시자)이 이름에서 빠진다 — aria-labelledby가
+   * 가리킨 곳이 이름이 되고 트리거의 내용은 그 자리를 잃기 때문이다.
+   * 라벨 id 뒤에 트리거 자신의 id를 이어 붙여 라벨 문구와 현재 값을
+   * 둘 다 이름에 담는다. id는 Field가 내려주지만 홀로 쓰일 때를 위해
+   * 없으면 스스로 만든다.
+   */
+  const triggerId = id ?? fallbackTriggerId
+  const triggerLabelledBy = ariaLabelledBy ? `${ariaLabelledBy} ${triggerId}` : undefined
 
   const filtered = React.useMemo(() => filterOptions(options, query), [options, query])
   const activeOption = filtered[activeIndex]
@@ -202,8 +216,10 @@ function Combobox(props: ComboboxProps) {
       <PopoverTrigger asChild>
         <div
           {...rest}
+          id={triggerId}
           role="button"
-          aria-haspopup="listbox"
+          aria-labelledby={triggerLabelledBy}
+          aria-haspopup="dialog"
           aria-expanded={open}
           aria-controls={listId}
           aria-disabled={disabled || undefined}
@@ -254,7 +270,13 @@ function Combobox(props: ComboboxProps) {
         </div>
       </PopoverTrigger>
 
-      <PopoverContent align="start" className="w-72 p-0">
+      {/*
+        PopoverContent는 role="dialog"라 이름이 없으면 "이름 없는 대화상자"로
+        읽힌다. 열리는 표면이 목록 하나가 아니라 검색 칸과 목록을 함께 담은
+        대화상자라 트리거의 aria-haspopup도 listbox가 아니라 dialog다 —
+        DatePicker의 트리거와 같은 값이다.
+      */}
+      <PopoverContent aria-label="선택 목록" align="start" className="w-72 p-0">
         <div className="relative border-b p-1.5">
           <Search
             aria-hidden

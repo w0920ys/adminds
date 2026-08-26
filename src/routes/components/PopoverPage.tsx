@@ -25,7 +25,7 @@ function renderPopover() {
           필터
         </Button>
       </PopoverTrigger>
-      <PopoverContent>
+      <PopoverContent aria-label="상태 필터">
         <div className="flex flex-col gap-1 pb-3">
           <p className="text-sm font-medium">상태로 거르기</p>
           <p className="text-muted-foreground text-xs">조건에 맞는 항목만 남깁니다</p>
@@ -59,7 +59,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
               필터
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="w-56">
+          <PopoverContent aria-label="사용자 필터" className="w-56">
             <label className="flex items-center gap-2 text-sm">
               <Checkbox defaultChecked />
               활성 사용자만
@@ -73,7 +73,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
               사용자 삭제
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="w-64">
+          <PopoverContent aria-label="사용자 삭제 확인" className="w-64">
             <div className="flex flex-col gap-3">
               <p className="text-sm font-medium">'홍길동'을 삭제하시겠습니까</p>
               <div className="flex justify-end gap-2">
@@ -97,7 +97,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
               <Info aria-hidden />
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="w-56">
+          <PopoverContent aria-label="전환율 설명" className="w-56">
             <div className="flex flex-col gap-2">
               <p className="text-sm">전환율은 방문자 중 결제까지 이어진 비율입니다</p>
               <Button variant="link" size="sm" className="h-auto justify-start px-0">
@@ -113,7 +113,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
               <Info aria-hidden />
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="w-56">
+          <PopoverContent aria-label="전환율 설명" className="w-56">
             <p className="text-sm">전환율은 방문자 중 결제까지 이어진 비율입니다</p>
           </PopoverContent>
         </Popover>
@@ -127,7 +127,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
               공유
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="w-64">
+          <PopoverContent aria-label="링크로 공유" className="w-64">
             <div className="flex flex-col gap-2">
               <p className="text-sm font-medium">링크로 공유</p>
               <Input readOnly value="https://admin.example.com/s/8f2c" />
@@ -141,7 +141,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
               공유
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="w-64">
+          <PopoverContent aria-label="링크로 공유" className="w-64">
             <div className="flex flex-col gap-2">
               <p className="text-sm font-medium">링크로 공유</p>
               <Popover>
@@ -150,7 +150,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
                     권한 설정
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent className="w-48">
+                <PopoverContent aria-label="권한 설정" className="w-48">
                   <p className="text-sm">읽기 전용</p>
                 </PopoverContent>
               </Popover>
@@ -167,7 +167,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
               더보기
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="w-56">화면 안에서 자리를 스스로 찾습니다</PopoverContent>
+          <PopoverContent aria-label="더보기" className="w-56">화면 안에서 자리를 스스로 찾습니다</PopoverContent>
         </Popover>
       ) : (
         <Popover>
@@ -176,8 +176,50 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
               더보기
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="w-56" side="right" avoidCollisions={false}>
+          <PopoverContent aria-label="더보기" className="w-56" side="right" avoidCollisions={false}>
             자리를 고정값으로 강제하면 가장자리에서 잘립니다
+          </PopoverContent>
+        </Popover>
+      )
+
+    /*
+     * DO와 DON'T가 화면에서는 제목 한 줄 차이로만 보인다 — 이름은 눈이
+     * 아니라 스크린 리더에 드러나는 것이라 그렇다. 표면 안에 제목이
+     * 있으면 그 제목을 그대로 이름으로 쓰는 편이 aria-label로 같은 말을
+     * 두 번 적는 것보다 어긋날 일이 없다.
+     */
+    case 'name-the-surface':
+      return kind === 'do' ? (
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button variant="outline" size="sm">
+              알림 설정
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent aria-labelledby="popover-name-the-surface-title" className="w-56">
+            <div className="flex flex-col gap-3">
+              <p id="popover-name-the-surface-title" className="text-sm font-medium">
+                알림 설정
+              </p>
+              <label className="flex items-center gap-2 text-sm">
+                <Checkbox defaultChecked />
+                댓글 알림 받기
+              </label>
+            </div>
+          </PopoverContent>
+        </Popover>
+      ) : (
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button variant="outline" size="sm">
+              알림 설정
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-56">
+            <label className="flex items-center gap-2 text-sm">
+              <Checkbox defaultChecked />
+              댓글 알림 받기
+            </label>
           </PopoverContent>
         </Popover>
       )
@@ -199,7 +241,7 @@ function renderExample(exampleId: string): ReactNode {
                 상태
               </Button>
             </PopoverTrigger>
-            <PopoverContent>
+            <PopoverContent aria-label="상태 필터">
               <div className="flex flex-col gap-2 pb-3">
                 {STATUS_OPTIONS.map((option) => (
                   <label key={option.id} className="flex items-center gap-2 text-sm">
@@ -228,7 +270,7 @@ function renderExample(exampleId: string): ReactNode {
               2026-08-26
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="w-48">
+          <PopoverContent aria-label="기간 선택" className="w-48">
             <div className="flex flex-col gap-1">
               {['오늘', '어제', '지난 7일', '이번 달'].map((label) => (
                 <Button key={label} variant="ghost" size="sm" className="justify-start">
@@ -248,7 +290,7 @@ function renderExample(exampleId: string): ReactNode {
               담당자 배정
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="w-56">
+          <PopoverContent aria-label="담당자 찾기" className="w-56">
             <div className="flex flex-col gap-2">
               <div className="relative">
                 <Search
@@ -278,7 +320,7 @@ function renderExample(exampleId: string): ReactNode {
               <Info aria-hidden />
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="w-56">
+          <PopoverContent aria-label="전환율 설명" className="w-56">
             <div className="flex flex-col gap-2">
               <p className="text-sm">전환율은 방문자 중 결제까지 이어진 비율입니다</p>
               <Button variant="link" size="sm" className="h-auto justify-start px-0">
@@ -298,7 +340,7 @@ function renderExample(exampleId: string): ReactNode {
                 더보기
               </Button>
             </PopoverTrigger>
-            <PopoverContent side="left" className="w-48">
+            <PopoverContent aria-label="더보기" side="left" className="w-48">
               자리가 없으면 반대쪽으로 뒤집힙니다
             </PopoverContent>
           </Popover>
@@ -313,7 +355,7 @@ function renderExample(exampleId: string): ReactNode {
               변경 이력
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="max-h-48 w-56 overflow-y-auto">
+          <PopoverContent aria-label="변경 이력" className="max-h-48 w-56 overflow-y-auto">
             <ul className="flex flex-col gap-2 text-sm">
               {Array.from({ length: 8 }, (_, i) => (
                 <li key={i} className="border-b pb-2 last:border-0">
@@ -334,7 +376,7 @@ function renderExample(exampleId: string): ReactNode {
               메모 추가
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="w-64">
+          <PopoverContent aria-label="메모 추가" className="w-64">
             <div className="flex flex-col gap-3">
               <div className="flex flex-col gap-1.5">
                 <label htmlFor="pop-memo" className="text-sm font-medium">
@@ -362,7 +404,9 @@ function renderExample(exampleId: string): ReactNode {
                 담당자 배정
               </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-48">좁은 화면에서도 collisionPadding만큼 여백이 남습니다</PopoverContent>
+            <PopoverContent aria-label="담당자 배정" className="w-48">
+              좁은 화면에서도 collisionPadding만큼 여백이 남습니다
+            </PopoverContent>
           </Popover>
         </Bounds>
       )
@@ -388,7 +432,7 @@ function AnatomyPreview() {
           필터
         </Button>
       </PopoverTrigger>
-      <PopoverContent>
+      <PopoverContent aria-label="상태 필터">
         <div className="flex flex-col gap-1 pb-3">
           <p className="text-sm font-medium">상태로 거르기</p>
           <p className="text-muted-foreground text-xs">조건에 맞는 항목만 남깁니다</p>

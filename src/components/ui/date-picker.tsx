@@ -84,10 +84,21 @@ function DatePicker(props: DatePickerProps) {
     value,
     defaultValue,
     onValueChange,
+    id,
+    'aria-labelledby': ariaLabelledBy,
     ...rest
   } = props as DatePickerInternalProps
 
   const isRange = layout === 'range'
+  const fallbackTriggerId = React.useId()
+
+  /*
+   * Combobox의 트리거와 같은 이유로 라벨 id 뒤에 트리거 자신의 id를 잇는다 —
+   * 라벨 문구만 가리키면 트리거 안의 내용(고른 날짜나 자리표시자)이 이름에서
+   * 빠지므로, 자기 자신도 함께 가리켜 라벨과 현재 값을 둘 다 담는다.
+   */
+  const triggerId = id ?? fallbackTriggerId
+  const triggerLabelledBy = ariaLabelledBy ? `${ariaLabelledBy} ${triggerId}` : undefined
 
   const [open, setOpen] = React.useState(false)
   const [uncontrolled, setUncontrolled] = React.useState<Date | CalendarRange | undefined>(
@@ -147,7 +158,9 @@ function DatePicker(props: DatePickerProps) {
       <PopoverTrigger asChild>
         <div
           {...rest}
+          id={triggerId}
           role="button"
+          aria-labelledby={triggerLabelledBy}
           aria-haspopup="dialog"
           aria-expanded={open}
           aria-disabled={disabled || undefined}
@@ -176,7 +189,8 @@ function DatePicker(props: DatePickerProps) {
         </div>
       </PopoverTrigger>
 
-      <PopoverContent align="start" className="w-auto p-3">
+      {/* PopoverContent는 role="dialog"라 이름이 없으면 "이름 없는 대화상자"로 읽힌다. 안에 든 것은 달 격자 하나다 */}
+      <PopoverContent aria-label="날짜 선택" align="start" className="w-auto p-3">
         {isRange ? (
           <Calendar
             mode="range"

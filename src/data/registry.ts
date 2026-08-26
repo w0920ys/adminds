@@ -2850,6 +2850,16 @@ export const components: ComponentMeta[] = [
         do: ['뷰포트 가장자리에서 자동으로 뒤집히도록 그대로 둔다'],
         dont: ['위치를 고정값으로 강제해 뒤집힘을 막지 않는다'],
       },
+      {
+        id: 'name-the-surface',
+        title: 'Name the surface',
+        body: '열린 표면은 role="dialog"입니다. 이름이 없으면 스크린 리더가 이름 없는 대화상자로 읽으므로 표면마다 이름을 답니다.',
+        do: [
+          '표면 안에 제목이 있으면 그 제목의 id를 PopoverContent의 aria-labelledby로 잇는다',
+          '제목이 없으면 안에 무엇이 들었는지 밝히는 aria-label을 단다',
+        ],
+        dont: ['PopoverContent를 이름 없이 두지 않는다'],
+      },
     ],
     usage: [
       { id: 'filter-group', title: '필터 묶음', note: '여러 조건을 한 자리에 묶어 고른다' },
