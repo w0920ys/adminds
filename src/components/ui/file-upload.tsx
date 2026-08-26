@@ -15,7 +15,6 @@ import { cn } from '@/lib/utils'
 type FileUploadContextValue = {
   inputRef: React.RefObject<HTMLInputElement | null>
   disabled: boolean
-  invalid: boolean
   isDragging: boolean
   setIsDragging: (dragging: boolean) => void
   openDialog: () => void
@@ -25,7 +24,6 @@ type FileUploadContextValue = {
 const FileUploadContext = React.createContext<FileUploadContextValue>({
   inputRef: { current: null },
   disabled: false,
-  invalid: false,
   isDragging: false,
   setIsDragging: () => {},
   openDialog: () => {},
@@ -36,10 +34,17 @@ function useFileUploadContext(): FileUploadContextValue {
   return React.useContext(FileUploadContext)
 }
 
+/*
+ * 오류를 알리는 invalid prop을 두지 않는다 — 이 시스템에서 오류는 컨트롤
+ * 자신에게 붙은 aria-invalid 하나로 나타낸다(Input·Select가 그 속성을 직접
+ * 받고, Field는 state="error"일 때 FieldControl이 자식에게 그 속성을 내려
+ * 준다). 여기서 실제 컨트롤은 루트 div가 아니라 FileUploadDropzone이 그리는
+ * button이고, 그 컴포넌트는 받은 속성을 button에 그대로 흘려보낸다. 그래서
+ * <FileUploadDropzone aria-invalid />나 Field로 감싸는 길이 이미 열려 있고,
+ * 루트에 따로 둔 invalid prop은 같은 일을 하는 두 번째 통로였다.
+ */
 type FileUploadProps = React.ComponentProps<'div'> & {
   disabled?: boolean
-  /** aria-invalid와 짝지어 테두리·문구 색을 함께 바꾼다 */
-  invalid?: boolean
   /** 파일을 여러 개 고를 수 있는지. 네이티브 input의 multiple로 그대로 이어진다 */
   multiple?: boolean
   /** 네이티브 input의 accept. 허용 형식은 이것과 별개로 Constraint 문구에도 미리 적는다 */
@@ -58,7 +63,6 @@ type FileUploadProps = React.ComponentProps<'div'> & {
  */
 function FileUpload({
   disabled = false,
-  invalid = false,
   multiple = false,
   accept,
   onFilesSelected,
@@ -88,27 +92,33 @@ function FileUpload({
   }
 
   const contextValue = React.useMemo<FileUploadContextValue>(
-    () => ({ inputRef, disabled, invalid, isDragging, setIsDragging, openDialog, selectFiles }),
-    [disabled, invalid, isDragging, openDialog, selectFiles],
+    () => ({ inputRef, disabled, isDragging, setIsDragging, openDialog, selectFiles }),
+    [disabled, isDragging, openDialog, selectFiles],
   )
 
   return (
     <FileUploadContext.Provider value={contextValue}>
       <div data-slot="file-upload" className={cn('flex flex-col gap-3', className)} {...props}>
         {/*
-         * display: none과 visibility: hidden은 접근성 트리는 물론 탭 순서에서도
-         * 요소를 통째로 걷어낸다. 이 input 자체는 탭으로 닿지 않게 할 생각이라도
-         * (아래 tabIndex=-1) 걷어내는 방식은 sr-only로 남긴다 — 스크린 리더가
-         * 요소 자체를 아예 없는 것으로 읽지 않게 하기 위해서다. 실제로 탭이
-         * 멈추는 자리는 FileUploadDropzone(진짜 button)이고, 이 input은 그
-         * button이 .click()으로 여는 창구일 뿐이라 tabIndex=-1로 이중 탭 정지를
-         * 막는다.
+         * 이 input은 컨트롤이 아니라 배관이다 — 화면에서 파일을 고르는 자리는
+         * FileUploadDropzone이 그리는 진짜 button이고, 이 input은 그 button이
+         * .click()으로 여는 창구일 뿐이다. 그래서 접근성 트리에서 걷어낸다
+         * (aria-hidden). 이름 없이 트리에 남겨 두면 스크린 리더의 폼 컨트롤
+         * 목록에 이름 없는 '파일 선택' 항목이 하나 더 생기고, 이름을 붙이면
+         * 같은 일을 하는 컨트롤이 둘로 읽힌다 — 어느 쪽도 도움이 되지 않는다.
+         *
+         * 감추는 방식은 sr-only다. display:none이나 hidden으로 감춰도 .click()은
+         * 열리지만, sr-only는 요소를 레이아웃에서 지우지 않아 파일 창의 위치나
+         * 브라우저의 기본 동작에 기대는 부분이 없다. tabIndex=-1은 탭 정지를
+         * 하나로 유지한다 — aria-hidden을 단 요소가 탭 순서에 남으면 스크린
+         * 리더가 읽을 수 없는 자리에 포커스가 멈춘다.
          */}
         <input
           ref={inputRef}
           type="file"
           data-slot="file-upload-input"
           className="sr-only"
+          aria-hidden
           tabIndex={-1}
           disabled={disabled}
           multiple={multiple}
@@ -158,8 +168,7 @@ function FileUploadDropzone({
   children,
   ...props
 }: FileUploadDropzoneProps) {
-  const { disabled, invalid, isDragging, setIsDragging, openDialog, selectFiles } =
-    useFileUploadContext()
+  const { disabled, isDragging, setIsDragging, openDialog, selectFiles } = useFileUploadContext()
 
   function handleDragEnter(event: React.DragEvent<HTMLButtonElement>) {
     event.preventDefault()
@@ -188,7 +197,6 @@ function FileUploadDropzone({
         type="button"
         data-slot="file-upload-dropzone"
         disabled={disabled}
-        aria-invalid={invalid || undefined}
         onClick={openDialog}
         className={className}
         {...props}
@@ -203,7 +211,6 @@ function FileUploadDropzone({
       type="button"
       data-slot="file-upload-dropzone"
       data-dragging={isDragging || undefined}
-      aria-invalid={invalid || undefined}
       disabled={disabled}
       onClick={openDialog}
       onDragEnter={handleDragEnter}
@@ -256,6 +263,16 @@ type FileUploadItemProps = Omit<React.ComponentProps<'li'>, 'children'> & {
   removeButtonProps?: React.ComponentProps<'button'> & { [dataAttr: `data-${string}`]: string }
 }
 
+/*
+ * 실패한 항목에 aria-invalid를 달지 않는다 — aria-invalid는 값을 입력하는
+ * 컨트롤의 상태이고 목록의 한 줄(li)에는 그런 상태가 없다. 테두리 색을
+ * 바꾸는 일만 남기면 되므로 그 자리는 data-invalid로 표시한다.
+ *
+ * 대신 실패 이유를 지우기 버튼의 aria-describedby로 잇는다. 이 줄에서
+ * 포커스를 받는 것은 그 버튼 하나뿐이라, 잇지 않으면 버튼에 멈춘 스크린
+ * 리더가 '…지우기, 버튼'만 읽고 무엇이 왜 실패했는지는 읽지 않는다 —
+ * Field가 오류 문구를 컨트롤의 aria-describedby로 잇는 것과 같은 얼개다.
+ */
 function FileUploadItem({
   name,
   size,
@@ -267,13 +284,15 @@ function FileUploadItem({
   className,
   ...props
 }: FileUploadItemProps) {
+  const errorId = React.useId()
+
   return (
     <li
       data-slot="file-upload-item"
-      aria-invalid={error ? true : undefined}
+      data-invalid={error ? '' : undefined}
       className={cn(
         'border-input bg-background flex flex-col gap-1.5 rounded-md border px-3 py-2.5',
-        'aria-invalid:border-destructive',
+        'data-[invalid]:border-destructive',
         className,
       )}
       {...props}
@@ -290,6 +309,7 @@ function FileUploadItem({
             data-slot="file-upload-item-remove"
             onClick={onRemove}
             aria-label={removeLabel ?? `${name} 지우기`}
+            aria-describedby={error ? errorId : undefined}
             className={cn(
               'text-muted-foreground shrink-0 rounded-xs p-1 outline-none transition-colors hover:text-foreground',
               'focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-2',
@@ -301,7 +321,11 @@ function FileUploadItem({
         )}
       </div>
       {progress != null && <Progress value={progress} size="sm" />}
-      {error && <p className="text-destructive text-xs">{error}</p>}
+      {error && (
+        <p id={errorId} className="text-destructive text-xs">
+          {error}
+        </p>
+      )}
     </li>
   )
 }
