@@ -7,6 +7,7 @@ import { AvatarPage } from '@/routes/components/AvatarPage'
 import { BadgePage } from '@/routes/components/BadgePage'
 import { BreadcrumbPage } from '@/routes/components/BreadcrumbPage'
 import { ButtonPage } from '@/routes/components/ButtonPage'
+import { CardPage } from '@/routes/components/CardPage'
 import { CheckboxPage } from '@/routes/components/CheckboxPage'
 import { ComponentsIndex } from '@/routes/components/ComponentsIndex'
 import { DialogPage } from '@/routes/components/DialogPage'
@@ -79,6 +80,7 @@ export const routes: RouteObject[] = [
           { path: 'table', element: <TablePage /> },
           { path: 'badge', element: <BadgePage /> },
           { path: 'avatar', element: <AvatarPage /> },
+          { path: 'card', element: <CardPage /> },
           { path: 'separator', element: <SeparatorPage /> },
         ],
       },

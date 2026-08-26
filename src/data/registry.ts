@@ -1878,6 +1878,105 @@ export const components: ComponentMeta[] = [
     ],
     verified: false,
   },
+  {
+    id: 'card',
+    name: 'Card',
+    category: 'data-display',
+    status: 'stable',
+    addedIn: 'v0.9.0',
+    changedIn: 'v0.9.0',
+    purpose: '관련된 내용을 하나의 틀로 묶어 보인다. 안쪽 구획은 Separator로 나눈다.',
+    anatomy: [
+      { part: 'container', label: 'Container', note: 'rounded-lg. variant에 따른 테두리·배경·그림자' },
+      {
+        part: 'header',
+        label: 'Header',
+        note: 'grid. Action이 있으면 두 번째 열을 만들어 오른쪽 끝에 고정한다',
+        optional: true,
+      },
+      { part: 'title', label: 'Title', note: 'font-semibold' },
+      {
+        part: 'description',
+        label: 'Description',
+        note: 'text-muted-foreground text-sm',
+        optional: true,
+      },
+      {
+        part: 'action',
+        label: 'Action',
+        note: '헤더 오른쪽 끝. 제목이 길어져도 밀려나지 않는다',
+        optional: true,
+      },
+      { part: 'content', label: 'Content', note: 'padding 축이 좌우 여백을 없애는 대상' },
+      { part: 'footer', label: 'Footer', note: 'padding 값과 무관하게 자기 여백을 유지한다', optional: true },
+    ],
+    properties: [
+      {
+        name: 'variant',
+        title: 'Variant',
+        description: '테두리를 쓸지 그림자를 쓸지 정한다.',
+        display: 'row',
+        options: [
+          { value: 'outlined', note: '기본. 카드가 여럿 나란히 놓이는 화면. 그림자가 여럿이면 화면이 들뜬다' },
+          { value: 'elevated', note: '배경 위에 떠 있어야 하는 하나짜리 카드' },
+        ],
+      },
+      {
+        name: 'padding',
+        title: 'Padding',
+        description: 'Content의 좌우 여백을 둘지 정한다.',
+        display: 'row',
+        options: [
+          { value: 'default', note: '기본' },
+          { value: 'none', note: '카드가 표를 통째로 담을 때. 표에는 자기 여백이 있어 카드 여백이 겹치면 두 겹이 된다' },
+        ],
+      },
+    ],
+    guidelines: [
+      {
+        id: 'no-card-in-card',
+        title: '카드를 카드 안에 넣지 않는다',
+        body: '테두리가 겹치면 위계가 아니라 잡음이 됩니다. 안쪽 구획은 Separator로 나눕니다.',
+        do: ['안쪽 구획은 Separator로 나눈다'],
+        dont: ['카드 안에 또 다른 카드를 넣지 않는다'],
+      },
+      {
+        id: 'no-whole-card-link',
+        title: '카드 전체를 링크로 만들지 않는다',
+        body: '카드 안에 누를 수 있는 것이 둘 이상이면 어디를 눌러야 하는지 흐려집니다. 제목만 링크로 둡니다.',
+        do: ['제목만 링크로 둔다'],
+        dont: ['카드 전체를 하나의 링크로 감싸지 않는다'],
+      },
+      {
+        id: 'no-padding-with-table',
+        title: '표를 담을 때는 여백을 없앤다',
+        body: 'padding을 none으로 두고 표의 여백을 씁니다.',
+        do: ["표를 담을 때는 padding을 'none'으로 둔다"],
+        dont: ['표와 카드 양쪽에 여백을 겹쳐 두지 않는다'],
+      },
+    ],
+    usage: [
+      { id: 'dashboard-metric', title: '대시보드의 지표', note: '지표 하나를 카드 한 장에 담는다' },
+      { id: 'detail-section', title: '상세 화면의 구획', note: '상세 화면을 여러 구획으로 나누고 구획마다 카드를 둔다' },
+      { id: 'settings-group', title: '설정 묶음', note: '관련된 설정 항목을 하나의 카드로 묶는다' },
+      { id: 'table-frame', title: '표를 담는 틀', note: 'padding을 none으로 두고 표의 여백을 그대로 쓴다' },
+    ],
+    cases: [
+      { id: 'title-only', title: '제목만 있고 내용이 없는 경우', note: '내용 없이 제목만 있어도 카드 구조는 그대로 유지된다' },
+      { id: 'long-content', title: '내용이 아주 긴 경우', note: '내용이 길어지면 카드 높이가 함께 늘어난다' },
+      {
+        id: 'uneven-height',
+        title: '카드가 나란히 놓여 높이가 다른 경우',
+        note: 'Card 자신은 높이를 맞추지 않는다. 나란히 두는 화면의 grid나 flex가 높이를 맞춘다',
+      },
+      {
+        id: 'narrow-screen',
+        title: '좁은 화면',
+        note: '폭이 좁아져도 Header의 두 번째 열은 줄지 않아 Action이 자리를 지킨다',
+      },
+    ],
+    verified: false,
+  },
 ]
 
 export function getComponent(id: string): ComponentMeta | undefined {
