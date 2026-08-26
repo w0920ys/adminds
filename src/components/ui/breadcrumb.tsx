@@ -1,6 +1,6 @@
 import * as React from 'react'
+import { Slot } from '@radix-ui/react-slot'
 import { ChevronRight, MoreHorizontal } from 'lucide-react'
-import { Link } from 'react-router'
 import { cn } from '@/lib/utils'
 
 function Breadcrumb({ ...props }: React.ComponentProps<'nav'>) {
@@ -30,9 +30,18 @@ function BreadcrumbItem({ className, ...props }: React.ComponentProps<'li'>) {
   )
 }
 
-function BreadcrumbLink({ className, ...props }: React.ComponentProps<typeof Link>) {
+/*
+ * 라우터를 알지 않는다. 기본은 <a>이고, asChild를 켜면 자식이 그 자리를 대신한다 —
+ * react-router의 Link든 next/link든 쓰는 쪽이 넣는다. Button이 쓰는 방식과 같다.
+ */
+function BreadcrumbLink({
+  className,
+  asChild = false,
+  ...props
+}: React.ComponentProps<'a'> & { asChild?: boolean }) {
+  const Comp = asChild ? Slot : 'a'
   return (
-    <Link
+    <Comp
       data-slot="breadcrumb-link"
       className={cn('hover:text-foreground transition-colors', className)}
       {...props}
