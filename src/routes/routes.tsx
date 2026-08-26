@@ -2,6 +2,7 @@
 import type { RouteObject } from 'react-router'
 import { AppShell } from '@/components/layout/AppShell'
 import { Placeholder } from '@/routes/Placeholder'
+import { AccordionPage } from '@/routes/components/AccordionPage'
 import { AlertPage } from '@/routes/components/AlertPage'
 import { AvatarPage } from '@/routes/components/AvatarPage'
 import { BadgePage } from '@/routes/components/BadgePage'
@@ -10,14 +11,18 @@ import { ButtonPage } from '@/routes/components/ButtonPage'
 import { CardPage } from '@/routes/components/CardPage'
 import { CheckboxPage } from '@/routes/components/CheckboxPage'
 import { ComponentsIndex } from '@/routes/components/ComponentsIndex'
+import { DescriptionListPage } from '@/routes/components/DescriptionListPage'
 import { DialogPage } from '@/routes/components/DialogPage'
 import { DropdownMenuPage } from '@/routes/components/DropdownMenuPage'
+import { EmptyStatePage } from '@/routes/components/EmptyStatePage'
 import { InputPage } from '@/routes/components/InputPage'
 import { PaginationPage } from '@/routes/components/PaginationPage'
+import { ProgressPage } from '@/routes/components/ProgressPage'
 import { RadioPage } from '@/routes/components/RadioPage'
 import { SelectPage } from '@/routes/components/SelectPage'
 import { SeparatorPage } from '@/routes/components/SeparatorPage'
 import { SkeletonPage } from '@/routes/components/SkeletonPage'
+import { StepsPage } from '@/routes/components/StepsPage'
 import { SwitchPage } from '@/routes/components/SwitchPage'
 import { TablePage } from '@/routes/components/TablePage'
 import { TabsPage } from '@/routes/components/TabsPage'
@@ -72,16 +77,21 @@ export const routes: RouteObject[] = [
           { path: 'tabs', element: <TabsPage /> },
           { path: 'breadcrumb', element: <BreadcrumbPage /> },
           { path: 'pagination', element: <PaginationPage /> },
+          { path: 'steps', element: <StepsPage /> },
           { path: 'alert', element: <AlertPage /> },
           { path: 'toast', element: <ToastPage /> },
           { path: 'tooltip', element: <TooltipPage /> },
           { path: 'dialog', element: <DialogPage /> },
           { path: 'skeleton', element: <SkeletonPage /> },
+          { path: 'progress', element: <ProgressPage /> },
+          { path: 'empty-state', element: <EmptyStatePage /> },
           { path: 'table', element: <TablePage /> },
           { path: 'badge', element: <BadgePage /> },
           { path: 'avatar', element: <AvatarPage /> },
           { path: 'card', element: <CardPage /> },
           { path: 'separator', element: <SeparatorPage /> },
+          { path: 'description-list', element: <DescriptionListPage /> },
+          { path: 'accordion', element: <AccordionPage /> },
         ],
       },
 

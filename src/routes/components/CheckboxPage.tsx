@@ -3,6 +3,7 @@ import type { CheckedState } from '@radix-ui/react-checkbox'
 import { Bounds } from '@/components/docs/Bounds'
 import { ComponentPage } from '@/components/docs/ComponentPage'
 import type { RenderOptions } from '@/components/docs/PropertyBlock'
+import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { getComponent } from '@/data/registry'
 import { Placeholder } from '@/routes/Placeholder'
@@ -113,6 +114,24 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
             계좌 이체
           </label>
         </fieldset>
+      )
+
+    case 'checkbox-vs-switch':
+      return kind === 'do' ? (
+        <form className="flex flex-col items-start gap-3">
+          <label className="flex items-center gap-2 text-sm">
+            <Checkbox defaultChecked />
+            마케팅 이메일 수신 동의
+          </label>
+          <Button type="button" size="sm">
+            저장
+          </Button>
+        </form>
+      ) : (
+        <label className="flex items-center gap-2 text-sm">
+          <Checkbox defaultChecked />
+          지금 바로 공개
+        </label>
       )
 
     case 'single-size':

@@ -101,15 +101,18 @@ export const sections: NavSection[] = [
         items: [
           { to: '/components/breadcrumb', label: 'Breadcrumb', updatedAt: '2026-08-26' },
           { to: '/components/pagination', label: 'Pagination', updatedAt: '2026-08-26' },
+          { to: '/components/steps', label: 'Steps', updatedAt: '2026-08-26' },
           { to: '/components/tabs', label: 'Tabs', updatedAt: '2026-08-26' },
         ],
       },
       {
         label: 'Data Display',
         items: [
+          { to: '/components/accordion', label: 'Accordion', updatedAt: '2026-08-26' },
           { to: '/components/avatar', label: 'Avatar', updatedAt: '2026-08-26' },
           { to: '/components/badge', label: 'Badge', updatedAt: '2026-08-26' },
           { to: '/components/card', label: 'Card', updatedAt: '2026-08-26' },
+          { to: '/components/description-list', label: 'Description List', updatedAt: '2026-08-26' },
           { to: '/components/separator', label: 'Separator', updatedAt: '2026-08-26' },
           { to: '/components/table', label: 'Table', updatedAt: '2026-08-26' },
         ],
@@ -119,6 +122,8 @@ export const sections: NavSection[] = [
         items: [
           { to: '/components/alert', label: 'Alert', updatedAt: '2026-08-26' },
           { to: '/components/dialog', label: 'Dialog', updatedAt: '2026-08-26' },
+          { to: '/components/empty-state', label: 'Empty State', updatedAt: '2026-08-26' },
+          { to: '/components/progress', label: 'Progress', updatedAt: '2026-08-26' },
           { to: '/components/skeleton', label: 'Skeleton', updatedAt: '2026-08-26' },
           { to: '/components/toast', label: 'Toast', updatedAt: '2026-08-26' },
           { to: '/components/tooltip', label: 'Tooltip', updatedAt: '2026-08-26' },
