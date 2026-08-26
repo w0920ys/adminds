@@ -156,6 +156,39 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
         </Field>
       )
 
+    case 'wrap-the-rendered-element':
+      return kind === 'do' ? (
+        <Field className="w-40">
+          <FieldLabel>상태</FieldLabel>
+          <Select defaultValue="active">
+            <FieldControl>
+              <SelectTrigger size="sm">
+                <SelectValue />
+              </SelectTrigger>
+            </FieldControl>
+            <SelectContent>
+              <SelectItem value="active">활성</SelectItem>
+              <SelectItem value="inactive">비활성</SelectItem>
+            </SelectContent>
+          </Select>
+        </Field>
+      ) : (
+        <Field className="w-40">
+          <FieldLabel>상태</FieldLabel>
+          <FieldControl>
+            <Select defaultValue="active">
+              <SelectTrigger size="sm">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="active">활성</SelectItem>
+                <SelectItem value="inactive">비활성</SelectItem>
+              </SelectContent>
+            </Select>
+          </FieldControl>
+        </Field>
+      )
+
     default:
       return null
   }
@@ -188,17 +221,23 @@ function renderExample(exampleId: string): ReactNode {
         <div className="bg-surface flex items-center gap-2 rounded-md border p-2">
           <Field>
             <FieldLabel className="sr-only">상태</FieldLabel>
-            <FieldControl>
-              <Select defaultValue="active">
+            {/*
+             * Select는 SelectPrimitive.Root라 자기 노드를 그리지 않는다 —
+             * context만 제공한다. FieldControl은 Slot으로 실제 DOM 노드에
+             * id를 내려야 하므로 Select 전체가 아니라 그 안에서 실제로
+             * 렌더링되는 SelectTrigger를 감싼다.
+             */}
+            <Select defaultValue="active">
+              <FieldControl>
                 <SelectTrigger size="sm" className="w-32">
                   <SelectValue placeholder="상태" />
                 </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="active">활성</SelectItem>
-                  <SelectItem value="inactive">비활성</SelectItem>
-                </SelectContent>
-              </Select>
-            </FieldControl>
+              </FieldControl>
+              <SelectContent>
+                <SelectItem value="active">활성</SelectItem>
+                <SelectItem value="inactive">비활성</SelectItem>
+              </SelectContent>
+            </Select>
           </Field>
         </div>
       )
@@ -223,12 +262,14 @@ function renderExample(exampleId: string): ReactNode {
       )
 
     case 'error-with-help':
+      // layout="horizontal"에 네 부위(라벨·도움말·컨트롤·오류)를 모두 둔다 —
+      // 라벨과 컨트롤이 도움말이 있어도 같은 행에 나란히 서는지 보인다.
       return (
-        <Field state="error" className="w-64">
-          <FieldLabel>자기소개</FieldLabel>
+        <Field layout="horizontal" state="error" className="w-80">
+          <FieldLabel className="w-20">자기소개</FieldLabel>
           <FieldHelp>다른 사용자에게 보이는 소개 문구입니다</FieldHelp>
           <FieldControl>
-            <Textarea defaultValue={'x'.repeat(210)} className="w-64" />
+            <Textarea defaultValue={'x'.repeat(210)} />
           </FieldControl>
           <FieldError>200자를 넘을 수 없습니다</FieldError>
         </Field>
@@ -258,17 +299,17 @@ function renderExample(exampleId: string): ReactNode {
         <Bounds className="w-48">
           <Field layout="horizontal">
             <FieldLabel className="w-16">상태</FieldLabel>
-            <FieldControl>
-              <Select defaultValue="active">
+            <Select defaultValue="active">
+              <FieldControl>
                 <SelectTrigger size="sm">
                   <SelectValue />
                 </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="active">활성</SelectItem>
-                  <SelectItem value="inactive">비활성</SelectItem>
-                </SelectContent>
-              </Select>
-            </FieldControl>
+              </FieldControl>
+              <SelectContent>
+                <SelectItem value="active">활성</SelectItem>
+                <SelectItem value="inactive">비활성</SelectItem>
+              </SelectContent>
+            </Select>
           </Field>
         </Bounds>
       )

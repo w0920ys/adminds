@@ -69,16 +69,24 @@ type FieldProps = Omit<React.ComponentProps<'div'>, 'children'> & {
 /*
  * horizontal은 grid grid-cols-[auto_1fr]로 바뀐다 — Steps의 vertical
  * orientation과 같은 얼개다. Field는 각 하위 컴포넌트의 타입이나 개수를
- * 들여다보지 않는다. FieldLabel은 col-start-1을, FieldHelp·FieldControl·
- * FieldError는 col-start-2만 스스로 표시한다 — 행은 지정하지 않는다.
- * 행이 없는 grid item은 CSS의 기본 auto-placement가 등장 순서대로
- * 다음 빈 칸에 채운다. 그래서 라벨 바로 다음에 오는 col-start-2 항목이
- * 라벨과 같은 첫 행에 나란히 서고 — 도움말이 없으면 그 자리가 바로
- * Control이라 라벨과 입력이 한 줄에 나란히 서는 가장 흔한 모양이 저절로
- * 나온다. 도움말이 있으면 그것이 첫 행에서 라벨과 나란히 서고 Control은
- * 다음 행으로, 그다음 Error가 그다음 행으로 내려간다. 어느 경우든 문서
- * 순서(라벨 → 도움말 → 입력 → 오류)와 화면에 보이는 순서가 어긋나지
- * 않는다 — 스크린 리더가 읽는 순서와 눈으로 보는 순서가 같다.
+ * 들여다보지 않는다 — 각자 컨텍스트의 layout만 읽어 자기 grid-column·
+ * grid-row를 스스로 표시한다.
+ *
+ * 열만 지정하고 행은 auto-placement에 맡기는 첫 시도는 도움말이 있을
+ * 때 라벨이 도움말과 한 행에 붙고 Control이 짝 없이 다음 행으로
+ * 밀려나는 결함이 있었다 — horizontal이 존재하는 이유(짧은 라벨이
+ * Control과 나란히 서는 것) 자체가 깨졌다. 그래서 행도 부위별로
+ * 고정한다: Label과 Control은 항상 1행에 나란히 서고(도움말이 있든
+ * 없든 이 짝은 흔들리지 않는다), Help는 2행, Error는 3행이다. 인스턴스가
+ * Help 없이 쓰이면 2행은 그냥 빈 채로 0 높이라 자리를 차지하지 않는다.
+ *
+ * 이 배치는 화면에 보이는 순서(Label+Control → Help → Error)를
+ * DOM 순서보다 우선한다 — DOM에 Help가 Control보다 앞서 있어도 grid가
+ * 명시적으로 자리를 정하므로 시각 순서와 DOM 순서가 갈라진다. 그래도
+ * 문제가 되지 않는 것은 Help·Error가 FieldControl의 aria-describedby로
+ * 이어지기 때문이다 — 스크린 리더는 Control에 포커스가 갈 때 그 값을
+ * DOM 위치와 무관하게 읽어 주므로, 폼을 채우는 상호작용에서는 시각
+ * 순서가 곧 실제로 전달되는 순서다.
  */
 function Field({ className, layout = 'stacked', state = 'default', children, ...props }: FieldProps) {
   const id = React.useId()
@@ -137,7 +145,7 @@ function FieldLabel({ className, ...props }: React.ComponentProps<'label'>) {
       className={cn(
         'text-sm font-medium',
         state === 'disabled' && 'text-muted-foreground',
-        layout === 'horizontal' && 'col-start-1',
+        layout === 'horizontal' && 'col-start-1 row-start-1',
         className,
       )}
       {...props}
@@ -162,12 +170,11 @@ function FieldControl({ className, ...props }: FieldControlProps) {
 
   return (
     <FieldControlSlot
-      data-slot="field-control"
       id={id}
       aria-invalid={state === 'error' || undefined}
       aria-describedby={describedBy || undefined}
       disabled={state === 'disabled' || undefined}
-      className={cn(layout === 'horizontal' && 'col-start-2', className)}
+      className={cn(layout === 'horizontal' && 'col-start-2 row-start-1', className)}
       {...props}
     />
   )
@@ -181,7 +188,7 @@ function FieldHelp({ className, ...props }: React.ComponentProps<'p'>) {
     <p
       id={helpId}
       data-slot="field-help"
-      className={cn('text-muted-foreground text-xs', layout === 'horizontal' && 'col-start-2', className)}
+      className={cn('text-muted-foreground text-xs', layout === 'horizontal' && 'col-start-2 row-start-2', className)}
       {...props}
     />
   )
@@ -195,7 +202,7 @@ function FieldError({ className, ...props }: React.ComponentProps<'p'>) {
     <p
       id={errorId}
       data-slot="field-error"
-      className={cn('text-destructive text-xs', layout === 'horizontal' && 'col-start-2', className)}
+      className={cn('text-destructive text-xs', layout === 'horizontal' && 'col-start-2 row-start-3', className)}
       {...props}
     />
   )

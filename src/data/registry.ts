@@ -513,6 +513,14 @@ export const components: ComponentMeta[] = [
         do: ['오류가 나타난 뒤에도 도움말을 그대로 둔다'],
         dont: ['오류 문구가 나타나면 도움말을 없애지 않는다'],
       },
+      {
+        id: 'wrap-the-rendered-element',
+        title: 'Wrap the element that renders',
+        body:
+          'FieldControl은 Slot으로 자식에게 id를 내려줍니다. 그 자식이 실제로 DOM 노드를 그려야 id가 어딘가에 붙습니다. Select처럼 context만 제공하고 자기 노드를 그리지 않는 컴포넌트를 통째로 감싸면 id가 갈 곳이 없어 사라집니다. Select 안에서 실제로 렌더링되는 SelectTrigger처럼, 그 컴포넌트가 실제로 그리는 요소를 감싸야 합니다.',
+        do: ['Select 안에서 실제로 렌더링되는 SelectTrigger를 FieldControl로 감싼다'],
+        dont: ['Select처럼 context만 제공하는 컴포넌트를 통째로 FieldControl로 감싸지 않는다'],
+      },
     ],
     usage: [
       { id: 'form-row', title: '폼 한 줄', note: '라벨과 입력 하나를 세로로 묶은 가장 흔한 자리' },
