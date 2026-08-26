@@ -35,7 +35,7 @@ export const releases: Release[] = [
     purpose:
       'GNB에서 마지막까지 비어 있던 두 섹션을 채웠어요. Get started는 여기가 무엇이고 어디서부터 읽는지, 어떻게 띄우고 어떤 원칙을 따르는지를 Overview·Install·Principles 세 문서로 나눴어요. Patterns는 Overview와 함께 목록·상세·입력·빈 자리·확인 다섯 문서를 실었는데, 예시 화면을 그림으로 그리지 않고 이미 있는 컴포넌트로 실제로 조립했어요 — 토큰이 바뀌면 예시도 따라 바뀌어요. 이로써 문서 라우트에서 자리표시자가 사라졌고, 그 사실을 뒤늦게 거짓이 되는 문장 몇 개도 이번에 함께 걷어냈어요.',
     changes: [
-      { target: 'Get started', type: 'New', note: '세 회차 동안 방문자가 처음 보는 화면이 자리표시자였어요. 섹션 목록도 섹션마다의 문서 개수도 컴포넌트·패턴 수도 전부 nav-config와 registry, patterns에서 세어 보여줘요. 섹션이 늘었는데 설명이 빠지는 일을 막으려고, 설명 표의 키가 GNB의 섹션과 정확히 같은지 테스트가 지켜요.' },
+      { target: 'Get started', type: 'New', note: 'v0.3.0에서 GNB에 Get started가 생긴 뒤로 아홉 회차 동안, 방문자가 처음 보는 화면이 자리표시자였어요. 섹션 목록도 섹션마다의 문서 개수도 컴포넌트·패턴 수도 전부 nav-config와 registry, patterns에서 세어 보여줘요. 섹션이 늘었는데 설명이 빠지는 일을 막으려고, 설명 표의 키가 GNB의 섹션과 정확히 같은지 테스트가 지켜요.' },
       { target: 'Install', type: 'New', note: '이 작업대를 로컬에서 띄우는 법과 토큰을 제품으로 가져가는 법을 나눠 적었어요. 명령을 통째로 적지 않고 스크립트 이름만 두어 npm run 뒤에 붙이고, 그 이름이 package.json에 실재하는지 테스트가 지켜요. 폰트 스택은 여기 적지 않고 Typography 문서를 가리켜요 — 같은 값을 두 곳에 적으면 한쪽이 낡아요.' },
       { target: 'Principles', type: 'New', note: '원칙 여섯에 이름을 붙였어요. 새로 만든 건 하나도 없고 전부 이미 다른 문서에서 지키던 것이라, 원칙마다 그 근거 문서를 가리켜요. 가리키는 문서가 LNB에 실재하는지 테스트가 지켜요. 여섯 중 다섯은 제품 화면에 거는 규칙이고 마지막 하나는 이 작업대 자체에 거는 규칙이라, 절을 나눠 그 차이를 말해요.' },
       { target: 'Patterns', type: 'New', note: '패턴 문서의 뼈대 PatternPage와 데이터 patterns.ts를 새로 만들고, 카드 목록이 patterns.ts에서 파생하는 Overview를 함께 실었어요. 패턴에는 축도 상태도 없어서 ComponentPage를 재사용하지 않았어요 — 그 자리를 빈 배열로 두면 빈 절이 생기고, v0.8.0에서 이미 한 번 걷어낸 결함이거든요. Structure가 가리키는 컴포넌트 id가 registry에 실재하는지도 테스트가 지켜요.' },
