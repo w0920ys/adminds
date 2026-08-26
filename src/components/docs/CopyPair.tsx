@@ -25,21 +25,21 @@ export function CopyPairs({ items }: { items: CopyExample[] }) {
           </p>
           <div className="grid md:grid-cols-2">
             <div className="p-4 md:p-5">
-              <p className="text-destructive mb-2.5 flex items-center gap-1.5 text-2xs font-bold tracking-widest">
+              <p className="text-destructive mb-3 flex items-center gap-1.5 text-2xs font-bold tracking-widest">
                 <X size={13} aria-hidden /> 쓰지 않는 문장
               </p>
               <p className="text-muted-foreground text-sm">{item.dont}</p>
             </div>
             <div className="border-t p-4 md:border-t-0 md:border-l md:p-5">
               {/* success-on-tint를 쓴다 — 원래 success 색은 흰 바탕에서도 3.67:1이다 */}
-              <p className="text-success-on-tint mb-2.5 flex items-center gap-1.5 text-2xs font-bold tracking-widest">
+              <p className="text-success-on-tint mb-3 flex items-center gap-1.5 text-2xs font-bold tracking-widest">
                 <Check size={13} aria-hidden /> 이 시스템이 쓰는 문장
               </p>
               <p className="text-sm font-medium">{item.do}</p>
             </div>
           </div>
           {/* 왜 그렇게 정했는지는 이 블록에서 가장 설명다운 문장이라 본문 크기로 둔다 */}
-          <p className="text-muted-foreground bg-muted/40 border-t px-4 py-2.5 text-sm">{item.why}</p>
+          <p className="text-muted-foreground bg-muted/40 border-t px-4 py-3 text-sm">{item.why}</p>
         </div>
       ))}
     </div>

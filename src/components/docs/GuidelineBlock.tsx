@@ -18,7 +18,7 @@ function Side({
   if (!example && rules.length === 0) return null
 
   return (
-    <div className="flex h-full flex-col gap-3.5 rounded-lg border p-4 md:p-5">
+    <div className="flex h-full flex-col gap-4 rounded-lg border p-4 md:p-5">
       {/*
        * DO 글자는 success-on-tint를 쓴다 — 원래 success 색은 흰 바탕
        * 위에서도 3.67:1로 4.5:1에 못 미친다. destructive는 4.76:1로
@@ -37,7 +37,7 @@ function Side({
       {example && <ExampleFrame>{example}</ExampleFrame>}
 
       {rules.length > 0 && (
-        <ul className="flex flex-col gap-2.5">
+        <ul className="flex flex-col gap-3">
           {rules.map((line) => (
             <li key={line} className="text-sm">
               {line}

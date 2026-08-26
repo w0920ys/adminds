@@ -55,7 +55,7 @@ export function DocPage({
 export function DocSection({ title, children }: { title: string; children: ReactNode }) {
   /*
    * 직계 <p>는 이 절의 본문이다 — 무대·표·격자는 전부 <div>나 <ul>로 온다.
-   * 그래서 읽는 글에만 위 docProse와 같은 규칙을 건다. 자손 선택자라
+   * 그래서 읽는 글에만 위 docProse와 같은 규칙을 건다. 자식 선택자라
    * 문단 자신의 크기 클래스보다 명시도가 높아 좁은 화면 규칙이 이긴다.
    * docProse 문자열을 그대로 쓸 수는 없다 — Tailwind는 소스에 적힌 클래스
    * 이름을 글자 그대로 훑어서 만들기 때문에, 변형 접두사를 코드로 붙이면

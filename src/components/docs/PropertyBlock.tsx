@@ -32,7 +32,7 @@ export function PropertyBlock({
           <h3 className="text-base font-semibold">{property.title}</h3>
           <HeadingAnchor />
         </div>
-        <p className={cn('text-muted-foreground mt-1.5 text-sm', docProse)}>{property.description}</p>
+        <p className={cn('text-muted-foreground mt-2 text-sm', docProse)}>{property.description}</p>
       </div>
 
       {property.display === 'matrix' && cross ? (
@@ -87,7 +87,7 @@ export function PropertyBlock({
           }
         >
           {property.options.map((option) => (
-            <div key={option.value} className="flex flex-col gap-2.5">
+            <div key={option.value} className="flex flex-col gap-3">
               <p className="text-muted-foreground text-xs font-bold">{option.value}</p>
               <div
                 className={cn(

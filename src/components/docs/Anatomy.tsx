@@ -227,7 +227,7 @@ export function Anatomy({ meta, preview }: { meta: ComponentMeta; preview: React
       </div>
 
       {/* 번호 목록. 지시선이 없어도 문서가 성립하는 기본 층이다. */}
-      <ol className="flex flex-col gap-2.5">
+      <ol className="flex flex-col gap-3">
         {meta.anatomy.map((part, index) => {
           const isActive = active === index
           return (
@@ -237,7 +237,7 @@ export function Anatomy({ meta, preview }: { meta: ComponentMeta; preview: React
                 onClick={() => setActive(isActive ? null : index)}
                 aria-pressed={isActive}
                 className={cn(
-                  'flex w-full items-start gap-2.5 rounded-md p-2.5 text-left',
+                  'flex w-full items-start gap-2 rounded-md p-3 text-left',
                   isActive ? 'bg-accent' : 'hover:bg-accent/50',
                 )}
               >
