@@ -373,27 +373,27 @@ function renderExample(exampleId: string): ReactNode {
 }
 
 /*
- * Content · Header · Body · Footer는 Portal로 document.body에 렌더링되어
- * Anatomy 무대(stage) 안의 DOM이 아니다 — stage.querySelector가 찾지
- * 못해 지시선은 trigger에만 그려진다. 그래도 실제로 열린 인스턴스라
- * 화면에는 그대로 보인다. Select가 목록·항목을 부위에서 뺀 것과 달리
- * 여기서는 뺴지 않는다 — 설계 문서가 다섯 부위 모두를 구조로 짚었고,
- * Popover는 modal이 아니라 열어 둬도 GNB가 잠기지 않는다.
+ * Content는 Portal로 document.body에 렌더링되어 Anatomy 무대(stage)
+ * 안의 DOM이 아니다 — stage.querySelector가 찾지 못해 지시선을 그릴
+ * 수 없다. Dialog·Tooltip·Dropdown Menu와 같은 이유로 부위는 Trigger
+ * 하나뿐이라, 열어 둔들 진단할 것이 더 늘지 않는다. Select가 실제로
+ * 클릭해서 열어 보게 한 것과 같은 인스턴스 하나를 그대로 둔다 —
+ * 강제로 열지 않는다.
  */
 function AnatomyPreview() {
   return (
-    <Popover defaultOpen>
+    <Popover>
       <PopoverTrigger asChild>
         <Button data-anatomy="trigger" variant="outline" size="sm">
           필터
         </Button>
       </PopoverTrigger>
-      <PopoverContent data-anatomy="content">
-        <div data-anatomy="header" className="flex flex-col gap-1 pb-3">
+      <PopoverContent>
+        <div className="flex flex-col gap-1 pb-3">
           <p className="text-sm font-medium">상태로 거르기</p>
           <p className="text-muted-foreground text-xs">조건에 맞는 항목만 남깁니다</p>
         </div>
-        <div data-anatomy="body" className="flex flex-col gap-2 pb-3">
+        <div className="flex flex-col gap-2 pb-3">
           {STATUS_OPTIONS.map((option) => (
             <label key={option.id} className="flex items-center gap-2 text-sm">
               <Checkbox defaultChecked={option.id === 'active'} />
@@ -401,7 +401,7 @@ function AnatomyPreview() {
             </label>
           ))}
         </div>
-        <div data-anatomy="footer" className="flex justify-end gap-2">
+        <div className="flex justify-end gap-2">
           <Button variant="outline" size="sm">
             초기화
           </Button>

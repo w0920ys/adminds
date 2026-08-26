@@ -2264,29 +2264,7 @@ export const components: ComponentMeta[] = [
       {
         part: 'trigger',
         label: 'Trigger',
-        note: '누르면 곁에 내용이 뜬다. asChild로 실제 버튼이나 입력 등 원하는 요소를 그대로 트리거로 쓴다',
-      },
-      {
-        part: 'content',
-        label: 'Content',
-        note: 'bg-popover, text-popover-foreground, 테두리, radius-md, shadow-md를 쓰고 쌓임 순서는 z-popover다. 트리거에서 sideOffset만큼 떨어지고 collisionPadding만큼 뷰포트 가장자리를 남긴 채 반대편으로 뒤집힌다. Portal로 렌더링되어 겹치는 컨테이너의 overflow에 잘리지 않는 대신 격자의 아래 칸을 덮는다. modal이 아니라 바깥을 눌러도 GNB를 포함해 그대로 눌린다',
-      },
-      {
-        part: 'header',
-        label: 'Header',
-        note: '제목과 보조 설명을 담는 첫 줄. 내용이 무엇에 대한 것인지 밝힐 때만 둔다',
-        optional: true,
-      },
-      {
-        part: 'body',
-        label: 'Body',
-        note: '실제 상호작용이 일어나는 자리. 폼·목록·글 등 Content 안의 주된 내용이 여기 온다',
-      },
-      {
-        part: 'footer',
-        label: 'Footer',
-        note: '적용·초기화처럼 마무리 동작이 있을 때만 오른쪽 정렬로 둔다',
-        optional: true,
+        note: '누르면 곁에 bg-popover, text-popover-foreground, 테두리, radius-md, shadow-md인 내용이 뜬다. 쌓임 순서는 z-popover다. 트리거에서 sideOffset만큼 떨어지고 collisionPadding만큼 뷰포트 가장자리를 남긴 채 반대편으로 뒤집힌다. 안은 제목·보조 설명을 담는 Header(선택)·실제 상호작용이 있는 Body·적용·초기화 같은 동작을 담는 Footer(선택) 순서로 쌓일 수 있다. Radix가 이 표면을 document.body로 포털하므로 구조도 무대 안에 담을 수 없다 — Dialog·Tooltip·Dropdown Menu와 같은 이유로 Trigger 하나만 부위로 남긴다. 열린 표면의 구조는 Usage와 Cases에서 실제로 눌러서 본다. modal이 아니라 바깥을 눌러도 GNB를 포함해 그대로 눌린다',
       },
     ],
     /*
