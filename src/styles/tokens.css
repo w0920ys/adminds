@@ -29,8 +29,10 @@
    * --surface-raised(0.985)와 명도가 거의 같아(0.97) 대비 1.04:1 — 다크에서는
    * 아예 같은 값이 되는 문제의 라이트 쪽 절반이다(아래 .dark의 --muted 주석
    * 참고). --surface-raised는 카드·스테이지·표 머리 등 훨씬 넓게 쓰여 손대지
-   * 않고, 채움 쪽인 --muted만 명도를 0.93으로 낮췄다 — --surface-raised
-   * 위에서 1.17:1로 갈라져 Skeleton·Progress 트랙이 카드/스테이지 표면 위에서도
+   * 않고, 채움 쪽인 --muted만 명도를 0.93으로 낮췄다 — 라이트에서 --card·
+   * --surface·--background는 모두 1.0으로 같은 값이라 그 위에서는 1.23:1,
+   * 이 넷 중 가장 타이트한 --surface-raised(0.985) 위에서는 1.17:1로
+   * 갈라져 Skeleton·Progress 트랙이 카드를 포함한 어떤 표면 위에서도
    * 도형으로 읽힌다.
    */
   --muted: oklch(0.93 0 0);
@@ -101,13 +103,17 @@
   --secondary-foreground: oklch(0.985 0 0);
   /*
    * --surface-raised와 완전히 같은 값(0.269)이었다 — Skeleton·Progress 트랙이
-   * 카드/스테이지 표면(bg-surface-raised) 위에서 대비 1:1로 완전히 사라졌다.
-   * 라이트와 같은 이유로 --surface-raised는 그대로 두고 --muted만 0.21로
-   * 낮췄다 — 1.17:1로 갈라진다(라이트 --muted 주석과 같은 근거).
-   * --muted-foreground(0.708)는 이 새 --muted 위에서도 6.87:1이라 함께
-   * 옮기지 않았다.
+   * bg-surface-raised 스테이지 위에서 대비 1:1로 완전히 사라졌다. 처음엔
+   * 0.21로만 낮췄는데, 그러면 --surface·--card(둘 다 0.205)와 거의 같은
+   * 값(1.01:1)이 되어 결함이 다른 표면으로 옮겨갈 뿐이었다 — 기본 Card
+   * 변형(outlined)이 bg-card를 쓰므로 실제 카드 위에서 그대로 재현됐다.
+   * --muted는 --background(0.145)·--surface·--card(0.205)·--surface-raised
+   * (0.269) 네 표면 모두와 갈라져야 해서 0.32로 다시 잡았다 — --background
+   * 위 1.57:1, --surface·--card 위 1.42:1, 넷 중 가장 타이트한
+   * --surface-raised 위 1.20:1. --muted-foreground(0.708)는 이 --muted
+   * 위에서도 4.89:1이라 함께 옮기지 않았다.
    */
-  --muted: oklch(0.21 0 0);
+  --muted: oklch(0.32 0 0);
   --muted-foreground: oklch(0.708 0 0);
   --accent: oklch(0.269 0 0);
   --accent-foreground: oklch(0.985 0 0);
