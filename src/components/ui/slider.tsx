@@ -74,6 +74,15 @@ type SliderProps = Omit<React.ComponentProps<typeof SliderPrimitive.Root>, 'defa
  * 않고 Thumb으로 옮겨 단다. Field가 FieldControl로 내려준 이름과 설명이
  * 이 통로를 지나 실제 컨트롤에 닿는다.
  *
+ * 오류(aria-invalid)와 비활성(disabled)도 같은 이유로 같은 길을 탄다.
+ * Field가 state="error"에서 내려주는 aria-invalid를 Root에 그대로 두면
+ * 역할 없는 span에 붙어 아무 데도 닿지 않는다 — Thumb으로 옮겨 단다.
+ * disabled는 Radix가 동작을 멈추는 데 쓰므로 Root에 그대로 넘기되(넘기지
+ * 않으면 비활성인데도 끌 수 있다), Radix가 그 값으로 Root에 다는
+ * aria-disabled 역시 역할 없는 자리라 Thumb에도 함께 단다. 비활성이면
+ * Radix가 Thumb의 tabIndex를 지워 포커스로는 닿지 않지만, 훑어 읽는
+ * 스크린 리더는 이 값을 읽어 지금 값을 바꿀 수 없다는 것을 알린다.
+ *
  * 손잡이가 둘 이상이면 이름이 서로 같아서는 안 된다 — 어느 쪽을 잡고
  * 있는지 구별되지 않는다. 위치 이름(시작·종료)을 덧붙여 가른다.
  * aria-labelledby로 이름을 받은 경우에는 문자열을 이어 붙일 수 없으므로
@@ -97,12 +106,14 @@ function Slider({
   size,
   value,
   defaultValue,
+  disabled,
   trackProps,
   rangeProps,
   thumbProps,
   'aria-label': ariaLabel,
   'aria-labelledby': ariaLabelledBy,
   'aria-describedby': ariaDescribedBy,
+  'aria-invalid': ariaInvalid,
   ...props
 }: SliderProps) {
   const thumbValues = value ?? defaultValue ?? [0]
@@ -114,6 +125,7 @@ function Slider({
       data-slot="slider"
       value={value}
       defaultValue={defaultValue}
+      disabled={disabled}
       className={cn(
         'relative flex w-full touch-none items-center select-none data-[disabled]:cursor-not-allowed data-[disabled]:opacity-50',
         className,
@@ -146,6 +158,8 @@ function Slider({
               ariaLabelledBy ? undefined : [ariaLabel, position].filter(Boolean).join(' ') || undefined
             }
             aria-describedby={ariaDescribedBy}
+            aria-invalid={ariaInvalid}
+            aria-disabled={disabled || undefined}
             {...thumbProps}
             className={cn(sliderThumbVariants({ size }), thumbProps?.className)}
           />

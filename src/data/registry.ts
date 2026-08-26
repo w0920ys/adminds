@@ -1265,6 +1265,11 @@ export const components: ComponentMeta[] = [
       { id: 'wide-range', title: '범위가 아주 넓은 경우', note: '전체 범위가 넓을수록 손잡이 하나가 움직이는 값의 폭도 커진다' },
       { id: 'thumbs-at-same-value', title: '두 손잡이가 같은 값이 된 경우', note: '겹쳐도 각자 화살표 키로 다시 갈라 움직일 수 있다' },
       { id: 'no-value', title: '값이 없는 경우', note: '아직 고르지 않았으면 범위의 시작값을 기본으로 둔다' },
+      {
+        id: 'error-with-help',
+        title: '도움말·오류와 함께 있는 경우',
+        note: "Field가 감싸면 도움말·오류의 id가 역할 없는 Root가 아니라 role='slider'를 단 손잡이의 aria-describedby로 이어진다. state가 error일 때의 aria-invalid도 같은 자리에 붙는다",
+      },
       { id: 'narrow-screen', title: '좁은 화면', note: '폭이 좁아져도 Track이 부모 폭을 그대로 따라간다' },
     ],
     verified: false,
