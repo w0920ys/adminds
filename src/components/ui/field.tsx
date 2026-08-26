@@ -174,7 +174,23 @@ function Field({ className, layout = 'stacked', state = 'default', children, ...
  * 일어나지 않아(label.control이 null이다) 라벨을 눌러도 포커스가 옮겨
  * 가지 않는다 — 그래서 onClick에서 직접 옮긴다. 어떤 컴포넌트인지
  * 이름으로 가르지 않고 label.control이 비었는지만 본다.
+ *
+ * id가 가리키는 요소가 늘 포커스를 받는 것은 아니다. Slider는 그 자리가
+ * 역할 없는 Radix Root span이고 포커스를 받는 것은 그 안의 손잡이다.
+ * 그래서 먼저 그 요소를 시도하고, 받지 못하면 안쪽의 포커스 가능한
+ * 첫 요소로 넘긴다. 이것도 이름이 아니라 요소의 성질만 본다.
  */
+/**
+ * 라벨이 가리키는 요소로 포커스를 옮긴다. 그 요소가 포커스를 받지 못하면
+ * 안쪽의 포커스 가능한 첫 요소로 넘긴다.
+ */
+function focusControl(target: HTMLElement | null): void {
+  if (!target) return
+  target.focus()
+  if (document.activeElement === target) return
+  target.querySelector<HTMLElement>('[tabindex]:not([tabindex="-1"]), button, input, select, textarea, a[href]')?.focus()
+}
+
 function FieldLabel({ className, onClick, ...props }: React.ComponentProps<'label'>) {
   const { id, layout, state, labelId, registerLabel } = React.useContext(FieldContext)
   React.useLayoutEffect(() => registerLabel(), [registerLabel])
@@ -187,7 +203,7 @@ function FieldLabel({ className, onClick, ...props }: React.ComponentProps<'labe
       onClick={(event) => {
         onClick?.(event)
         if (event.currentTarget.control) return
-        document.getElementById(id)?.focus()
+        focusControl(document.getElementById(id))
       }}
       className={cn(
         'text-sm font-medium',

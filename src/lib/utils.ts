@@ -28,7 +28,8 @@ import { extendTailwindMerge } from 'tailwind-merge'
  *
  * --spacing-row·--spacing-row-compact(Table의 행 높이)도 같은 종류의
  * 토큰이라 같은 틈에 빠져 있었다 — TableRow가 h-row를 className보다
- * 먼저 내보내므로 호출처가 뒤에 h-auto를 붙여도 둘 다 살아남는다.
+ * 먼저 내보내므로, 등록하기 전에는 호출처가 뒤에 h-auto를 붙여도 둘 다
+ * 살아남았다. 등록한 지금은 h-auto만 남는다.
  * h·min-h 두 그룹에 함께 등록해 컨트롤 높이 토큰과 정책을 하나로
  * 맞춘다. size 그룹에는 넣지 않는다 — 행 높이 토큰으로 정사각형
  * 크기를 잡는 자리가 없고, 실제로 이 저장소에 size-row·size-row-compact
