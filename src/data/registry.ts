@@ -462,7 +462,8 @@ export const components: ComponentMeta[] = [
       {
         name: 'layout',
         title: 'Layout',
-        description: '하나만 고르는지 여럿을 고르는지를 정한다.',
+        description:
+          '하나만 고르는지 여럿을 고르는지를 정한다. layout이라는 이름의 prop은 없다 — multiple prop이 이 축을 가른다.',
         display: 'row',
         options: [
           { value: 'single', note: '기본. 고른 항목의 문구가 트리거에 보인다' },
@@ -804,7 +805,8 @@ export const components: ComponentMeta[] = [
       {
         name: 'layout',
         title: 'Layout',
-        description: '파일을 하나만 받는지 여러 개 받는지 정한다.',
+        description:
+          '파일을 하나만 받는지 여러 개 받는지 정한다. layout이라는 이름의 prop은 없다 — multiple prop이 이 축을 가른다.',
         display: 'row',
         options: [
           { value: 'single', note: '기본. 새로 고르면 이전 파일을 대신한다' },
@@ -1217,7 +1219,8 @@ export const components: ComponentMeta[] = [
       {
         name: 'layout',
         title: 'Layout',
-        description: '손잡이가 하나인지 둘인지를 정한다.',
+        description:
+          '손잡이가 하나인지 둘인지를 정한다. layout이라는 이름의 prop은 없다 — value(비제어라면 defaultValue) 배열의 길이가 손잡이 수다.',
         display: 'row',
         options: [
           { value: 'single', note: '값 하나를 고른다' },
