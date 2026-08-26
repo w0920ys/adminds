@@ -17,6 +17,7 @@ import { DropdownMenuPage } from '@/routes/components/DropdownMenuPage'
 import { EmptyStatePage } from '@/routes/components/EmptyStatePage'
 import { InputPage } from '@/routes/components/InputPage'
 import { PaginationPage } from '@/routes/components/PaginationPage'
+import { PopoverPage } from '@/routes/components/PopoverPage'
 import { ProgressPage } from '@/routes/components/ProgressPage'
 import { RadioPage } from '@/routes/components/RadioPage'
 import { SelectPage } from '@/routes/components/SelectPage'
@@ -81,6 +82,7 @@ export const routes: RouteObject[] = [
           { path: 'alert', element: <AlertPage /> },
           { path: 'toast', element: <ToastPage /> },
           { path: 'tooltip', element: <TooltipPage /> },
+          { path: 'popover', element: <PopoverPage /> },
           { path: 'dialog', element: <DialogPage /> },
           { path: 'skeleton', element: <SkeletonPage /> },
           { path: 'progress', element: <ProgressPage /> },

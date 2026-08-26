@@ -2252,6 +2252,95 @@ export const components: ComponentMeta[] = [
     verified: false,
   },
   {
+    id: 'popover',
+    name: 'Popover',
+    aliases: ['팝오버', '팝업', '플로팅 패널', 'popover'],
+    category: 'feedback',
+    status: 'stable',
+    addedIn: 'v0.10.0',
+    changedIn: 'v0.10.0',
+    purpose: '트리거를 누르면 그 곁에 곁들여 보는 내용을 띄운다.',
+    anatomy: [
+      {
+        part: 'trigger',
+        label: 'Trigger',
+        note: '누르면 곁에 내용이 뜬다. asChild로 실제 버튼이나 입력 등 원하는 요소를 그대로 트리거로 쓴다',
+      },
+      {
+        part: 'content',
+        label: 'Content',
+        note: 'bg-popover, text-popover-foreground, 테두리, radius-md, shadow-md를 쓰고 쌓임 순서는 z-popover다. 트리거에서 sideOffset만큼 떨어지고 collisionPadding만큼 뷰포트 가장자리를 남긴 채 반대편으로 뒤집힌다. Portal로 렌더링되어 겹치는 컨테이너의 overflow에 잘리지 않는 대신 격자의 아래 칸을 덮는다. modal이 아니라 바깥을 눌러도 GNB를 포함해 그대로 눌린다',
+      },
+      {
+        part: 'header',
+        label: 'Header',
+        note: '제목과 보조 설명을 담는 첫 줄. 내용이 무엇에 대한 것인지 밝힐 때만 둔다',
+        optional: true,
+      },
+      {
+        part: 'body',
+        label: 'Body',
+        note: '실제 상호작용이 일어나는 자리. 폼·목록·글 등 Content 안의 주된 내용이 여기 온다',
+      },
+      {
+        part: 'footer',
+        label: 'Footer',
+        note: '적용·초기화처럼 마무리 동작이 있을 때만 오른쪽 정렬로 둔다',
+        optional: true,
+      },
+    ],
+    /*
+     * 열린 표면은 트리거의 변형이 아니라 다른 표면이다. 포털된 고정
+     * 위치 요소는 행 높이에 계산되지 않아 격자의 아래 칸을 덮는다 —
+     * Tooltip에서 이미 같은 결론에 이르렀다. properties를 빈 배열로
+     * 두면 ComponentPage가 절을 그리지 않는다.
+     */
+    properties: [],
+    guidelines: [
+      {
+        id: 'dialog-vs-popover',
+        title: 'Dialog vs Popover',
+        body: '하던 일을 멈추고 답해야 하면 Dialog를 쓰고, 곁들여 보는 것이면 Popover를 씁니다.',
+        do: ['필터·짧은 설명처럼 곁들여 보는 내용에는 Popover를 쓴다'],
+        dont: ['삭제 확인처럼 하던 일을 멈추고 답해야 하는 내용을 Popover에 담지 않는다'],
+      },
+      {
+        id: 'tooltip-vs-popover',
+        title: 'Tooltip vs Popover',
+        body: '안에 누를 수 있는 것이 하나라도 있으면 Popover를 씁니다. Tooltip은 마우스를 치우면 사라지므로 누를 수 없습니다.',
+        do: ['버튼이나 링크처럼 누를 수 있는 것이 있으면 Popover를 쓴다'],
+        dont: ['누를 수 있는 것을 Tooltip 안에 넣지 않는다'],
+      },
+      {
+        id: 'no-nested-popover',
+        title: 'No nested popovers',
+        body: '팝오버 안에서 또 팝오버를 열지 않습니다. 어느 것을 닫아야 뒤로 가는지 알 수 없게 됩니다.',
+        do: ['팝오버 하나로 끝나는 내용만 담는다'],
+        dont: ['팝오버 안에서 또 다른 팝오버를 열지 않는다'],
+      },
+      {
+        id: 'edge-reposition',
+        title: 'Reposition at screen edges',
+        body: '화면 가장자리에서는 잘리기 전에 반대편으로 뒤집힙니다. Radix가 맡는 일이므로 collisionPadding만 정합니다.',
+        do: ['뷰포트 가장자리에서 자동으로 뒤집히도록 그대로 둔다'],
+        dont: ['위치를 고정값으로 강제해 뒤집힘을 막지 않는다'],
+      },
+    ],
+    usage: [
+      { id: 'filter-group', title: '필터 묶음', note: '여러 조건을 한 자리에 묶어 고른다' },
+      { id: 'date-picker', title: '날짜 선택', note: '입력 곁에 자주 쓰는 날짜를 곁들인다' },
+      { id: 'item-search', title: '항목 검색', note: '입력하며 찾고 목록에서 고른다' },
+      { id: 'short-description-with-link', title: '짧은 설명과 링크', note: '몇 문장과 이어지는 링크를 함께 보인다' },
+    ],
+    cases: [
+      { id: 'screen-edge', title: '화면 가장자리', note: '자리가 없으면 반대쪽으로 자동으로 뒤집힌다' },
+      { id: 'long-content', title: '내용이 긴 경우', note: '세로로 넘치면 Content 안에서만 스크롤된다' },
+      { id: 'with-form', title: '안에 폼이 있는 경우', note: '입력을 마치기 전에는 바깥을 눌러도 값이 남는다' },
+      { id: 'narrow-screen', title: '좁은 화면', note: 'collisionPadding만큼 여백을 남기고 폭이 줄어든다' },
+    ],
+    verified: false,
+  },
+  {
     id: 'progress',
     name: 'Progress',
     aliases: ['진행률', '프로그레스', '진행 바', 'progress bar', '로딩 바'],

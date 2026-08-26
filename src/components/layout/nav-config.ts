@@ -123,6 +123,7 @@ export const sections: NavSection[] = [
           { to: '/components/alert', label: 'Alert', updatedAt: '2026-08-26' },
           { to: '/components/dialog', label: 'Dialog', updatedAt: '2026-08-26' },
           { to: '/components/empty-state', label: 'Empty State', updatedAt: '2026-08-26' },
+          { to: '/components/popover', label: 'Popover', updatedAt: '2026-08-26' },
           { to: '/components/progress', label: 'Progress', updatedAt: '2026-08-26' },
           { to: '/components/skeleton', label: 'Skeleton', updatedAt: '2026-08-26' },
           { to: '/components/toast', label: 'Toast', updatedAt: '2026-08-26' },
