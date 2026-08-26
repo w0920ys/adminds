@@ -34,7 +34,12 @@ src/
     docs/     # 전시 페이지를 구성하는 문서용 컴포넌트 (PropertyBlock, Anatomy, ComponentPage 등)
     layout/   # 앱 셸, GNB·LNB 등 레이아웃
   data/       # registry.ts(컴포넌트 메타), releases.ts(버전별 changelog)
-  routes/     # 라우트별 페이지 (routes/components/ButtonPage.tsx, routes/foundations/ 문서 10개 등)
+  routes/     # 라우트별 페이지. 섹션마다 폴더가 하나씩입니다
+              #   get-started/  Overview·Install·Principles
+              #   foundations/  Design Token·Color·Typography 등 토큰과 원칙 문서
+              #   components/   컴포넌트 문서 (ButtonPage.tsx 등)
+              #   patterns/     화면 단위 문서 (List·Detail·Form·Empty and error·Destructive confirm)
+              #   UpdatesPage.tsx — releases.ts를 펼쳐 보이는 변경 기록
   styles/     # tokens.css — 색·간격·radius·shadow 등 전역 디자인 토큰
   lib/        # 유틸리티
 ```
@@ -45,7 +50,9 @@ src/
 2. `src/data/registry.ts`에 컴포넌트 메타(설명, variants, sizes, anatomy, guidelines 등)를 등록합니다.
 3. `src/routes/components/`에 전시 페이지를 만듭니다 (`PropertyBlock`, `Anatomy` 등 `components/docs`의 도구를 사용).
 4. `src/routes/routes.tsx`에 라우트를 한 줄 추가합니다.
-5. `npm run registry`로 레지스트리를 다시 만듭니다 — 새 컴포넌트가 다른 프로젝트에 닿는 통로입니다.
+5. `src/components/layout/nav-config.ts`의 Components 목록에 같은 자리로 넣습니다. `registry.ts`와 순서까지 같아야 하고, 어긋나면 `registry-order.test.ts`가 실패합니다.
+6. `registry.json`에도 항목을 더합니다. `registry.ts`와 어긋나면 `registry-parity.test.ts`가 실패합니다.
+7. `npm run registry`로 `public/r/`을 다시 만듭니다 — 새 컴포넌트가 다른 프로젝트에 닿는 통로입니다.
 
 ## 다른 프로젝트에서 가져다 쓰기
 
@@ -53,7 +60,7 @@ src/
 
 ```bash
 npx shadcn@latest add https://adminds.vercel.app/r/table.json   # 하나만
-npx shadcn@latest add https://adminds.vercel.app/r/adminds.json # 토큰과 26개 전부
+npx shadcn@latest add https://adminds.vercel.app/r/adminds.json # 토큰과 32개 전부
 ```
 
 소스가 그쪽 `src/components/ui/`에 들어가므로 받은 쪽이 고쳐 씁니다. 나중에 같은 명령을 다시 돌리면 갱신되지만, 고쳐 둔 것은 덮어써집니다.

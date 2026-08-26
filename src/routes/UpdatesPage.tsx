@@ -25,7 +25,7 @@ export function UpdatesPage() {
       <DocSection title="Overview">
         <p className="text-muted-foreground text-sm">
           이 디자인 시스템은 releases.ts 한 곳에 버전 기록을 두고, Updates는 그 기록을
-          최신순으로 펼쳐 보여줍니다. 사이드바 아래 상자에 보이는 버전 표시도 같은
+          최신순으로 펼쳐 보여줍니다. 화면 위쪽 제목 옆에 붙는 버전 번호도 같은
           기록에서 가장 최신 것을 가져옵니다.
         </p>
         <p className="text-muted-foreground text-sm">

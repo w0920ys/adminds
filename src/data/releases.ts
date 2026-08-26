@@ -29,6 +29,40 @@ export type Release = {
 /** 최신 버전이 배열의 맨 앞이다. */
 export const releases: Release[] = [
   {
+    version: 'v0.11.0',
+    publishedAt: '2026-08-27',
+    title: '첫 화면과 Patterns를 채워 GNB의 빈 자리를 없앴어요',
+    purpose:
+      'GNB에서 마지막까지 비어 있던 두 섹션을 채웠어요. Get started는 여기가 무엇이고 어디서부터 읽는지, 어떻게 띄우고 어떤 원칙을 따르는지를 Overview·Install·Principles 세 문서로 나눴어요. Patterns는 Overview와 함께 목록·상세·입력·빈 자리·확인 다섯 문서를 실었는데, 예시 화면을 그림으로 그리지 않고 이미 있는 컴포넌트로 실제로 조립했어요 — 토큰이 바뀌면 예시도 따라 바뀌어요. 이로써 문서 라우트에서 자리표시자가 사라졌고, 그 사실을 뒤늦게 거짓이 되는 문장 몇 개도 이번에 함께 걷어냈어요.',
+    changes: [
+      { target: 'Get started', type: 'New', note: '세 회차 동안 방문자가 처음 보는 화면이 자리표시자였어요. 섹션 목록도 섹션마다의 문서 개수도 컴포넌트·패턴 수도 전부 nav-config와 registry, patterns에서 세어 보여줘요. 섹션이 늘었는데 설명이 빠지는 일을 막으려고, 설명 표의 키가 GNB의 섹션과 정확히 같은지 테스트가 지켜요.' },
+      { target: 'Install', type: 'New', note: '이 작업대를 로컬에서 띄우는 법과 토큰을 제품으로 가져가는 법을 나눠 적었어요. 명령을 통째로 적지 않고 스크립트 이름만 두어 npm run 뒤에 붙이고, 그 이름이 package.json에 실재하는지 테스트가 지켜요. 폰트 스택은 여기 적지 않고 Typography 문서를 가리켜요 — 같은 값을 두 곳에 적으면 한쪽이 낡아요.' },
+      { target: 'Principles', type: 'New', note: '원칙 여섯에 이름을 붙였어요. 새로 만든 건 하나도 없고 전부 이미 다른 문서에서 지키던 것이라, 원칙마다 그 근거 문서를 가리켜요. 가리키는 문서가 LNB에 실재하는지 테스트가 지켜요. 여섯 중 다섯은 제품 화면에 거는 규칙이고 마지막 하나는 이 작업대 자체에 거는 규칙이라, 절을 나눠 그 차이를 말해요.' },
+      { target: 'Patterns', type: 'New', note: '패턴 문서의 뼈대 PatternPage와 데이터 patterns.ts를 새로 만들고, 카드 목록이 patterns.ts에서 파생하는 Overview를 함께 실었어요. 패턴에는 축도 상태도 없어서 ComponentPage를 재사용하지 않았어요 — 그 자리를 빈 배열로 두면 빈 절이 생기고, v0.8.0에서 이미 한 번 걷어낸 결함이거든요. Structure가 가리키는 컴포넌트 id가 registry에 실재하는지도 테스트가 지켜요.' },
+      { target: 'List', type: 'New', note: '여러 항목을 훑고 걸러 하나를 고르는 화면이에요. 필터와 결과 수, 선택과 대량 작업 줄, 페이지 이동까지 Breadcrumb·Button·Input·Select·Table·Checkbox·Badge·Avatar·Pagination을 실제로 조립했어요.' },
+      { target: 'Detail', type: 'New', note: '항목 하나를 갈래로 나눠 보이는 화면이에요. 탭은 한 대상의 정보를 나누는 것이지 다른 화면으로 가는 것이 아니라, 제목과 동작을 Tabs 위에 두고 탭을 바꿔도 그 줄이 남는 것을 Example과 Guidelines 양쪽에서 보여요. 위험한 동작은 Dropdown Menu 안쪽에 둬요.' },
+      { target: 'Form', type: 'New', note: '라벨·도움말·오류의 배치를 정하는 입력 화면이에요. 그 셋을 컨트롤에 잇는 일은 v0.10.0에서 들어온 Field가 맡아요 — 라벨이 컨트롤 오른쪽에 오는 세 자리만 htmlFor를 직접 짝지었고, 그 이유를 주석으로 남겼어요. Switch와 Checkbox의 차이는 모양이 아니라 시점이라는 것도 지침으로 적었어요.' },
+      { target: 'Empty and error', type: 'New', note: '아직 아무것도 없는 것은 정상이고 불러오지 못한 것은 사고예요. EmptyState의 네 variant가 그대로 이 패턴의 네 경우여서 나란히 놓았는데, 그중 둘(empty·no-results)은 색이 같아요. 그래서 무엇이 다른지는 색이 아니라 문구가 말하게 했어요.' },
+      { target: 'Destructive confirm', type: 'New', note: '되돌릴 수 없는 동작을 실행하기 전에 한 번 멈추는 흐름이에요. Dialog로 묻고 Toast로 알리는 것을 그 자리에서 눌러 볼 수 있어요. 제목은 대상을 말하는 자리로 두고 되돌릴 수 없다는 말은 본문에 뒀으며, 본문이 그렇게 말하므로 Toast에 되돌리기를 두지 않았어요. 375px에서 지침 칸을 넘치던 고정폭 Toast는 이 문서에서만 줄어들 수 있게 고쳤어요.' },
+      { target: 'DocStatus', type: 'New', note: 'ComponentPage 안에 박혀 있던 상태 배지 줄을 뽑아 PatternPage와 나눠 써요. 잰 대비값이 적힌 주석도 함께 옮겼어요 — 같은 배지가 두 곳에서 같은 뜻으로 읽혀야 하니까요.' },
+      { target: 'Contents', type: 'Fixed', note: '패턴 예시 속의 가짜 화면 제목이 오른쪽 목차를 오염시키던 것을 고쳤어요. 목차는 아코디언만 빼고 main 아래의 h2·h3를 모두 훑는데, 예시가 화면 제목을 흉내내려 h3를 써서 어느 절도 가리키지 않는 항목이 목차에 잡혔어요. ButtonPage가 이미 같은 자리에서 h4를 쓰고 있어 그 선례를 따랐고, className은 그대로 둬 시각적 무게는 유지했어요.' },
+      { target: 'Foundations / Components', type: 'Fixed', note: '두 Overview가 화면 단위의 규칙은 "Patterns의 몫입니다. 그 문서는 아직 준비 중입니다"라고 말하고 있었어요. 이번 회차로 거짓이 되므로 함께 고쳤어요.' },
+      { target: 'Updates', type: 'Fixed', note: '이 화면의 설명이 버전 표시를 "사이드바 아래 상자"에서 가져온다고 말하고 있었어요. 그 상자는 v0.10.0에서 걷히고 버전 번호가 GNB로 옮겨 갔는데 문장만 남아 있었어요. 실제로 그리는 자리에 맞춰 고쳤어요.' },
+      { target: 'Placeholder', type: 'Fixed', note: '"이 문서는 아직 준비 중입니다"라고 적혀 있었어요. Principles까지 채우면서 준비 중인 문서가 하나도 남지 않아, 이제 이 자리표시자는 없는 주소와 메타를 찾지 못한 문서에만 쓰여요. 두 경우 모두에 대해 사실인 문구로 바꾸고 공사 중 아이콘도 함께 바꿨어요.' },
+      { target: 'README', type: 'Fixed', note: '레지스트리 묶음을 받는 명령에 "26개 전부"라고 적어 둔 게 낡아 있었어요. registry.ts와 registry.json이 가리키는 실제 개수인 32개로 고쳤고, 폴더 구조 설명에 빠져 있던 get-started·patterns 폴더와 새 컴포넌트를 더할 때 함께 고쳐야 하는 nav-config도 채웠어요.' },
+    ],
+    requests: [
+      { label: '남은 작업을 이어서 해주세요 — Get started와 Patterns를 채우는 쪽으로', done: true },
+    ],
+    reviewItems: [
+      { label: '접근성 후속 묶음(포커스 링 대비, 이름 없는 라벨, Toast의 assertive 알림)을 언제 다룰 것인가', category: 'Components', completed: false },
+      { label: 'useMeasuredTokens가 여러 Foundations 페이지에 중복되는 것을 걷어낼 수 있는가', category: 'Foundations', completed: false },
+      { label: '패턴 문서의 Example이 커서 List·Detail 두 파일이 사백 줄을 넘는다 — 조각을 나눌 자리가 어디인가', category: 'Patterns', completed: false },
+      { label: '다섯 패턴이 모두 draft다 — 눈으로 확인을 마치고 verified로 올릴 시점이 언제인가', category: 'Patterns', completed: false },
+    ],
+    impact: ['Get started', 'Patterns', 'Foundations', 'Components', 'Updates'],
+  },
+  {
     version: 'v0.10.1',
     publishedAt: '2026-08-27',
     title: '문서에 숨 쉴 틈을 내고, 달력·파일·슬라이더가 상태를 제대로 알리게 했어요',
