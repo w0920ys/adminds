@@ -89,6 +89,7 @@ export const sections: NavSection[] = [
         label: 'Inputs',
         items: [
           { to: '/components/checkbox', label: 'Checkbox', updatedAt: '2026-08-25' },
+          { to: '/components/combobox', label: 'Combobox', updatedAt: '2026-08-26' },
           { to: '/components/field', label: 'Field', updatedAt: '2026-08-26' },
           { to: '/components/input', label: 'Input', updatedAt: '2026-08-25' },
           { to: '/components/radio', label: 'Radio', updatedAt: '2026-08-26' },

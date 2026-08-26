@@ -410,6 +410,111 @@ export const components: ComponentMeta[] = [
     verified: true,
   },
   {
+    id: 'combobox',
+    name: 'Combobox',
+    aliases: ['콤보박스', '검색 선택', '검색형 셀렉트', 'searchable select', 'autocomplete'],
+    category: 'inputs',
+    status: 'stable',
+    addedIn: 'v0.10.0',
+    changedIn: 'v0.10.0',
+    purpose: '많은 항목 중에서 검색해 하나 이상을 고르게 한다. Popover 위에 세우고 트리거는 Select와 같은 모양이다. 항목이 열 개 이하면 Select로 충분하다.',
+    /*
+     * Search·List·Item·Empty message는 열린 표면 안에서만 존재하고
+     * PopoverContent가 document.body로 포털한다 — Popover·Select가 이미
+     * 같은 이유로 anatomy를 무대 안에 남는 부위만으로 좁힌 것과 같은
+     * 결론이다. stage.querySelector가 포털된 노드를 찾지 못해 지시선을
+     * 그릴 수 없으므로, 여기서도 무대 안에 실제로 남는 Trigger·Value
+     * 둘만 부위로 둔다.
+     */
+    anatomy: [
+      {
+        part: 'trigger',
+        label: 'Trigger',
+        note: '테두리·높이·포커스 링은 Select의 트리거와 같은 토큰을 쓴다. 오른쪽 끝에 16×16 ChevronDown이 열림 여부와 무관하게 항상 보인다. 누르면 트리거 아래에 검색 칸과 걸러진 목록이 뜬다. 검색 칸에서 위아래 화살표로 항목을 옮기고 Enter로 고르며 Escape로 닫는다. 목록은 role=listbox, 항목은 role=option이고 지금 짚은 항목은 검색 칸의 aria-activedescendant가 알린다',
+      },
+      {
+        part: 'value',
+        label: 'Value',
+        note: 'layout이 single이면 고른 항목의 문구가 그대로 보인다. multiple이면 고른 항목마다 Badge가 쌓이고 각 배지 오른쪽에 지우는 버튼이 있다. 아직 고르지 않았으면 이 자리에 자리표시자가 대신 보인다',
+      },
+    ],
+    properties: [
+      {
+        name: 'size',
+        title: 'Size',
+        description: '트리거의 높이를 정한다. 같은 줄에 놓이는 컨트롤끼리는 크기를 맞춘다.',
+        display: 'row',
+        options: [{ value: 'sm' }, { value: 'default' }, { value: 'lg' }],
+      },
+      {
+        name: 'state',
+        title: 'State',
+        description: '상호작용 상태를 나타낸다.',
+        display: 'grid',
+        options: [
+          { value: 'default' },
+          { value: 'hover', note: '포인터가 올라간 동안' },
+          { value: 'focus', note: '키보드 포커스. 항상 보여야 한다' },
+          { value: 'disabled', note: '지금 선택을 바꿀 수 없음' },
+          { value: 'invalid', note: 'aria-invalid로 나타낸다. 테두리 색과 문구를 함께 쓴다' },
+        ],
+      },
+      {
+        name: 'layout',
+        title: 'Layout',
+        description: '하나만 고르는지 여럿을 고르는지를 정한다.',
+        display: 'row',
+        options: [
+          { value: 'single', note: '기본. 고른 항목의 문구가 트리거에 보인다' },
+          { value: 'multiple', note: '고른 항목이 트리거 안에 Badge로 쌓인다' },
+        ],
+      },
+    ],
+    guidelines: [
+      {
+        id: 'select-vs-combobox',
+        title: 'Select vs Combobox',
+        body: '항목이 열 개를 넘으면 Select 대신 Combobox를 씁니다. 그 아래에서는 검색 칸이 오히려 한 단계를 더합니다.',
+        do: ['항목이 열 개를 넘으면 Combobox를 쓴다', '항목이 적으면 Select로 충분하다'],
+        dont: ['항목이 몇 개뿐인데 검색 칸부터 앞세우지 않는다'],
+      },
+      {
+        id: 'substring-match',
+        title: 'Substring match',
+        body: "포함으로 거릅니다. 앞글자만 맞추면 '김하나'를 '하나'로 찾을 수 없습니다.",
+        do: ['문구 중간에 있는 일치도 찾아낸다', '대소문자를 가리지 않는다'],
+        dont: ['앞글자만 맞추는 거르기를 쓰지 않는다'],
+      },
+      {
+        id: 'empty-result-guidance',
+        title: 'Empty result guidance',
+        body: '결과가 없을 때 할 일을 알립니다. 빈 목록만 남기지 않고 무엇을 할 수 있는지 적습니다.',
+        do: ['검색어를 바꿔 보라는 안내를 함께 보인다'],
+        dont: ['빈 목록만 남기고 다음 행동을 알리지 않는다'],
+      },
+      {
+        id: 'reversible-selection',
+        title: 'Reversible selection',
+        body: '고른 것을 되돌릴 수 있게 합니다. 여럿 고르는 경우 각 항목에 지우는 자리를 둡니다.',
+        do: ['multiple에서 각 배지에 지우는 버튼을 둔다'],
+        dont: ['고른 항목을 지울 방법 없이 쌓아 두지 않는다'],
+      },
+    ],
+    usage: [
+      { id: 'assignee', title: '담당자 지정', note: '팀원이 많아 스크롤보다 검색이 빠른 자리에 쓴다' },
+      { id: 'tag-select', title: '태그 선택', note: 'multiple로 여러 태그를 함께 고른다' },
+      { id: 'product-search', title: '상품 검색', note: '이름 일부만 알아도 찾을 수 있다' },
+      { id: 'org-select', title: '소속 조직 선택', note: '조직이 계층 없이 평평하게 많을 때 쓴다' },
+    ],
+    cases: [
+      { id: 'no-results', title: '결과가 없는 경우', note: '검색어를 바꿔 보라는 안내를 함께 보인다' },
+      { id: 'many-options', title: '항목이 아주 많은 경우', note: '목록이 뷰포트를 넘으면 목록 안에서 스크롤된다' },
+      { id: 'many-selected', title: '고른 것이 많은 경우', note: '배지가 늘어나며 트리거가 여러 줄로 늘어난다' },
+      { id: 'narrow-screen', title: '좁은 화면', note: '트리거 폭이 줄어도 배지는 줄바꿈되어 잘리지 않는다' },
+    ],
+    verified: false,
+  },
+  {
     id: 'field',
     name: 'Field',
     aliases: ['필드', '폼 필드', '입력 항목', 'form field', 'label'],

@@ -10,6 +10,7 @@ import { BreadcrumbPage } from '@/routes/components/BreadcrumbPage'
 import { ButtonPage } from '@/routes/components/ButtonPage'
 import { CardPage } from '@/routes/components/CardPage'
 import { CheckboxPage } from '@/routes/components/CheckboxPage'
+import { ComboboxPage } from '@/routes/components/ComboboxPage'
 import { ComponentsIndex } from '@/routes/components/ComponentsIndex'
 import { DescriptionListPage } from '@/routes/components/DescriptionListPage'
 import { DialogPage } from '@/routes/components/DialogPage'
@@ -76,6 +77,7 @@ export const routes: RouteObject[] = [
           { path: 'select', element: <SelectPage /> },
           { path: 'slider', element: <SliderPage /> },
           { path: 'checkbox', element: <CheckboxPage /> },
+          { path: 'combobox', element: <ComboboxPage /> },
           { path: 'radio', element: <RadioPage /> },
           { path: 'switch', element: <SwitchPage /> },
           { path: 'textarea', element: <TextareaPage /> },
