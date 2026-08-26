@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { recentDocs, searchIndex } from '@/data/search-index'
+import { patterns } from '@/data/patterns'
 import { components } from '@/data/registry'
 import { search } from '@/lib/search'
 
@@ -14,6 +15,28 @@ describe('searchIndex', () => {
   it('컴포넌트 결과의 빵부스러기가 LNB 묶음을 담는다', () => {
     const dialog = searchIndex.find((r) => r.to === '/components/dialog' && r.kind === 'component')!
     expect(dialog.breadcrumb).toEqual(['Components', 'Feedback'])
+  })
+
+  /*
+   * 패턴은 nav-config를 타고도 인덱스에 들어오지만, 그 길로 들어오면
+   * 제목과 한 줄 설명만 실리고 patterns.ts의 aliases는 버려진다. 아래 둘은
+   * 패턴이 자기 데이터로 실렸는지를 본다 — 첫째가 자리를, 둘째가 별칭을 지킨다.
+   */
+  it('모든 패턴이 인덱스에 있다', () => {
+    const paths = new Set(searchIndex.map((r) => r.to))
+    for (const meta of patterns) {
+      expect(paths, meta.id).toContain(`/patterns/${meta.id}`)
+    }
+  })
+
+  it('패턴의 별칭이 인덱스의 keywords에 실린다', () => {
+    for (const meta of patterns) {
+      const record = searchIndex.find((r) => r.to === `/patterns/${meta.id}`)
+      expect(record, meta.id).toBeDefined()
+      for (const alias of meta.aliases) {
+        expect(record!.keywords, `${meta.id}: ${alias}`).toContain(alias)
+      }
+    }
   })
 
   it('토큰도 인덱싱한다', () => {
@@ -56,6 +79,20 @@ describe('실제 질의', () => {
     expect(groups.find((g) => g.kind === 'component')?.hits.map((h) => h.title) ?? []).not.toContain(
       'Breadcrumb',
     )
+  })
+
+  /*
+   * PatternMeta.aliases의 주석은 "검색에서 이 패턴을 부르는 다른 이름들"이라고
+   * 말한다. 별칭을 쳤을 때 정작 그 패턴 문서가 안 나오면 그 주석이 거짓이 된다.
+   * 별칭 하나하나로 실제 질의를 돌려 그 문서가 결과에 있는지 본다.
+   */
+  it('별칭을 치면 그 패턴 문서가 결과에 나온다', () => {
+    for (const meta of patterns) {
+      for (const alias of meta.aliases) {
+        const paths = search(alias, searchIndex).flatMap((g) => g.hits.map((h) => h.to))
+        expect(paths, `${meta.id}: ${alias}`).toContain(`/patterns/${meta.id}`)
+      }
+    }
   })
 
   it('없는 말은 결과가 비어 있다', () => {

@@ -47,15 +47,24 @@ import { StatePage } from '@/routes/foundations/StatePage'
 import { TypographyPage } from '@/routes/foundations/TypographyPage'
 import { VoiceAndTonePage } from '@/routes/foundations/VoiceAndTonePage'
 import { WritingPage } from '@/routes/foundations/WritingPage'
+import { GetStartedOverview } from '@/routes/get-started/GetStartedOverview'
+import { InstallPage } from '@/routes/get-started/InstallPage'
+import { PrinciplesPage } from '@/routes/get-started/PrinciplesPage'
+import { DestructiveConfirmPatternPage } from '@/routes/patterns/DestructiveConfirmPatternPage'
+import { DetailPatternPage } from '@/routes/patterns/DetailPatternPage'
+import { EmptyAndErrorPatternPage } from '@/routes/patterns/EmptyAndErrorPatternPage'
+import { FormPatternPage } from '@/routes/patterns/FormPatternPage'
+import { ListPatternPage } from '@/routes/patterns/ListPatternPage'
+import { PatternsOverview } from '@/routes/patterns/PatternsOverview'
 
 export const routes: RouteObject[] = [
   {
     path: '/',
     element: <AppShell />,
     children: [
-      { index: true, element: <Placeholder title="Get started" /> },
-      { path: 'get-started/install', element: <Placeholder title="Install" /> },
-      { path: 'get-started/principles', element: <Placeholder title="Principles" /> },
+      { index: true, element: <GetStartedOverview /> },
+      { path: 'get-started/install', element: <InstallPage /> },
+      { path: 'get-started/principles', element: <PrinciplesPage /> },
 
       { path: 'foundations', element: <FoundationsOverview /> },
       { path: 'foundations/design-token', element: <DesignTokenPage /> },
@@ -108,7 +117,17 @@ export const routes: RouteObject[] = [
         ],
       },
 
-      { path: 'patterns', element: <Placeholder title="Patterns" /> },
+      {
+        path: 'patterns',
+        children: [
+          { index: true, element: <PatternsOverview /> },
+          { path: 'list', element: <ListPatternPage /> },
+          { path: 'detail', element: <DetailPatternPage /> },
+          { path: 'form', element: <FormPatternPage /> },
+          { path: 'empty-and-error', element: <EmptyAndErrorPatternPage /> },
+          { path: 'destructive-confirm', element: <DestructiveConfirmPatternPage /> },
+        ],
+      },
       { path: 'updates', element: <UpdatesPage /> },
 
       { path: '*', element: <Placeholder title="페이지를 찾을 수 없습니다" /> },

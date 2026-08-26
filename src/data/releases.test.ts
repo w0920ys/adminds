@@ -11,6 +11,15 @@ describe('releases', () => {
     expect(new Set(versions).size).toBe(versions.length)
   })
 
+  /*
+   * GNB의 버전 번호는 currentRelease.version에서 나온다. 기록을 남기지
+   * 않고 배포하면 화면이 지난 버전이라고 말한다.
+   */
+  it('최신 기록의 버전이 package.json의 버전과 같다', async () => {
+    const pkg = (await import('../../package.json')).default
+    expect(currentRelease.version).toBe(`v${pkg.version}`)
+  })
+
   it('요청 반영 진행률을 센다', () => {
     const release = {
       ...currentRelease,

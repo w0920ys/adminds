@@ -1,4 +1,5 @@
 import { flattenDocs, sections } from '@/components/layout/nav-config'
+import { patterns, type PatternMeta } from '@/data/patterns'
 import { categoryLabel, components } from '@/data/registry'
 import type { SearchRecord } from '@/lib/search'
 import { parseTokenNames } from '@/lib/tokens'
@@ -55,6 +56,37 @@ function componentBody(meta: Meta): string {
     .join(' ')
 }
 
+/**
+ * 패턴 문서 안의 이름 가진 것들 — 자리 이름과 지침 제목.
+ * cases의 제목은 componentTerms와 같은 이유로 뺀다. '하나 삭제'처럼 이름이
+ * 아니라 경우를 적은 말이라, 무겁게 달면 엉뚱한 한 글자에 걸린다.
+ */
+function patternTerms(meta: PatternMeta): string[] {
+  return [
+    ...meta.structure.map((step) => step.slot),
+    ...meta.guidelines.map((guideline) => guideline.title),
+  ]
+}
+
+/** 패턴 문서 안의 글을 한 덩이로 잇는다. 스니펫도 여기서 잘린다 */
+function patternBody(meta: PatternMeta): string {
+  return [
+    meta.purpose,
+    ...meta.structure.map((step) => step.note),
+    ...meta.guidelines.flatMap((guideline) => [
+      guideline.title,
+      guideline.body,
+      ...(guideline.do ?? []),
+      ...(guideline.dont ?? []),
+    ]),
+    meta.example.title,
+    meta.example.note,
+    ...meta.cases.flatMap((example) => [example.title, example.note]),
+  ]
+    .filter(Boolean)
+    .join(' ')
+}
+
 const docsByPath = new Map(
   sections.flatMap((section) =>
     flattenDocs(section.items).map((doc) => [doc.to, { doc, section }] as const),
@@ -74,12 +106,38 @@ const componentRecords: SearchRecord[] = components.map((meta) => ({
 }))
 
 /**
- * 컴포넌트 문서를 뺀 나머지 문서.
+ * 패턴 문서.
+ *
+ * nav-config만으로도 제목과 한 줄 설명은 실리지만, 그 길로는 patterns.ts의
+ * aliases가 인덱스에 닿지 않는다. '빈 상태'로 찾으면 Empty State 컴포넌트만
+ * 나오고 그 경우를 다루는 패턴은 나오지 않았다. 그래서 컴포넌트와 같은 모양으로
+ * 자기 데이터에서 직접 만든다.
+ *
+ * kind는 'doc'이다. 종류를 하나 더 만들면 검색 결과의 묶음이 넷으로 늘어나는데,
+ * 패턴은 읽는 사람에게 문서지 다른 갈래가 아니다.
+ */
+const patternRecords: SearchRecord[] = patterns.map((meta) => ({
+  to: `/patterns/${meta.id}`,
+  kind: 'doc' as const,
+  title: meta.name,
+  breadcrumb: ['Patterns'],
+  keywords: [meta.id, ...meta.aliases, 'Patterns'],
+  summary: meta.purpose,
+  terms: patternTerms(meta),
+  body: patternBody(meta),
+  updatedAt: docsByPath.get(`/patterns/${meta.id}`)?.doc.updatedAt,
+}))
+
+/** 자기 데이터로 이미 실린 문서. 아래에서 다시 싣지 않는다 */
+const richPaths = new Set(patternRecords.map((record) => record.to))
+
+/**
+ * 컴포넌트·패턴 문서를 뺀 나머지 문서.
  * Foundations 본문은 JSX 안에 있어 정적으로 긁을 수 없으므로 제목과 한 줄
  * 설명만 싣는다. 본문까지 걸리게 하려면 문서 저작 방식부터 바꿔야 한다.
  */
 const docRecords: SearchRecord[] = [...docsByPath.values()]
-  .filter(({ doc }) => !doc.to.startsWith('/components/'))
+  .filter(({ doc }) => !doc.to.startsWith('/components/') && !richPaths.has(doc.to))
   .map(({ doc, section }) => ({
     to: doc.to,
     kind: 'doc' as const,
@@ -113,12 +171,13 @@ const tokenRecords: SearchRecord[] = TOKEN_HOME.flatMap(({ prefix, to, label }) 
 
 export const searchIndex: SearchRecord[] = [
   ...componentRecords,
+  ...patternRecords,
   ...docRecords,
   ...tokenRecords,
 ]
 
 /** 빈 검색창에 보여줄 것. 전체 목록 대신 방금 바뀐 문서를 보인다 */
-export const recentDocs: SearchRecord[] = [...componentRecords, ...docRecords]
+export const recentDocs: SearchRecord[] = [...componentRecords, ...patternRecords, ...docRecords]
   .filter((record) => record.updatedAt)
   .sort((a, b) => (b.updatedAt ?? '').localeCompare(a.updatedAt ?? ''))
   .slice(0, 5)

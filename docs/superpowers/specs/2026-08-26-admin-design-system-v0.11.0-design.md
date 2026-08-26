@@ -2,9 +2,9 @@
 
 ## 배경
 
-컴포넌트 18개로 다섯 카테고리가 찼습니다. 남은 빈 곳은 셋입니다 — `Get started`, `Patterns`, `Updates`.
+컴포넌트 32개로 다섯 카테고리가 찼습니다. 남은 빈 곳은 둘입니다 — `Get started`와 `Patterns`.
 
-이번 회차는 앞의 둘을 채웁니다. `Updates`는 릴리스 기록을 쌓는 곳이라 성격이 다르므로 따로 다룹니다.
+`Updates`는 v0.10.0에서 이미 채웠습니다. `releases.ts`의 기록을 Accordion으로 늘어놓는 `UpdatesPage`가 그 자리에 있습니다. 이번 회차는 남은 둘을 채웁니다.
 
 **`Patterns`는 지금이 만들 수 있는 첫 시점입니다.** 패턴은 여러 컴포넌트를 엮어 화면을 이루는 규칙인데, 엮을 부품이 없으면 만들 수 없습니다. 컴포넌트가 하나였을 때 이 섹션이 비어 있던 것은 게을러서가 아니라 순서 때문이었습니다.
 
@@ -20,7 +20,7 @@
 
 **Overview** — 어드민 화면을 만들 때 쓰는 디자인 시스템이자, 그 시스템이 제대로 서 있는지 눈으로 확인하는 작업대입니다. 제품이 아니라 작업대라는 점을 분명히 합니다. 한 사람이 만들고 한 사람이 쓰므로 기여 안내나 합의 절차가 없습니다.
 
-**Sections** — GNB의 다섯 섹션이 각각 무엇을 맡는지 늘어놓습니다. `nav-config`의 `sections`에서 파생합니다. 준비 중인 섹션은 준비 중이라고 적습니다.
+**Sections** — GNB의 다섯 섹션이 각각 무엇을 맡는지 늘어놓습니다. `nav-config`의 `sections`에서 파생합니다. 섹션마다 몇 개의 문서를 갖는지도 같은 데이터에서 셉니다.
 
 **Reading order** — Foundations가 바닥이고 Components가 그 위에 서고 Patterns가 그것들을 엮으므로 순서가 있습니다.
 
@@ -102,7 +102,9 @@
 
 입력 화면. 라벨·도움말·오류의 배치를 정합니다.
 
-**Structure** — 라벨 · 입력(Input · Select · Textarea · Checkbox · Radio · Switch) · 도움말 · 오류 문구 · 저장과 취소
+**Structure** — Field(라벨 · 컨트롤 · 도움말 · 오류) · 입력(Input · Select · Textarea · Checkbox · Radio · Switch) · 저장과 취소
+
+라벨·도움말·오류를 컨트롤에 잇는 일은 v0.10.0에서 들어온 `Field`가 맡습니다. `htmlFor`와 `aria-describedby`를 손으로 맞추지 않습니다.
 
 **Guidelines** — 라벨은 입력 위에 둔다 · 도움말은 입력 전에, 오류는 입력 후에 보인다 · 저장은 오른쪽, 취소는 왼쪽 · 즉시 반영되는 것에는 Switch를, 저장이 필요한 것에는 Checkbox를 쓴다
 
@@ -140,6 +142,8 @@
 
 패턴은 화면 단위라 예시가 큽니다. 그래도 그리는 게 아니라 조립합니다. 토큰이 바뀌면 예시도 따라 바뀌어야 문서가 실제와 어긋나지 않습니다.
 
+조립에 쓸 수 있는 것은 등록된 32개 전부입니다. v0.10.0에서 들어온 `Field` · `Popover` · `Slider` · `Combobox` · `Date Picker` · `File Upload`도 포함합니다.
+
 ---
 
 ## 라우팅
@@ -152,15 +156,14 @@
 - `patterns` → `PatternsOverview`
 - `patterns/list` 외 넷 → 각 패턴 페이지
 
-`Placeholder`는 `Updates`와 404가 계속 쓰므로 남깁니다.
+`Placeholder`는 404와 각 컴포넌트 문서의 "메타를 찾을 수 없습니다" 대비가 계속 쓰므로 남깁니다.
 
 `nav-config`의 Patterns 섹션에 다섯 문서를 더합니다.
 
 ## 범위 밖
 
-- `Updates` 채우기와 실제 Changelog
 - 접근성 후속 묶음(포커스 링 대비, 이름 없는 라벨, Toast의 assertive 알림) — 별도 회차
-- `DatePicker` · `Combobox` · `FileUpload`
+- 새 컴포넌트 — 이번 회차는 이미 있는 32개를 엮기만 합니다
 - `useMeasuredTokens` 5벌 중복 해소
 
 ## 전역 제약
