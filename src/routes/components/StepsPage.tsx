@@ -1,6 +1,7 @@
 import type { ComponentProps, ReactNode } from 'react'
 import { ComponentPage } from '@/components/docs/ComponentPage'
 import type { RenderOptions } from '@/components/docs/PropertyBlock'
+import { Progress } from '@/components/ui/progress'
 import { Step, StepDescription, StepIndicator, StepLabel, Steps } from '@/components/ui/steps'
 import { getComponent } from '@/data/registry'
 import { Placeholder } from '@/routes/Placeholder'
@@ -174,9 +175,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
               <StepLabel>완료</StepLabel>
             </Step>
           </Steps>
-          <div className="bg-muted h-1.5 w-full overflow-hidden rounded-full">
-            <div className="bg-primary h-full w-2/3" />
-          </div>
+          <Progress value={67} size="sm" />
         </div>
       )
 

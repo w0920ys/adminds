@@ -2427,6 +2427,130 @@ export const components: ComponentMeta[] = [
     ],
     verified: false,
   },
+  {
+    id: 'progress',
+    name: 'Progress',
+    category: 'feedback',
+    status: 'stable',
+    addedIn: 'v0.9.0',
+    changedIn: 'v0.9.0',
+    purpose:
+      '작업이 얼마나 끝났는지 막대 길이로 보인다. Radix의 Progress를 감싸 role="progressbar"와 aria-valuenow를 맡기고, Indicator는 width 대신 translateX로 값만큼만 보이게 민다.',
+    anatomy: [
+      { part: 'track', label: 'Track', note: '전체 길이를 나타내는 바탕. 늘 bg-muted다' },
+      {
+        part: 'indicator',
+        label: 'Indicator',
+        note: '진행한 만큼 채우는 막대. variant가 배경색을 정한다',
+      },
+      { part: 'label', label: 'Label', note: '무엇의 진행인지 알리는 이름', optional: true },
+      { part: 'value', label: 'Value', note: '진행률을 숫자로 보인다', optional: true },
+    ],
+    properties: [
+      {
+        name: 'variant',
+        title: 'Variant',
+        description: 'Indicator의 배경색을 정한다. Track은 늘 bg-muted다.',
+        display: 'row',
+        options: [
+          { value: 'default', note: '기본. 중립적인 진행' },
+          { value: 'success', note: '성공적으로 끝난 진행' },
+          { value: 'warning', note: '주의가 필요한 진행' },
+          { value: 'destructive', note: '실패한 진행' },
+        ],
+      },
+      {
+        name: 'size',
+        title: 'Size',
+        description: '막대의 두께를 정한다.',
+        display: 'row',
+        options: [
+          { value: 'sm', note: '표 행, 카드 안처럼 조밀한 자리' },
+          { value: 'default', note: '기본' },
+        ],
+      },
+      {
+        name: 'state',
+        title: 'State',
+        description: '값을 아는지 모르는지를 나타낸다.',
+        display: 'grid',
+        options: [
+          { value: 'determinate', note: 'value를 주어 진행률만큼 막대가 찬다' },
+          {
+            value: 'indeterminate',
+            note: "value를 주지 않은 상태. Radix가 data-state='indeterminate'를 달아 좁힌 막대가 좌우로 오간다",
+          },
+        ],
+      },
+    ],
+    guidelines: [
+      {
+        id: 'give-value-when-known',
+        title: '끝을 알 수 있으면 값을 준다',
+        body: '남은 양을 아는데도 indeterminate로 두면 기다리는 사람이 얼마나 남았는지 짐작할 수 없습니다.',
+        do: ['남은 양을 알면 value를 주어 determinate로 보인다'],
+        dont: ['끝을 알 수 있는데도 indeterminate로 남겨 두지 않는다'],
+      },
+      {
+        id: 'show-number-with-bar',
+        title: '숫자를 함께 보인다',
+        body: '막대 길이만으로는 87%인지 92%인지 읽히지 않습니다.',
+        do: ['막대 옆이나 위에 Value로 숫자를 함께 보인다'],
+        dont: ['막대 길이만으로 정확한 값을 짐작하게 두지 않는다'],
+      },
+      {
+        id: 'dont-signal-failure-by-color-alone',
+        title: '색만으로 실패를 알리지 않는다',
+        body: '빨간 막대 옆에 무엇이 실패했는지 문구를 답니다.',
+        do: ['destructive 막대 옆에 무엇이 실패했는지 문구를 함께 둔다'],
+        dont: ['색만 바꾸고 실패 사유를 문구로 남기지 않는다'],
+      },
+      {
+        id: 'no-regression',
+        title: '되돌아가지 않는다',
+        body: '값이 줄어들면 진행이 아니라 오작동으로 읽힙니다. 다시 시작한다면 0부터 새로 그립니다.',
+        do: ['값은 앞으로만 나아가게 한다', '다시 시작할 때는 0부터 새 Progress로 그린다'],
+        dont: ['값을 줄여 뒤로 가는 모습을 보이지 않는다'],
+      },
+    ],
+    usage: [
+      { id: 'file-upload', title: '파일 업로드', note: '업로드가 끝날 때까지 남은 양을 보인다' },
+      {
+        id: 'bulk-job-progress',
+        title: '대량 작업 진행',
+        note: '여러 건을 한 번에 처리하는 동안 진행률을 보인다',
+      },
+      {
+        id: 'usage-against-limit',
+        title: '한도 대비 사용량',
+        note: '전체 한도에서 지금까지 쓴 양을 보인다',
+      },
+      {
+        id: 'multi-step-progress',
+        title: '여러 단계의 진척',
+        note: '단계별 이름 없이 전체 진행률만 하나의 수치로 보인다',
+      },
+    ],
+    cases: [
+      {
+        id: 'zero-and-hundred',
+        title: '0%와 100%',
+        note: '시작과 끝에서도 막대와 값이 자연스럽게 보인다',
+      },
+      {
+        id: 'unknown-value',
+        title: '값을 알 수 없는 경우',
+        note: 'value 없이 indeterminate로 두어 진행 중임만 알린다',
+      },
+      {
+        id: 'failed',
+        title: '실패한 경우',
+        note: 'destructive variant로 바꾸고 실패 사유를 문구로 덧붙인다',
+      },
+      { id: 'narrow-width', title: '아주 좁은 폭', note: '폭이 좁아도 막대와 값이 겹치지 않는다' },
+    ],
+    verified: false,
+  },
 ]
 
 export function getComponent(id: string): ComponentMeta | undefined {
