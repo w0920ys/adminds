@@ -47,6 +47,7 @@ import { StatePage } from '@/routes/foundations/StatePage'
 import { TypographyPage } from '@/routes/foundations/TypographyPage'
 import { VoiceAndTonePage } from '@/routes/foundations/VoiceAndTonePage'
 import { WritingPage } from '@/routes/foundations/WritingPage'
+import { GetStartedOverview } from '@/routes/get-started/GetStartedOverview'
 import { DestructiveConfirmPatternPage } from '@/routes/patterns/DestructiveConfirmPatternPage'
 import { DetailPatternPage } from '@/routes/patterns/DetailPatternPage'
 import { EmptyAndErrorPatternPage } from '@/routes/patterns/EmptyAndErrorPatternPage'
@@ -59,7 +60,7 @@ export const routes: RouteObject[] = [
     path: '/',
     element: <AppShell />,
     children: [
-      { index: true, element: <Placeholder title="Get started" /> },
+      { index: true, element: <GetStartedOverview /> },
       { path: 'get-started/install', element: <Placeholder title="Install" /> },
       { path: 'get-started/principles', element: <Placeholder title="Principles" /> },
 

@@ -42,7 +42,7 @@ export const sections: NavSection[] = [
     label: 'Get started',
     to: '/',
     items: [
-      { to: '/', label: 'Overview', summary: '이 디자인 시스템이 무엇이고 어디서부터 읽는가', updatedAt: '2026-08-25' },
+      { to: '/', label: 'Overview', summary: '이 디자인 시스템이 무엇이고 어디서부터 읽는가', updatedAt: '2026-08-27' },
       { to: '/get-started/install', label: 'Install', summary: '설치와 첫 컴포넌트 붙이기', updatedAt: '2026-08-25' },
       { to: '/get-started/principles', label: 'Principles', summary: '판단이 갈릴 때 기대는 원칙', updatedAt: '2026-08-25' },
     ],
