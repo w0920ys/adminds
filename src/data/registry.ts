@@ -2103,7 +2103,7 @@ export const components: ComponentMeta[] = [
           { value: 'empty', note: '아직 만든 것이 없는 첫 방문의 빈 상태. 오류가 아니다' },
           {
             value: 'no-results',
-            note: '검색이나 필터 결과가 없는 경우. empty와 같은 색을 쓴다 — 둘 다 오류가 아니다',
+            note: "검색이나 필터 결과가 없는 경우. 'empty'와 같은 색을 쓴다 — 둘 다 오류가 아니다",
           },
           { value: 'error', note: '불러오기에 실패한 경우' },
           { value: 'no-permission', note: '권한이 없어 접근할 수 없는 경우' },

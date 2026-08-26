@@ -61,16 +61,18 @@ function renderEmptyState(options: RenderOptions) {
   const size = (options.size ?? 'default') as EmptyStateSize
   const content = VARIANT_CONTENT[variant]
   const Icon = content.icon
+  /* compact는 표 행·필터 바 크기의 sm을, default는 빈 상태 단독 동작의 lg를 쓴다 — Button 자신의 size 축이 정한 자리다 */
+  const buttonSize = size === 'compact' ? 'sm' : 'lg'
 
   return (
     <EmptyState variant={variant} size={size} className="w-full max-w-sm">
       <EmptyStateIcon>
-        <Icon />
+        <Icon aria-hidden />
       </EmptyStateIcon>
       <EmptyStateTitle>{content.title}</EmptyStateTitle>
       <EmptyStateDescription>{content.description}</EmptyStateDescription>
       <EmptyStateAction>
-        <Button size="sm">{content.actionLabel}</Button>
+        <Button size={buttonSize}>{content.actionLabel}</Button>
       </EmptyStateAction>
     </EmptyState>
   )
@@ -88,7 +90,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
       return kind === 'do' ? (
         <EmptyState variant="empty" size="compact" className="w-56">
           <EmptyStateIcon>
-            <Inbox />
+            <Inbox aria-hidden />
           </EmptyStateIcon>
           <EmptyStateTitle>아직 등록된 상품이 없습니다</EmptyStateTitle>
           <EmptyStateDescription>새 상품을 추가하세요.</EmptyStateDescription>
@@ -96,7 +98,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
       ) : (
         <EmptyState variant="error" size="compact" className="w-56">
           <EmptyStateIcon>
-            <AlertTriangle />
+            <AlertTriangle aria-hidden />
           </EmptyStateIcon>
           <EmptyStateTitle>아직 등록된 상품이 없습니다</EmptyStateTitle>
           <EmptyStateDescription>새 상품을 추가하세요.</EmptyStateDescription>
@@ -107,7 +109,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
       return kind === 'do' ? (
         <EmptyState variant="empty" size="compact" className="w-56">
           <EmptyStateIcon>
-            <Inbox />
+            <Inbox aria-hidden />
           </EmptyStateIcon>
           <EmptyStateTitle>아직 등록된 상품이 없습니다</EmptyStateTitle>
           <EmptyStateDescription>새 상품을 추가하세요.</EmptyStateDescription>
@@ -118,7 +120,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
       ) : (
         <EmptyState variant="no-permission" size="compact" className="w-56">
           <EmptyStateIcon>
-            <Lock />
+            <Lock aria-hidden />
           </EmptyStateIcon>
           <EmptyStateTitle>접근 권한이 없습니다</EmptyStateTitle>
           <EmptyStateDescription>관리자에게 권한을 요청하세요.</EmptyStateDescription>
@@ -132,7 +134,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
       return kind === 'do' ? (
         <EmptyState variant="empty" size="compact" className="w-56">
           <EmptyStateIcon>
-            <Inbox />
+            <Inbox aria-hidden />
           </EmptyStateIcon>
           <EmptyStateTitle>첫 프로젝트를 만들어 보세요</EmptyStateTitle>
           <EmptyStateDescription>아직 만든 프로젝트가 없습니다.</EmptyStateDescription>
@@ -140,7 +142,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
       ) : (
         <EmptyState variant="error" size="compact" className="w-56">
           <EmptyStateIcon>
-            <AlertTriangle />
+            <AlertTriangle aria-hidden />
           </EmptyStateIcon>
           <EmptyStateTitle>첫 프로젝트를 만들어 보세요</EmptyStateTitle>
           <EmptyStateDescription>아직 만든 프로젝트가 없습니다.</EmptyStateDescription>
@@ -151,7 +153,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
       return kind === 'do' ? (
         <EmptyState variant="no-results" size="compact" className="w-60">
           <EmptyStateIcon>
-            <SearchX />
+            <SearchX aria-hidden />
           </EmptyStateIcon>
           <EmptyStateTitle>검색 결과가 없습니다</EmptyStateTitle>
           <EmptyStateDescription>다른 검색어로 다시 시도하세요.</EmptyStateDescription>
@@ -159,7 +161,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
       ) : (
         <EmptyState variant="no-results" size="compact" className="w-60">
           <EmptyStateIcon>
-            <SearchX />
+            <SearchX aria-hidden />
           </EmptyStateIcon>
           <EmptyStateTitle>다른 검색어로 다시 시도하세요</EmptyStateTitle>
           <EmptyStateDescription>검색 결과가 없습니다.</EmptyStateDescription>
@@ -187,7 +189,7 @@ function renderExample(exampleId: string): ReactNode {
               <TableCell colSpan={2} className="h-auto py-2">
                 <EmptyState variant="empty" size="compact">
                   <EmptyStateIcon>
-                    <Inbox />
+                    <Inbox aria-hidden />
                   </EmptyStateIcon>
                   <EmptyStateTitle>아직 등록된 상품이 없습니다</EmptyStateTitle>
                   <EmptyStateDescription>새 상품을 추가해 판매를 시작하세요.</EmptyStateDescription>
@@ -207,7 +209,7 @@ function renderExample(exampleId: string): ReactNode {
           <Input defaultValue="무선 키보드 프로" readOnly />
           <EmptyState variant="no-results" size="compact">
             <EmptyStateIcon>
-              <SearchX />
+              <SearchX aria-hidden />
             </EmptyStateIcon>
             <EmptyStateTitle>검색 결과가 없습니다</EmptyStateTitle>
             <EmptyStateDescription>다른 검색어로 다시 시도하거나 필터를 초기화하세요.</EmptyStateDescription>
@@ -226,12 +228,12 @@ function renderExample(exampleId: string): ReactNode {
           <CardContent>
             <EmptyState variant="no-permission">
               <EmptyStateIcon>
-                <Lock />
+                <Lock aria-hidden />
               </EmptyStateIcon>
               <EmptyStateTitle>이 페이지에 접근할 권한이 없습니다</EmptyStateTitle>
               <EmptyStateDescription>관리자에게 접근 권한을 요청하세요.</EmptyStateDescription>
               <EmptyStateAction>
-                <Button size="sm">권한 요청</Button>
+                <Button size="lg">권한 요청</Button>
               </EmptyStateAction>
             </EmptyState>
           </CardContent>
@@ -244,12 +246,12 @@ function renderExample(exampleId: string): ReactNode {
           <CardContent>
             <EmptyState variant="error">
               <EmptyStateIcon>
-                <AlertTriangle />
+                <AlertTriangle aria-hidden />
               </EmptyStateIcon>
               <EmptyStateTitle>데이터를 불러오지 못했습니다</EmptyStateTitle>
               <EmptyStateDescription>네트워크 상태를 확인하고 다시 시도하세요.</EmptyStateDescription>
               <EmptyStateAction>
-                <Button variant="outline" size="sm">
+                <Button variant="outline" size="lg">
                   다시 시도
                 </Button>
               </EmptyStateAction>
@@ -262,7 +264,7 @@ function renderExample(exampleId: string): ReactNode {
       return (
         <EmptyState variant="empty" className="w-64">
           <EmptyStateIcon>
-            <FileX />
+            <FileX aria-hidden />
           </EmptyStateIcon>
           <EmptyStateTitle>보관된 항목입니다</EmptyStateTitle>
           <EmptyStateDescription>보관된 항목에는 새로 추가할 수 없습니다.</EmptyStateDescription>
@@ -283,7 +285,7 @@ function renderExample(exampleId: string): ReactNode {
               <TableCell colSpan={2} className="h-auto py-2">
                 <EmptyState variant="no-results" size="compact">
                   <EmptyStateIcon>
-                    <SearchX />
+                    <SearchX aria-hidden />
                   </EmptyStateIcon>
                   <EmptyStateTitle>검색 결과가 없습니다</EmptyStateTitle>
                   <EmptyStateDescription>다른 검색어로 다시 시도하세요.</EmptyStateDescription>
@@ -298,13 +300,13 @@ function renderExample(exampleId: string): ReactNode {
       return (
         <EmptyState variant="empty" className="w-72">
           <EmptyStateIcon>
-            <Inbox />
+            <Inbox aria-hidden />
           </EmptyStateIcon>
           <EmptyStateTitle>가져올 데이터가 없습니다</EmptyStateTitle>
           <EmptyStateDescription>CSV로 가져오거나 하나씩 직접 추가하세요.</EmptyStateDescription>
           <EmptyStateAction>
-            <Button size="sm">CSV 업로드</Button>
-            <Button variant="outline" size="sm">
+            <Button size="lg">CSV 업로드</Button>
+            <Button variant="outline" size="lg">
               수동으로 추가
             </Button>
           </EmptyStateAction>
@@ -316,12 +318,12 @@ function renderExample(exampleId: string): ReactNode {
         <Bounds className="w-48">
           <EmptyState variant="empty">
             <EmptyStateIcon>
-              <Inbox />
+              <Inbox aria-hidden />
             </EmptyStateIcon>
             <EmptyStateTitle>아직 등록된 상품이 없습니다</EmptyStateTitle>
             <EmptyStateDescription>새 상품을 추가해 판매를 시작하세요.</EmptyStateDescription>
             <EmptyStateAction>
-              <Button size="sm">상품 추가</Button>
+              <Button size="lg">상품 추가</Button>
             </EmptyStateAction>
           </EmptyState>
         </Bounds>
@@ -341,14 +343,14 @@ function AnatomyPreview() {
   return (
     <EmptyState data-anatomy="container" variant="empty" className="w-72">
       <EmptyStateIcon data-anatomy="icon">
-        <Inbox />
+        <Inbox aria-hidden />
       </EmptyStateIcon>
       <EmptyStateTitle data-anatomy="title">아직 등록된 상품이 없습니다</EmptyStateTitle>
       <EmptyStateDescription data-anatomy="description">
         새 상품을 추가해 판매를 시작하세요.
       </EmptyStateDescription>
       <EmptyStateAction data-anatomy="action">
-        <Button size="sm">상품 추가</Button>
+        <Button size="lg">상품 추가</Button>
       </EmptyStateAction>
     </EmptyState>
   )
