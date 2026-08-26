@@ -47,6 +47,7 @@ import { StatePage } from '@/routes/foundations/StatePage'
 import { TypographyPage } from '@/routes/foundations/TypographyPage'
 import { VoiceAndTonePage } from '@/routes/foundations/VoiceAndTonePage'
 import { WritingPage } from '@/routes/foundations/WritingPage'
+import { ListPatternPage } from '@/routes/patterns/ListPatternPage'
 
 export const routes: RouteObject[] = [
   {
@@ -108,7 +109,13 @@ export const routes: RouteObject[] = [
         ],
       },
 
-      { path: 'patterns', element: <Placeholder title="Patterns" /> },
+      {
+        path: 'patterns',
+        children: [
+          { index: true, element: <Placeholder title="Patterns" /> },
+          { path: 'list', element: <ListPatternPage /> },
+        ],
+      },
       { path: 'updates', element: <UpdatesPage /> },
 
       { path: '*', element: <Placeholder title="페이지를 찾을 수 없습니다" /> },

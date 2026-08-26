@@ -141,7 +141,10 @@ export const sections: NavSection[] = [
     id: 'patterns',
     label: 'Patterns',
     to: '/patterns',
-    items: [{ to: '/patterns', label: 'Overview', summary: '여러 부품을 엮는 화면 단위의 규칙', updatedAt: '2026-08-25' }],
+    items: [
+      { to: '/patterns', label: 'Overview', summary: '여러 부품을 엮는 화면 단위의 규칙', updatedAt: '2026-08-25' },
+      { to: '/patterns/list', label: 'List', summary: '여러 항목을 훑고 걸러 하나를 고르는 화면', updatedAt: '2026-08-27' },
+    ],
   },
   {
     id: 'updates',

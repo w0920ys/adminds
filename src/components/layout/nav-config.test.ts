@@ -248,3 +248,13 @@ describe('Components 묶음', () => {
     }
   })
 })
+
+describe('Patterns 목록', () => {
+  it('Overview 다음 문서가 patterns.ts와 같은 순서로 맞물린다', async () => {
+    const { patterns } = await import('@/data/patterns')
+    const section = sections.find((s) => s.id === 'patterns')!
+    const docs = topLevelDocs(section.items).filter((doc) => doc.to !== section.to)
+    expect(docs.map((d) => d.to)).toEqual(patterns.map((p) => `/patterns/${p.id}`))
+    expect(docs.map((d) => d.label)).toEqual(patterns.map((p) => p.name))
+  })
+})
