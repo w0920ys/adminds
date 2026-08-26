@@ -316,7 +316,7 @@ function renderExample(exampleId: string): ReactNode {
 
     case 'narrow-screen':
       return (
-        <div className="w-48">
+        <div className="w-40">
           <Steps orientation="horizontal">
             <Step state="complete">
               <StepIndicator>1</StepIndicator>
