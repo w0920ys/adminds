@@ -34,6 +34,10 @@ export function AppShell() {
    * 주소에 해시가 있으면 브라우저가 제목에 id가 붙는 순간 뒤늦게 문서를 굴려
    * 헤더를 밀어내는데, 사용자 문서 스크롤은 막혀 있어 되돌아오지 못한다.
    * 시점을 맞추는 대신 규칙을 지킨다 — 문서가 굴러가면 되돌린다.
+   *
+   * main이 relative를 갖게 된 뒤로는 문서에 굴릴 여지 자체가 없다. 여덟 문서에서
+   * html의 scrollHeight가 화면 높이와 같음을 확인했다. 그래도 이 감시는 남긴다 —
+   * 잘리지 않고 새어 나가는 요소가 다시 생기면 그때 헤더가 밀려나기 때문이다.
    */
   useEffect(() => {
     const keepDocumentStill = () => {
@@ -60,7 +64,16 @@ export function AppShell() {
           <Gnb onMenuClick={() => setLnbOpen(true)} />
           <div className="flex min-h-0 flex-1">
             <Lnb open={lnbOpen} onClose={() => setLnbOpen(false)} />
-            <main className="scrollbar-none min-w-0 flex-1 overflow-y-auto px-4 py-8 md:px-10">
+            {/*
+              * relative가 필요하다. sr-only는 position:absolute인데, 조상 중에
+              * 위치를 잡은 것이 없으면 담는 상자가 문서 전체가 되어 main의
+              * overflow에 잘리지 않는다. 그러면 화면 밖 문서 좌표에 놓인 채로
+              * 문서에 스크롤 여지를 만든다 — Button 문서에서 재보니 html의
+              * scrollHeight가 812이 아니라 7085였고, html·body에 overflow:hidden을
+              * 걸어 뒀는데도 window.scrollTo(0, 600)이 실제로 먹었다.
+              * main이 담는 상자가 되면 그 여지가 사라진다(재보니 812로 돌아온다).
+              */}
+            <main className="scrollbar-none relative min-w-0 flex-1 overflow-y-auto px-4 py-8 md:px-10">
               <div className="mx-auto flex max-w-6xl gap-10">
                 <div className="min-w-0 flex-1">
                   <Outlet />
