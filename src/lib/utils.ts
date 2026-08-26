@@ -15,13 +15,16 @@ import { extendTailwindMerge } from 'tailwind-merge'
  * 자라야 할 때 h-control(고정 높이)이 h-auto를 누르고 이겨 내용이
  * 테두리 밖으로 넘치던 결함이 바로 이 틈에서 났다.
  *
- * control·control-sm·control-lg를 h·min-h·size 세 그룹에 직접
- * 등록해 이 프로젝트의 컨트롤 높이 유틸을 표준 스케일과 같은
- * 그룹으로 묶는다 — 이후로는 h-control 뒤에 오는 h-auto(또는 그
- * 반대 순서)가 twMerge 단계에서 정상적으로 하나만 남는다. size는
- * 지금 당장 겹치는 자리가 없지만(Button의 size-control), 같은
- * 토큰 계열이라 같이 등록해 둔다 — 나중에 누가 size-control 위에
- * size-auto를 덧붙여도 같은 틈에 빠지지 않는다.
+ * control·control-sm·control-lg를 h·min-h·size 세 그룹 모두에
+ * 빠짐없이 직접 등록해 이 프로젝트의 컨트롤 높이 유틸을 표준
+ * 스케일과 같은 그룹으로 묶는다 — 이후로는 h-control 뒤에 오는
+ * h-auto(또는 그 반대 순서)가 twMerge 단계에서 정상적으로 하나만
+ * 남는다. size 그룹은 지금 당장 겹치는 override 자리가 없지만(
+ * size-control-sm·size-control-lg는 Avatar·Breadcrumb가 쓰고,
+ * size-control은 Button의 icon 크기가 쓴다), 세 토큰 중 하나만
+ * 빠뜨리면 나중에 누가 그 하나 위에 size-auto 같은 표준 크기를
+ * 덧붙일 때 똑같은 틈에 빠진다 — h·min-h와 다르게 세 토큰을
+ * 고르지 않고 전부 등록해야 이 그룹이 실제로 안전하다.
  *
  * theme.spacing 쪽의 일반 매처를 넓히는 대신 classGroups를 직접
  * 확장한 것은 의도적이다 — theme.spacing을 건드리면 p-·m-·gap-·w-
@@ -34,7 +37,7 @@ const twMerge = extendTailwindMerge({
     classGroups: {
       h: [{ h: ['control', 'control-sm', 'control-lg'] }],
       'min-h': [{ 'min-h': ['control', 'control-sm', 'control-lg'] }],
-      size: [{ size: ['control'] }],
+      size: [{ size: ['control', 'control-sm', 'control-lg'] }],
     },
   },
 })
