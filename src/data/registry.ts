@@ -2172,6 +2172,146 @@ export const components: ComponentMeta[] = [
     ],
     verified: false,
   },
+  {
+    id: 'steps',
+    name: 'Steps',
+    category: 'navigation',
+    status: 'stable',
+    addedIn: 'v0.9.0',
+    changedIn: 'v0.9.0',
+    purpose:
+      '여러 단계로 이루어진 흐름에서 지금 단계와 전체 진행 상태를 보인다. state는 단계 하나의 상태이므로 Steps가 현재 단계 번호로 계산하지 않고 각 Step이 직접 받는다.',
+    anatomy: [
+      {
+        part: 'container',
+        label: 'Container',
+        note: 'ol. orientation에 따라 가로 또는 세로로 늘어놓는다',
+      },
+      {
+        part: 'step',
+        label: 'Step',
+        note: 'li. state를 직접 받는다. 자기가 몇 번째인지, 전체가 몇 개인지 몰라도 된다',
+      },
+      {
+        part: 'indicator',
+        label: 'Indicator',
+        note: 'state에 따라 테두리 원·채운 원·체크 아이콘·X 아이콘으로 달라진다',
+      },
+      { part: 'label', label: 'Label', note: '단계 이름 한 줄' },
+      {
+        part: 'description',
+        label: 'Description',
+        note: '단계를 보충하는 설명',
+        optional: true,
+      },
+      {
+        part: 'connector',
+        label: 'Connector',
+        note: '다음 단계로 이어지는 선. 마지막 단계 뒤에는 없다',
+      },
+    ],
+    properties: [
+      {
+        name: 'orientation',
+        title: 'Orientation',
+        description: '단계를 가로로 늘어놓을지 세로로 늘어놓을지 정한다.',
+        display: 'row',
+        options: [
+          { value: 'horizontal', note: '기본. 가로로 늘어놓는다' },
+          { value: 'vertical', note: '세로로 늘어놓는다' },
+        ],
+      },
+      {
+        name: 'state',
+        title: 'State',
+        description: '단계 하나의 진행 상태를 나타낸다. 격자의 칸마다 그 상태인 단계 하나를 보인다.',
+        display: 'grid',
+        options: [
+          { value: 'pending', note: '아직 오지 않은 단계. 테두리 원과 숫자' },
+          { value: 'current', note: "지금 하고 있는 단계. 채운 원과 숫자, aria-current='step'" },
+          { value: 'complete', note: '끝난 단계. 채운 원과 체크 아이콘' },
+          { value: 'error', note: '실패한 단계. 채운 원과 X 아이콘' },
+        ],
+      },
+      {
+        name: 'layout',
+        title: 'Layout',
+        description: '라벨만 보일지, 라벨 아래에 설명을 더할지 정한다.',
+        display: 'row',
+        options: [
+          { value: 'label', note: '기본. 단계 이름만 보인다' },
+          { value: 'with-description', note: '이름 아래에 설명을 한 줄 더한다' },
+        ],
+      },
+    ],
+    guidelines: [
+      {
+        id: 'color-and-shape',
+        title: 'Color and shape',
+        body: '현재 단계를 색과 모양 둘로 알립니다. 색만 다르면 색을 구별하지 못하는 사람에게는 어디까지 왔는지 보이지 않습니다. 끝난 단계는 체크 표시로, 지금 단계는 채운 원으로 갈라 보입니다.',
+        do: ['끝난 단계는 체크 아이콘으로, 지금 단계는 채운 원과 숫자로 갈라 보인다'],
+        dont: ['색만 다르고 모양은 같은 원으로 단계 상태를 구별하지 않는다'],
+      },
+      {
+        id: 'clickable-visited-only',
+        title: 'Clickable visited steps only',
+        body: '되돌아갈 수 있는 단계만 누를 수 있게 합니다. 아직 지나지 않은 단계를 누를 수 있게 두면 건너뛸 수 있다고 오해합니다.',
+        do: ['complete 상태인 지난 단계만 누를 수 있게 한다'],
+        dont: ['아직 오지 않은 pending 단계를 눌러 건너뛸 수 있게 두지 않는다'],
+      },
+      {
+        id: 'step-count-range',
+        title: 'Step count range',
+        body: '단계를 셋에서 다섯 사이로 둡니다. 둘이면 나눌 이유가 없고, 여섯을 넘으면 어디까지 왔는지 세어야 합니다.',
+        do: ['단계를 셋에서 다섯 사이로 나눈다'],
+        dont: ['여섯을 넘는 단계를 한 Steps에 모두 늘어놓지 않는다'],
+      },
+      {
+        id: 'no-progress-bar',
+        title: 'No progress bar alongside',
+        body: '진행률 막대와 함께 쓰지 않습니다. 같은 것을 두 번 말합니다.',
+        do: ['단계 진행은 Steps 하나로만 보인다'],
+        dont: ['Steps 옆에 진행률 막대를 나란히 두어 같은 정보를 반복하지 않는다'],
+      },
+    ],
+    usage: [
+      {
+        id: 'multi-step-form',
+        title: '여러 단계 폼',
+        note: '한 화면에 담기 어려운 입력을 단계로 나눈다',
+      },
+      {
+        id: 'approval-flow-position',
+        title: '승인 흐름의 현재 위치',
+        note: '결재나 심사가 지금 어느 단계인지 보인다',
+      },
+      {
+        id: 'processing-status',
+        title: '처리 단계 표시',
+        note: '주문이나 배송처럼 시간이 걸리는 처리 과정을 보인다',
+      },
+      {
+        id: 'installation-guide',
+        title: '설치 안내',
+        note: '순서대로 따라야 하는 설치 절차를 안내한다',
+      },
+    ],
+    cases: [
+      {
+        id: 'many-steps',
+        title: '단계가 많은 경우',
+        note: '다섯을 넘으면 한 단계씩 좁아져 라벨을 읽기 어려워진다',
+      },
+      { id: 'long-step-name', title: '단계 이름이 긴 경우', note: '줄바꿈되어 다음 줄로 이어진다' },
+      {
+        id: 'failed-step',
+        title: '실패한 단계',
+        note: 'error로 표시하고 그 뒤의 단계는 pending으로 남는다',
+      },
+      { id: 'narrow-screen', title: '좁은 화면', note: '가로 폭이 부족하면 라벨이 줄바꿈된다' },
+    ],
+    verified: false,
+  },
 ]
 
 export function getComponent(id: string): ComponentMeta | undefined {
