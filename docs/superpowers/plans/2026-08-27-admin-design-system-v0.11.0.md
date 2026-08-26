@@ -651,7 +651,7 @@ function ScreenHeader() {
         </BreadcrumbList>
       </Breadcrumb>
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h3 className="text-xl font-semibold tracking-tight">사용자</h3>
+        <h4 className="text-lg font-semibold tracking-tight">사용자</h4>
         <Button size="sm">
           <Plus aria-hidden />
           사용자 추가
@@ -950,7 +950,7 @@ Expected: FAIL — `expected [ '/patterns/list' ] to deeply equal [ '/patterns/l
 
 Example은 아래 다섯을 실제 컴포넌트로 세운다.
 1. `Breadcrumb`: 회원 → 사용자 → 홍길동(마지막은 `BreadcrumbPage`).
-2. 제목 줄: `<h3>`에 이름, 옆에 `<Badge variant="success">활성</Badge>`.
+2. 제목 줄: `<h4>`에 이름, 옆에 `<Badge variant="success">활성</Badge>`. `h3`을 쓰면 안 된다 — assignHeadingIds가 main 아래의 h2·h3을 전부 목차로 쓸어 담아, 예시 속 가짜 화면 제목이 문서의 절인 것처럼 오른쪽 목차에 뜬다. ButtonPage가 같은 이유로 h4를 쓴다.
 3. 동작: `<Button variant="outline" size="sm">수정</Button>`과 `DropdownMenu`(트리거는 `<Button variant="ghost" size="icon">`에 `MoreHorizontal` 아이콘 + `aria-label`). 메뉴 안에 `DropdownMenuItem` 정지·삭제.
 4. `Tabs`: `defaultValue="info"`, 트리거 셋(정보·주문·활동). 값은 `info` · `orders` · `activity`.
 5. 탭 내용: `info`는 `DescriptionList`, `orders`는 작은 `Table`, `activity`는 목록.
