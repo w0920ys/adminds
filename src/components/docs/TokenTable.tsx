@@ -15,7 +15,7 @@ export function TokenTable({ rows }: { rows: TokenRow[] }) {
         <tbody>
           {rows.map((row) => (
             <tr key={row.cssVar}>
-              <th scope="row" className="border-t px-3 py-2 font-medium">{row.name}</th>
+              <th scope="row" className="border-t px-3 py-3 font-medium">{row.name}</th>
               <td className="text-muted-foreground border-t px-1.5 py-1">
                 <CopyValue value={row.cssVar} />
               </td>

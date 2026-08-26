@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 import { Check, X } from 'lucide-react'
+import { docProse } from '@/components/docs/DocPage'
 import { ExampleFrame } from '@/components/docs/ExampleFrame'
 import { HeadingAnchor } from '@/components/docs/HeadingAnchor'
 import type { Guideline } from '@/data/registry'
@@ -17,7 +18,7 @@ function Side({
   if (!example && rules.length === 0) return null
 
   return (
-    <div className="flex h-full flex-col gap-3 rounded-lg border p-4">
+    <div className="flex h-full flex-col gap-4 rounded-lg border p-4 md:p-5">
       {/*
        * DO 글자는 success-on-tint를 쓴다 — 원래 success 색은 흰 바탕
        * 위에서도 3.67:1로 4.5:1에 못 미친다. destructive는 4.76:1로
@@ -36,7 +37,7 @@ function Side({
       {example && <ExampleFrame>{example}</ExampleFrame>}
 
       {rules.length > 0 && (
-        <ul className="flex flex-col gap-2">
+        <ul className="flex flex-col gap-3">
           {rules.map((line) => (
             <li key={line} className="text-sm">
               {line}
@@ -56,16 +57,16 @@ export function GuidelineBlock({
   renderExample?: (guidelineId: string, kind: 'do' | 'dont') => ReactNode
 }) {
   return (
-    <section className="flex flex-col gap-4">
+    <section className="flex flex-col gap-4 md:gap-5">
       <div>
         <div className="group flex items-center">
           <h3 className="text-base font-semibold">{guideline.title}</h3>
           <HeadingAnchor />
         </div>
-        <p className="text-muted-foreground mt-1 text-sm">{guideline.body}</p>
+        <p className={cn('text-muted-foreground mt-2 text-sm', docProse)}>{guideline.body}</p>
       </div>
 
-      <div className="grid items-stretch gap-3 md:grid-cols-2">
+      <div className="grid items-stretch gap-3 md:grid-cols-2 md:gap-4">
         <Side
           kind="do"
           example={renderExample?.(guideline.id, 'do')}

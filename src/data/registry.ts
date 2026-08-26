@@ -462,7 +462,8 @@ export const components: ComponentMeta[] = [
       {
         name: 'layout',
         title: 'Layout',
-        description: '하나만 고르는지 여럿을 고르는지를 정한다.',
+        description:
+          '하나만 고르는지 여럿을 고르는지를 정한다. layout이라는 이름의 prop은 없다 — multiple prop이 이 축을 가른다.',
         display: 'row',
         options: [
           { value: 'single', note: '기본. 고른 항목의 문구가 트리거에 보인다' },
@@ -804,7 +805,8 @@ export const components: ComponentMeta[] = [
       {
         name: 'layout',
         title: 'Layout',
-        description: '파일을 하나만 받는지 여러 개 받는지 정한다.',
+        description:
+          '파일을 하나만 받는지 여러 개 받는지 정한다. layout이라는 이름의 prop은 없다 — multiple prop이 이 축을 가른다.',
         display: 'row',
         options: [
           { value: 'single', note: '기본. 새로 고르면 이전 파일을 대신한다' },
@@ -1217,7 +1219,8 @@ export const components: ComponentMeta[] = [
       {
         name: 'layout',
         title: 'Layout',
-        description: '손잡이가 하나인지 둘인지를 정한다.',
+        description:
+          '손잡이가 하나인지 둘인지를 정한다. layout이라는 이름의 prop은 없다 — value(비제어라면 defaultValue) 배열의 길이가 손잡이 수다.',
         display: 'row',
         options: [
           { value: 'single', note: '값 하나를 고른다' },
@@ -1265,6 +1268,11 @@ export const components: ComponentMeta[] = [
       { id: 'wide-range', title: '범위가 아주 넓은 경우', note: '전체 범위가 넓을수록 손잡이 하나가 움직이는 값의 폭도 커진다' },
       { id: 'thumbs-at-same-value', title: '두 손잡이가 같은 값이 된 경우', note: '겹쳐도 각자 화살표 키로 다시 갈라 움직일 수 있다' },
       { id: 'no-value', title: '값이 없는 경우', note: '아직 고르지 않았으면 범위의 시작값을 기본으로 둔다' },
+      {
+        id: 'error-with-help',
+        title: '도움말·오류와 함께 있는 경우',
+        note: "Field가 감싸면 도움말·오류의 id가 역할 없는 Root가 아니라 role='slider'를 단 손잡이의 aria-describedby로 이어진다. state가 error일 때의 aria-invalid도 같은 자리에 붙는다",
+      },
       { id: 'narrow-screen', title: '좁은 화면', note: '폭이 좁아져도 Track이 부모 폭을 그대로 따라간다' },
     ],
     verified: false,

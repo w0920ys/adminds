@@ -2,7 +2,7 @@ import type { ComponentProps, ReactNode } from 'react'
 import { Bounds } from '@/components/docs/Bounds'
 import { ComponentPage } from '@/components/docs/ComponentPage'
 import type { RenderOptions } from '@/components/docs/PropertyBlock'
-import { Field, FieldControl, FieldLabel } from '@/components/ui/field'
+import { Field, FieldControl, FieldError, FieldHelp, FieldLabel } from '@/components/ui/field'
 import { Input } from '@/components/ui/input'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio'
 import { Slider, type SliderSize } from '@/components/ui/slider'
@@ -218,6 +218,27 @@ function renderExample(exampleId: string): ReactNode {
 
     case 'no-value':
       return <SliderField label="할인율" valueLabel="0%" min={0} max={100} />
+
+    /*
+     * Field의 네 부위(라벨·도움말·컨트롤·오류)를 Slider 하나에 모두 두는
+     * 자리다. Slider는 라벨이 붙지 않는 컨트롤이라(Root가 역할 없는 span,
+     * role="slider"는 그 안의 손잡이) Field가 내려준 id들이 손잡이까지
+     * 실제로 닿는지 눈으로 확인할 데가 이 페이지에 없었다.
+     */
+    case 'error-with-help':
+      return (
+        <Field state="error" className="w-64">
+          <FieldLabel className="flex items-center justify-between">
+            <span>재고 부족 알림 기준</span>
+            <span className="text-muted-foreground text-xs font-normal">120개 이하</span>
+          </FieldLabel>
+          <FieldHelp>재고가 이 값 이하로 떨어지면 담당자에게 알립니다</FieldHelp>
+          <FieldControl>
+            <Slider defaultValue={[120]} min={0} max={200} step={10} />
+          </FieldControl>
+          <FieldError>현재 재고(80개)보다 큰 값은 저장할 수 없습니다</FieldError>
+        </Field>
+      )
 
     case 'narrow-screen':
       return (

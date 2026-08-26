@@ -1,11 +1,13 @@
 import type { ComponentProps, ReactNode } from 'react'
 import { Bounds } from '@/components/docs/Bounds'
 import { ComponentPage } from '@/components/docs/ComponentPage'
+import { docProse } from '@/components/docs/DocPage'
 import type { RenderOptions } from '@/components/docs/PropertyBlock'
 import { Calendar } from '@/components/ui/calendar'
 import { DatePicker, type DatePickerSize } from '@/components/ui/date-picker'
 import { Field, FieldControl, FieldLabel } from '@/components/ui/field'
 import { getComponent } from '@/data/registry'
+import { cn } from '@/lib/utils'
 import { Placeholder } from '@/routes/Placeholder'
 
 /*
@@ -257,6 +259,75 @@ function AnatomyPreview() {
   )
 }
 
+/* ------------------------------------------------------------------ *
+ * 키보드
+ *
+ * 달 격자는 WAI-ARIA grid 패턴을 따르지만, 이 표는 그 패턴이 보통 어떻게
+ * 생겼는지가 아니라 calendar.tsx의 handleDayKeyDown과 date-picker.tsx의
+ * handleTriggerKeyDown이 실제로 다루는 키만 적는다.
+ * ------------------------------------------------------------------ */
+
+const TRIGGER_KEYS: { keys: string; effect: string }[] = [
+  { keys: 'Enter · Space', effect: '달력을 열고, 열려 있으면 닫는다' },
+  { keys: 'Escape', effect: '열려 있는 달력을 닫는다' },
+]
+
+const GRID_KEYS: { keys: string; effect: string }[] = [
+  { keys: '← →', effect: '하루 앞뒤로 옮긴다' },
+  { keys: '↑ ↓', effect: '이레 앞뒤로 옮긴다(위아래 같은 요일)' },
+  { keys: 'Home · End', effect: '그 주의 일요일 · 토요일로 옮긴다' },
+  {
+    keys: 'PageUp · PageDown',
+    effect:
+      '한 달 앞뒤로 옮긴다. 옮긴 달에 같은 날짜가 없으면(1월 31일에서 2월로) 그 달의 마지막 날로 당긴다. Shift를 함께 눌러도 한 달씩이다 — 한 해를 옮기는 키는 두지 않았다',
+  },
+  { keys: 'Enter · Space', effect: '짚은 날을 고른다. 고를 수 없는 날에서는 아무 일도 일어나지 않는다' },
+  { keys: 'Escape', effect: '달력을 닫고 포커스를 트리거로 되돌린다' },
+]
+
+function KeyTable({ caption, rows }: { caption: string; rows: { keys: string; effect: string }[] }) {
+  return (
+    <div className="overflow-x-auto rounded-lg border">
+      <table className="w-full text-left text-sm">
+        <caption className="text-muted-foreground px-3 py-2 text-left text-2xs font-bold tracking-widest">
+          {caption}
+        </caption>
+        <tbody>
+          {rows.map((row) => (
+            <tr key={row.keys}>
+              <th scope="row" className="w-44 border-t px-3 py-2.5 align-top font-medium">
+                {row.keys}
+              </th>
+              <td className="text-muted-foreground border-t px-3 py-2.5">{row.effect}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  )
+}
+
+function KeyboardSection() {
+  return (
+    <div className="flex flex-col gap-4">
+      <p className={cn('text-muted-foreground text-sm', docProse)}>
+        트리거는 button이 아니라 role=&quot;button&quot;을 단 div라 키를 스스로 다룬다. 열린 달력의
+        날짜 격자는 마흔두 칸을 모두 탭 순서에 두지 않는다 — 지금 짚은 날 하나만 탭 정지점이고,
+        나머지 칸으로는 아래 키로 옮긴다. 달력 안의 탭 정지점은 이전 달 · 다음 달 버튼과 그 한 칸,
+        모두 셋이다. 달력을 열면 포커스는 그중 첫 요소인 이전 달 버튼에 놓인다.
+      </p>
+      <KeyTable caption="트리거" rows={TRIGGER_KEYS} />
+      <KeyTable caption="열린 달력의 날짜 격자" rows={GRID_KEYS} />
+      <p className={cn('text-muted-foreground text-sm', docProse)}>
+        옮긴 날짜가 지금 보이는 달을 벗어나면 달이 함께 넘어간다 — 8월 1일에서 왼쪽 화살표를 누르면
+        7월 31일로 옮겨 가면서 달력도 7월을 보인다. 고를 수 없는 날은 격자에서 건너뛰지 않는다.
+        네이티브 disabled 대신 aria-disabled로 알리기 때문에 화살표로 지나갈 수 있고, 고르는 것만
+        막힌다.
+      </p>
+    </div>
+  )
+}
+
 export function DatePickerPage() {
   const meta = getComponent('date-picker')
   if (!meta) return <Placeholder title="Date Picker 메타를 찾을 수 없습니다" />
@@ -268,6 +339,7 @@ export function DatePickerPage() {
       preview={<AnatomyPreview />}
       renderGuidelineExample={renderGuidelineExample}
       renderExample={renderExample}
+      extraSections={[{ title: 'Keyboard', node: <KeyboardSection /> }]}
     />
   )
 }

@@ -323,7 +323,7 @@ export function PalettePage() {
             </tbody>
           </table>
         </div>
-        <p className="text-muted-foreground text-xs">
+        <p className="text-muted-foreground text-sm">
           이 표는 대응을 정하는 문서가 아니라 지금 상태를 비추는 거울입니다. 어떤 토큰의 차이가
           갑자기 커졌다면 팔레트 밖의 색이 들어온 것이므로, 그 색을 남길지 팔레트 단계로 되돌릴지
           정합니다.

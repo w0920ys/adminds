@@ -253,7 +253,7 @@ export function ColorRolePage() {
         <div className="rounded-lg border p-3">
           <Layer index={0} hexes={hexes} />
         </div>
-        <p className="text-muted-foreground text-xs">
+        <p className="text-muted-foreground text-sm">
           위 상자는 실제 토큰으로 칠한 것이라 지금 테마의 층 차이를 그대로 보여줍니다. 라이트에서는
           네 층의 hex가 같아 선으로만 갈리고, 다크로 바꾸면 밝기로 갈립니다. 라이트에서 층을 색으로
           구분해야 한다면 면을 더 밝히는 대신 선과 그림자로 나눕니다.
@@ -325,7 +325,7 @@ export function ColorRolePage() {
             </p>
           </ExampleFrame>
         </div>
-        <p className="text-muted-foreground text-xs">
+        <p className="text-muted-foreground text-sm">
           <code>muted-foreground</code>는 <code>background</code> 위에서 대비를 맞춘 색이라
           다른 배경 위로 옮기면 그 대비가 그대로 따라오지 않습니다. 배경을 바꾸면 글자색도
           함께 바꿉니다.

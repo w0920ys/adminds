@@ -26,6 +26,19 @@ const CELL_SIZE: Record<CalendarSize, string> = {
   lg: 'size-9 text-sm',
 }
 
+/*
+ * 요일 머리 칸의 폭은 그 아래 날짜 칸의 한 변과 같아야 한다 — 머리 칸이 열 폭을
+ * 정하므로, 여기만 고정 폭(w-9)으로 두면 sm·default에서 날짜 배지보다 넓은 열이
+ * 되어 요일과 날짜의 세로줄이 어긋나고 격자 전체도 그만큼 넓어진다. CELL_SIZE의
+ * size-*와 같은 눈금을 쓴다. 글자 크기는 따라가지 않는다 — 머리 글자는 날짜가
+ * 아니라 요일 이름이라 세 크기 모두 text-2xs다.
+ */
+const HEADER_CELL_WIDTH: Record<CalendarSize, string> = {
+  sm: 'w-7',
+  default: 'w-8',
+  lg: 'w-9',
+}
+
 export type CalendarRange = { from?: Date; to?: Date }
 
 type CalendarCommonProps = {
@@ -102,7 +115,7 @@ function Calendar(props: CalendarProps) {
   const shouldFocusRef = React.useRef(false)
   /*
    * 'YYYY-MM-DD' 문자열로 칸을 키·비교한다 — cell.date는 buildMonthGrid가 만든
-   * UTC 정오 기준 Date지만, focusedDate의 초기값(today·defaultMonth·selected)은
+   * 로컬 정오 기준 Date지만, focusedDate의 초기값(today·defaultMonth·selected)은
    * 이 컴포넌트를 쓰는 페이지가 new Date(y, m, d)로 만든 로컬 자정 기준 Date일
    * 수 있다. 같은 날이어도 두 표기의 getTime()은 절대 같지 않아, getTime()으로
    * 비교하면 격자 어느 칸도 '지금 포커스가 가야 할 칸'과 맞아떨어지지 않고
@@ -153,7 +166,7 @@ function Calendar(props: CalendarProps) {
   /*
    * 화살표는 하루·이레, Home·End는 그 주의 처음·끝, PageUp·PageDown은 한 달
    * 앞뒤로 옮긴다 — WAI-ARIA grid 패턴의 표준 키 배정이다. cell.date가
-   * buildMonthGrid의 UTC 정오 기준이라 addDays·addMonthsToDate로 옮겨도
+   * buildMonthGrid의 로컬 정오 기준이라 addDays·addMonthsToDate로 옮겨도
    * 서머타임에 흔들리지 않는다. 옮긴 날짜가 지금 보이는 달을 벗어나면
    * view가 focusedDate에서 파생되므로 자연히 이웃 달로 넘어간다.
    */
@@ -177,11 +190,11 @@ function Calendar(props: CalendarProps) {
         return
       case 'Home':
         event.preventDefault()
-        moveFocus(addDays(cell.date, -cell.date.getUTCDay()))
+        moveFocus(addDays(cell.date, -cell.date.getDay()))
         return
       case 'End':
         event.preventDefault()
-        moveFocus(addDays(cell.date, 6 - cell.date.getUTCDay()))
+        moveFocus(addDays(cell.date, 6 - cell.date.getDay()))
         return
       case 'PageUp':
         event.preventDefault()
@@ -232,7 +245,10 @@ function Calendar(props: CalendarProps) {
               <th
                 key={label}
                 scope="col"
-                className="text-muted-foreground w-9 pb-1 text-2xs font-normal"
+                className={cn(
+                  'text-muted-foreground pb-1 text-2xs font-normal',
+                  HEADER_CELL_WIDTH[size],
+                )}
               >
                 {label}
               </th>
@@ -260,9 +276,21 @@ function Calendar(props: CalendarProps) {
                 const dayLabel = `${cell.date.getFullYear()}년 ${cell.date.getMonth() + 1}월 ${cell.date.getDate()}일`
 
                 return (
+                  /*
+                   * aria-selected는 칸(gridcell)에 단다. 안쪽 button에 달면
+                   * 아무것도 알리지 못한다 — aria-selected는 role="button"이
+                   * 지원하는 속성이 아니라 그 자리에서는 무시된다. 고른 날을
+                   * 실제로 알리는 자리는 grid의 칸이다.
+                   *
+                   * range에서는 양 끝만이 아니라 사이의 날도 함께 표시한다 —
+                   * 화면에서 bg-accent로 이어 그리는 그 구간이 곧 지금 고른
+                   * 기간이라, 끝 두 날만 선택으로 알리면 사이의 날들이 고른
+                   * 것에 들지 않는 것처럼 읽힌다.
+                   */
                   <td
                     key={isoDate}
                     role="gridcell"
+                    aria-selected={isBoundary || isInRange || undefined}
                     className={cn(
                       'p-0 text-center',
                       isInRange && 'bg-accent',
@@ -287,7 +315,6 @@ function Calendar(props: CalendarProps) {
                       tabIndex={isRoving ? 0 : -1}
                       aria-disabled={disabled || undefined}
                       aria-current={isToday ? 'date' : undefined}
-                      aria-selected={isBoundary || undefined}
                       title={disabled ? disabledReason : undefined}
                       aria-label={disabled && disabledReason ? `${dayLabel}, ${disabledReason}` : dayLabel}
                       onClick={() => handleDayClick(cell)}

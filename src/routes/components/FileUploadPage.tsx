@@ -73,8 +73,17 @@ function DemoFileUpload({
     setFiles((prev) => (multiple ? [...prev, ...next] : next))
   }
 
+  /*
+   * 오류는 컨트롤 자신에게 붙은 aria-invalid로 나타낸다 — Input·Select 문서가
+   * 같은 축을 같은 방식으로 그린다. 값이 없을 때 속성 자체를 넘기지 않는 것은
+   * Field로 감싼 경우 때문이다: FieldControl은 Slot으로 aria-invalid를 내려
+   * 주는데 자식이 그 이름의 프로퍼티를 undefined로라도 들고 있으면 자식 쪽이
+   * 이긴다(Slot의 mergeProps).
+   */
+  const invalidProps = invalid ? ({ 'aria-invalid': true } as const) : {}
+
   const dropzone = (
-    <FileUploadDropzone variant={variant}>
+    <FileUploadDropzone variant={variant} {...invalidProps}>
       {variant === 'dropzone' ? (
         <>
           <UploadCloud className="text-muted-foreground size-6" aria-hidden />
@@ -90,7 +99,6 @@ function DemoFileUpload({
   return (
     <FileUpload
       disabled={disabled}
-      invalid={invalid}
       multiple={multiple}
       onFilesSelected={handleFilesSelected}
       className={className}

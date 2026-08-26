@@ -21,17 +21,17 @@ export function Playground({
   const isInitial = meta.properties.every((p) => options[p.name] === base[p.name])
 
   return (
-    <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_16rem]">
+    <div className="grid gap-4 md:gap-5 lg:grid-cols-[minmax(0,1fr)_16rem]">
       <div
         className={cn(
-          'bg-surface-raised grid min-h-44 place-items-center rounded-lg border p-8',
+          'bg-surface-raised grid min-h-44 place-items-center rounded-lg border p-6 md:p-8',
           forcedStateClass(options.state),
         )}
       >
         {render(options)}
       </div>
 
-      <div className="flex flex-col gap-4 rounded-lg border p-4">
+      <div className="flex flex-col gap-5 rounded-lg border p-4 md:p-5">
         <div className="flex items-center justify-between">
           <p className="text-muted-foreground text-2xs font-bold tracking-widest">Options</p>
           <button
@@ -44,11 +44,11 @@ export function Playground({
           </button>
         </div>
         {meta.properties.map((property) => (
-          <fieldset key={property.name} className="flex flex-col gap-1.5">
+          <fieldset key={property.name} className="flex flex-col gap-2">
             <legend className="text-muted-foreground text-2xs font-bold tracking-widest">
               {property.title.toUpperCase()}
             </legend>
-            <div className="flex flex-wrap gap-1">
+            <div className="flex flex-wrap gap-1.5">
               {property.options.map((option) => {
                 const selected = options[property.name] === option.value
                 return (

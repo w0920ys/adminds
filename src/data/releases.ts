@@ -29,6 +29,32 @@ export type Release = {
 /** 최신 버전이 배열의 맨 앞이다. */
 export const releases: Release[] = [
   {
+    version: 'v0.10.1',
+    publishedAt: '2026-08-27',
+    title: '문서에 숨 쉴 틈을 내고, 달력·파일·슬라이더가 상태를 제대로 알리게 했어요',
+    purpose:
+      '컴포넌트는 서른둘로 다 찼는데 정작 그것을 설명하는 문서가 답답하게 읽혔어요. 줄 간격과 한 줄 길이, 절 사이 여백을 shadcn 문서를 기준으로 다시 잡고 좁은 화면까지 함께 손봤어요. 이번에 새로 넣은 여백은 전부 Spacing 문서가 정한 4px 배수 눈금 위에 올렸어요 — 규칙을 적어 둔 문서가 그 규칙을 스스로 어기고 있었거든요. 곁들여 달력·파일 업로드·슬라이더가 화면에 보이는 상태를 보조기술에도 똑같이 알리도록 고쳤어요.',
+    changes: [
+      { target: 'Docs', type: 'Updated', note: '문서 화면의 줄 간격과 여백을 다시 잡았어요. 읽는 글이 놓이는 세 크기(text-xs·sm·base)의 줄 간격을 16/20/24px에서 20/24/28px로 올렸어요 — 셋 다 4의 배수라 여백 눈금에도 컨트롤 높이에도 어긋나지 않아요. 본문 한 줄은 856px까지 늘어나던 것을 672px에서 끊었고(무대·표·놀이터는 그대로 전폭을 써요), 절 사이 120px은 64/80px로 좁히는 대신 절 안의 간격을 올려 빽빽한 덩어리 사이에 협곡만 남던 리듬을 되돌렸어요. 문서 안에서 문장 노릇을 하던 12px 문단 스물여섯 곳도 본문 크기로 올렸어요.' },
+      { target: 'Docs', type: 'Fixed', note: '절 안의 간격을 올리면서 새로 넣은 여백 열여섯 자리가 10·14·6px이라 4px 눈금에서 벗어나 있었어요. 간격은 4px 배수로만 쓴다고 적어 둔 것이 이 문서 자신이라, 12·16·8px로 옮겨 규칙과 코드를 맞췄어요. /components/button을 1440px에서 재 보니 눈금 밖 간격이 198자리에서 102자리로 줄었고, 남은 102자리는 모두 이번 작업 이전부터 있던 6px(gap-1.5) 아이콘 간격이에요.' },
+      { target: 'Docs', type: 'Fixed', note: 'Design Token 화면이 방금 더한 줄 간격 토큰 둘(--text-xs--line-height·--text-base--line-height)을 "(정의되지 않음)"으로 보여주던 것을 고쳤어요. Tailwind는 이 짝 이름을 .text-<크기> 규칙 안에 값째로 박아 넣고 :root에는 내보내지 않아서, 실측만으로는 잡히지 않았어요. 실측이 비면 tokens.css에 적힌 선언을 대신 읽도록 해서, 정의된 토큰을 없다고 말하는 일이 없게 했어요.' },
+      { target: 'Docs', type: 'Updated', note: '좁은 화면(640px 미만)에서 절의 본문 문단이 15px/26.25px로 한 단계 커지고 바깥 여백도 함께 넓어져요. 다만 이 규칙이 닿는 것은 절의 직계 문단과 docProse를 쓰는 문단뿐이에요 — 375px에서 재 보니 Button 8곳, Table 5곳, Color 7곳, Updates 2곳이고, 카드·표·놀이터 안에 있는 나머지 본문(같은 화면에서 각각 89·109·142·10곳)은 14px 그대로예요.' },
+      { target: 'Tabs', type: 'Updated', note: '탭 트리거의 높이를 h-control-sm(32px)으로 못 박아 밀도 축에 붙였어요. 그전 32px은 padding과 본문 줄 간격이 우연히 만들던 값이라, 줄 간격을 올리자 36px로 밀렸거든요. 탭 트리거는 whitespace-nowrap이라 높이를 고정해도 글이 잘리지 않아요.' },
+      { target: 'Select / Combobox / Dropdown Menu / Accordion', type: 'Updated', note: '줄 간격이 올라가면서 메뉴 줄 넷의 높이도 함께 자랐어요 — Select 항목·Combobox 옵션·Dropdown Menu 항목이 32px에서 36px로, Accordion 트리거가 52px에서 56px로(두 줄로 접히는 자리는 72px에서 80px로) 늘었어요. 넷 다 py-1.5와 text-sm 줄 상자가 높이를 만드는 같은 구조예요. 탭 트리거와 달리 이 넷은 whitespace-nowrap이 없어 글이 두 줄로 접힐 수 있어서, 높이를 고정하면 접힌 글이 잘려요. 그래서 밀도 축에 못 박지 않고 내용을 따라 자라게 뒀어요. 컨트롤 높이(32·36·40px)와 표 행 높이(48·40px), Badge(20px), Checkbox(16px), Switch(24px), 페이지네이션 항목·달력 날짜 칸(32px)은 다시 재 보니 모두 그대로예요.' },
+      { target: 'Calendar', type: 'Fixed', note: '칸을 UTC 정오로 만들면서 읽기는 로컬 게터로 해서, UTC+12 이상인 표준시대에서 격자 전체가 하루씩 밀리던 것을 고쳤어요. 만드는 쪽을 로컬 정오로 옮겨 양쪽이 같은 달력을 보게 했고, 표준시 아홉 곳을 갈아 끼우는 테스트를 붙였어요. 고른 날을 알리는 aria-selected가 role="button"인 안쪽 요소에 붙어 무시되던 것도 격자의 칸으로 옮기고, 기간 선택에서는 양 끝만이 아니라 사이의 날도 함께 표시해요. 요일 머리 칸이 크기와 무관하게 w-9라 sm·default에서 열이 날짜 배지보다 넓던 것도 날짜 칸과 같은 눈금으로 맞췄어요.' },
+      { target: 'File Upload', type: 'Fixed', note: '목록의 한 줄이 스스로 aria-invalid를 달고 있던 것을 고쳤어요. aria-invalid는 값을 입력하는 컨트롤의 상태라 목록의 한 줄에는 없는 상태예요. 테두리 표시는 data-invalid로 옮기고, 실패 이유는 그 줄에서 포커스를 받는 유일한 요소인 지우기 버튼의 aria-describedby로 이었어요 — 그전에는 버튼에 멈춘 스크린 리더가 무엇이 왜 실패했는지 읽을 방법이 없었어요. 오류를 나타내는 두 번째 통로였던 루트의 invalid prop도 걷어내고, 감춰 둔 네이티브 file input은 aria-hidden으로 접근성 트리에서 빼 실제 컨트롤이 dropzone 버튼 하나로 읽히게 했어요.' },
+      { target: 'Slider', type: 'Fixed', note: 'Field가 오류·비활성에서 내려주던 aria-invalid와 aria-disabled가 role 없는 Radix Root에 붙어 아무 데도 닿지 않던 것을 고쳤어요. role="slider"를 단 것은 Root가 아니라 손잡이(Thumb)라, 이름·설명이 이미 지나가던 길로 둘을 함께 옮겨 달았어요. Field로 감싼 Slider에 도움말과 오류를 함께 둔 예시가 어느 페이지에도 없어 이 통로가 화면에서 확인된 적이 없었는데, Cases에 네 부위를 모두 둔 자리를 만들어 눈으로 확인할 수 있게 했어요.' },
+    ],
+    requests: [
+      { label: '문서에 숨 쉴 틈이 없어요. shadcn을 기준으로 반응형까지 생각해서 여백과 타이포를 잡아주세요', done: true },
+    ],
+    reviewItems: [
+      { label: '메뉴 줄 넷(Select·Combobox·Dropdown Menu 항목, Accordion 트리거)이 내용을 따라 자란다 — 고정 높이 대신 무엇으로 밀도를 묶을 것인가', category: 'Components', completed: false },
+      { label: '아이콘과 라벨 사이 gap-1.5(6px)가 저장소에 일흔세 자리 남아 있다 — 4px 눈금의 8px로 함께 옮길 것인가', category: 'Foundations', completed: false },
+    ],
+    impact: ['Foundations', 'Components'],
+  },
+  {
     version: 'v0.10.0',
     publishedAt: '2026-08-26',
     title: '입력 카테고리를 열하나로 채우고, 이 저장소를 레지스트리로 다시 갖췄어요',
