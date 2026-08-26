@@ -1,10 +1,28 @@
 export type DocLink = {
   to: string
   label: string
+  /** 이 문서가 무엇을 다루는가. Overview 카드와 검색 결과가 같은 문장을 쓴다 */
+  summary?: string
   /** 문서 최종 수정일. YYYY-MM-DD */
   updatedAt: string
   /** LNB에서 이 항목 아래 들여쓰기로 놓이는 하위 문서. 순서에서는 부모 바로 뒤에 온다 */
   children?: DocLink[]
+}
+
+/**
+ * LNB에서 문서 여러 개를 묶는 머리글. 링크가 아니므로 이동하지 않고,
+ * 순서·이전·다음 계산에서도 존재하지 않는 것처럼 지나간다.
+ * 자식과 다르다 — children은 문서의 하위 문서지만, 묶음은 분류일 뿐이다.
+ */
+export type DocGroup = {
+  label: string
+  items: DocLink[]
+}
+
+export type NavItem = DocLink | DocGroup
+
+export function isGroup(item: NavItem): item is DocGroup {
+  return !('to' in item)
 }
 
 export type NavSection = {
@@ -13,8 +31,8 @@ export type NavSection = {
   label: string
   /** 섹션 진입 경로. 자기 Overview와 같다 */
   to: string
-  /** LNB 목록. 첫 항목은 항상 Overview */
-  items: DocLink[]
+  /** LNB 목록. 첫 항목은 항상 Overview이고, 그 뒤로 문서나 묶음이 온다 */
+  items: NavItem[]
 }
 
 /** 문서 내용을 고칠 때 그 항목의 updatedAt도 함께 갱신한다. */
@@ -24,9 +42,9 @@ export const sections: NavSection[] = [
     label: 'Get started',
     to: '/',
     items: [
-      { to: '/', label: 'Overview', updatedAt: '2026-08-25' },
-      { to: '/get-started/install', label: 'Install', updatedAt: '2026-08-25' },
-      { to: '/get-started/principles', label: 'Principles', updatedAt: '2026-08-25' },
+      { to: '/', label: 'Overview', summary: '이 디자인 시스템이 무엇이고 어디서부터 읽는가', updatedAt: '2026-08-25' },
+      { to: '/get-started/install', label: 'Install', summary: '설치와 첫 컴포넌트 붙이기', updatedAt: '2026-08-25' },
+      { to: '/get-started/principles', label: 'Principles', summary: '판단이 갈릴 때 기대는 원칙', updatedAt: '2026-08-25' },
     ],
   },
   {
@@ -34,23 +52,24 @@ export const sections: NavSection[] = [
     label: 'Foundations',
     to: '/foundations',
     items: [
-      { to: '/foundations', label: 'Overview', updatedAt: '2026-08-25' },
-      { to: '/foundations/design-token', label: 'Design Token', updatedAt: '2026-08-25' },
+      { to: '/foundations', label: 'Overview', summary: '컴포넌트보다 먼저 합의하는 것들', updatedAt: '2026-08-25' },
+      { to: '/foundations/design-token', label: 'Design Token', summary: '토큰의 층과 이름 규칙, 전체 목록', updatedAt: '2026-08-25' },
       {
         to: '/foundations/color',
         label: 'Color',
+        summary: '역할 기반 시맨틱 색 토큰과 라이트·다크 대응',
         updatedAt: '2026-08-25',
         children: [
-          { to: '/foundations/color-role', label: 'Color Role', updatedAt: '2026-08-25' },
-          { to: '/foundations/palette', label: 'Palette', updatedAt: '2026-08-25' },
+          { to: '/foundations/color-role', label: 'Color Role', summary: '역할 사이의 위계와 짝', updatedAt: '2026-08-25' },
+          { to: '/foundations/palette', label: 'Palette', summary: '원시 색 스케일과 시맨틱 연결', updatedAt: '2026-08-25' },
         ],
       },
-      { to: '/foundations/typography', label: 'Typography', updatedAt: '2026-08-25' },
-      { to: '/foundations/spacing', label: 'Spacing', updatedAt: '2026-08-25' },
-      { to: '/foundations/iconography', label: 'Iconography', updatedAt: '2026-08-25' },
-      { to: '/foundations/state', label: 'State', updatedAt: '2026-08-25' },
-      { to: '/foundations/voice-and-tone', label: 'Voice and Tone', updatedAt: '2026-08-25' },
-      { to: '/foundations/writing', label: 'Writing', updatedAt: '2026-08-25' },
+      { to: '/foundations/typography', label: 'Typography', summary: '크기 스케일과 굵기, 정보 위계', updatedAt: '2026-08-25' },
+      { to: '/foundations/spacing', label: 'Spacing', summary: '4px 기반 간격과 어드민 밀도 축', updatedAt: '2026-08-25' },
+      { to: '/foundations/iconography', label: 'Iconography', summary: '아이콘 크기·스트로크·사용 규칙', updatedAt: '2026-08-25' },
+      { to: '/foundations/state', label: 'State', summary: '상호작용 상태의 표현 규칙', updatedAt: '2026-08-25' },
+      { to: '/foundations/voice-and-tone', label: 'Voice and Tone', summary: '어드민이 사용자에게 말하는 방식', updatedAt: '2026-08-25' },
+      { to: '/foundations/writing', label: 'Writing', summary: '라벨·문구·오류 메시지 작성 규칙', updatedAt: '2026-08-25' },
     ],
   },
   {
@@ -58,44 +77,82 @@ export const sections: NavSection[] = [
     label: 'Components',
     to: '/components',
     items: [
-      { to: '/components', label: 'Overview', updatedAt: '2026-08-25' },
-      { to: '/components/button', label: 'Button', updatedAt: '2026-08-25' },
-      { to: '/components/dropdown-menu', label: 'Dropdown Menu', updatedAt: '2026-08-26' },
-      { to: '/components/input', label: 'Input', updatedAt: '2026-08-25' },
-      { to: '/components/select', label: 'Select', updatedAt: '2026-08-26' },
-      { to: '/components/checkbox', label: 'Checkbox', updatedAt: '2026-08-25' },
-      { to: '/components/radio', label: 'Radio', updatedAt: '2026-08-26' },
-      { to: '/components/switch', label: 'Switch', updatedAt: '2026-08-26' },
-      { to: '/components/textarea', label: 'Textarea', updatedAt: '2026-08-26' },
-      { to: '/components/tabs', label: 'Tabs', updatedAt: '2026-08-26' },
-      { to: '/components/breadcrumb', label: 'Breadcrumb', updatedAt: '2026-08-26' },
-      { to: '/components/pagination', label: 'Pagination', updatedAt: '2026-08-26' },
-      { to: '/components/alert', label: 'Alert', updatedAt: '2026-08-26' },
-      { to: '/components/toast', label: 'Toast', updatedAt: '2026-08-26' },
-      { to: '/components/tooltip', label: 'Tooltip', updatedAt: '2026-08-26' },
-      { to: '/components/dialog', label: 'Dialog', updatedAt: '2026-08-26' },
-      { to: '/components/table', label: 'Table', updatedAt: '2026-08-26' },
-      { to: '/components/badge', label: 'Badge', updatedAt: '2026-08-26' },
-      { to: '/components/avatar', label: 'Avatar', updatedAt: '2026-08-26' },
+      { to: '/components', label: 'Overview', summary: '화면을 이루는 낱개의 부품 목록', updatedAt: '2026-08-25' },
+      {
+        label: 'Actions',
+        items: [
+          { to: '/components/button', label: 'Button', updatedAt: '2026-08-25' },
+          { to: '/components/dropdown-menu', label: 'Dropdown Menu', updatedAt: '2026-08-26' },
+        ],
+      },
+      {
+        label: 'Inputs',
+        items: [
+          { to: '/components/checkbox', label: 'Checkbox', updatedAt: '2026-08-25' },
+          { to: '/components/input', label: 'Input', updatedAt: '2026-08-25' },
+          { to: '/components/radio', label: 'Radio', updatedAt: '2026-08-26' },
+          { to: '/components/select', label: 'Select', updatedAt: '2026-08-26' },
+          { to: '/components/switch', label: 'Switch', updatedAt: '2026-08-26' },
+          { to: '/components/textarea', label: 'Textarea', updatedAt: '2026-08-26' },
+        ],
+      },
+      {
+        label: 'Navigation',
+        items: [
+          { to: '/components/breadcrumb', label: 'Breadcrumb', updatedAt: '2026-08-26' },
+          { to: '/components/pagination', label: 'Pagination', updatedAt: '2026-08-26' },
+          { to: '/components/tabs', label: 'Tabs', updatedAt: '2026-08-26' },
+        ],
+      },
+      {
+        label: 'Data Display',
+        items: [
+          { to: '/components/avatar', label: 'Avatar', updatedAt: '2026-08-26' },
+          { to: '/components/badge', label: 'Badge', updatedAt: '2026-08-26' },
+          { to: '/components/card', label: 'Card', updatedAt: '2026-08-26' },
+          { to: '/components/separator', label: 'Separator', updatedAt: '2026-08-26' },
+          { to: '/components/table', label: 'Table', updatedAt: '2026-08-26' },
+        ],
+      },
+      {
+        label: 'Feedback',
+        items: [
+          { to: '/components/alert', label: 'Alert', updatedAt: '2026-08-26' },
+          { to: '/components/dialog', label: 'Dialog', updatedAt: '2026-08-26' },
+          { to: '/components/skeleton', label: 'Skeleton', updatedAt: '2026-08-26' },
+          { to: '/components/toast', label: 'Toast', updatedAt: '2026-08-26' },
+          { to: '/components/tooltip', label: 'Tooltip', updatedAt: '2026-08-26' },
+        ],
+      },
     ],
   },
   {
     id: 'patterns',
     label: 'Patterns',
     to: '/patterns',
-    items: [{ to: '/patterns', label: 'Overview', updatedAt: '2026-08-25' }],
+    items: [{ to: '/patterns', label: 'Overview', summary: '여러 부품을 엮는 화면 단위의 규칙', updatedAt: '2026-08-25' }],
   },
   {
     id: 'updates',
     label: 'Updates',
     to: '/updates',
-    items: [{ to: '/updates', label: 'Overview', updatedAt: '2026-08-25' }],
+    items: [{ to: '/updates', label: 'Overview', summary: '버전마다 무엇이 바뀌었는가', updatedAt: '2026-08-25' }],
   },
 ]
 
-/** 부모 다음에 자식이 오도록 평탄화한다. 순서가 필요한 곳은 모두 이것을 쓴다. */
-export function flattenDocs(items: DocLink[]): DocLink[] {
-  return items.flatMap((item) => [item, ...flattenDocs(item.children ?? [])])
+/** 묶음을 풀고 부모 다음에 자식이 오도록 평탄화한다. 순서가 필요한 곳은 모두 이것을 쓴다. */
+export function flattenDocs(items: NavItem[]): DocLink[] {
+  return items.flatMap((item) =>
+    isGroup(item) ? flattenDocs(item.items) : [item, ...flattenDocs(item.children ?? [])],
+  )
+}
+
+/**
+ * 묶음만 풀고 하위 문서는 펼치지 않은 1단계 문서 목록.
+ * Overview 카드처럼 "이 섹션이 무슨 문서를 갖는가"를 늘어놓는 곳에서 쓴다.
+ */
+export function topLevelDocs(items: NavItem[]): DocLink[] {
+  return items.flatMap((item) => (isGroup(item) ? item.items : [item]))
 }
 
 /**

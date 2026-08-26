@@ -28,3 +28,6 @@ dist-ssr
 
 # SDD 작업용 스크래치
 .superpowers
+
+# git worktree (병렬 세션용)
+.claude/worktrees

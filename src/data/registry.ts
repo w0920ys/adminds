@@ -5,6 +5,27 @@ export type ComponentCategory =
   | 'feedback'
   | 'data-display'
 
+/**
+ * 카테고리를 늘어놓는 순서. 읽는 순서이자 LNB의 묶음 순서다.
+ * 무엇을 누르는가(actions) → 무엇을 채우는가(inputs) → 어디로 가는가(navigation) →
+ * 무엇을 보는가(data-display) → 무엇을 듣는가(feedback) 순으로 좁혀 읽는다.
+ */
+export const categoryOrder: ComponentCategory[] = [
+  'actions',
+  'inputs',
+  'navigation',
+  'data-display',
+  'feedback',
+]
+
+export const categoryLabel: Record<ComponentCategory, string> = {
+  actions: 'Actions',
+  inputs: 'Inputs',
+  navigation: 'Navigation',
+  'data-display': 'Data Display',
+  feedback: 'Feedback',
+}
+
 export type ComponentStatus = 'draft' | 'review' | 'stable' | 'deprecated'
 
 export type AnatomyPart = {
@@ -57,6 +78,12 @@ export type Example = {
 export type ComponentMeta = {
   id: string
   name: string
+  /**
+   * 검색에서 이 컴포넌트를 부르는 다른 이름들.
+   * 문서 본문이 얇아 전문 검색만으로는 "모달"이 Dialog에 닿지 않으므로
+   * 사람이 실제로 치는 말을 손으로 적어 둔다. 한국어 이름과 흔한 오표기를 함께 넣는다.
+   */
+  aliases: string[]
   category: ComponentCategory
   status: ComponentStatus
   /** 컴포넌트나 그 문서가 처음 실린 버전. */
@@ -76,6 +103,7 @@ export const components: ComponentMeta[] = [
   {
     id: 'button',
     name: 'Button',
+    aliases: ['버튼', 'cta', '액션', 'action'],
     category: 'actions',
     status: 'stable',
     addedIn: 'v0.2.0',
@@ -208,6 +236,7 @@ export const components: ComponentMeta[] = [
   {
     id: 'input',
     name: 'Input',
+    aliases: ['텍스트 필드', '입력', '인풋', 'text field', 'textfield'],
     category: 'inputs',
     status: 'stable',
     addedIn: 'v0.7.0',
@@ -315,6 +344,7 @@ export const components: ComponentMeta[] = [
   {
     id: 'select',
     name: 'Select',
+    aliases: ['셀렉트', '드롭다운', '선택', 'dropdown', 'combobox'],
     category: 'inputs',
     status: 'stable',
     addedIn: 'v0.7.0',
@@ -416,6 +446,7 @@ export const components: ComponentMeta[] = [
   {
     id: 'checkbox',
     name: 'Checkbox',
+    aliases: ['체크박스', '체크', '다중 선택', 'check'],
     category: 'inputs',
     status: 'stable',
     addedIn: 'v0.7.0',
@@ -524,6 +555,7 @@ export const components: ComponentMeta[] = [
   {
     id: 'radio',
     name: 'Radio',
+    aliases: ['라디오', '단일 선택', 'radio group'],
     category: 'inputs',
     status: 'stable',
     addedIn: 'v0.8.0',
@@ -626,6 +658,7 @@ export const components: ComponentMeta[] = [
   {
     id: 'switch',
     name: 'Switch',
+    aliases: ['스위치', '토글', 'toggle', '온오프', 'on off'],
     category: 'inputs',
     status: 'stable',
     addedIn: 'v0.8.0',
@@ -733,6 +766,7 @@ export const components: ComponentMeta[] = [
   {
     id: 'textarea',
     name: 'Textarea',
+    aliases: ['텍스트 영역', '여러 줄', 'multiline', '메모', '긴 글'],
     category: 'inputs',
     status: 'stable',
     addedIn: 'v0.8.0',
@@ -845,6 +879,7 @@ export const components: ComponentMeta[] = [
   {
     id: 'tabs',
     name: 'Tabs',
+    aliases: ['탭', 'tab', '전환'],
     category: 'navigation',
     status: 'stable',
     addedIn: 'v0.8.0',
@@ -938,6 +973,7 @@ export const components: ComponentMeta[] = [
   {
     id: 'breadcrumb',
     name: 'Breadcrumb',
+    aliases: ['경로', '빵부스러기', 'path', '위치'],
     category: 'navigation',
     status: 'stable',
     addedIn: 'v0.8.0',
@@ -1023,6 +1059,7 @@ export const components: ComponentMeta[] = [
   {
     id: 'pagination',
     name: 'Pagination',
+    aliases: ['페이지', '페이지네이션', '페이징', 'paging'],
     category: 'navigation',
     status: 'stable',
     addedIn: 'v0.8.0',
@@ -1103,6 +1140,7 @@ export const components: ComponentMeta[] = [
   {
     id: 'alert',
     name: 'Alert',
+    aliases: ['경고', '배너', 'banner', 'notice', '안내'],
     category: 'feedback',
     status: 'stable',
     addedIn: 'v0.8.0',
@@ -1198,6 +1236,7 @@ export const components: ComponentMeta[] = [
   {
     id: 'toast',
     name: 'Toast',
+    aliases: ['토스트', '스낵바', 'snackbar', '알림', 'notification'],
     category: 'feedback',
     status: 'stable',
     addedIn: 'v0.8.0',
@@ -1281,6 +1320,7 @@ export const components: ComponentMeta[] = [
   {
     id: 'table',
     name: 'Table',
+    aliases: ['테이블', '표', '목록', 'grid', 'list'],
     category: 'data-display',
     status: 'stable',
     addedIn: 'v0.8.0',
@@ -1385,6 +1425,7 @@ export const components: ComponentMeta[] = [
   {
     id: 'badge',
     name: 'Badge',
+    aliases: ['라벨', '태그', '뱃지', 'tag', 'label', 'chip'],
     category: 'data-display',
     status: 'stable',
     addedIn: 'v0.8.0',
@@ -1465,6 +1506,7 @@ export const components: ComponentMeta[] = [
   {
     id: 'tooltip',
     name: 'Tooltip',
+    aliases: ['툴팁', '말풍선', '설명', 'hint'],
     category: 'feedback',
     status: 'stable',
     addedIn: 'v0.8.0',
@@ -1528,6 +1570,7 @@ export const components: ComponentMeta[] = [
   {
     id: 'dialog',
     name: 'Dialog',
+    aliases: ['모달', '팝업', 'modal', 'popup', '확인창'],
     category: 'feedback',
     status: 'stable',
     addedIn: 'v0.8.0',
@@ -1601,6 +1644,7 @@ export const components: ComponentMeta[] = [
   {
     id: 'dropdown-menu',
     name: 'Dropdown Menu',
+    aliases: ['드롭다운', '메뉴', '더보기', 'menu', 'kebab', '케밥'],
     category: 'actions',
     status: 'stable',
     addedIn: 'v0.8.0',
@@ -1667,6 +1711,7 @@ export const components: ComponentMeta[] = [
   {
     id: 'avatar',
     name: 'Avatar',
+    aliases: ['프로필', '사진', 'profile', 'user', '유저'],
     category: 'data-display',
     status: 'stable',
     addedIn: 'v0.8.0',
@@ -1745,6 +1790,241 @@ export const components: ComponentMeta[] = [
     ],
     verified: true,
   },
+  {
+    id: 'separator',
+    name: 'Separator',
+    aliases: ['구분선', '디바이더', 'divider', 'hr', '선'],
+    category: 'data-display',
+    status: 'stable',
+    addedIn: 'v0.9.0',
+    changedIn: 'v0.9.0',
+    purpose: '가로 또는 세로로 선을 그어 화면의 영역을 나눈다. 기본은 장식이므로 뜻이 있는 경계에서만 decorative를 거짓으로 둔다.',
+    anatomy: [],
+    properties: [
+      {
+        name: 'orientation',
+        title: 'Orientation',
+        description: '선을 가로로 그을지 세로로 그을지 정한다.',
+        display: 'row',
+        options: [{ value: 'horizontal' }, { value: 'vertical' }],
+      },
+    ],
+    guidelines: [
+      {
+        id: 'meaningful-vs-decorative',
+        title: '뜻이 있는 경계와 장식을 구별한다',
+        body: '메뉴에서 성격이 다른 묶음을 가르는 선은 뜻이 있고, 카드 안 구획을 나누는 선은 장식입니다. 스크린 리더가 읽어야 하는 것은 앞의 것뿐입니다.',
+        do: ['성격이 다른 동작 묶음의 경계에는 decorative를 거짓으로 둔다'],
+        dont: ['카드 안 구획처럼 장식으로 쓰는 선에 decorative를 거짓으로 두지 않는다'],
+      },
+      {
+        id: 'no-line-when-spacing-suffices',
+        title: '여백으로 충분하면 선을 긋지 않는다',
+        body: '간격이 이미 묶음을 말하고 있으면 선은 잡음입니다.',
+        do: ['넉넉한 간격만으로 구획을 나눌 수 있는지 먼저 살핀다'],
+        dont: ['이미 여백이 구획을 나누고 있는데 선을 더하지 않는다'],
+      },
+      {
+        id: 'not-between-every-item',
+        title: '목록의 모든 항목 사이에 긋지 않는다',
+        body: '선이 많아지면 각각의 뜻이 사라집니다.',
+        do: ['성격이 다른 묶음 사이에만 선을 긋는다'],
+        dont: ['목록의 항목마다 선을 넣지 않는다'],
+      },
+    ],
+    usage: [
+      { id: 'card-section', title: '카드 안의 구획', note: '테두리 있는 상자 안에서 서로 다른 정보 구획을 나눈다' },
+      { id: 'menu-group', title: '메뉴 항목 묶음 사이', note: '성격이 다른 동작 묶음의 경계를 알린다' },
+      { id: 'toolbar-group', title: '툴바의 동작 묶음 사이', note: '관련 있는 동작끼리 묶는다' },
+      { id: 'form-section', title: '폼의 구획', note: '입력 항목이 많은 폼에서 구획을 나눈다' },
+    ],
+    cases: [
+      { id: 'vertical-height', title: '세로 구분선의 높이', note: '부모가 높이를 정해야 세로 구분선이 보인다' },
+      { id: 'spacing-sufficient', title: '여백만으로 충분한 경우', note: '선 없이 간격만으로 구획을 나눈다' },
+      { id: 'asymmetric-margin', title: '양옆 여백이 다른 경우', note: '툴바처럼 시작 여백과 끝 여백이 다르게 그어진다' },
+    ],
+    verified: false,
+  },
+  {
+    id: 'skeleton',
+    name: 'Skeleton',
+    aliases: ['스켈레톤', '로딩', '플레이스홀더', 'loading', 'placeholder'],
+    category: 'feedback',
+    status: 'stable',
+    addedIn: 'v0.9.0',
+    changedIn: 'v0.9.0',
+    purpose:
+      '아직 도착하지 않은 내용의 자리를 실제 모양에 가까운 뼈대로 채운다. 뼈대 자체는 aria-hidden이고, 불러오는 중이라는 사실은 role="status" 문구가 따로 알린다.',
+    anatomy: [],
+    properties: [
+      {
+        name: 'shape',
+        title: 'Shape',
+        description: '뼈대가 흉내 낼 실제 내용의 모양을 정한다.',
+        display: 'row',
+        options: [{ value: 'text' }, { value: 'title' }, { value: 'block' }, { value: 'circle' }],
+      },
+    ],
+    guidelines: [
+      {
+        id: 'match-real-content',
+        title: '실제 내용의 모양을 닮게 만든다',
+        body: '뼈대가 실제와 다르면 내용이 도착하는 순간 화면이 튑니다. 줄 수와 폭을 맞춥니다.',
+        do: ['실제 내용의 줄 수와 폭에 맞춰 뼈대를 그린다'],
+        dont: ['실제 내용과 다른 모양의 뼈대를 두어 내용이 도착할 때 화면을 튀게 하지 않는다'],
+      },
+      {
+        id: 'not-for-brief-loads',
+        title: '짧게 끝나는 것에는 쓰지 않는다',
+        body: '곧 사라질 뼈대는 깜빡임으로만 보입니다.',
+        do: ['오래 걸리는 로딩에만 뼈대를 쓴다'],
+        dont: ['금방 끝나는 로딩에 뼈대를 두어 깜빡임만 남기지 않는다'],
+      },
+      {
+        id: 'no-mixing-with-spinner',
+        title: '뼈대와 스피너를 한 화면에 섞지 않는다',
+        body: '무엇을 기다리는지 두 가지로 말하면 둘 다 흐려집니다.',
+        do: ['한 화면에는 뼈대나 스피너 중 하나만 쓴다'],
+        dont: ['뼈대와 스피너를 한 화면에 함께 쓰지 않는다'],
+      },
+      {
+        id: 'announce-via-text',
+        title: '스크린 리더에는 문구로 알린다',
+        body: '뼈대 자체는 aria-hidden이고, 상태는 문구가 전합니다.',
+        do: ["role='status'를 가진 문구로 불러오는 중임을 알린다"],
+        dont: ['불러오는 중이라는 사실을 문구 없이 뼈대만으로 전하려 하지 않는다'],
+      },
+    ],
+    usage: [
+      { id: 'table-row', title: '표의 행', note: '표가 아직 불러오지 않았을 때 행 모양의 뼈대를 반복해 보인다' },
+      { id: 'card-list', title: '카드 목록', note: '카드 여러 장이 함께 불러올 때 카드 모양의 뼈대를 나열한다' },
+      {
+        id: 'detail-basic-info',
+        title: '상세 화면의 기본 정보',
+        note: '상세 화면 상단의 제목과 본문 자리를 뼈대로 채운다',
+      },
+      {
+        id: 'avatar-with-name',
+        title: '아바타와 이름',
+        note: '아바타와 이름 두 줄이 함께 불러오는 자리를 뼈대로 채운다',
+      },
+    ],
+    cases: [
+      {
+        id: 'shorter-or-longer-content',
+        title: '실제 내용보다 짧거나 긴 경우',
+        note: '뼈대 폭보다 실제 내용이 짧거나 길면 도착하는 순간 폭이 다시 잡힌다',
+      },
+      { id: 'partial-arrival', title: '일부만 도착한 경우', note: '일부 항목만 먼저 도착하면 나머지 자리만 뼈대로 남는다' },
+      { id: 'repeat-count', title: '반복 횟수를 정하는 경우', note: '반복 횟수는 배열에서 파생하고 손으로 적지 않는다' },
+      {
+        id: 'surface',
+        title: '놓이는 표면이 다른 경우',
+        note: 'bg-muted 채움이라 놓이는 표면의 명도가 다를 때만 도형으로 읽힌다',
+      },
+    ],
+    verified: false,
+  },
+  {
+    id: 'card',
+    name: 'Card',
+    aliases: ['카드', '패널', 'panel', '박스'],
+    category: 'data-display',
+    status: 'stable',
+    addedIn: 'v0.9.0',
+    changedIn: 'v0.9.0',
+    purpose: '관련된 내용을 하나의 틀로 묶어 보인다. 안쪽 구획은 Separator로 나눈다.',
+    anatomy: [
+      { part: 'container', label: 'Container', note: 'rounded-lg. variant에 따른 테두리·배경·그림자' },
+      {
+        part: 'header',
+        label: 'Header',
+        note: 'grid. Action이 있으면 두 번째 열을 만들어 오른쪽 끝에 고정한다',
+        optional: true,
+      },
+      { part: 'title', label: 'Title', note: 'font-semibold' },
+      {
+        part: 'description',
+        label: 'Description',
+        note: 'text-muted-foreground text-sm',
+        optional: true,
+      },
+      {
+        part: 'action',
+        label: 'Action',
+        note: '헤더 오른쪽 끝. 제목이 길어져도 밀려나지 않는다',
+        optional: true,
+      },
+      { part: 'content', label: 'Content', note: 'padding 축이 좌우 여백을 없애는 대상' },
+      { part: 'footer', label: 'Footer', note: 'padding 값과 무관하게 자기 여백을 유지한다', optional: true },
+    ],
+    properties: [
+      {
+        name: 'variant',
+        title: 'Variant',
+        description: '테두리를 쓸지 그림자를 쓸지 정한다.',
+        display: 'row',
+        options: [
+          { value: 'outlined', note: '기본. 카드가 여럿 나란히 놓이는 화면. 그림자가 여럿이면 화면이 들뜬다' },
+          { value: 'elevated', note: '배경 위에 떠 있어야 하는 하나짜리 카드' },
+        ],
+      },
+      {
+        name: 'padding',
+        title: 'Padding',
+        description: 'Content의 좌우 여백을 둘지 정한다.',
+        display: 'row',
+        options: [
+          { value: 'default', note: '기본' },
+          { value: 'none', note: '카드가 표를 통째로 담을 때. 표에는 자기 여백이 있어 카드 여백이 겹치면 두 겹이 된다' },
+        ],
+      },
+    ],
+    guidelines: [
+      {
+        id: 'no-card-in-card',
+        title: '카드를 카드 안에 넣지 않는다',
+        body: '테두리가 겹치면 위계가 아니라 잡음이 됩니다. 안쪽 구획은 Separator로 나눕니다.',
+        do: ['안쪽 구획은 Separator로 나눈다'],
+        dont: ['카드 안에 또 다른 카드를 넣지 않는다'],
+      },
+      {
+        id: 'no-whole-card-link',
+        title: '카드 전체를 링크로 만들지 않는다',
+        body: '카드 안에 누를 수 있는 것이 둘 이상이면 어디를 눌러야 하는지 흐려집니다. 제목만 링크로 둡니다.',
+        do: ['제목만 링크로 둔다'],
+        dont: ['카드 전체를 하나의 링크로 감싸지 않는다'],
+      },
+      {
+        id: 'no-padding-with-table',
+        title: '표를 담을 때는 여백을 없앤다',
+        body: 'padding을 none으로 두고 표의 여백을 씁니다.',
+        do: ["표를 담을 때는 padding을 'none'으로 둔다"],
+        dont: ['표와 카드 양쪽에 여백을 겹쳐 두지 않는다'],
+      },
+    ],
+    usage: [
+      { id: 'dashboard-metric', title: '대시보드의 지표', note: '지표 하나를 카드 한 장에 담는다' },
+      { id: 'detail-section', title: '상세 화면의 구획', note: '상세 화면을 여러 구획으로 나누고 구획마다 카드를 둔다' },
+      { id: 'settings-group', title: '설정 묶음', note: '관련된 설정 항목을 하나의 카드로 묶는다' },
+      { id: 'table-frame', title: '표를 담는 틀', note: 'padding을 none으로 두고 표의 여백을 그대로 쓴다' },
+    ],
+    cases: [
+      { id: 'title-only', title: '제목만 있고 내용이 없는 경우', note: '내용 없이 제목만 있어도 카드 구조는 그대로 유지된다' },
+      { id: 'long-content', title: '내용이 아주 긴 경우', note: '내용이 길어지면 카드 높이가 함께 늘어난다' },
+      {
+        id: 'uneven-height',
+        title: '카드가 나란히 놓여 높이가 다른 경우',
+        note: 'Card 자신은 높이를 맞추지 않는다. 나란히 두는 화면의 grid나 flex가 높이를 맞춘다',
+      },
+      {
+        id: 'narrow-screen',
+        title: '좁은 화면',
+        note: '폭이 좁아져도 Header의 두 번째 열은 줄지 않아 Action이 자리를 지킨다',
+      },
+    ],
+    verified: false,
+  },
 ]
 
 export function getComponent(id: string): ComponentMeta | undefined {
@@ -1753,6 +2033,14 @@ export function getComponent(id: string): ComponentMeta | undefined {
 
 export function getComponentsByCategory(category: ComponentCategory): ComponentMeta[] {
   return components.filter((c) => c.category === category)
+}
+
+/** 카테고리 순서대로 묶은 컴포넌트 목록. 묶음 안은 이름순이다. */
+export function componentsByCategory(): { category: ComponentCategory; items: ComponentMeta[] }[] {
+  return categoryOrder.map((category) => ({
+    category,
+    items: getComponentsByCategory(category).sort((a, b) => a.name.localeCompare(b.name)),
+  }))
 }
 
 export function getProperty(meta: ComponentMeta, name: string): ComponentProperty | undefined {
