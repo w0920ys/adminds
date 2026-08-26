@@ -49,6 +49,7 @@ import { VoiceAndTonePage } from '@/routes/foundations/VoiceAndTonePage'
 import { WritingPage } from '@/routes/foundations/WritingPage'
 import { GetStartedOverview } from '@/routes/get-started/GetStartedOverview'
 import { InstallPage } from '@/routes/get-started/InstallPage'
+import { PrinciplesPage } from '@/routes/get-started/PrinciplesPage'
 import { DestructiveConfirmPatternPage } from '@/routes/patterns/DestructiveConfirmPatternPage'
 import { DetailPatternPage } from '@/routes/patterns/DetailPatternPage'
 import { EmptyAndErrorPatternPage } from '@/routes/patterns/EmptyAndErrorPatternPage'
@@ -63,7 +64,7 @@ export const routes: RouteObject[] = [
     children: [
       { index: true, element: <GetStartedOverview /> },
       { path: 'get-started/install', element: <InstallPage /> },
-      { path: 'get-started/principles', element: <Placeholder title="Principles" /> },
+      { path: 'get-started/principles', element: <PrinciplesPage /> },
 
       { path: 'foundations', element: <FoundationsOverview /> },
       { path: 'foundations/design-token', element: <DesignTokenPage /> },
