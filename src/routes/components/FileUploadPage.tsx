@@ -3,6 +3,7 @@ import type { ReactNode } from 'react'
 import { UploadCloud } from 'lucide-react'
 import { ComponentPage } from '@/components/docs/ComponentPage'
 import type { RenderOptions } from '@/components/docs/PropertyBlock'
+import { Field, FieldControl, FieldLabel } from '@/components/ui/field'
 import {
   FileUpload,
   FileUploadDropzone,
@@ -30,12 +31,23 @@ function toDemoFile(file: File): DemoFile {
  * 이 데모 화면(실제로는 그 자리에 서비스 화면)의 몫이다. layout이 single이면
  * 새로 고른 파일이 이전 파일을 대신하고, multiple이면 목록에 더한다 —
  * 그 규칙조차 FileUpload 안에 있지 않고 여기 handleFilesSelected에 있다.
+ *
+ * label을 주면 Field·FieldLabel·FieldControl로 트리거를 감싼다 — Input·
+ * Combobox·Date Picker가 Usage 예시에서 실제 화면처럼 라벨을 다는 것과
+ * 같은 이유다(Playground·Properties·Guidelines처럼 축 자체를 보이는
+ * 자리는 label을 주지 않아 예전처럼 라벨 없이 그린다). Dropzone·button
+ * 두 변형 모두 FileUploadDropzone이 진짜 <button>을 그리고 button은
+ * label의 대상이 될 수 있는(labelable) 요소라 Combobox·DatePicker의
+ * 트리거(<div role="button">)처럼 FieldLabel의 onClick으로 포커스를
+ * 대신 옮겨줄 필요가 없다 — label을 눌러도 브라우저가 알아서 그 id를
+ * 가진 button에 포커스를 주고 클릭까지 전달한다.
  */
 function DemoFileUpload({
   variant,
   layout,
   disabled,
   invalid,
+  label,
   initialFiles = [],
   instruction = '파일을 끌어다 놓거나 눌러서 올리세요',
   constraint = 'PNG, JPG · 최대 5MB',
@@ -46,6 +58,7 @@ function DemoFileUpload({
   layout: DemoLayout
   disabled?: boolean
   invalid?: boolean
+  label?: string
   initialFiles?: DemoFile[]
   instruction?: string
   constraint?: string
@@ -60,6 +73,20 @@ function DemoFileUpload({
     setFiles((prev) => (multiple ? [...prev, ...next] : next))
   }
 
+  const dropzone = (
+    <FileUploadDropzone variant={variant}>
+      {variant === 'dropzone' ? (
+        <>
+          <UploadCloud className="text-muted-foreground size-6" aria-hidden />
+          <p className="text-sm font-medium">{instruction}</p>
+          <p className="text-muted-foreground text-xs">{constraint}</p>
+        </>
+      ) : (
+        buttonLabel
+      )}
+    </FileUploadDropzone>
+  )
+
   return (
     <FileUpload
       disabled={disabled}
@@ -68,17 +95,14 @@ function DemoFileUpload({
       onFilesSelected={handleFilesSelected}
       className={className}
     >
-      <FileUploadDropzone variant={variant}>
-        {variant === 'dropzone' ? (
-          <>
-            <UploadCloud className="text-muted-foreground size-6" aria-hidden />
-            <p className="text-sm font-medium">{instruction}</p>
-            <p className="text-muted-foreground text-xs">{constraint}</p>
-          </>
-        ) : (
-          buttonLabel
-        )}
-      </FileUploadDropzone>
+      {label ? (
+        <Field>
+          <FieldLabel>{label}</FieldLabel>
+          <FieldControl>{dropzone}</FieldControl>
+        </Field>
+      ) : (
+        dropzone
+      )}
       {files.length > 0 && (
         <FileUploadList>
           {files.map((file) => (
@@ -194,6 +218,7 @@ function renderExample(exampleId: string): ReactNode {
         <DemoFileUpload
           variant="button"
           layout="single"
+          label="프로필 이미지"
           buttonLabel="프로필 이미지 선택"
           className="w-56"
         />
@@ -204,6 +229,7 @@ function renderExample(exampleId: string): ReactNode {
         <DemoFileUpload
           variant="dropzone"
           layout="single"
+          label="회원 목록 파일"
           instruction="회원 목록 파일을 끌어다 놓거나 눌러서 올리세요"
           constraint="CSV · 최대 20MB"
           className="w-72"
@@ -215,6 +241,7 @@ function renderExample(exampleId: string): ReactNode {
         <DemoFileUpload
           variant="dropzone"
           layout="multiple"
+          label="첨부 파일"
           instruction="첨부 파일을 끌어다 놓거나 눌러서 올리세요"
           constraint="문서·이미지 · 파일당 최대 10MB"
           initialFiles={[
@@ -230,6 +257,7 @@ function renderExample(exampleId: string): ReactNode {
         <DemoFileUpload
           variant="dropzone"
           layout="single"
+          label="로고 파일"
           instruction="새 로고 파일을 끌어다 놓거나 눌러서 올리세요"
           constraint="PNG, SVG · 최대 2MB"
           initialFiles={[{ id: 'l1', name: 'logo.svg', size: 84_000 }]}

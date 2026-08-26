@@ -131,14 +131,7 @@ type FileUploadDropzoneVariant = 'dropzone' | 'button'
  */
 type FileUploadDropzoneProps = Omit<
   React.ComponentProps<'button'>,
-  | 'children'
-  | 'disabled'
-  | 'onClick'
-  | 'onKeyDown'
-  | 'onDragEnter'
-  | 'onDragOver'
-  | 'onDragLeave'
-  | 'onDrop'
+  'children' | 'disabled' | 'onClick' | 'onDragEnter' | 'onDragOver' | 'onDragLeave' | 'onDrop'
 > & {
   variant?: FileUploadDropzoneVariant
   children: React.ReactNode
@@ -147,10 +140,17 @@ type FileUploadDropzoneProps = Omit<
 /*
  * variant가 이 컴포넌트의 모양을 통째로 바꾼다 — dropzone은 점선 테두리의
  * 넓은 영역, button은 진짜 Button 하나다(크기·색은 Button 자기 문서가 정한
- * 뜻을 그대로 따른다). 둘 다 진짜 <button>이라 Tab으로 닿고 Enter·Space로
- * 누를 수 있다 — 끌어다 놓기는 키보드로 할 수 없으므로 누르는 길이 항상
- * 함께 있어야 한다. 드래그 핸들러는 dropzone에만 건다 — 작은 버튼 위로
- * 파일을 끄는 동작은 이 시스템이 지지하는 사용법이 아니다.
+ * 뜻을 그대로 따른다). 둘 다 진짜 <button>이라 Tab으로 닿고, 브라우저가
+ * 기본으로 주는 Enter·Space 활성화만으로 열린다 — Combobox·DatePicker의
+ * 트리거가 직접 keydown을 잡는 것은 그 둘이 <div role="button">이라
+ * 스스로는 아무 키에도 반응하지 않기 때문이다(combobox.tsx의 트리거,
+ * date-picker.tsx의 트리거). 여기는 진짜 button이라 그 사정이 없고,
+ * 직접 잡으면 오히려 keydown에서 막은 preventDefault가 브라우저의 기본
+ * 클릭 합성을 지워 키보드로 눌렀을 때 click 이벤트 자체가 나가지 않는
+ * 부작용만 남는다 — 그래서 아무것도 달지 않는다. 끌어다 놓기는 키보드로
+ * 할 수 없으므로 누르는 길이 항상 함께 있어야 한다는 지침은 그대로다.
+ * 드래그 핸들러는 dropzone에만 건다 — 작은 버튼 위로 파일을 끄는 동작은
+ * 이 시스템이 지지하는 사용법이 아니다.
  */
 function FileUploadDropzone({
   variant = 'dropzone',
@@ -182,21 +182,6 @@ function FileUploadDropzone({
     selectFiles(Array.from(event.dataTransfer.files))
   }
 
-  /*
-   * 진짜 <button>이라 Enter·Space는 브라우저가 기본으로도 열어준다. 그래도
-   * 여기서 한 번 더 직접 잡는다 — keydown에서 preventDefault로 막아 두면
-   * 브라우저의 기본 클릭 합성과 겹쳐 openDialog가 두 번 불리는 일이 없다.
-   * Combobox·DatePicker의 트리거가 이미 같은 방식으로 Enter·Space를 스스로
-   * 잡는다.
-   */
-  function handleKeyDown(event: React.KeyboardEvent<HTMLButtonElement>) {
-    if (disabled) return
-    if (event.key === 'Enter' || event.key === ' ') {
-      event.preventDefault()
-      openDialog()
-    }
-  }
-
   if (variant === 'button') {
     return (
       <Button
@@ -205,7 +190,6 @@ function FileUploadDropzone({
         disabled={disabled}
         aria-invalid={invalid || undefined}
         onClick={openDialog}
-        onKeyDown={handleKeyDown}
         className={className}
         {...props}
       >
@@ -222,7 +206,6 @@ function FileUploadDropzone({
       aria-invalid={invalid || undefined}
       disabled={disabled}
       onClick={openDialog}
-      onKeyDown={handleKeyDown}
       onDragEnter={handleDragEnter}
       onDragOver={handleDragOver}
       onDragLeave={handleDragLeave}
