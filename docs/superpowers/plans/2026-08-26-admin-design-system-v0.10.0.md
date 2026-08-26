@@ -89,10 +89,18 @@
 
 `@radix-ui/react-popover`와 `@radix-ui/react-slider`는 **이미 설치·커밋되어 있다.** `npm install`을 돌리지 않는다.
 
-`nav-config`의 자리:
+`nav-config`의 자리는 **묶음 안 이름순**이다. `nav-config.test.ts`가 그것을 검사하고, `registry.ts`의 배열 순서도 `nav-config`와 같아야 한다(`registry-order.test.ts`).
 
-- `Popover` — `Tooltip` 뒤 (Feedback)
-- `Field` · `Slider` · `Combobox` · `Date Picker` · `File Upload` — `Textarea` 뒤 (Inputs), 이 순서대로
+| 컴포넌트 | 묶음 | 앞 | 뒤 |
+|---|---|---|---|
+| `Popover` | Feedback | Empty State | Progress |
+| `Combobox` | Inputs | Checkbox | Date Picker |
+| `Date Picker` | Inputs | Combobox | Field |
+| `Field` | Inputs | Date Picker | File Upload |
+| `File Upload` | Inputs | Field | Input |
+| `Slider` | Inputs | Select | Switch |
+
+여섯이 다 들어오면 Inputs 묶음은 Checkbox · Combobox · Date Picker · Field · File Upload · Input · Radio · Select · Slider · Switch · Textarea 순이 된다.
 
 ---
 

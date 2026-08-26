@@ -43,9 +43,13 @@ Playground는 트리거를 눌러 여는 인스턴스 하나를 놓습니다. �
 
 ### 구조 (Anatomy)
 
-Trigger · Content · Header(선택) · Body · Footer(선택)
+Trigger 하나입니다.
 
-구조도의 미리보기는 열린 인스턴스입니다 — `Select`가 목록과 항목을 그렇게 보였습니다.
+처음에는 Content와 그 안의 Header·Body·Footer까지 부위로 두려 했습니다. 그런데 Radix가 그 표면을 `document.body`로 포털하므로 구조도의 무대 안에서 찾을 수 없습니다 — 지시선을 그릴 자리가 없습니다.
+
+이 저장소는 같은 처지의 컴포넌트를 이미 셋 갖고 있고 모두 같은 결론에 이르렀습니다. `Dialog` · `Tooltip` · `Dropdown Menu`가 Trigger 하나만 부위로 둡니다. `Select`는 Trigger와 Value 둘인데, 그 둘이 무대 안에 남는 부위이기 때문입니다.
+
+열린 표면의 구조는 지침과 사용 예가 다룹니다. **보일 수 없는 것을 부위로 적지 않습니다.**
 
 ### 지침
 
