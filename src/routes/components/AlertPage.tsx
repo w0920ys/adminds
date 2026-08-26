@@ -4,6 +4,7 @@ import { ComponentPage } from '@/components/docs/ComponentPage'
 import type { RenderOptions } from '@/components/docs/PropertyBlock'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
+import { Toast, ToastClose, ToastProvider, ToastTitle, ToastViewport } from '@/components/ui/toast'
 import { getComponent } from '@/data/registry'
 import { Placeholder } from '@/routes/Placeholder'
 
@@ -58,8 +59,36 @@ function renderAlert(options: RenderOptions) {
  * 따라 바뀌므로 문서가 실제와 어긋나지 않는다.
  * ------------------------------------------------------------------ */
 
+/** alert-vs-toast 예시에서만 쓰는 자리 고정 Toast. 실제 트리거 없이 결과만 보인다 */
+function PinnedToast({ children }: { children: ReactNode }) {
+  return (
+    <ToastProvider duration={Infinity}>
+      {children}
+      <ToastViewport className="static right-auto bottom-auto w-auto max-w-none flex-none" />
+    </ToastProvider>
+  )
+}
+
 function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): ReactNode {
   switch (guidelineId) {
+    case 'alert-vs-toast':
+      return kind === 'do' ? (
+        <Alert variant="destructive" className="w-72">
+          <OctagonAlert aria-hidden />
+          <div className="flex flex-1 flex-col gap-1">
+            <AlertTitle>결제 정보가 만료되었습니다</AlertTitle>
+            <AlertDescription>결제 수단을 갱신할 때까지 이 화면에 계속 보입니다</AlertDescription>
+          </div>
+        </Alert>
+      ) : (
+        <PinnedToast>
+          <Toast variant="destructive" className="w-72">
+            <ToastTitle>결제 정보가 만료되었습니다</ToastTitle>
+            <ToastClose />
+          </Toast>
+        </PinnedToast>
+      )
+
     case 'color-alone':
       return kind === 'do' ? (
         <Alert variant="destructive" className="w-72">

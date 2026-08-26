@@ -206,6 +206,72 @@ export const components: ComponentMeta[] = [
     verified: true,
   },
   {
+    id: 'dropdown-menu',
+    name: 'Dropdown Menu',
+    category: 'actions',
+    status: 'stable',
+    addedIn: 'v0.8.0',
+    changedIn: 'v0.8.0',
+    purpose: '한 자리에서 여러 동작을 고르게 한다. 값을 고르는 자리에는 Select를 쓴다.',
+    anatomy: [
+      {
+        part: 'trigger',
+        label: 'Trigger',
+        note: "누르면 트리거 아래에 목록이 뜬다. bg-popover, 테두리, radius-md, 쌓임 순서는 z-popover. 각 항목은 text-sm이고 포커스되면 bg-accent, 위험한 항목은 text-destructive다. 위험한 항목은 구분선(bg-border, 1px) 아래로 모은다. Select와 달리 고른 항목에 Check 표시가 남지 않는다 — 여기서는 값을 고르는 것이 아니라 동작을 실행하는 것이고, 실행되면 메뉴가 닫힌다. Radix DropdownMenu는 기본이 modal이라(RemoveScroll·FocusScope·hideOthers) 열린 목록은 구조도 무대에 담지 않는다",
+      },
+    ],
+    properties: [
+      {
+        name: 'state',
+        title: 'State',
+        description: '트리거의 상호작용 상태를 나타낸다. 열림·정렬은 열려야만 보이는 값이라 이 격자에는 없다 — Usage에서 실제로 눌러서 본다.',
+        display: 'grid',
+        options: [
+          { value: 'default' },
+          { value: 'hover', note: '포인터가 올라간 동안' },
+          { value: 'focus', note: '키보드 포커스. 항상 보여야 한다' },
+          { value: 'disabled', note: '지금 열 수 없음' },
+        ],
+      },
+    ],
+    guidelines: [
+      {
+        id: 'select-for-values',
+        title: 'Select for values',
+        body: '값을 고르는 자리에는 Dropdown Menu 대신 Select를 씁니다. Dropdown Menu의 항목은 눌리는 순간 실행되고 메뉴가 닫힙니다.',
+        do: ['상태나 분류처럼 값을 고르는 자리에는 Select를 쓴다', '삭제·수정처럼 동작을 실행하는 자리에는 Dropdown Menu를 쓴다'],
+        dont: ['값을 고르는 용도로 Dropdown Menu를 쓰지 않는다'],
+      },
+      {
+        id: 'destructive-grouping',
+        title: 'Destructive grouping',
+        body: '위험한 항목은 구분선 아래로 모으고 text-destructive를 씁니다. 일반 동작 사이에 섞여 있으면 실수로 누르기 쉽습니다.',
+        do: ['위험한 항목을 구분선 아래로 모은다', '위험한 항목에 text-destructive를 쓴다'],
+        dont: ['위험한 항목을 일반 항목 사이에 섞어 두지 않는다'],
+      },
+      {
+        id: 'few-items-buttons',
+        title: 'Few items, buttons',
+        body: '항목이 셋 이하면 Dropdown Menu 대신 버튼을 나란히 두는 편이 낫습니다. 누르는 수가 하나 줄고 선택지가 바로 보입니다.',
+        do: ['항목이 셋 이하면 버튼을 나란히 둔다'],
+        dont: ['항목이 둘뿐인데 그것을 감추려고 Dropdown Menu로 접지 않는다'],
+      },
+    ],
+    usage: [
+      { id: 'row-actions', title: '표 행의 더보기', note: '행마다 반복되는 동작을 아이콘 버튼 뒤에 모은다' },
+      { id: 'page-header-actions', title: '페이지 헤더의 보조 동작', note: '주 동작 옆에 부수적인 동작을 모은다. align="end"로 오른쪽 끝에 맞춘다' },
+      { id: 'bulk-actions', title: '대량 작업', note: '선택한 행에 적용할 동작을 모은다' },
+      { id: 'account-menu', title: '계정 메뉴', note: '설정·로그아웃처럼 계정에 관한 동작을 모은다' },
+    ],
+    cases: [
+      { id: 'many-items', title: '항목이 아주 많은 경우', note: '목록이 뷰포트를 넘으면 목록 안에서 스크롤된다' },
+      { id: 'bottom-of-screen', title: '화면 아래쪽에서 열리는 경우', note: '자리가 없으면 위쪽으로 뒤집혀 열린다' },
+      { id: 'destructive-only', title: '위험 항목만 있는 경우', note: '구분선 없이 항목 전체가 text-destructive를 쓴다' },
+      { id: 'narrow-screen', title: '좁은 화면', note: '트리거가 줄어들지 않고 목록 너비는 트리거와 무관하게 유지된다' },
+    ],
+    verified: true,
+  },
+  {
     id: 'input',
     name: 'Input',
     category: 'inputs',
@@ -1101,6 +1167,146 @@ export const components: ComponentMeta[] = [
     verified: true,
   },
   {
+    id: 'steps',
+    name: 'Steps',
+    category: 'navigation',
+    status: 'stable',
+    addedIn: 'v0.9.0',
+    changedIn: 'v0.9.0',
+    purpose:
+      '여러 단계로 이루어진 흐름에서 지금 단계와 전체 진행 상태를 보인다. state는 단계 하나의 상태이므로 Steps가 현재 단계 번호로 계산하지 않고 각 Step이 직접 받는다.',
+    anatomy: [
+      {
+        part: 'container',
+        label: 'Container',
+        note: 'ol. orientation에 따라 가로 또는 세로로 늘어놓는다',
+      },
+      {
+        part: 'step',
+        label: 'Step',
+        note: 'li. state를 직접 받는다. 자기가 몇 번째인지, 전체가 몇 개인지 몰라도 된다',
+      },
+      {
+        part: 'indicator',
+        label: 'Indicator',
+        note: 'state에 따라 테두리 원·채운 원·체크 아이콘·X 아이콘으로 달라진다',
+      },
+      { part: 'label', label: 'Label', note: '단계 이름 한 줄' },
+      {
+        part: 'description',
+        label: 'Description',
+        note: '단계를 보충하는 설명',
+        optional: true,
+      },
+      {
+        part: 'connector',
+        label: 'Connector',
+        note: '다음 단계로 이어지는 선. 마지막 단계 뒤에는 없다',
+      },
+    ],
+    properties: [
+      {
+        name: 'orientation',
+        title: 'Orientation',
+        description: '단계를 가로로 늘어놓을지 세로로 늘어놓을지 정한다.',
+        display: 'row',
+        options: [
+          { value: 'horizontal', note: '기본. 가로로 늘어놓는다' },
+          { value: 'vertical', note: '세로로 늘어놓는다' },
+        ],
+      },
+      {
+        name: 'state',
+        title: 'State',
+        description: '단계 하나의 진행 상태를 나타낸다. 격자의 칸마다 그 상태인 단계 하나를 보인다.',
+        display: 'grid',
+        options: [
+          { value: 'pending', note: '아직 오지 않은 단계. 테두리 원과 숫자' },
+          { value: 'current', note: "지금 하고 있는 단계. 채운 원과 숫자, aria-current='step'" },
+          { value: 'complete', note: '끝난 단계. 채운 원과 체크 아이콘' },
+          { value: 'error', note: '실패한 단계. 채운 원과 X 아이콘' },
+        ],
+      },
+      {
+        name: 'layout',
+        title: 'Layout',
+        description: '라벨만 보일지, 라벨 아래에 설명을 더할지 정한다.',
+        display: 'row',
+        options: [
+          { value: 'label', note: '기본. 단계 이름만 보인다' },
+          { value: 'with-description', note: '이름 아래에 설명을 한 줄 더한다' },
+        ],
+      },
+    ],
+    guidelines: [
+      {
+        id: 'color-and-shape',
+        title: 'Color and shape',
+        body: '현재 단계를 색과 모양 둘로 알립니다. 색만 다르면 색을 구별하지 못하는 사람에게는 어디까지 왔는지 보이지 않습니다. 끝난 단계는 체크 표시로, 지금 단계는 채운 원으로 갈라 보입니다.',
+        do: ['끝난 단계는 체크 아이콘으로, 지금 단계는 채운 원과 숫자로 갈라 보인다'],
+        dont: ['색만 다르고 모양은 같은 원으로 단계 상태를 구별하지 않는다'],
+      },
+      {
+        id: 'clickable-visited-only',
+        title: 'Clickable visited steps only',
+        body: '되돌아갈 수 있는 단계만 누를 수 있게 합니다. 아직 지나지 않은 단계를 누를 수 있게 두면 건너뛸 수 있다고 오해합니다.',
+        do: ['complete 상태인 지난 단계만 누를 수 있게 한다'],
+        dont: ['아직 오지 않은 pending 단계를 눌러 건너뛸 수 있게 두지 않는다'],
+      },
+      {
+        id: 'step-count-range',
+        title: 'Step count range',
+        body: '단계를 셋에서 다섯 사이로 둡니다. 둘이면 나눌 이유가 없고, 여섯을 넘으면 어디까지 왔는지 세어야 합니다.',
+        do: ['단계를 셋에서 다섯 사이로 나눈다'],
+        dont: ['여섯을 넘는 단계를 한 Steps에 모두 늘어놓지 않는다'],
+      },
+      {
+        id: 'no-progress-bar',
+        title: 'No progress bar alongside',
+        body: '진행률 막대와 함께 쓰지 않습니다. 같은 것을 두 번 말합니다.',
+        do: ['단계 진행은 Steps 하나로만 보인다'],
+        dont: ['Steps 옆에 진행률 막대를 나란히 두어 같은 정보를 반복하지 않는다'],
+      },
+    ],
+    usage: [
+      {
+        id: 'multi-step-form',
+        title: '여러 단계 폼',
+        note: '한 화면에 담기 어려운 입력을 단계로 나눈다',
+      },
+      {
+        id: 'approval-flow-position',
+        title: '승인 흐름의 현재 위치',
+        note: '결재나 심사가 지금 어느 단계인지 보인다',
+      },
+      {
+        id: 'processing-status',
+        title: '처리 단계 표시',
+        note: '주문이나 배송처럼 시간이 걸리는 처리 과정을 보인다',
+      },
+      {
+        id: 'installation-guide',
+        title: '설치 안내',
+        note: '순서대로 따라야 하는 설치 절차를 안내한다',
+      },
+    ],
+    cases: [
+      {
+        id: 'many-steps',
+        title: '단계가 많은 경우',
+        note: '다섯을 넘으면 한 단계씩 좁아져 라벨을 읽기 어려워진다',
+      },
+      { id: 'long-step-name', title: '단계 이름이 긴 경우', note: '줄바꿈되어 다음 줄로 이어진다' },
+      {
+        id: 'failed-step',
+        title: '실패한 단계',
+        note: 'error로 표시하고 그 뒤의 단계는 pending으로 남는다',
+      },
+      { id: 'narrow-screen', title: '좁은 화면', note: '가로 폭이 부족하면 라벨이 줄바꿈된다' },
+    ],
+    verified: false,
+  },
+  {
     id: 'alert',
     name: 'Alert',
     category: 'feedback',
@@ -1277,6 +1483,453 @@ export const components: ComponentMeta[] = [
       { id: 'narrow-screen', title: '좁은 화면', note: '뷰포트 폭이 줄어들고 Toast는 그 폭을 채운다' },
     ],
     verified: true,
+  },
+  {
+    id: 'tooltip',
+    name: 'Tooltip',
+    category: 'feedback',
+    status: 'stable',
+    addedIn: 'v0.8.0',
+    changedIn: 'v0.8.0',
+    purpose: '가리키는 것의 이름이나 짧은 설명을 보인다.',
+    anatomy: [
+      {
+        part: 'trigger',
+        label: 'Trigger',
+        note: '호버하거나 포커스하면 트리거 주변에 말풍선이 뜬다. bg-popover, 테두리, radius-md, 쌓임 순서는 z-popover. 글자는 text-xs이고 트리거를 향한 작은 꼬리(Arrow)가 함께 붙는다. 표 헤더처럼 넘침이 있는 컨테이너 안에서도 잘리지 않도록 Portal로 렌더링된다',
+      },
+    ],
+    /*
+     * side는 트리거 자체에는 아무 시각 차이를 남기지 않는다 — 말풍선이
+     * 열려야만 값이 갈린다. defaultOpen으로 강제해 봤지만 Radix
+     * Tooltip은 열림 상태를 포인터·포커스가 쥐고 있어 유지되지
+     * 않았다(실측: 격자에 똑같이 생긴 트리거만 남고 말풍선은 0개).
+     * Select가 open을, Dropdown Menu가 open·align을 축에서 뺀 것과
+     * 같은 이유로 properties에 두지 않는다. side prop 자체는
+     * 컴포넌트에 그대로 있고 위치 차이는 Usage·Cases에서 실제
+     * 호버로 보인다.
+     */
+    properties: [],
+    guidelines: [
+      {
+        id: 'icon-only-button',
+        title: 'Icon-only buttons',
+        body: '아이콘만 있는 버튼에는 반드시 Tooltip을 붙입니다. 글자가 없으면 아이콘의 뜻을 짐작해야 합니다.',
+        do: ['아이콘만 있는 버튼에 Tooltip으로 이름을 붙인다', '스크린리더용 이름도 aria-label로 함께 준다'],
+        dont: ['아이콘만 두고 이름을 어디에도 남기지 않는다'],
+      },
+      {
+        id: 'not-only-source',
+        title: 'Not the only source',
+        body: '중요한 정보를 Tooltip에만 두지 않습니다. 터치 기기에는 호버가 없어 마우스를 대지 않으면 존재조차 알 수 없습니다.',
+        do: ['비활성 이유처럼 중요한 정보는 화면에 먼저 보이게 하고 Tooltip은 보조로 둔다'],
+        dont: ['비활성인 이유를 Tooltip에만 적어 두지 않는다'],
+      },
+      {
+        id: 'single-line',
+        title: 'Single line',
+        body: 'Tooltip 글은 한 줄을 넘기지 않습니다. 길어지면 본문이나 Dialog로 옮깁니다.',
+        do: ['한 줄로 끝나는 짧은 문구만 담는다'],
+        dont: ['여러 문장을 Tooltip 안에 욱여넣지 않는다'],
+      },
+    ],
+    usage: [
+      { id: 'icon-button', title: '아이콘 버튼', note: '아이콘만 있는 버튼의 이름을 밝힌다' },
+      { id: 'truncated-text', title: '줄임된 글', note: '표에서 잘린 값의 전체 글을 보인다' },
+      { id: 'disabled-reason', title: '비활성 이유', note: '화면에 보이는 안내를 보조하는 자리로만 쓴다' },
+      { id: 'table-header', title: '표 머리의 설명', note: '열 이름만으로 부족한 뜻을 덧붙인다' },
+    ],
+    cases: [
+      { id: 'long-text', title: '글이 긴 경우', note: '한 줄을 넘기면 여러 줄로 줄바꿈된다' },
+      { id: 'screen-edge', title: '화면 가장자리', note: '자리가 없으면 반대쪽으로 자동으로 뒤집힌다' },
+      { id: 'touch-device', title: '터치 기기', note: '호버가 없으므로 이름을 aria-label로도 함께 남긴다' },
+      { id: 'narrow-screen', title: '좁은 화면', note: '트리거가 줄바꿈되어도 말풍선 위치는 트리거를 따라간다' },
+    ],
+    verified: true,
+  },
+  {
+    id: 'dialog',
+    name: 'Dialog',
+    category: 'feedback',
+    status: 'stable',
+    addedIn: 'v0.8.0',
+    changedIn: 'v0.8.0',
+    purpose: '흐름을 멈추고 확인이나 입력을 받는다.',
+    anatomy: [
+      {
+        part: 'trigger',
+        label: 'Trigger',
+        note: '누르면 화면 전체를 덮는 반투명 덮개(bg-black/50)와 가운데 정렬된 컨테이너(bg-background, 테두리, radius-lg, shadow-lg)가 뜬다. 컨테이너 안은 제목(text-lg font-semibold)·본문(text-sm text-muted-foreground)·오른쪽 정렬된 동작 버튼 순서로 쌓이고, 오른쪽 위 모서리에 닫기(X) 아이콘이 항상 있다. 쌓임 순서는 z-overlay. 컨테이너는 화면 전체를 덮어 구조도 무대 안에 담을 수 없으므로 나머지 부위는 Usage에서 실제로 눌러서 본다',
+      },
+    ],
+    /*
+     * size는 DialogContent에만 붙는데 DialogContent는 Portal 안에서
+     * 열려야만 DOM에 있다. Tooltip이 side를, Select·Dropdown Menu가
+     * open·align을 뺀 것과 같은 이유로 properties에 두지 않는다 —
+     * 닫힌 트리거는 size가 무엇이든 같아 보여 Properties의 세 칸이
+     * 똑같은 버튼만 남긴다. size prop 자체는 컴포넌트에 그대로 있고,
+     * sm·default·lg 세 값 모두 Usage에서 실제로 열어 확인한다
+     * (짧은 입력·상세 미리보기·대량 작업 확인).
+     */
+    properties: [
+      {
+        name: 'variant',
+        title: 'Variant',
+        description: '되돌릴 수 없는 동작인지에 따라 실행 버튼의 색과 제목의 문구가 달라진다.',
+        display: 'row',
+        options: [
+          { value: 'default', note: '확인이나 입력처럼 되돌릴 수 있는 동작' },
+          { value: 'destructive', note: '삭제처럼 되돌릴 수 없는 동작. 실행 버튼이 destructive 색을 쓴다' },
+        ],
+      },
+    ],
+    guidelines: [
+      {
+        id: 'action-order',
+        title: 'Action order',
+        body: '오른쪽에 실행, 왼쪽에 취소를 둡니다. 눈이 마지막에 닿는 자리에 지금 진행 중인 동작을 끝맺는 버튼을 놓습니다.',
+        do: ['실행 버튼을 오른쪽 끝에 둔다', '취소나 닫기는 그 왼쪽에 둔다'],
+        dont: ['실행 버튼을 왼쪽에 두고 취소를 오른쪽에 두지 않는다'],
+      },
+      {
+        id: 'destructive-title',
+        title: 'Destructive title',
+        body: "위험한 동작은 무엇이 지워지는지 제목에 적습니다. '정말 삭제하시겠습니까'만으로는 무엇이 사라지는지 알 수 없습니다.",
+        do: ["'게시글 12건을 삭제하시겠습니까'처럼 대상을 제목에 밝힌다"],
+        dont: ["'정말 삭제하시겠습니까'처럼 대상 없이 묻지 않는다"],
+      },
+      {
+        id: 'outside-click',
+        title: 'Outside click',
+        body: '바깥을 눌러 닫는 것은 잃을 것이 없을 때만 허용합니다. 입력 중인 폼이 있으면 실수로 닫혀 내용을 잃을 수 있습니다.',
+        do: ['확인만 하는 Dialog는 바깥 클릭으로 닫히게 둔다'],
+        dont: ['입력 중인 폼이 있는 Dialog를 바깥 클릭 한 번으로 닫히게 두지 않는다'],
+      },
+    ],
+    usage: [
+      { id: 'delete-confirm', title: '삭제 확인', note: '무엇이 지워지는지 제목에 밝히고 destructive 색을 쓴다' },
+      { id: 'short-input', title: '짧은 입력', note: '필드 한둘만 있는 폼은 sm이나 default로 충분하다' },
+      { id: 'detail-preview', title: '상세 미리보기', note: '목록을 벗어나지 않고 항목의 내용을 확인한다' },
+      { id: 'bulk-confirm', title: '대량 작업 확인', note: '몇 건에 어떤 일이 일어나는지 본문에 적는다' },
+    ],
+    cases: [
+      { id: 'long-body', title: '본문이 긴 경우', note: '컨테이너는 늘어나지 않고 본문 안에서 세로로 스크롤된다' },
+      { id: 'form-inside', title: '안에 폼이 있는 경우', note: '바깥 클릭으로 닫히지 않고 취소 버튼으로만 닫힌다' },
+      { id: 'stacked-dialogs', title: '겹쳐 열리는 경우', note: '안쪽 Dialog가 위에 쌓이고 닫으면 바깥 Dialog로 돌아간다' },
+      { id: 'narrow-screen', title: '좁은 화면', note: '가장자리에 여백을 두고 너비를 채운다' },
+    ],
+    verified: true,
+  },
+  {
+    id: 'skeleton',
+    name: 'Skeleton',
+    category: 'feedback',
+    status: 'stable',
+    addedIn: 'v0.9.0',
+    changedIn: 'v0.9.0',
+    purpose:
+      '아직 도착하지 않은 내용의 자리를 실제 모양에 가까운 뼈대로 채운다. 뼈대 자체는 aria-hidden이고, 불러오는 중이라는 사실은 role="status" 문구가 따로 알린다.',
+    anatomy: [],
+    properties: [
+      {
+        name: 'shape',
+        title: 'Shape',
+        description: '뼈대가 흉내 낼 실제 내용의 모양을 정한다.',
+        display: 'row',
+        options: [{ value: 'text' }, { value: 'title' }, { value: 'block' }, { value: 'circle' }],
+      },
+    ],
+    guidelines: [
+      {
+        id: 'match-real-content',
+        title: '실제 내용의 모양을 닮게 만든다',
+        body: '뼈대가 실제와 다르면 내용이 도착하는 순간 화면이 튑니다. 줄 수와 폭을 맞춥니다.',
+        do: ['실제 내용의 줄 수와 폭에 맞춰 뼈대를 그린다'],
+        dont: ['실제 내용과 다른 모양의 뼈대를 두어 내용이 도착할 때 화면을 튀게 하지 않는다'],
+      },
+      {
+        id: 'not-for-brief-loads',
+        title: '짧게 끝나는 것에는 쓰지 않는다',
+        body: '곧 사라질 뼈대는 깜빡임으로만 보입니다.',
+        do: ['오래 걸리는 로딩에만 뼈대를 쓴다'],
+        dont: ['금방 끝나는 로딩에 뼈대를 두어 깜빡임만 남기지 않는다'],
+      },
+      {
+        id: 'no-mixing-with-spinner',
+        title: '뼈대와 스피너를 한 화면에 섞지 않는다',
+        body: '무엇을 기다리는지 두 가지로 말하면 둘 다 흐려집니다.',
+        do: ['한 화면에는 뼈대나 스피너 중 하나만 쓴다'],
+        dont: ['뼈대와 스피너를 한 화면에 함께 쓰지 않는다'],
+      },
+      {
+        id: 'announce-via-text',
+        title: '스크린 리더에는 문구로 알린다',
+        body: '뼈대 자체는 aria-hidden이고, 상태는 문구가 전합니다.',
+        do: ["role='status'를 가진 문구로 불러오는 중임을 알린다"],
+        dont: ['불러오는 중이라는 사실을 문구 없이 뼈대만으로 전하려 하지 않는다'],
+      },
+    ],
+    usage: [
+      { id: 'table-row', title: '표의 행', note: '표가 아직 불러오지 않았을 때 행 모양의 뼈대를 반복해 보인다' },
+      { id: 'card-list', title: '카드 목록', note: '카드 여러 장이 함께 불러올 때 카드 모양의 뼈대를 나열한다' },
+      {
+        id: 'detail-basic-info',
+        title: '상세 화면의 기본 정보',
+        note: '상세 화면 상단의 제목과 본문 자리를 뼈대로 채운다',
+      },
+      {
+        id: 'avatar-with-name',
+        title: '아바타와 이름',
+        note: '아바타와 이름 두 줄이 함께 불러오는 자리를 뼈대로 채운다',
+      },
+    ],
+    cases: [
+      {
+        id: 'shorter-or-longer-content',
+        title: '실제 내용보다 짧거나 긴 경우',
+        note: '뼈대 폭보다 실제 내용이 짧거나 길면 도착하는 순간 폭이 다시 잡힌다',
+      },
+      { id: 'partial-arrival', title: '일부만 도착한 경우', note: '일부 항목만 먼저 도착하면 나머지 자리만 뼈대로 남는다' },
+      { id: 'repeat-count', title: '반복 횟수를 정하는 경우', note: '반복 횟수는 배열에서 파생하고 손으로 적지 않는다' },
+      {
+        id: 'surface',
+        title: '놓이는 표면이 다른 경우',
+        note: 'bg-muted 채움이라 놓이는 표면의 명도가 다를 때만 도형으로 읽힌다',
+      },
+    ],
+    verified: false,
+  },
+  {
+    id: 'progress',
+    name: 'Progress',
+    category: 'feedback',
+    status: 'stable',
+    addedIn: 'v0.9.0',
+    changedIn: 'v0.9.0',
+    purpose:
+      '작업이 얼마나 끝났는지 막대 길이로 보인다. Radix의 Progress를 감싸 role="progressbar"와 aria-valuenow를 맡기고, Indicator는 width 대신 translateX로 값만큼만 보이게 민다.',
+    anatomy: [
+      { part: 'track', label: 'Track', note: '전체 길이를 나타내는 바탕. 늘 bg-muted다' },
+      {
+        part: 'indicator',
+        label: 'Indicator',
+        note: '진행한 만큼 채우는 막대. variant가 배경색을 정한다',
+      },
+      { part: 'label', label: 'Label', note: '무엇의 진행인지 알리는 이름', optional: true },
+      { part: 'value', label: 'Value', note: '진행률을 숫자로 보인다', optional: true },
+    ],
+    properties: [
+      {
+        name: 'variant',
+        title: 'Variant',
+        description: 'Indicator의 배경색을 정한다. Track은 늘 bg-muted다.',
+        display: 'row',
+        options: [
+          { value: 'default', note: '기본. 중립적인 진행' },
+          { value: 'success', note: '성공적으로 끝난 진행' },
+          { value: 'warning', note: '주의가 필요한 진행' },
+          { value: 'destructive', note: '실패한 진행' },
+        ],
+      },
+      {
+        name: 'size',
+        title: 'Size',
+        description: '막대의 두께를 정한다.',
+        display: 'row',
+        options: [
+          { value: 'sm', note: '표 행, 카드 안처럼 조밀한 자리' },
+          { value: 'default', note: '기본' },
+        ],
+      },
+      {
+        name: 'state',
+        title: 'State',
+        description: '값을 아는지 모르는지를 나타낸다.',
+        display: 'grid',
+        options: [
+          { value: 'determinate', note: 'value를 주어 진행률만큼 막대가 찬다' },
+          {
+            value: 'indeterminate',
+            note: "value를 주지 않은 상태. Radix가 data-state='indeterminate'를 달아 좁힌 막대가 좌우로 오간다",
+          },
+        ],
+      },
+    ],
+    guidelines: [
+      {
+        id: 'give-value-when-known',
+        title: '끝을 알 수 있으면 값을 준다',
+        body: '남은 양을 아는데도 indeterminate로 두면 기다리는 사람이 얼마나 남았는지 짐작할 수 없습니다.',
+        do: ['남은 양을 알면 value를 주어 determinate로 보인다'],
+        dont: ['끝을 알 수 있는데도 indeterminate로 남겨 두지 않는다'],
+      },
+      {
+        id: 'show-number-with-bar',
+        title: '숫자를 함께 보인다',
+        body: '막대 길이만으로는 87%인지 92%인지 읽히지 않습니다.',
+        do: ['막대 옆이나 위에 Value로 숫자를 함께 보인다'],
+        dont: ['막대 길이만으로 정확한 값을 짐작하게 두지 않는다'],
+      },
+      {
+        id: 'dont-signal-failure-by-color-alone',
+        title: '색만으로 실패를 알리지 않는다',
+        body: '빨간 막대 옆에 무엇이 실패했는지 문구를 답니다.',
+        do: ['destructive 막대 옆에 무엇이 실패했는지 문구를 함께 둔다'],
+        dont: ['색만 바꾸고 실패 사유를 문구로 남기지 않는다'],
+      },
+      {
+        id: 'no-regression',
+        title: '되돌아가지 않는다',
+        body: '값이 줄어들면 진행이 아니라 오작동으로 읽힙니다. 다시 시작한다면 0부터 새로 그립니다.',
+        do: ['값은 앞으로만 나아가게 한다', '다시 시작할 때는 0부터 새 Progress로 그린다'],
+        dont: ['값을 줄여 뒤로 가는 모습을 보이지 않는다'],
+      },
+    ],
+    usage: [
+      { id: 'file-upload', title: '파일 업로드', note: '업로드가 끝날 때까지 남은 양을 보인다' },
+      {
+        id: 'bulk-job-progress',
+        title: '대량 작업 진행',
+        note: '여러 건을 한 번에 처리하는 동안 진행률을 보인다',
+      },
+      {
+        id: 'usage-against-limit',
+        title: '한도 대비 사용량',
+        note: '전체 한도에서 지금까지 쓴 양을 보인다',
+      },
+      {
+        id: 'multi-step-progress',
+        title: '여러 단계의 진척',
+        note: '단계별 이름 없이 전체 진행률만 하나의 수치로 보인다',
+      },
+    ],
+    cases: [
+      {
+        id: 'zero-and-hundred',
+        title: '0%와 100%',
+        note: '시작과 끝에서도 막대와 값이 자연스럽게 보인다',
+      },
+      {
+        id: 'unknown-value',
+        title: '값을 알 수 없는 경우',
+        note: 'value 없이 indeterminate로 두어 진행 중임만 알린다',
+      },
+      {
+        id: 'failed',
+        title: '실패한 경우',
+        note: 'destructive variant로 바꾸고 실패 사유를 문구로 덧붙인다',
+      },
+      { id: 'narrow-width', title: '아주 좁은 폭', note: '폭이 좁아도 막대와 값이 겹치지 않는다' },
+    ],
+    verified: false,
+  },
+  {
+    id: 'empty-state',
+    name: 'Empty State',
+    category: 'feedback',
+    status: 'stable',
+    addedIn: 'v0.9.0',
+    changedIn: 'v0.9.0',
+    purpose:
+      '표나 목록에 보일 내용이 없을 때 무엇이 없는지, 왜 없는지, 무엇을 할 수 있는지 안내한다. 아직 만든 것이 없는 것과 불러오지 못한 것을 variant로 구별한다.',
+    anatomy: [
+      {
+        part: 'container',
+        label: 'Container',
+        note: 'Icon·Title·Description·Action을 세로로 가운데 정렬해 담는다',
+      },
+      {
+        part: 'icon',
+        label: 'Icon',
+        note: '어떤 아이콘을 넣을지는 호출하는 쪽이 정한다. variant는 색과 배경만 정한다',
+      },
+      { part: 'title', label: 'Title', note: '무엇이 없는지 한 줄로 적는다' },
+      { part: 'description', label: 'Description', note: '왜 없는지와 무엇을 할 수 있는지 적는다' },
+      {
+        part: 'action',
+        label: 'Action',
+        note: '할 수 있는 일이 있을 때만 둔다',
+        optional: true,
+      },
+    ],
+    properties: [
+      {
+        name: 'variant',
+        title: 'Variant',
+        description: '상황에 따라 아이콘의 색과 배경을 정한다. 무엇이 다른지는 문구가 말한다.',
+        display: 'grid',
+        options: [
+          { value: 'empty', note: '아직 만든 것이 없는 첫 방문의 빈 상태. 오류가 아니다' },
+          {
+            value: 'no-results',
+            note: "검색이나 필터 결과가 없는 경우. 'empty'와 같은 색을 쓴다 — 둘 다 오류가 아니다",
+          },
+          { value: 'error', note: '불러오기에 실패한 경우' },
+          { value: 'no-permission', note: '권한이 없어 접근할 수 없는 경우' },
+        ],
+      },
+      {
+        name: 'size',
+        title: 'Size',
+        description: '표 안이나 카드 안처럼 자리가 좁은 곳에서는 compact를 쓴다.',
+        display: 'row',
+        options: [
+          { value: 'default' },
+          { value: 'compact', note: '아이콘이 작아지고 위아래 여백이 준다' },
+        ],
+      },
+    ],
+    guidelines: [
+      {
+        id: 'distinguish-empty-error',
+        title: '비어 있는 것과 실패한 것을 구별한다',
+        body: '아직 만든 것이 없는 것과 불러오지 못한 것은 사용자가 할 일이 다릅니다.',
+        do: ["아직 없으면 'empty', 불러오지 못했으면 'error'를 쓴다"],
+        dont: ['상황에 맞지 않는 variant로 실제로 일어난 일을 감추지 않는다'],
+      },
+      {
+        id: 'action-when-possible',
+        title: '할 수 있는 일이 있으면 동작을 둔다',
+        body: '필터를 지우거나, 새로 만들거나, 다시 시도하는 것입니다. 없다면 두지 않습니다.',
+        do: ['사용자가 실제로 할 수 있는 일만 Action으로 둔다'],
+        dont: ['할 수 있는 일이 없는데도 누를 것을 남겨 두지 않는다'],
+      },
+      {
+        id: 'first-visit-not-error',
+        title: '첫 방문의 빈 상태는 안내이지 오류가 아니다',
+        body: '경고 색을 쓰지 않고 무엇을 할 수 있는지 알립니다.',
+        do: ["첫 방문의 빈 상태는 'empty'의 무채색을 쓴다"],
+        dont: ['아직 아무 일도 일어나지 않은 상태에 경고·오류 색을 쓰지 않는다'],
+      },
+      {
+        id: 'writing-order',
+        title: '무엇이 · 왜 · 무엇을 할 수 있는지 순서로 적는다',
+        body: "Foundations의 Writing이 정한 순서입니다.",
+        do: ['무엇이 없는지를 Title에, 왜와 무엇을 할 수 있는지를 Description에 순서대로 적는다'],
+        dont: ['할 일부터 적고 무엇이 없는지를 뒤에 붙이지 않는다'],
+      },
+    ],
+    usage: [
+      { id: 'empty-table', title: '표에 행이 없을 때', note: '데이터가 아직 없는 표에서 빈 행 대신 이 상태를 보인다' },
+      {
+        id: 'no-search-results',
+        title: '검색 결과가 없을 때',
+        note: '검색어나 필터에 맞는 결과가 없을 때 다른 조건을 시도하도록 안내한다',
+      },
+      { id: 'permission-wall', title: '권한이 없을 때', note: '접근 권한이 없는 화면에서 무엇을 요청해야 하는지 안내한다' },
+      {
+        id: 'load-failed',
+        title: '불러오기에 실패했을 때',
+        note: '네트워크나 서버 오류로 데이터를 불러오지 못했을 때 다시 시도하도록 안내한다',
+      },
+    ],
+    cases: [
+      { id: 'no-action', title: '동작이 없는 경우', note: '사용자가 할 수 있는 일이 없으면 Action을 두지 않는다' },
+      { id: 'in-table', title: '표 안에 놓이는 경우', note: '표 안에서는 size를 compact로 두어 자리를 줄인다' },
+      { id: 'two-actions', title: '동작이 둘인 경우', note: '주된 동작과 대안이 되는 동작을 나란히 둔다' },
+      { id: 'narrow-screen', title: '좁은 화면', note: '폭이 좁아져도 Description은 줄바꿈되어 읽힌다' },
+    ],
+    verified: false,
   },
   {
     id: 'table',
@@ -1463,208 +2116,6 @@ export const components: ComponentMeta[] = [
     verified: true,
   },
   {
-    id: 'tooltip',
-    name: 'Tooltip',
-    category: 'feedback',
-    status: 'stable',
-    addedIn: 'v0.8.0',
-    changedIn: 'v0.8.0',
-    purpose: '가리키는 것의 이름이나 짧은 설명을 보인다.',
-    anatomy: [
-      {
-        part: 'trigger',
-        label: 'Trigger',
-        note: '호버하거나 포커스하면 트리거 주변에 말풍선이 뜬다. bg-popover, 테두리, radius-md, 쌓임 순서는 z-popover. 글자는 text-xs이고 트리거를 향한 작은 꼬리(Arrow)가 함께 붙는다. 표 헤더처럼 넘침이 있는 컨테이너 안에서도 잘리지 않도록 Portal로 렌더링된다',
-      },
-    ],
-    /*
-     * side는 트리거 자체에는 아무 시각 차이를 남기지 않는다 — 말풍선이
-     * 열려야만 값이 갈린다. defaultOpen으로 강제해 봤지만 Radix
-     * Tooltip은 열림 상태를 포인터·포커스가 쥐고 있어 유지되지
-     * 않았다(실측: 격자에 똑같이 생긴 트리거만 남고 말풍선은 0개).
-     * Select가 open을, Dropdown Menu가 open·align을 축에서 뺀 것과
-     * 같은 이유로 properties에 두지 않는다. side prop 자체는
-     * 컴포넌트에 그대로 있고 위치 차이는 Usage·Cases에서 실제
-     * 호버로 보인다.
-     */
-    properties: [],
-    guidelines: [
-      {
-        id: 'icon-only-button',
-        title: 'Icon-only buttons',
-        body: '아이콘만 있는 버튼에는 반드시 Tooltip을 붙입니다. 글자가 없으면 아이콘의 뜻을 짐작해야 합니다.',
-        do: ['아이콘만 있는 버튼에 Tooltip으로 이름을 붙인다', '스크린리더용 이름도 aria-label로 함께 준다'],
-        dont: ['아이콘만 두고 이름을 어디에도 남기지 않는다'],
-      },
-      {
-        id: 'not-only-source',
-        title: 'Not the only source',
-        body: '중요한 정보를 Tooltip에만 두지 않습니다. 터치 기기에는 호버가 없어 마우스를 대지 않으면 존재조차 알 수 없습니다.',
-        do: ['비활성 이유처럼 중요한 정보는 화면에 먼저 보이게 하고 Tooltip은 보조로 둔다'],
-        dont: ['비활성인 이유를 Tooltip에만 적어 두지 않는다'],
-      },
-      {
-        id: 'single-line',
-        title: 'Single line',
-        body: 'Tooltip 글은 한 줄을 넘기지 않습니다. 길어지면 본문이나 Dialog로 옮깁니다.',
-        do: ['한 줄로 끝나는 짧은 문구만 담는다'],
-        dont: ['여러 문장을 Tooltip 안에 욱여넣지 않는다'],
-      },
-    ],
-    usage: [
-      { id: 'icon-button', title: '아이콘 버튼', note: '아이콘만 있는 버튼의 이름을 밝힌다' },
-      { id: 'truncated-text', title: '줄임된 글', note: '표에서 잘린 값의 전체 글을 보인다' },
-      { id: 'disabled-reason', title: '비활성 이유', note: '화면에 보이는 안내를 보조하는 자리로만 쓴다' },
-      { id: 'table-header', title: '표 머리의 설명', note: '열 이름만으로 부족한 뜻을 덧붙인다' },
-    ],
-    cases: [
-      { id: 'long-text', title: '글이 긴 경우', note: '한 줄을 넘기면 여러 줄로 줄바꿈된다' },
-      { id: 'screen-edge', title: '화면 가장자리', note: '자리가 없으면 반대쪽으로 자동으로 뒤집힌다' },
-      { id: 'touch-device', title: '터치 기기', note: '호버가 없으므로 이름을 aria-label로도 함께 남긴다' },
-      { id: 'narrow-screen', title: '좁은 화면', note: '트리거가 줄바꿈되어도 말풍선 위치는 트리거를 따라간다' },
-    ],
-    verified: true,
-  },
-  {
-    id: 'dialog',
-    name: 'Dialog',
-    category: 'feedback',
-    status: 'stable',
-    addedIn: 'v0.8.0',
-    changedIn: 'v0.8.0',
-    purpose: '흐름을 멈추고 확인이나 입력을 받는다.',
-    anatomy: [
-      {
-        part: 'trigger',
-        label: 'Trigger',
-        note: '누르면 화면 전체를 덮는 반투명 덮개(bg-black/50)와 가운데 정렬된 컨테이너(bg-background, 테두리, radius-lg, shadow-lg)가 뜬다. 컨테이너 안은 제목(text-lg font-semibold)·본문(text-sm text-muted-foreground)·오른쪽 정렬된 동작 버튼 순서로 쌓이고, 오른쪽 위 모서리에 닫기(X) 아이콘이 항상 있다. 쌓임 순서는 z-overlay. 컨테이너는 화면 전체를 덮어 구조도 무대 안에 담을 수 없으므로 나머지 부위는 Usage에서 실제로 눌러서 본다',
-      },
-    ],
-    /*
-     * size는 DialogContent에만 붙는데 DialogContent는 Portal 안에서
-     * 열려야만 DOM에 있다. Tooltip이 side를, Select·Dropdown Menu가
-     * open·align을 뺀 것과 같은 이유로 properties에 두지 않는다 —
-     * 닫힌 트리거는 size가 무엇이든 같아 보여 Properties의 세 칸이
-     * 똑같은 버튼만 남긴다. size prop 자체는 컴포넌트에 그대로 있고,
-     * sm·default·lg 세 값 모두 Usage에서 실제로 열어 확인한다
-     * (짧은 입력·상세 미리보기·대량 작업 확인).
-     */
-    properties: [
-      {
-        name: 'variant',
-        title: 'Variant',
-        description: '되돌릴 수 없는 동작인지에 따라 실행 버튼의 색과 제목의 문구가 달라진다.',
-        display: 'row',
-        options: [
-          { value: 'default', note: '확인이나 입력처럼 되돌릴 수 있는 동작' },
-          { value: 'destructive', note: '삭제처럼 되돌릴 수 없는 동작. 실행 버튼이 destructive 색을 쓴다' },
-        ],
-      },
-    ],
-    guidelines: [
-      {
-        id: 'action-order',
-        title: 'Action order',
-        body: '오른쪽에 실행, 왼쪽에 취소를 둡니다. 눈이 마지막에 닿는 자리에 지금 진행 중인 동작을 끝맺는 버튼을 놓습니다.',
-        do: ['실행 버튼을 오른쪽 끝에 둔다', '취소나 닫기는 그 왼쪽에 둔다'],
-        dont: ['실행 버튼을 왼쪽에 두고 취소를 오른쪽에 두지 않는다'],
-      },
-      {
-        id: 'destructive-title',
-        title: 'Destructive title',
-        body: "위험한 동작은 무엇이 지워지는지 제목에 적습니다. '정말 삭제하시겠습니까'만으로는 무엇이 사라지는지 알 수 없습니다.",
-        do: ["'게시글 12건을 삭제하시겠습니까'처럼 대상을 제목에 밝힌다"],
-        dont: ["'정말 삭제하시겠습니까'처럼 대상 없이 묻지 않는다"],
-      },
-      {
-        id: 'outside-click',
-        title: 'Outside click',
-        body: '바깥을 눌러 닫는 것은 잃을 것이 없을 때만 허용합니다. 입력 중인 폼이 있으면 실수로 닫혀 내용을 잃을 수 있습니다.',
-        do: ['확인만 하는 Dialog는 바깥 클릭으로 닫히게 둔다'],
-        dont: ['입력 중인 폼이 있는 Dialog를 바깥 클릭 한 번으로 닫히게 두지 않는다'],
-      },
-    ],
-    usage: [
-      { id: 'delete-confirm', title: '삭제 확인', note: '무엇이 지워지는지 제목에 밝히고 destructive 색을 쓴다' },
-      { id: 'short-input', title: '짧은 입력', note: '필드 한둘만 있는 폼은 sm이나 default로 충분하다' },
-      { id: 'detail-preview', title: '상세 미리보기', note: '목록을 벗어나지 않고 항목의 내용을 확인한다' },
-      { id: 'bulk-confirm', title: '대량 작업 확인', note: '몇 건에 어떤 일이 일어나는지 본문에 적는다' },
-    ],
-    cases: [
-      { id: 'long-body', title: '본문이 긴 경우', note: '컨테이너는 늘어나지 않고 본문 안에서 세로로 스크롤된다' },
-      { id: 'form-inside', title: '안에 폼이 있는 경우', note: '바깥 클릭으로 닫히지 않고 취소 버튼으로만 닫힌다' },
-      { id: 'stacked-dialogs', title: '겹쳐 열리는 경우', note: '안쪽 Dialog가 위에 쌓이고 닫으면 바깥 Dialog로 돌아간다' },
-      { id: 'narrow-screen', title: '좁은 화면', note: '가장자리에 여백을 두고 너비를 채운다' },
-    ],
-    verified: true,
-  },
-  {
-    id: 'dropdown-menu',
-    name: 'Dropdown Menu',
-    category: 'actions',
-    status: 'stable',
-    addedIn: 'v0.8.0',
-    changedIn: 'v0.8.0',
-    purpose: '한 자리에서 여러 동작을 고르게 한다. 값을 고르는 자리에는 Select를 쓴다.',
-    anatomy: [
-      {
-        part: 'trigger',
-        label: 'Trigger',
-        note: "누르면 트리거 아래에 목록이 뜬다. bg-popover, 테두리, radius-md, 쌓임 순서는 z-popover. 각 항목은 text-sm이고 포커스되면 bg-accent, 위험한 항목은 text-destructive다. 위험한 항목은 구분선(bg-border, 1px) 아래로 모은다. Select와 달리 고른 항목에 Check 표시가 남지 않는다 — 여기서는 값을 고르는 것이 아니라 동작을 실행하는 것이고, 실행되면 메뉴가 닫힌다. Radix DropdownMenu는 기본이 modal이라(RemoveScroll·FocusScope·hideOthers) 열린 목록은 구조도 무대에 담지 않는다",
-      },
-    ],
-    properties: [
-      {
-        name: 'state',
-        title: 'State',
-        description: '트리거의 상호작용 상태를 나타낸다. 열림·정렬은 열려야만 보이는 값이라 이 격자에는 없다 — Usage에서 실제로 눌러서 본다.',
-        display: 'grid',
-        options: [
-          { value: 'default' },
-          { value: 'hover', note: '포인터가 올라간 동안' },
-          { value: 'focus', note: '키보드 포커스. 항상 보여야 한다' },
-          { value: 'disabled', note: '지금 열 수 없음' },
-        ],
-      },
-    ],
-    guidelines: [
-      {
-        id: 'select-for-values',
-        title: 'Select for values',
-        body: '값을 고르는 자리에는 Dropdown Menu 대신 Select를 씁니다. Dropdown Menu의 항목은 눌리는 순간 실행되고 메뉴가 닫힙니다.',
-        do: ['상태나 분류처럼 값을 고르는 자리에는 Select를 쓴다', '삭제·수정처럼 동작을 실행하는 자리에는 Dropdown Menu를 쓴다'],
-        dont: ['값을 고르는 용도로 Dropdown Menu를 쓰지 않는다'],
-      },
-      {
-        id: 'destructive-grouping',
-        title: 'Destructive grouping',
-        body: '위험한 항목은 구분선 아래로 모으고 text-destructive를 씁니다. 일반 동작 사이에 섞여 있으면 실수로 누르기 쉽습니다.',
-        do: ['위험한 항목을 구분선 아래로 모은다', '위험한 항목에 text-destructive를 쓴다'],
-        dont: ['위험한 항목을 일반 항목 사이에 섞어 두지 않는다'],
-      },
-      {
-        id: 'few-items-buttons',
-        title: 'Few items, buttons',
-        body: '항목이 셋 이하면 Dropdown Menu 대신 버튼을 나란히 두는 편이 낫습니다. 누르는 수가 하나 줄고 선택지가 바로 보입니다.',
-        do: ['항목이 셋 이하면 버튼을 나란히 둔다'],
-        dont: ['항목이 둘뿐인데 그것을 감추려고 Dropdown Menu로 접지 않는다'],
-      },
-    ],
-    usage: [
-      { id: 'row-actions', title: '표 행의 더보기', note: '행마다 반복되는 동작을 아이콘 버튼 뒤에 모은다' },
-      { id: 'page-header-actions', title: '페이지 헤더의 보조 동작', note: '주 동작 옆에 부수적인 동작을 모은다. align="end"로 오른쪽 끝에 맞춘다' },
-      { id: 'bulk-actions', title: '대량 작업', note: '선택한 행에 적용할 동작을 모은다' },
-      { id: 'account-menu', title: '계정 메뉴', note: '설정·로그아웃처럼 계정에 관한 동작을 모은다' },
-    ],
-    cases: [
-      { id: 'many-items', title: '항목이 아주 많은 경우', note: '목록이 뷰포트를 넘으면 목록 안에서 스크롤된다' },
-      { id: 'bottom-of-screen', title: '화면 아래쪽에서 열리는 경우', note: '자리가 없으면 위쪽으로 뒤집혀 열린다' },
-      { id: 'destructive-only', title: '위험 항목만 있는 경우', note: '구분선 없이 항목 전체가 text-destructive를 쓴다' },
-      { id: 'narrow-screen', title: '좁은 화면', note: '트리거가 줄어들지 않고 목록 너비는 트리거와 무관하게 유지된다' },
-    ],
-    verified: true,
-  },
-  {
     id: 'avatar',
     name: 'Avatar',
     category: 'data-display',
@@ -1744,139 +2195,6 @@ export const components: ComponentMeta[] = [
       { id: 'narrow-screen', title: '좁은 화면', note: '크기가 줄지 않고 옆 글자가 줄바꿈된다' },
     ],
     verified: true,
-  },
-  {
-    id: 'separator',
-    name: 'Separator',
-    category: 'data-display',
-    status: 'stable',
-    addedIn: 'v0.9.0',
-    changedIn: 'v0.9.0',
-    purpose: '가로 또는 세로로 선을 그어 화면의 영역을 나눈다. 기본은 장식이므로 뜻이 있는 경계에서만 decorative를 거짓으로 둔다.',
-    anatomy: [],
-    properties: [
-      {
-        name: 'orientation',
-        title: 'Orientation',
-        description: '선을 가로로 그을지 세로로 그을지 정한다.',
-        display: 'row',
-        options: [{ value: 'horizontal' }, { value: 'vertical' }],
-      },
-    ],
-    guidelines: [
-      {
-        id: 'meaningful-vs-decorative',
-        title: '뜻이 있는 경계와 장식을 구별한다',
-        body: '메뉴에서 성격이 다른 묶음을 가르는 선은 뜻이 있고, 카드 안 구획을 나누는 선은 장식입니다. 스크린 리더가 읽어야 하는 것은 앞의 것뿐입니다.',
-        do: ['성격이 다른 동작 묶음의 경계에는 decorative를 거짓으로 둔다'],
-        dont: ['카드 안 구획처럼 장식으로 쓰는 선에 decorative를 거짓으로 두지 않는다'],
-      },
-      {
-        id: 'no-line-when-spacing-suffices',
-        title: '여백으로 충분하면 선을 긋지 않는다',
-        body: '간격이 이미 묶음을 말하고 있으면 선은 잡음입니다.',
-        do: ['넉넉한 간격만으로 구획을 나눌 수 있는지 먼저 살핀다'],
-        dont: ['이미 여백이 구획을 나누고 있는데 선을 더하지 않는다'],
-      },
-      {
-        id: 'not-between-every-item',
-        title: '목록의 모든 항목 사이에 긋지 않는다',
-        body: '선이 많아지면 각각의 뜻이 사라집니다.',
-        do: ['성격이 다른 묶음 사이에만 선을 긋는다'],
-        dont: ['목록의 항목마다 선을 넣지 않는다'],
-      },
-    ],
-    usage: [
-      { id: 'card-section', title: '카드 안의 구획', note: '테두리 있는 상자 안에서 서로 다른 정보 구획을 나눈다' },
-      { id: 'menu-group', title: '메뉴 항목 묶음 사이', note: '성격이 다른 동작 묶음의 경계를 알린다' },
-      { id: 'toolbar-group', title: '툴바의 동작 묶음 사이', note: '관련 있는 동작끼리 묶는다' },
-      { id: 'form-section', title: '폼의 구획', note: '입력 항목이 많은 폼에서 구획을 나눈다' },
-    ],
-    cases: [
-      { id: 'vertical-height', title: '세로 구분선의 높이', note: '부모가 높이를 정해야 세로 구분선이 보인다' },
-      { id: 'spacing-sufficient', title: '여백만으로 충분한 경우', note: '선 없이 간격만으로 구획을 나눈다' },
-      { id: 'asymmetric-margin', title: '양옆 여백이 다른 경우', note: '툴바처럼 시작 여백과 끝 여백이 다르게 그어진다' },
-    ],
-    verified: false,
-  },
-  {
-    id: 'skeleton',
-    name: 'Skeleton',
-    category: 'feedback',
-    status: 'stable',
-    addedIn: 'v0.9.0',
-    changedIn: 'v0.9.0',
-    purpose:
-      '아직 도착하지 않은 내용의 자리를 실제 모양에 가까운 뼈대로 채운다. 뼈대 자체는 aria-hidden이고, 불러오는 중이라는 사실은 role="status" 문구가 따로 알린다.',
-    anatomy: [],
-    properties: [
-      {
-        name: 'shape',
-        title: 'Shape',
-        description: '뼈대가 흉내 낼 실제 내용의 모양을 정한다.',
-        display: 'row',
-        options: [{ value: 'text' }, { value: 'title' }, { value: 'block' }, { value: 'circle' }],
-      },
-    ],
-    guidelines: [
-      {
-        id: 'match-real-content',
-        title: '실제 내용의 모양을 닮게 만든다',
-        body: '뼈대가 실제와 다르면 내용이 도착하는 순간 화면이 튑니다. 줄 수와 폭을 맞춥니다.',
-        do: ['실제 내용의 줄 수와 폭에 맞춰 뼈대를 그린다'],
-        dont: ['실제 내용과 다른 모양의 뼈대를 두어 내용이 도착할 때 화면을 튀게 하지 않는다'],
-      },
-      {
-        id: 'not-for-brief-loads',
-        title: '짧게 끝나는 것에는 쓰지 않는다',
-        body: '곧 사라질 뼈대는 깜빡임으로만 보입니다.',
-        do: ['오래 걸리는 로딩에만 뼈대를 쓴다'],
-        dont: ['금방 끝나는 로딩에 뼈대를 두어 깜빡임만 남기지 않는다'],
-      },
-      {
-        id: 'no-mixing-with-spinner',
-        title: '뼈대와 스피너를 한 화면에 섞지 않는다',
-        body: '무엇을 기다리는지 두 가지로 말하면 둘 다 흐려집니다.',
-        do: ['한 화면에는 뼈대나 스피너 중 하나만 쓴다'],
-        dont: ['뼈대와 스피너를 한 화면에 함께 쓰지 않는다'],
-      },
-      {
-        id: 'announce-via-text',
-        title: '스크린 리더에는 문구로 알린다',
-        body: '뼈대 자체는 aria-hidden이고, 상태는 문구가 전합니다.',
-        do: ["role='status'를 가진 문구로 불러오는 중임을 알린다"],
-        dont: ['불러오는 중이라는 사실을 문구 없이 뼈대만으로 전하려 하지 않는다'],
-      },
-    ],
-    usage: [
-      { id: 'table-row', title: '표의 행', note: '표가 아직 불러오지 않았을 때 행 모양의 뼈대를 반복해 보인다' },
-      { id: 'card-list', title: '카드 목록', note: '카드 여러 장이 함께 불러올 때 카드 모양의 뼈대를 나열한다' },
-      {
-        id: 'detail-basic-info',
-        title: '상세 화면의 기본 정보',
-        note: '상세 화면 상단의 제목과 본문 자리를 뼈대로 채운다',
-      },
-      {
-        id: 'avatar-with-name',
-        title: '아바타와 이름',
-        note: '아바타와 이름 두 줄이 함께 불러오는 자리를 뼈대로 채운다',
-      },
-    ],
-    cases: [
-      {
-        id: 'shorter-or-longer-content',
-        title: '실제 내용보다 짧거나 긴 경우',
-        note: '뼈대 폭보다 실제 내용이 짧거나 길면 도착하는 순간 폭이 다시 잡힌다',
-      },
-      { id: 'partial-arrival', title: '일부만 도착한 경우', note: '일부 항목만 먼저 도착하면 나머지 자리만 뼈대로 남는다' },
-      { id: 'repeat-count', title: '반복 횟수를 정하는 경우', note: '반복 횟수는 배열에서 파생하고 손으로 적지 않는다' },
-      {
-        id: 'surface',
-        title: '놓이는 표면이 다른 경우',
-        note: 'bg-muted 채움이라 놓이는 표면의 명도가 다를 때만 도형으로 읽힌다',
-      },
-    ],
-    verified: false,
   },
   {
     id: 'card',
@@ -1978,6 +2296,60 @@ export const components: ComponentMeta[] = [
     verified: false,
   },
   {
+    id: 'separator',
+    name: 'Separator',
+    category: 'data-display',
+    status: 'stable',
+    addedIn: 'v0.9.0',
+    changedIn: 'v0.9.0',
+    purpose: '가로 또는 세로로 선을 그어 화면의 영역을 나눈다. 기본은 장식이므로 뜻이 있는 경계에서만 decorative를 거짓으로 둔다.',
+    anatomy: [],
+    properties: [
+      {
+        name: 'orientation',
+        title: 'Orientation',
+        description: '선을 가로로 그을지 세로로 그을지 정한다.',
+        display: 'row',
+        options: [{ value: 'horizontal' }, { value: 'vertical' }],
+      },
+    ],
+    guidelines: [
+      {
+        id: 'meaningful-vs-decorative',
+        title: '뜻이 있는 경계와 장식을 구별한다',
+        body: '메뉴에서 성격이 다른 묶음을 가르는 선은 뜻이 있고, 카드 안 구획을 나누는 선은 장식입니다. 스크린 리더가 읽어야 하는 것은 앞의 것뿐입니다.',
+        do: ['성격이 다른 동작 묶음의 경계에는 decorative를 거짓으로 둔다'],
+        dont: ['카드 안 구획처럼 장식으로 쓰는 선에 decorative를 거짓으로 두지 않는다'],
+      },
+      {
+        id: 'no-line-when-spacing-suffices',
+        title: '여백으로 충분하면 선을 긋지 않는다',
+        body: '간격이 이미 묶음을 말하고 있으면 선은 잡음입니다.',
+        do: ['넉넉한 간격만으로 구획을 나눌 수 있는지 먼저 살핀다'],
+        dont: ['이미 여백이 구획을 나누고 있는데 선을 더하지 않는다'],
+      },
+      {
+        id: 'not-between-every-item',
+        title: '목록의 모든 항목 사이에 긋지 않는다',
+        body: '선이 많아지면 각각의 뜻이 사라집니다.',
+        do: ['성격이 다른 묶음 사이에만 선을 긋는다'],
+        dont: ['목록의 항목마다 선을 넣지 않는다'],
+      },
+    ],
+    usage: [
+      { id: 'card-section', title: '카드 안의 구획', note: '테두리 있는 상자 안에서 서로 다른 정보 구획을 나눈다' },
+      { id: 'menu-group', title: '메뉴 항목 묶음 사이', note: '성격이 다른 동작 묶음의 경계를 알린다' },
+      { id: 'toolbar-group', title: '툴바의 동작 묶음 사이', note: '관련 있는 동작끼리 묶는다' },
+      { id: 'form-section', title: '폼의 구획', note: '입력 항목이 많은 폼에서 구획을 나눈다' },
+    ],
+    cases: [
+      { id: 'vertical-height', title: '세로 구분선의 높이', note: '부모가 높이를 정해야 세로 구분선이 보인다' },
+      { id: 'spacing-sufficient', title: '여백만으로 충분한 경우', note: '선 없이 간격만으로 구획을 나눈다' },
+      { id: 'asymmetric-margin', title: '양옆 여백이 다른 경우', note: '툴바처럼 시작 여백과 끝 여백이 다르게 그어진다' },
+    ],
+    verified: false,
+  },
+  {
     id: 'description-list',
     name: 'Description List',
     category: 'data-display',
@@ -2065,254 +2437,6 @@ export const components: ComponentMeta[] = [
     verified: false,
   },
   {
-    id: 'empty-state',
-    name: 'Empty State',
-    category: 'feedback',
-    status: 'stable',
-    addedIn: 'v0.9.0',
-    changedIn: 'v0.9.0',
-    purpose:
-      '표나 목록에 보일 내용이 없을 때 무엇이 없는지, 왜 없는지, 무엇을 할 수 있는지 안내한다. 아직 만든 것이 없는 것과 불러오지 못한 것을 variant로 구별한다.',
-    anatomy: [
-      {
-        part: 'container',
-        label: 'Container',
-        note: 'Icon·Title·Description·Action을 세로로 가운데 정렬해 담는다',
-      },
-      {
-        part: 'icon',
-        label: 'Icon',
-        note: '어떤 아이콘을 넣을지는 호출하는 쪽이 정한다. variant는 색과 배경만 정한다',
-      },
-      { part: 'title', label: 'Title', note: '무엇이 없는지 한 줄로 적는다' },
-      { part: 'description', label: 'Description', note: '왜 없는지와 무엇을 할 수 있는지 적는다' },
-      {
-        part: 'action',
-        label: 'Action',
-        note: '할 수 있는 일이 있을 때만 둔다',
-        optional: true,
-      },
-    ],
-    properties: [
-      {
-        name: 'variant',
-        title: 'Variant',
-        description: '상황에 따라 아이콘의 색과 배경을 정한다. 무엇이 다른지는 문구가 말한다.',
-        display: 'grid',
-        options: [
-          { value: 'empty', note: '아직 만든 것이 없는 첫 방문의 빈 상태. 오류가 아니다' },
-          {
-            value: 'no-results',
-            note: "검색이나 필터 결과가 없는 경우. 'empty'와 같은 색을 쓴다 — 둘 다 오류가 아니다",
-          },
-          { value: 'error', note: '불러오기에 실패한 경우' },
-          { value: 'no-permission', note: '권한이 없어 접근할 수 없는 경우' },
-        ],
-      },
-      {
-        name: 'size',
-        title: 'Size',
-        description: '표 안이나 카드 안처럼 자리가 좁은 곳에서는 compact를 쓴다.',
-        display: 'row',
-        options: [
-          { value: 'default' },
-          { value: 'compact', note: '아이콘이 작아지고 위아래 여백이 준다' },
-        ],
-      },
-    ],
-    guidelines: [
-      {
-        id: 'distinguish-empty-error',
-        title: '비어 있는 것과 실패한 것을 구별한다',
-        body: '아직 만든 것이 없는 것과 불러오지 못한 것은 사용자가 할 일이 다릅니다.',
-        do: ["아직 없으면 'empty', 불러오지 못했으면 'error'를 쓴다"],
-        dont: ['상황에 맞지 않는 variant로 실제로 일어난 일을 감추지 않는다'],
-      },
-      {
-        id: 'action-when-possible',
-        title: '할 수 있는 일이 있으면 동작을 둔다',
-        body: '필터를 지우거나, 새로 만들거나, 다시 시도하는 것입니다. 없다면 두지 않습니다.',
-        do: ['사용자가 실제로 할 수 있는 일만 Action으로 둔다'],
-        dont: ['할 수 있는 일이 없는데도 누를 것을 남겨 두지 않는다'],
-      },
-      {
-        id: 'first-visit-not-error',
-        title: '첫 방문의 빈 상태는 안내이지 오류가 아니다',
-        body: '경고 색을 쓰지 않고 무엇을 할 수 있는지 알립니다.',
-        do: ["첫 방문의 빈 상태는 'empty'의 무채색을 쓴다"],
-        dont: ['아직 아무 일도 일어나지 않은 상태에 경고·오류 색을 쓰지 않는다'],
-      },
-      {
-        id: 'writing-order',
-        title: '무엇이 · 왜 · 무엇을 할 수 있는지 순서로 적는다',
-        body: "Foundations의 Writing이 정한 순서입니다.",
-        do: ['무엇이 없는지를 Title에, 왜와 무엇을 할 수 있는지를 Description에 순서대로 적는다'],
-        dont: ['할 일부터 적고 무엇이 없는지를 뒤에 붙이지 않는다'],
-      },
-    ],
-    usage: [
-      { id: 'empty-table', title: '표에 행이 없을 때', note: '데이터가 아직 없는 표에서 빈 행 대신 이 상태를 보인다' },
-      {
-        id: 'no-search-results',
-        title: '검색 결과가 없을 때',
-        note: '검색어나 필터에 맞는 결과가 없을 때 다른 조건을 시도하도록 안내한다',
-      },
-      { id: 'permission-wall', title: '권한이 없을 때', note: '접근 권한이 없는 화면에서 무엇을 요청해야 하는지 안내한다' },
-      {
-        id: 'load-failed',
-        title: '불러오기에 실패했을 때',
-        note: '네트워크나 서버 오류로 데이터를 불러오지 못했을 때 다시 시도하도록 안내한다',
-      },
-    ],
-    cases: [
-      { id: 'no-action', title: '동작이 없는 경우', note: '사용자가 할 수 있는 일이 없으면 Action을 두지 않는다' },
-      { id: 'in-table', title: '표 안에 놓이는 경우', note: '표 안에서는 size를 compact로 두어 자리를 줄인다' },
-      { id: 'two-actions', title: '동작이 둘인 경우', note: '주된 동작과 대안이 되는 동작을 나란히 둔다' },
-      { id: 'narrow-screen', title: '좁은 화면', note: '폭이 좁아져도 Description은 줄바꿈되어 읽힌다' },
-    ],
-    verified: false,
-  },
-  {
-    id: 'steps',
-    name: 'Steps',
-    category: 'navigation',
-    status: 'stable',
-    addedIn: 'v0.9.0',
-    changedIn: 'v0.9.0',
-    purpose:
-      '여러 단계로 이루어진 흐름에서 지금 단계와 전체 진행 상태를 보인다. state는 단계 하나의 상태이므로 Steps가 현재 단계 번호로 계산하지 않고 각 Step이 직접 받는다.',
-    anatomy: [
-      {
-        part: 'container',
-        label: 'Container',
-        note: 'ol. orientation에 따라 가로 또는 세로로 늘어놓는다',
-      },
-      {
-        part: 'step',
-        label: 'Step',
-        note: 'li. state를 직접 받는다. 자기가 몇 번째인지, 전체가 몇 개인지 몰라도 된다',
-      },
-      {
-        part: 'indicator',
-        label: 'Indicator',
-        note: 'state에 따라 테두리 원·채운 원·체크 아이콘·X 아이콘으로 달라진다',
-      },
-      { part: 'label', label: 'Label', note: '단계 이름 한 줄' },
-      {
-        part: 'description',
-        label: 'Description',
-        note: '단계를 보충하는 설명',
-        optional: true,
-      },
-      {
-        part: 'connector',
-        label: 'Connector',
-        note: '다음 단계로 이어지는 선. 마지막 단계 뒤에는 없다',
-      },
-    ],
-    properties: [
-      {
-        name: 'orientation',
-        title: 'Orientation',
-        description: '단계를 가로로 늘어놓을지 세로로 늘어놓을지 정한다.',
-        display: 'row',
-        options: [
-          { value: 'horizontal', note: '기본. 가로로 늘어놓는다' },
-          { value: 'vertical', note: '세로로 늘어놓는다' },
-        ],
-      },
-      {
-        name: 'state',
-        title: 'State',
-        description: '단계 하나의 진행 상태를 나타낸다. 격자의 칸마다 그 상태인 단계 하나를 보인다.',
-        display: 'grid',
-        options: [
-          { value: 'pending', note: '아직 오지 않은 단계. 테두리 원과 숫자' },
-          { value: 'current', note: "지금 하고 있는 단계. 채운 원과 숫자, aria-current='step'" },
-          { value: 'complete', note: '끝난 단계. 채운 원과 체크 아이콘' },
-          { value: 'error', note: '실패한 단계. 채운 원과 X 아이콘' },
-        ],
-      },
-      {
-        name: 'layout',
-        title: 'Layout',
-        description: '라벨만 보일지, 라벨 아래에 설명을 더할지 정한다.',
-        display: 'row',
-        options: [
-          { value: 'label', note: '기본. 단계 이름만 보인다' },
-          { value: 'with-description', note: '이름 아래에 설명을 한 줄 더한다' },
-        ],
-      },
-    ],
-    guidelines: [
-      {
-        id: 'color-and-shape',
-        title: 'Color and shape',
-        body: '현재 단계를 색과 모양 둘로 알립니다. 색만 다르면 색을 구별하지 못하는 사람에게는 어디까지 왔는지 보이지 않습니다. 끝난 단계는 체크 표시로, 지금 단계는 채운 원으로 갈라 보입니다.',
-        do: ['끝난 단계는 체크 아이콘으로, 지금 단계는 채운 원과 숫자로 갈라 보인다'],
-        dont: ['색만 다르고 모양은 같은 원으로 단계 상태를 구별하지 않는다'],
-      },
-      {
-        id: 'clickable-visited-only',
-        title: 'Clickable visited steps only',
-        body: '되돌아갈 수 있는 단계만 누를 수 있게 합니다. 아직 지나지 않은 단계를 누를 수 있게 두면 건너뛸 수 있다고 오해합니다.',
-        do: ['complete 상태인 지난 단계만 누를 수 있게 한다'],
-        dont: ['아직 오지 않은 pending 단계를 눌러 건너뛸 수 있게 두지 않는다'],
-      },
-      {
-        id: 'step-count-range',
-        title: 'Step count range',
-        body: '단계를 셋에서 다섯 사이로 둡니다. 둘이면 나눌 이유가 없고, 여섯을 넘으면 어디까지 왔는지 세어야 합니다.',
-        do: ['단계를 셋에서 다섯 사이로 나눈다'],
-        dont: ['여섯을 넘는 단계를 한 Steps에 모두 늘어놓지 않는다'],
-      },
-      {
-        id: 'no-progress-bar',
-        title: 'No progress bar alongside',
-        body: '진행률 막대와 함께 쓰지 않습니다. 같은 것을 두 번 말합니다.',
-        do: ['단계 진행은 Steps 하나로만 보인다'],
-        dont: ['Steps 옆에 진행률 막대를 나란히 두어 같은 정보를 반복하지 않는다'],
-      },
-    ],
-    usage: [
-      {
-        id: 'multi-step-form',
-        title: '여러 단계 폼',
-        note: '한 화면에 담기 어려운 입력을 단계로 나눈다',
-      },
-      {
-        id: 'approval-flow-position',
-        title: '승인 흐름의 현재 위치',
-        note: '결재나 심사가 지금 어느 단계인지 보인다',
-      },
-      {
-        id: 'processing-status',
-        title: '처리 단계 표시',
-        note: '주문이나 배송처럼 시간이 걸리는 처리 과정을 보인다',
-      },
-      {
-        id: 'installation-guide',
-        title: '설치 안내',
-        note: '순서대로 따라야 하는 설치 절차를 안내한다',
-      },
-    ],
-    cases: [
-      {
-        id: 'many-steps',
-        title: '단계가 많은 경우',
-        note: '다섯을 넘으면 한 단계씩 좁아져 라벨을 읽기 어려워진다',
-      },
-      { id: 'long-step-name', title: '단계 이름이 긴 경우', note: '줄바꿈되어 다음 줄로 이어진다' },
-      {
-        id: 'failed-step',
-        title: '실패한 단계',
-        note: 'error로 표시하고 그 뒤의 단계는 pending으로 남는다',
-      },
-      { id: 'narrow-screen', title: '좁은 화면', note: '가로 폭이 부족하면 라벨이 줄바꿈된다' },
-    ],
-    verified: false,
-  },
-  {
     id: 'accordion',
     name: 'Accordion',
     category: 'data-display',
@@ -2346,8 +2470,8 @@ export const components: ComponentMeta[] = [
         description: '항목 사이의 경계를 어떻게 보일지 정한다.',
         display: 'row',
         options: [
-          { value: 'bordered', note: '항목마다 테두리 상자로 서로 떨어져 보인다' },
           { value: 'plain', note: '기본. 구분선 하나로 한 줄기처럼 이어져 보인다' },
+          { value: 'bordered', note: '항목마다 테두리 상자로 서로 떨어져 보인다' },
         ],
       },
       {
@@ -2424,130 +2548,6 @@ export const components: ComponentMeta[] = [
         title: '모두 펼친 경우',
         note: 'type이 multiple이면 여러 항목을 동시에 열어 둘 수 있다',
       },
-    ],
-    verified: false,
-  },
-  {
-    id: 'progress',
-    name: 'Progress',
-    category: 'feedback',
-    status: 'stable',
-    addedIn: 'v0.9.0',
-    changedIn: 'v0.9.0',
-    purpose:
-      '작업이 얼마나 끝났는지 막대 길이로 보인다. Radix의 Progress를 감싸 role="progressbar"와 aria-valuenow를 맡기고, Indicator는 width 대신 translateX로 값만큼만 보이게 민다.',
-    anatomy: [
-      { part: 'track', label: 'Track', note: '전체 길이를 나타내는 바탕. 늘 bg-muted다' },
-      {
-        part: 'indicator',
-        label: 'Indicator',
-        note: '진행한 만큼 채우는 막대. variant가 배경색을 정한다',
-      },
-      { part: 'label', label: 'Label', note: '무엇의 진행인지 알리는 이름', optional: true },
-      { part: 'value', label: 'Value', note: '진행률을 숫자로 보인다', optional: true },
-    ],
-    properties: [
-      {
-        name: 'variant',
-        title: 'Variant',
-        description: 'Indicator의 배경색을 정한다. Track은 늘 bg-muted다.',
-        display: 'row',
-        options: [
-          { value: 'default', note: '기본. 중립적인 진행' },
-          { value: 'success', note: '성공적으로 끝난 진행' },
-          { value: 'warning', note: '주의가 필요한 진행' },
-          { value: 'destructive', note: '실패한 진행' },
-        ],
-      },
-      {
-        name: 'size',
-        title: 'Size',
-        description: '막대의 두께를 정한다.',
-        display: 'row',
-        options: [
-          { value: 'sm', note: '표 행, 카드 안처럼 조밀한 자리' },
-          { value: 'default', note: '기본' },
-        ],
-      },
-      {
-        name: 'state',
-        title: 'State',
-        description: '값을 아는지 모르는지를 나타낸다.',
-        display: 'grid',
-        options: [
-          { value: 'determinate', note: 'value를 주어 진행률만큼 막대가 찬다' },
-          {
-            value: 'indeterminate',
-            note: "value를 주지 않은 상태. Radix가 data-state='indeterminate'를 달아 좁힌 막대가 좌우로 오간다",
-          },
-        ],
-      },
-    ],
-    guidelines: [
-      {
-        id: 'give-value-when-known',
-        title: '끝을 알 수 있으면 값을 준다',
-        body: '남은 양을 아는데도 indeterminate로 두면 기다리는 사람이 얼마나 남았는지 짐작할 수 없습니다.',
-        do: ['남은 양을 알면 value를 주어 determinate로 보인다'],
-        dont: ['끝을 알 수 있는데도 indeterminate로 남겨 두지 않는다'],
-      },
-      {
-        id: 'show-number-with-bar',
-        title: '숫자를 함께 보인다',
-        body: '막대 길이만으로는 87%인지 92%인지 읽히지 않습니다.',
-        do: ['막대 옆이나 위에 Value로 숫자를 함께 보인다'],
-        dont: ['막대 길이만으로 정확한 값을 짐작하게 두지 않는다'],
-      },
-      {
-        id: 'dont-signal-failure-by-color-alone',
-        title: '색만으로 실패를 알리지 않는다',
-        body: '빨간 막대 옆에 무엇이 실패했는지 문구를 답니다.',
-        do: ['destructive 막대 옆에 무엇이 실패했는지 문구를 함께 둔다'],
-        dont: ['색만 바꾸고 실패 사유를 문구로 남기지 않는다'],
-      },
-      {
-        id: 'no-regression',
-        title: '되돌아가지 않는다',
-        body: '값이 줄어들면 진행이 아니라 오작동으로 읽힙니다. 다시 시작한다면 0부터 새로 그립니다.',
-        do: ['값은 앞으로만 나아가게 한다', '다시 시작할 때는 0부터 새 Progress로 그린다'],
-        dont: ['값을 줄여 뒤로 가는 모습을 보이지 않는다'],
-      },
-    ],
-    usage: [
-      { id: 'file-upload', title: '파일 업로드', note: '업로드가 끝날 때까지 남은 양을 보인다' },
-      {
-        id: 'bulk-job-progress',
-        title: '대량 작업 진행',
-        note: '여러 건을 한 번에 처리하는 동안 진행률을 보인다',
-      },
-      {
-        id: 'usage-against-limit',
-        title: '한도 대비 사용량',
-        note: '전체 한도에서 지금까지 쓴 양을 보인다',
-      },
-      {
-        id: 'multi-step-progress',
-        title: '여러 단계의 진척',
-        note: '단계별 이름 없이 전체 진행률만 하나의 수치로 보인다',
-      },
-    ],
-    cases: [
-      {
-        id: 'zero-and-hundred',
-        title: '0%와 100%',
-        note: '시작과 끝에서도 막대와 값이 자연스럽게 보인다',
-      },
-      {
-        id: 'unknown-value',
-        title: '값을 알 수 없는 경우',
-        note: 'value 없이 indeterminate로 두어 진행 중임만 알린다',
-      },
-      {
-        id: 'failed',
-        title: '실패한 경우',
-        note: 'destructive variant로 바꾸고 실패 사유를 문구로 덧붙인다',
-      },
-      { id: 'narrow-width', title: '아주 좁은 폭', note: '폭이 좁아도 막대와 값이 겹치지 않는다' },
     ],
     verified: false,
   },

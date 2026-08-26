@@ -29,6 +29,83 @@ export type Release = {
 /** 최신 버전이 배열의 맨 앞이다. */
 export const releases: Release[] = [
   {
+    version: 'v0.9.0',
+    publishedAt: '2026-08-26',
+    title: '화면의 구조와 상태를 보여줄 여덟 개를 더했어요',
+    purpose:
+      '컴포넌트 열여덟 개로 다섯 카테고리가 모두 열렸지만 채워진 것은 낱개의 컨트롤뿐이었어요. 화면의 구획을 나누고 불러오는 중과 아무것도 없는 상태를 보여줄 여덟 개를 더해 그 사이를 이었어요. Skeleton과 Progress의 트랙이 놓이는 표면과 같은 값을 쓰던 토큰도 이번에 갈라놨어요.',
+    changes: [
+      { target: 'Card / Separator / Description List / Accordion', type: 'New', note: '화면의 구획을 나누고 키·값 쌍을 보여주는 Data Display 넷을 더했어요. Accordion은 @radix-ui/react-accordion을 써요.' },
+      { target: 'Skeleton / Progress / Empty State', type: 'New', note: '불러오는 중과 아무것도 없는 상태를 보여주는 Feedback 셋을 더했어요. Progress는 @radix-ui/react-progress를 써요.' },
+      { target: 'Steps', type: 'New', note: '폼이나 절차의 단계를 보여주는 Navigation 하나를 더했어요.' },
+      { target: '--muted / --muted-foreground / --neutral-on-tint', type: 'Fixed', note: '채움 토큰 --muted가 표면 토큰 --surface-raised와 같은 값(다크에서는 완전히 같은 값)이라 Skeleton·Progress의 트랙이 카드나 스테이지 위에서 보이지 않던 것을, --muted의 명도를 낮춰 두 토큰이 1.17:1로 갈라지게 고쳤어요. 함께 어두워진 --muted 위에서 대비가 부족해진 --muted-foreground와 --neutral-on-tint도 같이 낮췄어요.' },
+      { target: 'Card', type: 'Fixed', note: '다크 elevated의 테두리 결함과 성공색 대비 부족을 고쳤어요.' },
+      { target: 'Skeleton', type: 'Fixed', note: '다크 테마를 다루던 Case를 표면 위 Case로 바꿔 실제로 겹치는 표면에서 확인하게 했어요.' },
+      { target: 'Empty State', type: 'Fixed', note: '빈 상태 지침의 Button size를 Button 자신의 규칙(단독 동작은 lg)에 맞추고, 아이콘에 aria-hidden을 달았어요.' },
+    ],
+    requests: [
+      { label: '화면의 구획을 나누고 로딩·빈 상태를 보여줄 부품을 만들어주세요', done: true },
+      { label: 'Skeleton과 Progress의 트랙이 카드나 스테이지 위에서도 보이게 해주세요', done: true },
+      { label: '폼이나 절차의 단계를 보여주는 컴포넌트를 만들어주세요', done: true },
+    ],
+    reviewItems: [
+      { label: 'useMeasuredTokens가 여러 Foundations 페이지에 중복되는 것을 걷어낼 수 있는가', category: 'Foundations', completed: false },
+      { label: '접근성 후속 묶음(포커스 링 대비, 이름 없는 라벨, Toast의 assertive 알림)을 언제 다룰 것인가', category: 'Components', completed: false },
+    ],
+    impact: ['Components', 'Foundations'],
+  },
+  {
+    version: 'v0.8.0',
+    publishedAt: '2026-08-26',
+    title: '열네 개를 더해 다섯 카테고리를 모두 채웠어요',
+    purpose:
+      'v0.7.0까지 등록된 컴포넌트는 Button·Input·Select·Checkbox 넷뿐이라 다섯 카테고리 중 actions와 inputs만 일부 찼어요. 열넷을 더해 navigation·feedback·data-display까지 다섯 카테고리를 모두 세웠고, 옅게 탄 배경 위에 얹힌 상태 글자의 대비가 여러 곳에서 동시에 부족했던 것을 토큰 층에서 고쳤어요.',
+    changes: [
+      { target: '컴포넌트 열넷', type: 'New', note: 'Textarea·Badge·Alert·Breadcrumb·Pagination·Radio·Switch·Tabs·Tooltip·Dialog·Dropdown Menu·Avatar·Toast·Table을 더해 다섯 카테고리를 모두 채웠어요.' },
+      { target: '탄 배경 위 상태 글자', type: 'Fixed', note: '옅게 탄 배경(/10·/15) 위에 얹힌 상태 글자색의 대비가 4.5:1에 못 미치던 곳을 토큰 층에서 맞췄어요. 문서 장식의 칩도 같은 기준으로 고쳤어요.' },
+      { target: 'Alert', type: 'Fixed', note: 'role="alert"를 하드코딩 대신 live prop으로 받게 했어요.' },
+      { target: 'Table / Dialog', type: 'Fixed', note: '표의 가로 스크롤 그릇과 Dialog의 긴 본문이 키보드로도 닿게 했어요.' },
+      { target: 'Dialog', type: 'Fixed', note: '컴포넌트에 없는 size 축을 Properties에서 뺐어요.' },
+      { target: 'State 축', type: 'Fixed', note: '컴포넌트마다 다르던 상태 축 순서를 하나로 맞추고, State 문서에 남아 있던 낡은 목록을 없앴어요.' },
+      { target: 'Input / Select / Checkbox', type: 'Fixed', note: 'Select의 defaultOpen이 강제로 열려 있던 문제와 세 컴포넌트에 hover 상태가 없던 문제를 고쳤어요.' },
+    ],
+    requests: [
+      { label: '나머지 다섯 카테고리를 마저 채워주세요', done: true },
+      { label: '옅게 탄 배경 위 글자가 흐리게 보이는 문제를 고쳐주세요', done: true },
+      { label: 'Alert가 스크린리더에게 실제로 알림으로 읽히게 해주세요', done: true },
+    ],
+    reviewItems: [
+      { label: 'useMeasuredTokens가 여러 Foundations 페이지에 중복되는 것을 걷어낼 수 있는가', category: 'Foundations', completed: false },
+      { label: '접근성 후속 묶음(포커스 링 대비, 이름 없는 라벨, Toast의 assertive 알림)을 언제 다룰 것인가', category: 'Components', completed: false },
+    ],
+    impact: ['Components', 'Foundations'],
+  },
+  {
+    version: 'v0.7.0',
+    publishedAt: '2026-08-25',
+    title: '폼 입력 세 가지로 첫 공통 계약을 세웠어요',
+    purpose:
+      '등록된 컴포넌트가 Button 하나뿐이라 확인할 것이 거의 없었어요. Input·Select·Checkbox를 한 묶음으로 더해 셋이 상태와 토큰을 공유하는 첫 공통 계약 — 컨트롤 높이, 포커스 링, 오류 표현 — 을 세웠어요. 문서에만 있고 실제로는 아무도 쓰지 않던 --color-input과 --color-ring 토큰도 이번에 처음 검증됐어요.',
+    changes: [
+      { target: 'Input', type: 'New', note: '한 줄짜리 값을 입력받아요. 컨트롤 높이를 h-control 토큰에 처음 연결했어요.' },
+      { target: 'Select', type: 'New', note: '여러 값 중 하나를 고르게 해요. @radix-ui/react-select를 써요.' },
+      { target: 'Checkbox', type: 'New', note: '여러 값을 켜고 꺼요. @radix-ui/react-checkbox를 써요.' },
+      { target: 'Input / Select / Checkbox', type: 'New', note: '셋이 공유하는 계약을 세웠어요 — 같은 size의 높이는 서로 같고, 포커스 링은 한 모양이고, 오류는 aria-invalid로 나타내고 색과 문구를 함께 써요.' },
+      { target: 'Anatomy', type: 'Fixed', note: '구조도의 미리보기가 인스턴스 하나로만 그려지게 했어요.' },
+    ],
+    requests: [
+      { label: '폼에서 쓸 기본 입력 컴포넌트를 만들어주세요', done: true },
+      { label: '여러 값 중 하나를 고르는 컴포넌트를 만들어주세요', done: true },
+      { label: '여러 값을 켜고 끄는 컴포넌트를 만들어주세요', done: true },
+      { label: '세 컴포넌트의 높이와 포커스 링, 오류 표현을 통일해주세요', done: true },
+    ],
+    reviewItems: [
+      { label: 'useMeasuredTokens가 여러 Foundations 페이지에 중복되는 것을 걷어낼 수 있는가', category: 'Foundations', completed: false },
+      { label: '라벨·도움말·오류를 묶는 Field 감싸개가 필요한가 — 세 컴포넌트가 자리 잡은 뒤에 판단한다', category: 'Components', completed: false },
+    ],
+    impact: ['Components', 'Foundations'],
+  },
+  {
     version: 'v0.6.0',
     publishedAt: '2026-08-25',
     title: '구조를 가리키는 이름을 다시 영문으로 돌렸어요',
