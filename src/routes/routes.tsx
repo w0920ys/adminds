@@ -2,6 +2,7 @@
 import type { RouteObject } from 'react-router'
 import { AppShell } from '@/components/layout/AppShell'
 import { Placeholder } from '@/routes/Placeholder'
+import { AccordionPage } from '@/routes/components/AccordionPage'
 import { AlertPage } from '@/routes/components/AlertPage'
 import { AvatarPage } from '@/routes/components/AvatarPage'
 import { BadgePage } from '@/routes/components/BadgePage'
@@ -88,6 +89,7 @@ export const routes: RouteObject[] = [
           { path: 'card', element: <CardPage /> },
           { path: 'separator', element: <SeparatorPage /> },
           { path: 'description-list', element: <DescriptionListPage /> },
+          { path: 'accordion', element: <AccordionPage /> },
         ],
       },
 

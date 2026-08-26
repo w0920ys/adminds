@@ -2312,6 +2312,121 @@ export const components: ComponentMeta[] = [
     ],
     verified: false,
   },
+  {
+    id: 'accordion',
+    name: 'Accordion',
+    category: 'data-display',
+    status: 'stable',
+    addedIn: 'v0.9.0',
+    changedIn: 'v0.9.0',
+    purpose:
+      '여러 항목 중 필요한 것만 펼쳐 한 번에 필요한 만큼만 보인다. 포털을 쓰지 않고 페이지를 잠그지 않아 expanded를 defaultValue로 그대로 보일 수 있다.',
+    anatomy: [
+      { part: 'container', label: 'Container', note: 'Item들을 세로로 늘어놓는다' },
+      {
+        part: 'item',
+        label: 'Item',
+        note: 'Trigger와 Content를 감싼다. disabled를 직접 받는다',
+      },
+      {
+        part: 'trigger',
+        label: 'Trigger',
+        note: "h3(AccordionHeader)로 감싼 버튼. 열림 여부를 오른쪽 화살표(ChevronDown)의 회전으로 함께 보인다",
+      },
+      {
+        part: 'content',
+        label: 'Content',
+        note: '열렸을 때 보이는 내용. --radix-accordion-content-height로 높이를 여닫는다',
+      },
+    ],
+    properties: [
+      {
+        name: 'variant',
+        title: 'Variant',
+        description: '항목 사이의 경계를 어떻게 보일지 정한다.',
+        display: 'row',
+        options: [
+          { value: 'bordered', note: '항목마다 테두리 상자로 서로 떨어져 보인다' },
+          { value: 'plain', note: '기본. 구분선 하나로 한 줄기처럼 이어져 보인다' },
+        ],
+      },
+      {
+        name: 'state',
+        title: 'State',
+        description: '항목 하나의 열림 여부와 상호작용을 나타낸다.',
+        display: 'grid',
+        options: [
+          { value: 'collapsed', note: '기본. 접힌 상태' },
+          { value: 'expanded', note: '펼쳐진 상태. defaultValue로 보인다' },
+          { value: 'disabled', note: '열고 닫을 수 없음' },
+          { value: 'focus', note: '키보드 포커스. 항상 보여야 한다' },
+        ],
+      },
+    ],
+    guidelines: [
+      {
+        id: 'decide-single-or-multiple',
+        title: '한 번에 하나만 열지 여럿 열지 미리 정한다',
+        body: '항목끼리 비교해야 하면 여럿, 한 줄기로 읽어야 하면 하나입니다. type(single·multiple)은 쉬고 있는 모습에서 완전히 같아 이 문서의 축으로 두지 않습니다.',
+        do: [
+          '항목끼리 비교해야 하면 여러 개를 동시에 열 수 있게 정한다',
+          '순서대로 하나씩 읽어야 하면 한 번에 하나만 열리게 정한다',
+        ],
+        dont: ['정하지 않고 상황에 따라 동작을 바꾸지 않는다'],
+      },
+      {
+        id: 'dont-hide-important-content',
+        title: '중요한 내용을 접어 두지 않는다',
+        body: '접힌 것은 없는 것과 같습니다. 반드시 봐야 하는 내용은 펼쳐 둡니다.',
+        do: ['반드시 봐야 하는 내용은 Accordion 밖에 두거나 펼친 채로 둔다'],
+        dont: ['중요한 안내를 접힌 Item 안에 숨겨 두지 않는다'],
+      },
+      {
+        id: 'dont-hide-page-length',
+        title: '접었다 펴는 것으로 화면 길이를 숨기지 않는다',
+        body: '내용이 너무 많으면 접을 것이 아니라 나눌 곳입니다.',
+        do: ['한 항목의 내용은 한눈에 읽을 수 있는 길이로 둔다'],
+        dont: ['너무 긴 내용을 접어서 화면 길이만 줄여 보이지 않는다'],
+      },
+    ],
+    usage: [
+      {
+        id: 'advanced-settings',
+        title: '설정의 고급 항목',
+        note: '자주 안 쓰는 고급 설정을 접어 두어 기본 설정에 집중하게 한다',
+      },
+      {
+        id: 'filter-groups',
+        title: '필터 묶음',
+        note: '조건이 많은 필터를 주제별로 나눠 필요한 것만 펼쳐 본다',
+      },
+      {
+        id: 'long-form-sections',
+        title: '긴 폼의 구획',
+        note: '입력할 것이 많은 폼을 구획으로 나눠 한 번에 하나씩 채우게 한다',
+      },
+      { id: 'faq', title: '자주 묻는 질문', note: '질문과 답을 짝지어 필요한 질문만 펼쳐 본다' },
+    ],
+    cases: [
+      {
+        id: 'single-item',
+        title: '항목이 하나뿐인 경우',
+        note: '항목이 하나라도 접고 펼 수 있는 기능은 그대로 남는다',
+      },
+      { id: 'long-title', title: '제목이 긴 경우', note: '줄바꿈되어 다음 줄로 이어진다' },
+      {
+        id: 'long-content',
+        title: '내용이 아주 긴 경우',
+        note: '내용이 길어도 높이를 그대로 따라 늘어난다',
+      },
+      {
+        id: 'all-expanded',
+        title: '모두 펼친 경우',
+        note: 'type이 multiple이면 여러 항목을 동시에 열어 둘 수 있다',
+      },
+    ],
+    verified: false,
+  },
 ]
 
 export function getComponent(id: string): ComponentMeta | undefined {
