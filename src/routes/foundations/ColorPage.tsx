@@ -75,7 +75,7 @@ export function ColorPage() {
       )}
 
       <DocSection title="All tokens">
-        <p className="text-muted-foreground text-xs">
+        <p className="text-muted-foreground text-sm">
           아래 값은 지금 적용된 테마에서 실측한 것입니다. 테마를 바꾸면 값도 바뀝니다.
         </p>
         <TokenTable rows={rows} />

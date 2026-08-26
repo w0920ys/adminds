@@ -47,7 +47,7 @@ const GROUPS: TokenGroup[] = [
   },
   {
     prefix: '--text-',
-    note: 'Tailwind 기본 스케일에 없는 글자 크기만 더합니다. 있는 크기는 그대로 씁니다.',
+    note: '글자 크기와 줄 간격입니다. 크기는 Tailwind 기본 스케일에 없는 것만 더하고, 줄 간격은 읽는 글이 놓이는 세 단계(xs·sm·base)만 기본값에서 올려 다시 정합니다.',
     names: parseTokenNames(tokensCss, '--text-'),
   },
 ]
@@ -95,6 +95,12 @@ const NAMING_RULES = [
   { shape: '--shadow-<용도>', meaning: '그림자 단계', example: '--shadow-card' },
   { shape: '--z-index-<레이어>', meaning: '쌓임 순서', example: '--z-index-drawer' },
   { shape: '--text-<크기>', meaning: '글자 크기', example: '--text-2xs' },
+  {
+    /* Tailwind가 정한 짝 이름이다. text-<크기> 유틸리티가 이 이름을 줄 간격으로 읽는다 */
+    shape: '--text-<크기>--line-height',
+    meaning: '그 크기의 줄 간격',
+    example: '--text-sm--line-height',
+  },
 ].filter((rule) => ALL_NAMES.includes(rule.example))
 
 /** 테마가 바뀌면 실측값도 바뀌므로 루트의 클래스 변화를 지켜본다. */
@@ -141,13 +147,13 @@ export function DesignTokenPage() {
             </div>
           ))}
         </div>
-        <p className="text-muted-foreground text-xs">
+        <p className="text-muted-foreground text-sm">
           컴포넌트가 1층 값이나 임의 수치를 직접 적으면 그 자리만 시스템에서 떨어져 나옵니다. 다크
           테마에서 그 색만 바뀌지 않고, 밀도를 조정할 때 그 높이만 남고, 무엇을 고쳐야 하는지
           찾으려면 파일을 전부 뒤져야 합니다. 컴포넌트가 2층 이름만 쓰면 바꿀 곳이 tokens.css 한
           곳으로 모입니다.
         </p>
-        <p className="text-muted-foreground text-xs">
+        <p className="text-muted-foreground text-sm">
           새 토큰을 더할 때는 테마에 따라 값이 달라지는지를 먼저 봅니다. 달라지면{' '}
           <code className="text-xs">:root</code>와 <code className="text-xs">.dark</code> 양쪽에 값을
           적고 <code className="text-xs">@theme inline</code>에서 접두사가 붙은 이름으로 이어줍니다.
@@ -158,7 +164,7 @@ export function DesignTokenPage() {
       </DocSection>
 
       <DocSection title="Naming">
-        <p className="text-muted-foreground text-xs">
+        <p className="text-muted-foreground text-sm">
           이름은 접두사와 역할로 이루어집니다. 접두사가 그 값이 어떤 종류인지를, 뒤에 붙는 낱말이
           어디에 쓰이는지를 말합니다. 값을 가리키는 낱말은 이름에 넣지 않습니다.
         </p>
@@ -186,7 +192,7 @@ export function DesignTokenPage() {
             </tbody>
           </table>
         </div>
-        <p className="text-muted-foreground text-xs">
+        <p className="text-muted-foreground text-sm">
           짝 규칙이 하나 있습니다. 배경으로 쓰는 색 토큰에는 같은 이름에{' '}
           <code className="text-xs">-foreground</code>를 붙인 짝이 있고, 그 배경을 쓰면 글자색은 반드시
           그 짝을 씁니다 — <code className="text-xs">bg-primary</code> 위의 글자는{' '}
@@ -196,7 +202,7 @@ export function DesignTokenPage() {
       </DocSection>
 
       <DocSection title="All tokens">
-        <p className="text-muted-foreground text-xs">
+        <p className="text-muted-foreground text-sm">
           아래 목록은 tokens.css를 읽어 만들고, 값은 지금 적용된 테마에서 실측한 것입니다. 테마를
           바꾸면 색 값도 함께 바뀝니다. 값이나 변수 이름에 마우스를 올린 뒤 누르면 복사됩니다.
         </p>

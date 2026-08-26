@@ -20,7 +20,7 @@ export function ExampleFrame({
         // DO 글자는 success-on-tint를 쓴다 — 원래 success 색은 흰 바탕에서도 3.67:1이다
         <p
           className={cn(
-            'flex items-center gap-1.5 border-b px-3 py-2 text-2xs font-bold tracking-widest',
+            'flex items-center gap-1.5 border-b px-3 py-2.5 text-2xs font-bold tracking-widest',
             kind === 'do' ? 'text-success-on-tint' : 'text-destructive',
           )}
         >
@@ -28,7 +28,7 @@ export function ExampleFrame({
           {KIND_LABEL[kind]}
         </p>
       )}
-      <div className="bg-surface-raised flex-1 p-4">{children}</div>
+      <div className="bg-surface-raised flex-1 p-4 md:p-5">{children}</div>
     </div>
   )
 }

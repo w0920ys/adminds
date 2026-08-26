@@ -73,7 +73,7 @@ export function AppShell() {
               * 걸어 뒀는데도 window.scrollTo(0, 600)이 실제로 먹었다.
               * main이 담는 상자가 되면 그 여지가 사라진다(재보니 812로 돌아온다).
               */}
-            <main className="scrollbar-none relative min-w-0 flex-1 overflow-y-auto px-4 py-8 md:px-10">
+            <main className="scrollbar-none relative min-w-0 flex-1 overflow-y-auto px-5 py-8 sm:px-8 sm:py-10 md:px-10 md:py-12">
               <div className="mx-auto flex max-w-6xl gap-10">
                 <div className="min-w-0 flex-1">
                   <Outlet />

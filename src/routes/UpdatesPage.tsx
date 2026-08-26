@@ -1,8 +1,9 @@
 import type { VariantProps } from 'class-variance-authority'
-import { DocPage, DocSection } from '@/components/docs/DocPage'
+import { DocPage, DocSection, docProse } from '@/components/docs/DocPage'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
 import { Badge, type badgeVariants } from '@/components/ui/badge'
 import { releases, type ReleaseChange } from '@/data/releases'
+import { cn } from '@/lib/utils'
 
 /**
  * 변경 종류를 배지 색으로 잇는다. New는 Lnb의 New 배지와 같은 info를 쓰고,
@@ -56,8 +57,9 @@ export function UpdatesPage() {
                 </span>
               </AccordionTrigger>
               <AccordionContent>
-                <p className="text-sm">{release.purpose}</p>
-                <ul className="mt-4 flex flex-col gap-3">
+                {/* 아코디언 안이라 DocSection의 직계 <p> 규칙이 닿지 않는다. 한 줄 길이를 여기서 직접 제한한다 */}
+                <p className={cn('text-sm', docProse)}>{release.purpose}</p>
+                <ul className="mt-5 flex flex-col gap-4">
                   {release.changes.map((change, index) => (
                     <li key={index} className="flex items-start gap-3">
                       <Badge variant={CHANGE_BADGE_VARIANT[change.type]} className="mt-0.5 shrink-0">
@@ -65,7 +67,7 @@ export function UpdatesPage() {
                       </Badge>
                       <div>
                         <strong className="text-foreground text-sm">{change.target}</strong>
-                        <p className="mt-0.5 text-sm">{change.note}</p>
+                        <p className={cn('mt-1 text-sm', docProse)}>{change.note}</p>
                       </div>
                     </li>
                   ))}

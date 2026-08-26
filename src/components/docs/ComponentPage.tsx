@@ -85,7 +85,7 @@ export function ComponentPage({
 
       {meta.properties.length > 0 && (
         <DocSection title="Properties">
-          <div className="flex flex-col gap-12">
+          <div className="flex flex-col gap-10 md:gap-12">
             {meta.properties.map((property) => (
               <PropertyBlock
                 key={property.name}
@@ -100,7 +100,7 @@ export function ComponentPage({
 
       {meta.guidelines.length > 0 && (
         <DocSection title="Guidelines">
-          <div className="flex flex-col gap-12">
+          <div className="flex flex-col gap-10 md:gap-12">
             {meta.guidelines.map((guideline) => (
               <GuidelineBlock
                 key={guideline.id}

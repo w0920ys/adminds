@@ -9,15 +9,22 @@ export function ExampleList({
   examples: Example[]
   renderExample?: (exampleId: string) => ReactNode
 }) {
+  /*
+   * 칸에 min-w-0이 필요하다. 격자 칸은 기본이 min-width:auto라 안에 든
+   * 표(whitespace-nowrap)가 칸을 자기 폭만큼 벌린다 — 375px에서 main의
+   * scrollWidth가 375가 아니라 428이었다. 0으로 내리면 칸이 컨테이너에 맞고,
+   * 넘치는 표는 Table이 스스로 가진 overflow-x-auto 영역 안에서 굴러간다.
+   */
   return (
-    <ul className="grid gap-4 sm:grid-cols-2">
+    <ul className="grid gap-5 sm:grid-cols-2 md:gap-6">
       {examples.map((example) => {
         const node = renderExample?.(example.id)
         return (
-          <li key={example.id} className="flex flex-col gap-2">
+          <li key={example.id} className="flex min-w-0 flex-col gap-2.5">
             <div>
               <strong className="text-sm">{example.title}</strong>
-              <p className="text-muted-foreground mt-1 text-xs">{example.note}</p>
+              {/* 예시의 설명은 한 문장짜리 읽는 글이라 캡션(text-xs)이 아니라 본문 크기로 둔다 */}
+              <p className="text-muted-foreground mt-1.5 text-sm">{example.note}</p>
             </div>
             {node && <ExampleFrame>{node}</ExampleFrame>}
           </li>

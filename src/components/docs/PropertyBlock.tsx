@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import { docProse } from '@/components/docs/DocPage'
 import { HeadingAnchor } from '@/components/docs/HeadingAnchor'
 import { forcedStateClass } from '@/components/docs/state-preview'
 import type { ComponentMeta, ComponentProperty } from '@/data/registry'
@@ -25,13 +26,13 @@ export function PropertyBlock({
   const cross = property.crossWith ? getProperty(meta, property.crossWith) : undefined
 
   return (
-    <section className="flex flex-col gap-3">
+    <section className="flex flex-col gap-4">
       <div>
         <div className="group flex items-center">
           <h3 className="text-base font-semibold">{property.title}</h3>
           <HeadingAnchor />
         </div>
-        <p className="text-muted-foreground text-sm">{property.description}</p>
+        <p className={cn('text-muted-foreground mt-1.5 text-sm', docProse)}>{property.description}</p>
       </div>
 
       {property.display === 'matrix' && cross ? (
@@ -81,12 +82,12 @@ export function PropertyBlock({
         <div
           className={
             property.display === 'row'
-              ? 'flex flex-wrap items-end gap-6 rounded-lg border p-4'
-              : 'grid gap-3 rounded-lg border p-4 sm:grid-cols-2 lg:grid-cols-3'
+              ? 'flex flex-wrap items-end gap-x-6 gap-y-5 rounded-lg border p-4 md:p-5'
+              : 'grid gap-x-4 gap-y-5 rounded-lg border p-4 sm:grid-cols-2 md:p-5 lg:grid-cols-3'
           }
         >
           {property.options.map((option) => (
-            <div key={option.value} className="flex flex-col gap-2">
+            <div key={option.value} className="flex flex-col gap-2.5">
               <p className="text-muted-foreground text-xs font-bold">{option.value}</p>
               <div
                 className={cn(

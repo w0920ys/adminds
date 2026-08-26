@@ -55,7 +55,7 @@ export function IconographyPage() {
       </DocSection>
 
       <DocSection title="Size">
-        <p className="text-muted-foreground text-xs">
+        <p className="text-muted-foreground text-sm">
           크기는 아이콘이 아니라 옆에 붙는 글자가 정합니다. 아래 다섯 단계 밖의 값은 쓰지 않습니다.
         </p>
         <div className="divide-y rounded-lg border">
@@ -75,7 +75,7 @@ export function IconographyPage() {
       </DocSection>
 
       <DocSection title="Stroke">
-        <p className="text-muted-foreground text-xs">
+        <p className="text-muted-foreground text-sm">
           기본은 2입니다. strokeWidth를 코드에 적었다면 왜 적었는지 한 줄로 말할 수 있어야 하고, 말할 수
           없으면 지웁니다.
         </p>
@@ -97,7 +97,7 @@ export function IconographyPage() {
       </DocSection>
 
       <DocSection title="Consistency">
-        <p className="text-muted-foreground text-xs">
+        <p className="text-muted-foreground text-sm">
           아래 매핑은 고정입니다. 새 화면에서 뜻이 겹치면 새 아이콘을 고르지 말고 이 표에서 찾습니다. 표에
           없는 뜻이 생기면 아이콘부터 고르지 말고 이 표에 한 줄을 먼저 추가합니다.
         </p>
@@ -114,14 +114,14 @@ export function IconographyPage() {
             )
           })}
         </div>
-        <p className="text-muted-foreground text-xs">
+        <p className="text-muted-foreground text-sm">
           반대 방향도 고정합니다. X는 닫기이지 삭제가 아니고, Check는 성공이지 '선택할 수 있음'이 아닙니다.
           한 아이콘에 뜻을 둘 이상 얹는 순간 둘 다 흐려집니다.
         </p>
       </DocSection>
 
       <DocSection title="Accessibility">
-        <p className="text-muted-foreground text-xs">
+        <p className="text-muted-foreground text-sm">
           아이콘은 스크린리더에 아무 이름도 주지 않습니다. 둘 중 하나는 반드시 붙습니다 — 아이콘이 유일한
           라벨이면 <code className="text-xs">aria-label</code>, 옆에 글자가 있으면{' '}
           <code className="text-xs">aria-hidden</code>.

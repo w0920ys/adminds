@@ -19,7 +19,7 @@ export function Swatch({ row }: { row: TokenRow }) {
         style={{ background: `var(${row.cssVar})` }}
         aria-hidden
       />
-      <div className="flex flex-col gap-0.5">
+      <div className="flex flex-col gap-1">
         <CopyValue value={row.name} className="text-sm font-semibold" />
         <CopyValue value={row.cssVar} className="text-muted-foreground text-2xs" />
         {row.value ? (

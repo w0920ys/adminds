@@ -25,7 +25,7 @@ export function DocFooterNav() {
           {prev ? (
             <Link
               to={prev.to}
-              className="bg-secondary/60 hover:bg-secondary flex flex-col gap-1 rounded-lg p-4"
+              className="bg-secondary/60 hover:bg-secondary flex flex-col gap-1.5 rounded-lg p-4 md:p-5"
             >
               <span className="text-muted-foreground flex items-center gap-1 text-2xs">
                 <ChevronLeft size={12} aria-hidden /> 이전 문서
@@ -38,7 +38,7 @@ export function DocFooterNav() {
           {next && (
             <Link
               to={next.to}
-              className="bg-secondary/60 hover:bg-secondary flex flex-col items-end gap-1 rounded-lg p-4 sm:text-right"
+              className="bg-secondary/60 hover:bg-secondary flex flex-col items-end gap-1.5 rounded-lg p-4 sm:text-right md:p-5"
             >
               <span className="text-muted-foreground flex items-center gap-1 text-2xs">
                 다음 문서 <ChevronRight size={12} aria-hidden />

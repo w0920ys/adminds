@@ -102,7 +102,7 @@ export function VoiceAndTonePage() {
             </div>
           ))}
         </div>
-        <p className="text-muted-foreground text-xs">
+        <p className="text-muted-foreground text-sm">
           톤이 바뀌어도 문체는 바뀌지 않습니다. 경고라고 문장을 길게 늘이거나 오류라고 사과를 덧붙이지
           않습니다. 표기 규칙은 Writing에 정리해 두었습니다.
         </p>

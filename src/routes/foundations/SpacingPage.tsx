@@ -45,7 +45,7 @@ export function SpacingPage() {
       </DocSection>
 
       <DocSection title="Density">
-        <p className="text-muted-foreground text-xs">
+        <p className="text-muted-foreground text-sm">
           컨트롤과 테이블 행의 높이를 토큰으로 묶어 화면마다 흔들리지 않게 합니다.
         </p>
         <TokenTable rows={density} />
