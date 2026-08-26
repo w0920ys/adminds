@@ -10,6 +10,7 @@ import { ButtonPage } from '@/routes/components/ButtonPage'
 import { CardPage } from '@/routes/components/CardPage'
 import { CheckboxPage } from '@/routes/components/CheckboxPage'
 import { ComponentsIndex } from '@/routes/components/ComponentsIndex'
+import { DescriptionListPage } from '@/routes/components/DescriptionListPage'
 import { DialogPage } from '@/routes/components/DialogPage'
 import { DropdownMenuPage } from '@/routes/components/DropdownMenuPage'
 import { InputPage } from '@/routes/components/InputPage'
@@ -82,6 +83,7 @@ export const routes: RouteObject[] = [
           { path: 'avatar', element: <AvatarPage /> },
           { path: 'card', element: <CardPage /> },
           { path: 'separator', element: <SeparatorPage /> },
+          { path: 'description-list', element: <DescriptionListPage /> },
         ],
       },
 

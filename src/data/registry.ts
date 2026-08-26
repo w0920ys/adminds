@@ -1977,6 +1977,93 @@ export const components: ComponentMeta[] = [
     ],
     verified: false,
   },
+  {
+    id: 'description-list',
+    name: 'Description List',
+    category: 'data-display',
+    status: 'stable',
+    addedIn: 'v0.9.0',
+    changedIn: 'v0.9.0',
+    purpose:
+      '라벨과 값의 쌍을 나열해 상세 정보를 보인다. <dl>·<dt>·<dd>를 써 키와 값이라는 뜻을 마크업에 그대로 담는다.',
+    anatomy: [
+      {
+        part: 'container',
+        label: 'Container',
+        note: '<dl>. columns가 격자의 열 수를 정한다',
+      },
+      {
+        part: 'item',
+        label: 'Item',
+        note: '<dt>와 <dd>를 감싸는 <div>. 격자에서 한 칸을 차지하는 단위',
+      },
+      {
+        part: 'term',
+        label: 'Term',
+        note: '<dt>. layout이 horizontal이면 왼쪽 고정 폭을 갖는다',
+      },
+      { part: 'detail', label: 'Detail', note: '<dd>' },
+    ],
+    properties: [
+      {
+        name: 'layout',
+        title: 'Layout',
+        description: '라벨을 위에 두고 값을 아래에 둘지, 라벨을 왼쪽 고정 폭에 두고 값을 오른쪽에 둘지 정한다.',
+        display: 'row',
+        options: [
+          { value: 'stacked', note: '라벨이 위, 값이 아래. 값이 길거나 폭이 좁을 때 쓴다' },
+          { value: 'horizontal', note: '라벨이 왼쪽 고정 폭, 값이 오른쪽. 값이 짧을 때 훑어보기 좋다' },
+        ],
+      },
+      {
+        name: 'columns',
+        title: 'Columns',
+        description: '한 줄에 항목을 몇 개 늘어놓을지 정한다.',
+        display: 'row',
+        options: [{ value: 'one' }, { value: 'two' }, { value: 'three' }],
+      },
+    ],
+    guidelines: [
+      {
+        id: 'short-labels',
+        title: '라벨을 짧게 적는다',
+        body: '라벨이 값보다 길면 훑어보는 눈이 값을 찾지 못합니다.',
+        do: ['라벨을 한두 단어로 짧게 적는다'],
+        dont: ['라벨이 값보다 길어지도록 풀어 쓰지 않는다'],
+      },
+      {
+        id: 'no-empty-value',
+        title: '값이 없으면 자리를 비우지 않는다',
+        body: "항목을 지우거나 '—'를 넣습니다. 빈칸은 불러오는 중인지 값이 없는 것인지 알려주지 않습니다.",
+        do: ["값이 없으면 항목을 지우거나 '—'를 넣는다"],
+        dont: ['값이 없다고 빈 dd를 그대로 두지 않는다'],
+      },
+      {
+        id: 'meaningful-order',
+        title: '순서에 뜻을 담는다',
+        body: '자주 보는 것을 위에 둡니다. 데이터베이스의 열 순서를 그대로 옮기지 않습니다.',
+        do: ['자주 확인하는 항목을 위에 둔다'],
+        dont: ['데이터베이스의 열 순서를 그대로 옮기지 않는다'],
+      },
+    ],
+    usage: [
+      { id: 'detail-basic-info', title: '상세 화면의 기본 정보', note: '상세 화면 상단에서 핵심 값을 나열한다' },
+      { id: 'dialog-confirmation', title: 'Dialog 안의 확인 정보', note: '실행하기 전에 확인할 값을 나열한다' },
+      { id: 'card-summary', title: '카드 안 요약', note: 'Card 안에서 관련 값을 간추려 보인다' },
+      { id: 'table-expanded-row', title: '표의 펼친 행', note: '표의 한 행을 펼쳤을 때 나머지 값을 보인다' },
+    ],
+    cases: [
+      { id: 'very-long-value', title: '값이 아주 긴 경우', note: '긴 값은 줄바꿈되어 다음 줄로 이어진다' },
+      { id: 'no-value', title: '값이 없는 경우', note: "값이 없으면 호출하는 쪽이 '—'를 넣는다" },
+      { id: 'badge-value', title: '값이 Badge인 경우', note: 'dd 안에 Badge를 그대로 놓는다' },
+      {
+        id: 'narrow-screen',
+        title: '좁은 화면',
+        note: 'layout이 horizontal이고 columns가 three이면 한 칸이 좁아져 라벨 자리가 부족해진다',
+      },
+    ],
+    verified: false,
+  },
 ]
 
 export function getComponent(id: string): ComponentMeta | undefined {
