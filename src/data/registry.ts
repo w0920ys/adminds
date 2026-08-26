@@ -515,6 +515,111 @@ export const components: ComponentMeta[] = [
     verified: false,
   },
   {
+    id: 'date-picker',
+    name: 'Date Picker',
+    aliases: ['날짜 선택', '달력', '기간 선택', 'calendar', 'date range'],
+    category: 'inputs',
+    status: 'stable',
+    addedIn: 'v0.10.0',
+    changedIn: 'v0.10.0',
+    purpose:
+      '달력에서 날짜 하나 또는 기간을 고르게 한다. Popover 위에 Calendar를 놓고, 트리거는 Select와 같은 모양이다.',
+    /*
+     * Month header·Weekday row·Day grid·Day는 열린 표면 안에서만 존재하고
+     * PopoverContent가 document.body로 포털한다 — Combobox의 Search·List·
+     * Item·Empty message와 같은 이유로 stage.querySelector가 닿지 못해
+     * 지시선을 그릴 수 없다. 무대 안에 실제로 남는 Trigger·Value 둘만
+     * 부위로 둔다.
+     */
+    anatomy: [
+      {
+        part: 'trigger',
+        label: 'Trigger',
+        note: '테두리·높이·포커스 링은 Select의 트리거와 같은 토큰을 쓴다. 오른쪽 끝에 16×16 CalendarDays가 항상 보인다. 누르면 트리거 아래에 달력이 뜬다',
+      },
+      {
+        part: 'value',
+        label: 'Value',
+        note: "layout이 single이면 고른 날짜가 'YYYY-MM-DD'로 보인다. range면 시작과 끝을 '–'로 잇고, 시작만 골랐으면 '종료일을 고르세요'가 이어 붙는다. 아직 고르지 않았으면 이 자리에 자리표시자가 대신 보인다",
+      },
+    ],
+    properties: [
+      {
+        name: 'size',
+        title: 'Size',
+        description: '트리거의 높이와 달력 날짜 칸의 크기를 함께 정한다. 같은 줄에 놓이는 컨트롤끼리는 크기를 맞춘다.',
+        display: 'row',
+        options: [{ value: 'sm' }, { value: 'default' }, { value: 'lg' }],
+      },
+      {
+        name: 'state',
+        title: 'State',
+        description: '상호작용 상태를 나타낸다.',
+        display: 'grid',
+        options: [
+          { value: 'default' },
+          { value: 'hover', note: '포인터가 올라간 동안' },
+          { value: 'focus', note: '키보드 포커스. 항상 보여야 한다' },
+          { value: 'disabled', note: '지금 선택을 바꿀 수 없음' },
+          { value: 'invalid', note: 'aria-invalid로 나타낸다. 테두리 색과 문구를 함께 쓴다' },
+        ],
+      },
+      {
+        name: 'layout',
+        title: 'Layout',
+        description: '날짜 하나를 고르는지 기간을 고르는지를 정한다.',
+        display: 'row',
+        options: [
+          { value: 'single', note: '기본. 날짜 하나를 고른다' },
+          { value: 'range', note: '시작과 끝, 두 날짜를 고른다' },
+        ],
+      },
+    ],
+    guidelines: [
+      {
+        id: 'format-as-placeholder',
+        title: 'Format as placeholder',
+        body: "형식을 자리표시자로 알립니다. 'YYYY-MM-DD'처럼 어떤 모양으로 적는지 미리 보입니다.",
+        do: ["자리표시자에 실제 날짜 형식('YYYY-MM-DD')을 그대로 쓴다"],
+        dont: ["'날짜 선택'처럼 형식을 알리지 않는 자리표시자를 쓰지 않는다"],
+      },
+      {
+        id: 'today-vs-selected',
+        title: 'Today vs selected',
+        body: '오늘과 고른 날을 다르게 표시합니다. 둘이 같은 모양이면 오늘을 이미 고른 것으로 읽습니다.',
+        do: ['오늘은 테두리로, 고른 날은 채운 배경으로 나눈다'],
+        dont: ['오늘과 고른 날을 같은 채운 배경으로 그리지 않는다'],
+      },
+      {
+        id: 'disabled-reason',
+        title: 'Disabled reason',
+        body: '고를 수 없는 날은 이유를 알립니다. 흐리게만 두면 왜 안 되는지 알 수 없습니다.',
+        do: ['고를 수 없는 날에 이유를 title과 aria-label로 함께 단다'],
+        dont: ['이유 없이 흐리게만 두지 않는다'],
+      },
+      {
+        id: 'range-shows-both-ends',
+        title: 'Range shows both ends',
+        body: '범위는 시작과 끝을 함께 보입니다. 하나만 고른 중간 상태에서 무엇을 더 골라야 하는지 알립니다.',
+        do: ['시작만 골랐으면 종료일을 고르라고 트리거에 알린다'],
+        dont: ['시작만 고른 채로 아무 안내 없이 값 자리를 비워 두지 않는다'],
+      },
+    ],
+    usage: [
+      { id: 'period-filter', title: '기간 필터', note: 'range로 시작일과 종료일을 함께 고른다' },
+      { id: 'expiry-date', title: '만료일 설정', note: '오늘 이전 날짜는 고를 수 없게 막는다' },
+      { id: 'reservation-date', title: '예약일', note: '오늘과 다가올 날짜 중에서 고른다' },
+      { id: 'reference-date', title: '조회 기준일', note: '단일 날짜로 화면의 기준 시점을 정한다' },
+    ],
+    cases: [
+      { id: 'block-before-today', title: '오늘 이전을 막는 경우', note: '고를 수 없는 날에 이유를 함께 단다' },
+      { id: 'range-over-a-month', title: '범위가 한 달을 넘는 경우', note: '트리거는 달을 넘어도 시작·끝을 그대로 보인다' },
+      { id: 'no-value', title: '값이 없는 경우', note: "자리표시자로 형식('YYYY-MM-DD')을 미리 보인다" },
+      { id: 'narrow-screen', title: '좁은 화면', note: '트리거 폭이 줄어도 값이 잘리지 않고 줄임표로 대신한다' },
+    ],
+    verified: false,
+  },
+  {
     id: 'field',
     name: 'Field',
     aliases: ['필드', '폼 필드', '입력 항목', 'form field', 'label'],

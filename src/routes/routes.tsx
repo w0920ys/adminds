@@ -12,6 +12,7 @@ import { CardPage } from '@/routes/components/CardPage'
 import { CheckboxPage } from '@/routes/components/CheckboxPage'
 import { ComboboxPage } from '@/routes/components/ComboboxPage'
 import { ComponentsIndex } from '@/routes/components/ComponentsIndex'
+import { DatePickerPage } from '@/routes/components/DatePickerPage'
 import { DescriptionListPage } from '@/routes/components/DescriptionListPage'
 import { DialogPage } from '@/routes/components/DialogPage'
 import { DropdownMenuPage } from '@/routes/components/DropdownMenuPage'
@@ -78,6 +79,7 @@ export const routes: RouteObject[] = [
           { path: 'slider', element: <SliderPage /> },
           { path: 'checkbox', element: <CheckboxPage /> },
           { path: 'combobox', element: <ComboboxPage /> },
+          { path: 'date-picker', element: <DatePickerPage /> },
           { path: 'radio', element: <RadioPage /> },
           { path: 'switch', element: <SwitchPage /> },
           { path: 'textarea', element: <TextareaPage /> },
