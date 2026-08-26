@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "avatar",
+  "title": "Avatar",
+  "dependencies": [
+    "@radix-ui/react-avatar",
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "https://adminds.vercel.app/r/tokens.json",
+    "https://adminds.vercel.app/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/avatar.tsx",
+      "content": "import * as React from 'react'\nimport * as AvatarPrimitive from '@radix-ui/react-avatar'\nimport { cva, type VariantProps } from 'class-variance-authority'\nimport { cn } from '@/lib/utils'\n\n/*\n * 아바타가 표 행·담당자 표시줄에서 Button·Input과 나란히 놓이는 일이\n * 잦다. 아바타 전용 크기를 새로 정의하면 같은 줄의 다른 컨트롤과 매번\n * 수동으로 맞춰야 하므로, 컨트롤 높이 축(size-control-*)을 그대로\n * 재사용한다 — sm은 표 행, default는 목록·카드, lg는 프로필 헤더.\n */\nconst avatarVariants = cva('relative flex shrink-0 overflow-hidden rounded-full', {\n  variants: {\n    size: {\n      sm: 'size-control-sm',\n      default: 'size-control',\n      lg: 'size-control-lg',\n    },\n  },\n  defaultVariants: { size: 'default' },\n})\n\nfunction Avatar({\n  className,\n  size,\n  ...props\n}: React.ComponentProps<typeof AvatarPrimitive.Root> & VariantProps<typeof avatarVariants>) {\n  return (\n    <AvatarPrimitive.Root\n      data-slot=\"avatar\"\n      className={cn(avatarVariants({ size }), className)}\n      {...props}\n    />\n  )\n}\n\nfunction AvatarImage({ className, ...props }: React.ComponentProps<typeof AvatarPrimitive.Image>) {\n  return (\n    <AvatarPrimitive.Image\n      data-slot=\"avatar-image\"\n      className={cn('aspect-square size-full object-cover', className)}\n      {...props}\n    />\n  )\n}\n\nfunction AvatarFallback({ className, ...props }: React.ComponentProps<typeof AvatarPrimitive.Fallback>) {\n  return (\n    <AvatarPrimitive.Fallback\n      data-slot=\"avatar-fallback\"\n      className={cn(\n        'bg-muted text-muted-foreground flex size-full items-center justify-center rounded-full text-xs font-medium',\n        className,\n      )}\n      {...props}\n    />\n  )\n}\n\nexport { Avatar, AvatarImage, AvatarFallback }\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

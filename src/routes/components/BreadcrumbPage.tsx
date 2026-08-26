@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import { Link } from 'react-router'
 import { Bounds } from '@/components/docs/Bounds'
 import { ComponentPage } from '@/components/docs/ComponentPage'
 import type { RenderOptions } from '@/components/docs/PropertyBlock'
@@ -22,7 +23,9 @@ function renderBreadcrumb(options: RenderOptions) {
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>
-            <BreadcrumbLink to="/">대시보드</BreadcrumbLink>
+            <BreadcrumbLink asChild>
+              <Link to="/">대시보드</Link>
+            </BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
@@ -30,7 +33,9 @@ function renderBreadcrumb(options: RenderOptions) {
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbLink to="/teams">팀</BreadcrumbLink>
+            <BreadcrumbLink asChild>
+              <Link to="/teams">팀</Link>
+            </BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
@@ -45,11 +50,15 @@ function renderBreadcrumb(options: RenderOptions) {
     <Breadcrumb>
       <BreadcrumbList>
         <BreadcrumbItem>
-          <BreadcrumbLink to="/">대시보드</BreadcrumbLink>
+          <BreadcrumbLink asChild>
+            <Link to="/">대시보드</Link>
+          </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
-          <BreadcrumbLink to="/users">사용자 관리</BreadcrumbLink>
+          <BreadcrumbLink asChild>
+            <Link to="/users">사용자 관리</Link>
+          </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
@@ -75,14 +84,18 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
-              <BreadcrumbLink to="/">대시보드</BreadcrumbLink>
+              <BreadcrumbLink asChild>
+                <Link to="/">대시보드</Link>
+              </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
               {kind === 'do' ? (
                 <BreadcrumbCurrent>사용자 관리</BreadcrumbCurrent>
               ) : (
-                <BreadcrumbLink to="/users">사용자 관리</BreadcrumbLink>
+                <BreadcrumbLink asChild>
+                  <Link to="/users">사용자 관리</Link>
+                </BreadcrumbLink>
               )}
             </BreadcrumbItem>
           </BreadcrumbList>
@@ -94,7 +107,9 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
-              <BreadcrumbLink to="/">대시보드</BreadcrumbLink>
+              <BreadcrumbLink asChild>
+                <Link to="/">대시보드</Link>
+              </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
@@ -111,23 +126,33 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
           <Breadcrumb>
             <BreadcrumbList>
               <BreadcrumbItem>
-                <BreadcrumbLink to="/">대시보드</BreadcrumbLink>
+                <BreadcrumbLink asChild>
+                  <Link to="/">대시보드</Link>
+                </BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
-                <BreadcrumbLink to="/org">조직</BreadcrumbLink>
+                <BreadcrumbLink asChild>
+                  <Link to="/org">조직</Link>
+                </BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
-                <BreadcrumbLink to="/org/dept">부서</BreadcrumbLink>
+                <BreadcrumbLink asChild>
+                  <Link to="/org/dept">부서</Link>
+                </BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
-                <BreadcrumbLink to="/org/dept/team">팀</BreadcrumbLink>
+                <BreadcrumbLink asChild>
+                  <Link to="/org/dept/team">팀</Link>
+                </BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
-                <BreadcrumbLink to="/org/dept/team/settings">설정</BreadcrumbLink>
+                <BreadcrumbLink asChild>
+                  <Link to="/org/dept/team/settings">설정</Link>
+                </BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
@@ -143,11 +168,15 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
-              <BreadcrumbLink to="/settings">설정</BreadcrumbLink>
+              <BreadcrumbLink asChild>
+                <Link to="/settings">설정</Link>
+              </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
-              <BreadcrumbLink to="/settings/security">보안</BreadcrumbLink>
+              <BreadcrumbLink asChild>
+                <Link to="/settings/security">보안</Link>
+              </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
@@ -159,11 +188,15 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
-              <BreadcrumbLink to="/users/42">사용자 상세</BreadcrumbLink>
+              <BreadcrumbLink asChild>
+                <Link to="/users/42">사용자 상세</Link>
+              </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
-              <BreadcrumbLink to="/reports">리포트</BreadcrumbLink>
+              <BreadcrumbLink asChild>
+                <Link to="/reports">리포트</Link>
+              </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
@@ -185,11 +218,15 @@ function renderExample(exampleId: string): ReactNode {
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
-              <BreadcrumbLink to="/">대시보드</BreadcrumbLink>
+              <BreadcrumbLink asChild>
+                <Link to="/">대시보드</Link>
+              </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
-              <BreadcrumbLink to="/users">사용자 관리</BreadcrumbLink>
+              <BreadcrumbLink asChild>
+                <Link to="/users">사용자 관리</Link>
+              </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
@@ -204,11 +241,15 @@ function renderExample(exampleId: string): ReactNode {
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
-              <BreadcrumbLink to="/settings">설정</BreadcrumbLink>
+              <BreadcrumbLink asChild>
+                <Link to="/settings">설정</Link>
+              </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
-              <BreadcrumbLink to="/settings/billing">결제</BreadcrumbLink>
+              <BreadcrumbLink asChild>
+                <Link to="/settings/billing">결제</Link>
+              </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
@@ -223,11 +264,15 @@ function renderExample(exampleId: string): ReactNode {
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
-              <BreadcrumbLink to="/projects">프로젝트</BreadcrumbLink>
+              <BreadcrumbLink asChild>
+                <Link to="/projects">프로젝트</Link>
+              </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
-              <BreadcrumbLink to="/projects/redesign">웹사이트 개편</BreadcrumbLink>
+              <BreadcrumbLink asChild>
+                <Link to="/projects/redesign">웹사이트 개편</Link>
+              </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
@@ -242,7 +287,9 @@ function renderExample(exampleId: string): ReactNode {
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
-              <BreadcrumbLink to="/search">검색 결과</BreadcrumbLink>
+              <BreadcrumbLink asChild>
+                <Link to="/search">검색 결과</Link>
+              </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
@@ -259,7 +306,9 @@ function renderExample(exampleId: string): ReactNode {
             <Breadcrumb>
               <BreadcrumbList className="flex-nowrap">
                 <BreadcrumbItem>
-                  <BreadcrumbLink to="/">대시보드</BreadcrumbLink>
+                  <BreadcrumbLink asChild>
+                    <Link to="/">대시보드</Link>
+                  </BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator />
                 <BreadcrumbItem className="min-w-0">
@@ -281,7 +330,9 @@ function renderExample(exampleId: string): ReactNode {
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
-              <BreadcrumbLink to="/">대시보드</BreadcrumbLink>
+              <BreadcrumbLink asChild>
+                <Link to="/">대시보드</Link>
+              </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
@@ -289,7 +340,9 @@ function renderExample(exampleId: string): ReactNode {
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
-              <BreadcrumbLink to="/org/dept/team">팀</BreadcrumbLink>
+              <BreadcrumbLink asChild>
+                <Link to="/org/dept/team">팀</Link>
+              </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
@@ -317,11 +370,15 @@ function renderExample(exampleId: string): ReactNode {
             <Breadcrumb>
               <BreadcrumbList>
                 <BreadcrumbItem>
-                  <BreadcrumbLink to="/">대시보드</BreadcrumbLink>
+                  <BreadcrumbLink asChild>
+                    <Link to="/">대시보드</Link>
+                  </BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator />
                 <BreadcrumbItem>
-                  <BreadcrumbLink to="/users">사용자 관리</BreadcrumbLink>
+                  <BreadcrumbLink asChild>
+                    <Link to="/users">사용자 관리</Link>
+                  </BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator />
                 <BreadcrumbItem>
@@ -353,8 +410,10 @@ export function BreadcrumbPage() {
         <Breadcrumb>
           <BreadcrumbList data-anatomy="list">
             <BreadcrumbItem>
-              <BreadcrumbLink data-anatomy="item" to="/">
-                대시보드
+              <BreadcrumbLink asChild>
+                <Link data-anatomy="item" to="/">
+                  대시보드
+                </Link>
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator data-anatomy="separator" />
@@ -363,7 +422,9 @@ export function BreadcrumbPage() {
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
-              <BreadcrumbLink to="/teams">팀</BreadcrumbLink>
+              <BreadcrumbLink asChild>
+                <Link to="/teams">팀</Link>
+              </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>

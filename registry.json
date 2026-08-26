@@ -1,0 +1,566 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "adminds",
+  "homepage": "https://adminds.vercel.app",
+  "items": [
+    {
+      "name": "tokens",
+      "type": "registry:item",
+      "title": "Design Tokens",
+      "description": "색·간격·radius·상태색 토큰. 모든 컴포넌트가 이 위에 선다.",
+      "dependencies": [
+        "tailwindcss",
+        "tw-animate-css"
+      ],
+      "files": [
+        {
+          "path": "src/styles/tokens.css",
+          "type": "registry:file",
+          "target": "src/styles/tokens.css"
+        }
+      ],
+      "docs": "받은 뒤 두 가지를 확인하세요.\n\n1. src/styles/globals.css의 들이는 순서 — @import \"tailwindcss\"; 다음 @import \"tw-animate-css\"; 다음 @import \"./tokens.css\"; 순서여야 합니다. tokens.css가 tailwindcss보다 먼저 오면 다크 변형과 색 토큰이 풀리지 않습니다.\n\n2. tsconfig.json의 paths — \"paths\": { \"@/*\": [\"./src/*\"] }가 tsconfig.json에도 있어야 합니다. Vite 템플릿은 이것을 tsconfig.app.json에만 두는데, 그러면 파일이 @/ 라는 이름의 폴더에 통째로 떨어집니다. baseUrl은 넣지 마세요 — TypeScript 6에서 하드 에러입니다.\n\nTailwind v4가 전제입니다. v3에서는 토큰이 @theme inline 문법이라 동작하지 않습니다."
+    },
+    {
+      "name": "utils",
+      "type": "registry:lib",
+      "title": "cn",
+      "dependencies": [
+        "clsx",
+        "tailwind-merge"
+      ],
+      "files": [
+        {
+          "path": "src/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "theme",
+      "type": "registry:lib",
+      "title": "Theme",
+      "description": "라이트·다크 전환 훅. 루트의 .dark 클래스를 켜고 끈다.",
+      "files": [
+        {
+          "path": "src/lib/theme.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "accordion",
+      "type": "registry:ui",
+      "title": "Accordion",
+      "dependencies": [
+        "@radix-ui/react-accordion",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://adminds.vercel.app/r/tokens.json",
+        "https://adminds.vercel.app/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/accordion.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "alert",
+      "type": "registry:ui",
+      "title": "Alert",
+      "dependencies": [
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "https://adminds.vercel.app/r/tokens.json",
+        "https://adminds.vercel.app/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/alert.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "avatar",
+      "type": "registry:ui",
+      "title": "Avatar",
+      "dependencies": [
+        "@radix-ui/react-avatar",
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "https://adminds.vercel.app/r/tokens.json",
+        "https://adminds.vercel.app/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/avatar.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "badge",
+      "type": "registry:ui",
+      "title": "Badge",
+      "dependencies": [
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "https://adminds.vercel.app/r/tokens.json",
+        "https://adminds.vercel.app/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/badge.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "breadcrumb",
+      "type": "registry:ui",
+      "title": "Breadcrumb",
+      "dependencies": [
+        "@radix-ui/react-slot",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://adminds.vercel.app/r/tokens.json",
+        "https://adminds.vercel.app/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/breadcrumb.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "button",
+      "type": "registry:ui",
+      "title": "Button",
+      "dependencies": [
+        "@radix-ui/react-slot",
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "https://adminds.vercel.app/r/tokens.json",
+        "https://adminds.vercel.app/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/button.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "card",
+      "type": "registry:ui",
+      "title": "Card",
+      "dependencies": [
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "https://adminds.vercel.app/r/tokens.json",
+        "https://adminds.vercel.app/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/card.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "checkbox",
+      "type": "registry:ui",
+      "title": "Checkbox",
+      "dependencies": [
+        "@radix-ui/react-checkbox",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://adminds.vercel.app/r/tokens.json",
+        "https://adminds.vercel.app/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/checkbox.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "description-list",
+      "type": "registry:ui",
+      "title": "Description List",
+      "dependencies": [
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "https://adminds.vercel.app/r/tokens.json",
+        "https://adminds.vercel.app/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/description-list.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "dialog",
+      "type": "registry:ui",
+      "title": "Dialog",
+      "dependencies": [
+        "@radix-ui/react-dialog",
+        "class-variance-authority",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://adminds.vercel.app/r/tokens.json",
+        "https://adminds.vercel.app/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/dialog.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "dropdown-menu",
+      "type": "registry:ui",
+      "title": "Dropdown Menu",
+      "dependencies": [
+        "@radix-ui/react-dropdown-menu"
+      ],
+      "registryDependencies": [
+        "https://adminds.vercel.app/r/tokens.json",
+        "https://adminds.vercel.app/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/dropdown-menu.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "empty-state",
+      "type": "registry:ui",
+      "title": "Empty State",
+      "dependencies": [
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "https://adminds.vercel.app/r/tokens.json",
+        "https://adminds.vercel.app/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/empty-state.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "input",
+      "type": "registry:ui",
+      "title": "Input",
+      "dependencies": [
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "https://adminds.vercel.app/r/tokens.json",
+        "https://adminds.vercel.app/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/input.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "pagination",
+      "type": "registry:ui",
+      "title": "Pagination",
+      "registryDependencies": [
+        "https://adminds.vercel.app/r/tokens.json",
+        "https://adminds.vercel.app/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/pagination.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "progress",
+      "type": "registry:ui",
+      "title": "Progress",
+      "dependencies": [
+        "@radix-ui/react-progress",
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "https://adminds.vercel.app/r/tokens.json",
+        "https://adminds.vercel.app/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/progress.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "radio",
+      "type": "registry:ui",
+      "title": "Radio",
+      "dependencies": [
+        "@radix-ui/react-radio-group"
+      ],
+      "registryDependencies": [
+        "https://adminds.vercel.app/r/tokens.json",
+        "https://adminds.vercel.app/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/radio.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "select",
+      "type": "registry:ui",
+      "title": "Select",
+      "dependencies": [
+        "@radix-ui/react-select",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://adminds.vercel.app/r/input.json",
+        "https://adminds.vercel.app/r/tokens.json",
+        "https://adminds.vercel.app/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/select.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "separator",
+      "type": "registry:ui",
+      "title": "Separator",
+      "dependencies": [
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "https://adminds.vercel.app/r/tokens.json",
+        "https://adminds.vercel.app/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/separator.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "skeleton",
+      "type": "registry:ui",
+      "title": "Skeleton",
+      "dependencies": [
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "https://adminds.vercel.app/r/tokens.json",
+        "https://adminds.vercel.app/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/skeleton.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "steps",
+      "type": "registry:ui",
+      "title": "Steps",
+      "dependencies": [
+        "class-variance-authority",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://adminds.vercel.app/r/tokens.json",
+        "https://adminds.vercel.app/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/steps.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "switch",
+      "type": "registry:ui",
+      "title": "Switch",
+      "dependencies": [
+        "@radix-ui/react-switch",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://adminds.vercel.app/r/tokens.json",
+        "https://adminds.vercel.app/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/switch.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "table",
+      "type": "registry:ui",
+      "title": "Table",
+      "registryDependencies": [
+        "https://adminds.vercel.app/r/tokens.json",
+        "https://adminds.vercel.app/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/table.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "tabs",
+      "type": "registry:ui",
+      "title": "Tabs",
+      "dependencies": [
+        "@radix-ui/react-tabs"
+      ],
+      "registryDependencies": [
+        "https://adminds.vercel.app/r/tokens.json",
+        "https://adminds.vercel.app/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/tabs.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "textarea",
+      "type": "registry:ui",
+      "title": "Textarea",
+      "dependencies": [
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "https://adminds.vercel.app/r/input.json",
+        "https://adminds.vercel.app/r/tokens.json",
+        "https://adminds.vercel.app/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/textarea.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "toast",
+      "type": "registry:ui",
+      "title": "Toast",
+      "dependencies": [
+        "@radix-ui/react-toast",
+        "class-variance-authority",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://adminds.vercel.app/r/tokens.json",
+        "https://adminds.vercel.app/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/toast.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "tooltip",
+      "type": "registry:ui",
+      "title": "Tooltip",
+      "dependencies": [
+        "@radix-ui/react-tooltip"
+      ],
+      "registryDependencies": [
+        "https://adminds.vercel.app/r/tokens.json",
+        "https://adminds.vercel.app/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/tooltip.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "adminds",
+      "type": "registry:item",
+      "title": "Admin Design System",
+      "description": "토큰과 컴포넌트 스물여섯 개를 한 번에 가져온다.",
+      "registryDependencies": [
+        "https://adminds.vercel.app/r/accordion.json",
+        "https://adminds.vercel.app/r/alert.json",
+        "https://adminds.vercel.app/r/avatar.json",
+        "https://adminds.vercel.app/r/badge.json",
+        "https://adminds.vercel.app/r/breadcrumb.json",
+        "https://adminds.vercel.app/r/button.json",
+        "https://adminds.vercel.app/r/card.json",
+        "https://adminds.vercel.app/r/checkbox.json",
+        "https://adminds.vercel.app/r/description-list.json",
+        "https://adminds.vercel.app/r/dialog.json",
+        "https://adminds.vercel.app/r/dropdown-menu.json",
+        "https://adminds.vercel.app/r/empty-state.json",
+        "https://adminds.vercel.app/r/input.json",
+        "https://adminds.vercel.app/r/pagination.json",
+        "https://adminds.vercel.app/r/progress.json",
+        "https://adminds.vercel.app/r/radio.json",
+        "https://adminds.vercel.app/r/select.json",
+        "https://adminds.vercel.app/r/separator.json",
+        "https://adminds.vercel.app/r/skeleton.json",
+        "https://adminds.vercel.app/r/steps.json",
+        "https://adminds.vercel.app/r/switch.json",
+        "https://adminds.vercel.app/r/table.json",
+        "https://adminds.vercel.app/r/tabs.json",
+        "https://adminds.vercel.app/r/textarea.json",
+        "https://adminds.vercel.app/r/toast.json",
+        "https://adminds.vercel.app/r/tooltip.json",
+        "https://adminds.vercel.app/r/theme.json"
+      ],
+      "files": [],
+      "docs": "받은 뒤 두 가지를 확인하세요.\n\n1. src/styles/globals.css의 들이는 순서 — @import \"tailwindcss\"; 다음 @import \"tw-animate-css\"; 다음 @import \"./tokens.css\"; 순서여야 합니다. tokens.css가 tailwindcss보다 먼저 오면 다크 변형과 색 토큰이 풀리지 않습니다.\n\n2. tsconfig.json의 paths — \"paths\": { \"@/*\": [\"./src/*\"] }가 tsconfig.json에도 있어야 합니다. Vite 템플릿은 이것을 tsconfig.app.json에만 두는데, 그러면 파일이 @/ 라는 이름의 폴더에 통째로 떨어집니다. baseUrl은 넣지 마세요 — TypeScript 6에서 하드 에러입니다.\n\nTailwind v4가 전제입니다. v3에서는 토큰이 @theme inline 문법이라 동작하지 않습니다.\n\nTooltip과 Toast는 트리 최상단에 TooltipProvider와 ToastProvider·ToastViewport가 있어야 동작합니다.\nBreadcrumbLink는 라우터를 모릅니다 — asChild를 켜고 쓰시는 라우터의 Link를 넣으세요."
+    }
+  ]
+}

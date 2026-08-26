@@ -1,0 +1,22 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "dialog",
+  "title": "Dialog",
+  "dependencies": [
+    "@radix-ui/react-dialog",
+    "class-variance-authority",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://adminds.vercel.app/r/tokens.json",
+    "https://adminds.vercel.app/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/dialog.tsx",
+      "content": "import * as React from 'react'\nimport * as DialogPrimitive from '@radix-ui/react-dialog'\nimport { cva, type VariantProps } from 'class-variance-authority'\nimport { X } from 'lucide-react'\nimport { cn } from '@/lib/utils'\n\nconst Dialog = DialogPrimitive.Root\nconst DialogTrigger = DialogPrimitive.Trigger\nconst DialogClose = DialogPrimitive.Close\n\nfunction DialogOverlay({ className, ...props }: React.ComponentProps<typeof DialogPrimitive.Overlay>) {\n  return (\n    <DialogPrimitive.Overlay\n      data-slot=\"dialog-overlay\"\n      className={cn('fixed inset-0 z-overlay bg-black/50', className)}\n      {...props}\n    />\n  )\n}\n\nconst dialogContentVariants = cva('w-full rounded-lg border bg-background p-6 shadow-lg outline-none', {\n  variants: {\n    size: {\n      sm: 'max-w-sm',\n      default: 'max-w-md',\n      lg: 'max-w-2xl',\n    },\n  },\n  defaultVariants: { size: 'default' },\n})\n\n/*\n * calc()로 뷰포트 폭에서 여백을 빼는 대신, 덮개를 그대로 중앙 정렬\n * 그릇으로 쓴다 — inset-0 + grid place-items-center + p-4로 화면\n * 가장자리 여백을 만들고, 컨테이너는 w-full과 size별 max-w로만\n * 너비를 정한다. 임의 값 대괄호를 쓰지 않고도 좁은 화면에서\n * 컨테이너가 뷰포트에 닿지 않는다.\n */\nfunction DialogContent({\n  className,\n  size,\n  children,\n  showClose = true,\n  ...props\n}: React.ComponentProps<typeof DialogPrimitive.Content> &\n  VariantProps<typeof dialogContentVariants> & { showClose?: boolean }) {\n  return (\n    <DialogPrimitive.Portal>\n      <DialogOverlay />\n      <div className=\"fixed inset-0 z-overlay grid place-items-center p-4\">\n        <DialogPrimitive.Content\n          data-slot=\"dialog-content\"\n          className={cn('relative flex flex-col gap-4', dialogContentVariants({ size }), className)}\n          {...props}\n        >\n          {children}\n          {showClose && (\n            <DialogPrimitive.Close\n              className={cn(\n                'absolute top-4 right-4 rounded-xs opacity-70 outline-none transition-opacity hover:opacity-100',\n                'focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-2',\n                'disabled:pointer-events-none',\n              )}\n            >\n              <X className=\"size-4\" />\n              <span className=\"sr-only\">닫기</span>\n            </DialogPrimitive.Close>\n          )}\n        </DialogPrimitive.Content>\n      </div>\n    </DialogPrimitive.Portal>\n  )\n}\n\nfunction DialogHeader({ className, ...props }: React.ComponentProps<'div'>) {\n  return <div data-slot=\"dialog-header\" className={cn('flex flex-col gap-1.5', className)} {...props} />\n}\n\nfunction DialogFooter({ className, ...props }: React.ComponentProps<'div'>) {\n  return (\n    <div\n      data-slot=\"dialog-footer\"\n      className={cn('flex flex-col-reverse gap-2 sm:flex-row sm:justify-end', className)}\n      {...props}\n    />\n  )\n}\n\nfunction DialogTitle({ className, ...props }: React.ComponentProps<typeof DialogPrimitive.Title>) {\n  return (\n    <DialogPrimitive.Title\n      data-slot=\"dialog-title\"\n      className={cn('text-lg font-semibold', className)}\n      {...props}\n    />\n  )\n}\n\nfunction DialogDescription({\n  className,\n  ...props\n}: React.ComponentProps<typeof DialogPrimitive.Description>) {\n  return (\n    <DialogPrimitive.Description\n      data-slot=\"dialog-description\"\n      className={cn('text-muted-foreground text-sm', className)}\n      {...props}\n    />\n  )\n}\n\nexport {\n  Dialog,\n  DialogTrigger,\n  DialogClose,\n  DialogContent,\n  DialogHeader,\n  DialogFooter,\n  DialogTitle,\n  DialogDescription,\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

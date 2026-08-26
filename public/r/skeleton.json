@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "skeleton",
+  "title": "Skeleton",
+  "dependencies": [
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "https://adminds.vercel.app/r/tokens.json",
+    "https://adminds.vercel.app/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/skeleton.tsx",
+      "content": "import * as React from 'react'\nimport { cva, type VariantProps } from 'class-variance-authority'\nimport { cn } from '@/lib/utils'\n\n/*\n * 뼈대는 눈으로만 보는 자리 표시다. 불러오는 중이라는 사실은 스크린\n * 리더에 role=\"status\" 문구가 따로 전하므로, 이 컴포넌트는 스스로\n * aria-hidden을 달아 접근성 트리에서 빠진다.\n */\nconst skeletonVariants = cva('animate-pulse bg-muted', {\n  variants: {\n    shape: {\n      text: 'h-4 w-full rounded',\n      title: 'h-6 w-1/2 rounded',\n      block: 'h-24 w-full rounded-md',\n      circle: 'size-10 rounded-full',\n    },\n  },\n  defaultVariants: { shape: 'text' },\n})\n\ntype SkeletonProps = React.ComponentProps<'div'> & VariantProps<typeof skeletonVariants>\n\nfunction Skeleton({ className, shape = 'text', ...props }: SkeletonProps) {\n  return (\n    <div\n      data-slot=\"skeleton\"\n      aria-hidden=\"true\"\n      className={cn(skeletonVariants({ shape, className }))}\n      {...props}\n    />\n  )\n}\n\nexport { Skeleton, skeletonVariants }\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

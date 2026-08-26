@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "switch",
+  "title": "Switch",
+  "dependencies": [
+    "@radix-ui/react-switch",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://adminds.vercel.app/r/tokens.json",
+    "https://adminds.vercel.app/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/switch.tsx",
+      "content": "import * as React from 'react'\nimport * as SwitchPrimitive from '@radix-ui/react-switch'\nimport { Loader2 } from 'lucide-react'\nimport { cn } from '@/lib/utils'\n\ntype SwitchProps = React.ComponentProps<typeof SwitchPrimitive.Root> & {\n  /*\n   * 즉시 반영이 서버 응답을 기다리는 동안이다. disabled와 다르게\n   * disabled:opacity-50을 쓰지 않는다 — 불투명도는 이미 disabled가\n   * 쓰고 있어서 겹치면 disabled인지 pending인지 구분할 수 없다.\n   * 그래서 실제 disabled 어트리뷰트는 건드리지 않고, 손잡이 자리를\n   * 스피너로 바꿔서 트랙의 색(목표 상태)은 그대로 보이게 한다.\n   * 클릭과 키보드 조작은 onCheckedChange를 끊고 pointer-events로 막는다.\n   */\n  pending?: boolean\n  /*\n   * 손잡이(Thumb)는 Root 안에 있어 소비자가 직접 닿을 수 없다.\n   * 임의의 속성을 손잡이에 그대로 전달하는 통로만 열어 둔다 — 무엇을\n   * 전달할지는 소비자가 정하므로 이 컴포넌트는 그 내용을 알지 못한다.\n   */\n  thumbProps?: React.ComponentProps<typeof SwitchPrimitive.Thumb> & {\n    [dataAttr: `data-${string}`]: string\n  }\n}\n\nfunction Switch({\n  className,\n  pending,\n  disabled,\n  onCheckedChange,\n  thumbProps,\n  ...props\n}: SwitchProps) {\n  return (\n    <SwitchPrimitive.Root\n      data-slot=\"switch\"\n      data-pending={pending ? '' : undefined}\n      disabled={disabled}\n      aria-disabled={pending || undefined}\n      aria-busy={pending || undefined}\n      onCheckedChange={pending ? undefined : onCheckedChange}\n      className={cn(\n        'peer inline-flex h-6 w-11 shrink-0 items-center rounded-full border-2 border-transparent shadow-xs outline-none transition-colors',\n        'data-[state=unchecked]:bg-input data-[state=checked]:bg-primary',\n        /*\n         * hover는 Checkbox·Radio와 같은 생각(테두리를 한 단계 옮김)을 쓴다.\n         * 트랙의 배경은 이미 켜짐·꺼짐을 나타내는 자리라 hover까지 배경을\n         * 다투게 하지 않는다 — border-transparent로 자리만 미리 잡아 두고\n         * hover에서 색만 채운다.\n         */\n        'hover:border-ring/60',\n        'focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-2',\n        'disabled:cursor-not-allowed disabled:opacity-50',\n        'data-[pending]:pointer-events-none data-[pending]:cursor-wait',\n        className,\n      )}\n      {...props}\n    >\n      <SwitchPrimitive.Thumb\n        data-slot=\"switch-thumb\"\n        {...thumbProps}\n        className={cn(\n          'bg-background pointer-events-none grid size-5 place-items-center rounded-full shadow-lg ring-0 transition-transform',\n          'data-[state=unchecked]:translate-x-0 data-[state=checked]:translate-x-5',\n          thumbProps?.className,\n        )}\n      >\n        {pending && (\n          <Loader2 className=\"text-muted-foreground size-3 animate-spin\" aria-hidden />\n        )}\n      </SwitchPrimitive.Thumb>\n    </SwitchPrimitive.Root>\n  )\n}\n\nexport { Switch }\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}
