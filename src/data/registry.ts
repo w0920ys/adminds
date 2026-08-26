@@ -2064,6 +2064,114 @@ export const components: ComponentMeta[] = [
     ],
     verified: false,
   },
+  {
+    id: 'empty-state',
+    name: 'Empty State',
+    category: 'feedback',
+    status: 'stable',
+    addedIn: 'v0.9.0',
+    changedIn: 'v0.9.0',
+    purpose:
+      '표나 목록에 보일 내용이 없을 때 무엇이 없는지, 왜 없는지, 무엇을 할 수 있는지 안내한다. 아직 만든 것이 없는 것과 불러오지 못한 것을 variant로 구별한다.',
+    anatomy: [
+      {
+        part: 'container',
+        label: 'Container',
+        note: 'Icon·Title·Description·Action을 세로로 가운데 정렬해 담는다',
+      },
+      {
+        part: 'icon',
+        label: 'Icon',
+        note: '어떤 아이콘을 넣을지는 호출하는 쪽이 정한다. variant는 색과 배경만 정한다',
+      },
+      { part: 'title', label: 'Title', note: '무엇이 없는지 한 줄로 적는다' },
+      { part: 'description', label: 'Description', note: '왜 없는지와 무엇을 할 수 있는지 적는다' },
+      {
+        part: 'action',
+        label: 'Action',
+        note: '할 수 있는 일이 있을 때만 둔다',
+        optional: true,
+      },
+    ],
+    properties: [
+      {
+        name: 'variant',
+        title: 'Variant',
+        description: '상황에 따라 아이콘의 색과 배경을 정한다. 무엇이 다른지는 문구가 말한다.',
+        display: 'grid',
+        options: [
+          { value: 'empty', note: '아직 만든 것이 없는 첫 방문의 빈 상태. 오류가 아니다' },
+          {
+            value: 'no-results',
+            note: '검색이나 필터 결과가 없는 경우. empty와 같은 색을 쓴다 — 둘 다 오류가 아니다',
+          },
+          { value: 'error', note: '불러오기에 실패한 경우' },
+          { value: 'no-permission', note: '권한이 없어 접근할 수 없는 경우' },
+        ],
+      },
+      {
+        name: 'size',
+        title: 'Size',
+        description: '표 안이나 카드 안처럼 자리가 좁은 곳에서는 compact를 쓴다.',
+        display: 'row',
+        options: [
+          { value: 'default' },
+          { value: 'compact', note: '아이콘이 작아지고 위아래 여백이 준다' },
+        ],
+      },
+    ],
+    guidelines: [
+      {
+        id: 'distinguish-empty-error',
+        title: '비어 있는 것과 실패한 것을 구별한다',
+        body: '아직 만든 것이 없는 것과 불러오지 못한 것은 사용자가 할 일이 다릅니다.',
+        do: ["아직 없으면 'empty', 불러오지 못했으면 'error'를 쓴다"],
+        dont: ['상황에 맞지 않는 variant로 실제로 일어난 일을 감추지 않는다'],
+      },
+      {
+        id: 'action-when-possible',
+        title: '할 수 있는 일이 있으면 동작을 둔다',
+        body: '필터를 지우거나, 새로 만들거나, 다시 시도하는 것입니다. 없다면 두지 않습니다.',
+        do: ['사용자가 실제로 할 수 있는 일만 Action으로 둔다'],
+        dont: ['할 수 있는 일이 없는데도 누를 것을 남겨 두지 않는다'],
+      },
+      {
+        id: 'first-visit-not-error',
+        title: '첫 방문의 빈 상태는 안내이지 오류가 아니다',
+        body: '경고 색을 쓰지 않고 무엇을 할 수 있는지 알립니다.',
+        do: ["첫 방문의 빈 상태는 'empty'의 무채색을 쓴다"],
+        dont: ['아직 아무 일도 일어나지 않은 상태에 경고·오류 색을 쓰지 않는다'],
+      },
+      {
+        id: 'writing-order',
+        title: '무엇이 · 왜 · 무엇을 할 수 있는지 순서로 적는다',
+        body: "Foundations의 Writing이 정한 순서입니다.",
+        do: ['무엇이 없는지를 Title에, 왜와 무엇을 할 수 있는지를 Description에 순서대로 적는다'],
+        dont: ['할 일부터 적고 무엇이 없는지를 뒤에 붙이지 않는다'],
+      },
+    ],
+    usage: [
+      { id: 'empty-table', title: '표에 행이 없을 때', note: '데이터가 아직 없는 표에서 빈 행 대신 이 상태를 보인다' },
+      {
+        id: 'no-search-results',
+        title: '검색 결과가 없을 때',
+        note: '검색어나 필터에 맞는 결과가 없을 때 다른 조건을 시도하도록 안내한다',
+      },
+      { id: 'permission-wall', title: '권한이 없을 때', note: '접근 권한이 없는 화면에서 무엇을 요청해야 하는지 안내한다' },
+      {
+        id: 'load-failed',
+        title: '불러오기에 실패했을 때',
+        note: '네트워크나 서버 오류로 데이터를 불러오지 못했을 때 다시 시도하도록 안내한다',
+      },
+    ],
+    cases: [
+      { id: 'no-action', title: '동작이 없는 경우', note: '사용자가 할 수 있는 일이 없으면 Action을 두지 않는다' },
+      { id: 'in-table', title: '표 안에 놓이는 경우', note: '표 안에서는 size를 compact로 두어 자리를 줄인다' },
+      { id: 'two-actions', title: '동작이 둘인 경우', note: '주된 동작과 대안이 되는 동작을 나란히 둔다' },
+      { id: 'narrow-screen', title: '좁은 화면', note: '폭이 좁아져도 Description은 줄바꿈되어 읽힌다' },
+    ],
+    verified: false,
+  },
 ]
 
 export function getComponent(id: string): ComponentMeta | undefined {

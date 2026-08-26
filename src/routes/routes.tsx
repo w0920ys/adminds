@@ -13,6 +13,7 @@ import { ComponentsIndex } from '@/routes/components/ComponentsIndex'
 import { DescriptionListPage } from '@/routes/components/DescriptionListPage'
 import { DialogPage } from '@/routes/components/DialogPage'
 import { DropdownMenuPage } from '@/routes/components/DropdownMenuPage'
+import { EmptyStatePage } from '@/routes/components/EmptyStatePage'
 import { InputPage } from '@/routes/components/InputPage'
 import { PaginationPage } from '@/routes/components/PaginationPage'
 import { RadioPage } from '@/routes/components/RadioPage'
@@ -78,6 +79,7 @@ export const routes: RouteObject[] = [
           { path: 'tooltip', element: <TooltipPage /> },
           { path: 'dialog', element: <DialogPage /> },
           { path: 'skeleton', element: <SkeletonPage /> },
+          { path: 'empty-state', element: <EmptyStatePage /> },
           { path: 'table', element: <TablePage /> },
           { path: 'badge', element: <BadgePage /> },
           { path: 'avatar', element: <AvatarPage /> },
