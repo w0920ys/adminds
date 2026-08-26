@@ -227,7 +227,18 @@ grep -rnE '\[calc\(|\[[0-9]+(px|rem|vh|vw)\]|\[#|\[[0-9.]+rem\]' src/
 | `outlined` | `border bg-card` |
 | `elevated` | `bg-card shadow-sm` |
 
-`shadow-sm`이 라이트와 다크 양쪽에서 보이는지 확인한다. 다크에서 그림자가 배경에 묻히면 `elevated`가 `outlined`와 구별되지 않는다 — 그렇다면 다크에서 테두리를 함께 두고 그 사실을 보고서에 적는다.
+`shadow-sm`은 다크에서 배경에 묻힌다. 그림자는 밝은 바탕에 검은 것을 떨어뜨리는 표현이라 바탕이 이미 어두우면 아무 일도 일어나지 않는다.
+
+**다크에서 테두리를 더해 메우지 않는다.** `outlined`가 이미 테두리를 가지고 있으므로, `elevated`에 테두리를 더하면 두 값이 **같아진다** — 축의 두 칸이 똑같이 보이는 것은 이 저장소가 이미 한 번 고친 결함이다(`Input`과 `Select`의 `hover`).
+
+다크에서 떠 있음은 **밝기로 말한다.** `elevated`는 다크에서 한 단계 밝은 표면(`--surface-raised`)에 얹힌다. 라이트에서는 그림자만으로 충분하므로 테두리를 두지 않는다.
+
+| | 라이트 | 다크 |
+|---|---|---|
+| `outlined` | 테두리 + `bg-card` | 테두리 + `bg-card` |
+| `elevated` | 그림자 + `bg-card`, 테두리 없음 | `bg-surface-raised`, 테두리 없음 |
+
+두 값이 라이트와 다크 **양쪽에서** 갈라져 보이는지 브라우저로 확인하고 그 결과를 보고서에 적는다.
 
 `nav-config` 자리는 `Separator` 앞(`Avatar` 뒤). `category`는 `data-display`.
 
