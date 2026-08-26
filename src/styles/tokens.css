@@ -25,16 +25,25 @@
   --primary-foreground: oklch(0.985 0 0);
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
   /*
-   * 0.556이면 --muted(0.97) 위에서 4.34:1, Alert·Toast의 bg-destructive/10
-   * 탄 배경(가장 어두운 조합) 위에서는 3.96:1까지 떨어져 여러 곳에서 동시에
-   * 4.5:1에 못 미쳤다 — Avatar 대체 글자·Table 담당자 칸·Anatomy 번호 배지가
-   * 전부 이 토큰 하나를 물려받는다. 채도·색상은 그대로 두고 명도만 낮춰 가장
-   * 어두운 조합(destructive/10)에서도 간신히 4.5:1을 넘도록 잡았다 — 더
-   * 어둡게 하면 '덜 중요한 글자'라는 위계가 본문과 구별되지 않는다.
+   * --surface-raised(0.985)와 명도가 거의 같아(0.97) 대비 1.04:1 — 다크에서는
+   * 아예 같은 값이 되는 문제의 라이트 쪽 절반이다(아래 .dark의 --muted 주석
+   * 참고). --surface-raised는 카드·스테이지·표 머리 등 훨씬 넓게 쓰여 손대지
+   * 않고, 채움 쪽인 --muted만 명도를 0.93으로 낮췄다 — --surface-raised
+   * 위에서 1.17:1로 갈라져 Skeleton·Progress 트랙이 카드/스테이지 표면 위에서도
+   * 도형으로 읽힌다.
    */
-  --muted-foreground: oklch(0.523 0 0);
+  --muted: oklch(0.93 0 0);
+  /*
+   * --muted가 0.97→0.93으로 낮아지며(바로 위 주석) 예전 0.523(0.556에서 한 차례
+   * 낮춘 값)으로는 새 --muted 위에서 4.5:1에 못 미쳤다(4.41:1). 명도만 0.5로
+   * 다시 낮춰 새 --muted(0.93) 위에서 4.90:1, Alert·Toast의 bg-destructive/10
+   * 탄 배경(가장 어두운 조합) 위에서는 4.82:1 — Avatar 대체 글자·Table 담당자
+   * 칸·Anatomy 번호 배지가 전부 이 토큰 하나를 물려받는다. 채도·색상은 그대로
+   * 두고 명도만 낮췄다 — 더 어둡게 하면 '덜 중요한 글자'라는 위계가 본문과
+   * 구별되지 않는다.
+   */
+  --muted-foreground: oklch(0.5 0 0);
   --accent: oklch(0.97 0 0);
   --accent-foreground: oklch(0.205 0 0);
   --destructive: oklch(0.577 0.245 27.325);
@@ -60,7 +69,7 @@
    * 더 어두운 탄 배경에 맞춘 것이라, Badge의 opaque --muted 배경 하나에만
    * 맞춘 이 토큰과는 목표 배경이 달라 계속 따로 둔다.
    */
-  --neutral-on-tint: oklch(0.542 0 0);
+  --neutral-on-tint: oklch(0.51 0 0);
   --info-on-tint: oklch(0.525 0.118 264.376);
   --success-on-tint: oklch(0.492 0.145 163.225);
   --warning-on-tint: oklch(0.542 0.188 70.08);
@@ -90,7 +99,15 @@
   --primary-foreground: oklch(0.205 0 0);
   --secondary: oklch(0.269 0 0);
   --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
+  /*
+   * --surface-raised와 완전히 같은 값(0.269)이었다 — Skeleton·Progress 트랙이
+   * 카드/스테이지 표면(bg-surface-raised) 위에서 대비 1:1로 완전히 사라졌다.
+   * 라이트와 같은 이유로 --surface-raised는 그대로 두고 --muted만 0.21로
+   * 낮췄다 — 1.17:1로 갈라진다(라이트 --muted 주석과 같은 근거).
+   * --muted-foreground(0.708)는 이 새 --muted 위에서도 6.87:1이라 함께
+   * 옮기지 않았다.
+   */
+  --muted: oklch(0.21 0 0);
   --muted-foreground: oklch(0.708 0 0);
   --accent: oklch(0.269 0 0);
   --accent-foreground: oklch(0.985 0 0);
