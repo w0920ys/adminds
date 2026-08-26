@@ -2,6 +2,7 @@
 import type { RouteObject } from 'react-router'
 import { AppShell } from '@/components/layout/AppShell'
 import { Placeholder } from '@/routes/Placeholder'
+import { UpdatesPage } from '@/routes/UpdatesPage'
 import { AccordionPage } from '@/routes/components/AccordionPage'
 import { AlertPage } from '@/routes/components/AlertPage'
 import { AvatarPage } from '@/routes/components/AvatarPage'
@@ -108,7 +109,7 @@ export const routes: RouteObject[] = [
       },
 
       { path: 'patterns', element: <Placeholder title="Patterns" /> },
-      { path: 'updates', element: <Placeholder title="Updates" /> },
+      { path: 'updates', element: <UpdatesPage /> },
 
       { path: '*', element: <Placeholder title="페이지를 찾을 수 없습니다" /> },
     ],
