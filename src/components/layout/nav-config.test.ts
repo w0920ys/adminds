@@ -1,17 +1,28 @@
 import { describe, expect, it } from 'vitest'
 import type { DocLink } from '@/components/layout/nav-config'
-import { docOrder, findAdjacent, findDoc, findSection, flattenDocs, sections } from '@/components/layout/nav-config'
+import {
+  docOrder,
+  findAdjacent,
+  findDoc,
+  findSection,
+  flattenDocs,
+  isGroup,
+  sections,
+  topLevelDocs,
+} from '@/components/layout/nav-config'
 
 describe('sections', () => {
-  it('모든 섹션의 첫 LNB 항목은 Overview다', () => {
+  it('모든 섹션의 첫 LNB 항목은 묶음이 아닌 Overview다', () => {
     for (const section of sections) {
-      expect(section.items[0].label).toBe('Overview')
+      const first = section.items[0]
+      expect(isGroup(first), section.id).toBe(false)
+      expect(first.label).toBe('Overview')
     }
   })
 
   it('섹션의 진입 경로는 자기 Overview와 같다', () => {
     for (const section of sections) {
-      expect(section.to).toBe(section.items[0].to)
+      expect(section.to).toBe(topLevelDocs(section.items)[0].to)
     }
   })
 
@@ -55,7 +66,7 @@ describe('flattenDocs', () => {
 describe('Color 하위 문서', () => {
   it('Color Role과 Palette가 Color의 자식이다', () => {
     const foundations = sections.find((s) => s.id === 'foundations')!
-    const color = foundations.items.find((d) => d.to === '/foundations/color')!
+    const color = topLevelDocs(foundations.items).find((d) => d.to === '/foundations/color')!
     expect(color.children?.map((c) => c.to)).toEqual([
       '/foundations/color-role',
       '/foundations/palette',
@@ -101,21 +112,22 @@ describe('findAdjacent', () => {
 
   it('섹션의 첫 문서에는 이전이 없다', () => {
     const foundations = sections.find((s) => s.id === 'foundations')!
-    const first = foundations.items[1]
-    expect(findAdjacent(first.to).prev).toBeUndefined()
-    expect(findAdjacent(first.to).next).toBe(foundations.items[2])
+    const docs = topLevelDocs(foundations.items)
+    expect(findAdjacent(docs[1].to).prev).toBeUndefined()
+    expect(findAdjacent(docs[1].to).next).toBe(docs[2])
   })
 
   it('섹션의 마지막 문서에는 다음이 없다', () => {
     const foundations = sections.find((s) => s.id === 'foundations')!
-    const last = foundations.items[foundations.items.length - 1]
+    const docs = flattenDocs(foundations.items)
+    const last = docs[docs.length - 1]
     expect(findAdjacent(last.to).next).toBeUndefined()
-    expect(findAdjacent(last.to).prev).toBe(foundations.items[foundations.items.length - 2])
+    expect(findAdjacent(last.to).prev).toBe(docs[docs.length - 2])
   })
 
   it('섹션 경계를 넘지 않는다', () => {
     for (const section of sections) {
-      for (const doc of section.items) {
+      for (const doc of flattenDocs(section.items)) {
         const { prev, next } = findAdjacent(doc.to)
         for (const link of [prev, next]) {
           if (!link) continue
@@ -172,6 +184,67 @@ describe('라우트와 네비게이션의 일치', () => {
     const navPaths = new Set(docOrder.map((d) => d.to))
     for (const path of registeredPaths) {
       expect(navPaths, `${path}가 LNB에 없다`).toContain(path)
+    }
+  })
+})
+
+describe('flattenDocs', () => {
+  it('묶음을 풀고 그 안의 문서를 순서대로 잇는다', () => {
+    const tree = [
+      { to: '/a', label: 'A', updatedAt: '2026-08-25' },
+      {
+        label: 'G',
+        items: [
+          { to: '/g/1', label: 'G1', updatedAt: '2026-08-25' },
+          { to: '/g/2', label: 'G2', updatedAt: '2026-08-25' },
+        ],
+      },
+    ]
+    expect(flattenDocs(tree).map((d) => d.to)).toEqual(['/a', '/g/1', '/g/2'])
+  })
+})
+
+describe('topLevelDocs', () => {
+  it('묶음만 풀고 하위 문서는 펼치지 않는다', () => {
+    const foundations = sections.find((s) => s.id === 'foundations')!
+    const paths = topLevelDocs(foundations.items).map((d) => d.to)
+    expect(paths).toContain('/foundations/color')
+    expect(paths).not.toContain('/foundations/color-role')
+  })
+})
+
+describe('Components 묶음', () => {
+  it('Overview 다음은 모두 묶음이다', () => {
+    const components = sections.find((s) => s.id === 'components')!
+    expect(components.items.slice(1).every(isGroup)).toBe(true)
+  })
+
+  it('묶음 이름과 순서가 registry의 카테고리와 같다', async () => {
+    const { categoryLabel, categoryOrder } = await import('@/data/registry')
+    const components = sections.find((s) => s.id === 'components')!
+    const labels = components.items.filter(isGroup).map((g) => g.label)
+    expect(labels).toEqual(categoryOrder.map((c) => categoryLabel[c]))
+  })
+
+  it('각 묶음의 문서가 그 카테고리의 컴포넌트와 일대일로 맞물린다', async () => {
+    const { componentsByCategory, categoryLabel } = await import('@/data/registry')
+    const components = sections.find((s) => s.id === 'components')!
+    const groups = components.items.filter(isGroup)
+
+    for (const { category, items } of componentsByCategory()) {
+      const group = groups.find((g) => g.label === categoryLabel[category])!
+      expect(group, categoryLabel[category]).toBeDefined()
+      expect(group.items.map((d) => d.to), categoryLabel[category]).toEqual(
+        items.map((meta) => `/components/${meta.id}`),
+      )
+    }
+  })
+
+  it('묶음 안의 문서는 이름순이다', () => {
+    const components = sections.find((s) => s.id === 'components')!
+    for (const group of components.items.filter(isGroup)) {
+      const labels = group.items.map((d) => d.label)
+      expect([...labels].sort((a, b) => a.localeCompare(b)), group.label).toEqual(labels)
     }
   })
 })

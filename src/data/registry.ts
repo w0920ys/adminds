@@ -5,6 +5,27 @@ export type ComponentCategory =
   | 'feedback'
   | 'data-display'
 
+/**
+ * 카테고리를 늘어놓는 순서. 읽는 순서이자 LNB의 묶음 순서다.
+ * 무엇을 누르는가(actions) → 무엇을 채우는가(inputs) → 어디로 가는가(navigation) →
+ * 무엇을 보는가(data-display) → 무엇을 듣는가(feedback) 순으로 좁혀 읽는다.
+ */
+export const categoryOrder: ComponentCategory[] = [
+  'actions',
+  'inputs',
+  'navigation',
+  'data-display',
+  'feedback',
+]
+
+export const categoryLabel: Record<ComponentCategory, string> = {
+  actions: 'Actions',
+  inputs: 'Inputs',
+  navigation: 'Navigation',
+  'data-display': 'Data Display',
+  feedback: 'Feedback',
+}
+
 export type ComponentStatus = 'draft' | 'review' | 'stable' | 'deprecated'
 
 export type AnatomyPart = {
@@ -57,6 +78,12 @@ export type Example = {
 export type ComponentMeta = {
   id: string
   name: string
+  /**
+   * 검색에서 이 컴포넌트를 부르는 다른 이름들.
+   * 문서 본문이 얇아 전문 검색만으로는 "모달"이 Dialog에 닿지 않으므로
+   * 사람이 실제로 치는 말을 손으로 적어 둔다. 한국어 이름과 흔한 오표기를 함께 넣는다.
+   */
+  aliases: string[]
   category: ComponentCategory
   status: ComponentStatus
   /** 컴포넌트나 그 문서가 처음 실린 버전. */
@@ -76,6 +103,7 @@ export const components: ComponentMeta[] = [
   {
     id: 'button',
     name: 'Button',
+    aliases: ['버튼', 'cta', '액션', 'action'],
     category: 'actions',
     status: 'stable',
     addedIn: 'v0.2.0',
@@ -208,6 +236,7 @@ export const components: ComponentMeta[] = [
   {
     id: 'input',
     name: 'Input',
+    aliases: ['텍스트 필드', '입력', '인풋', 'text field', 'textfield'],
     category: 'inputs',
     status: 'stable',
     addedIn: 'v0.7.0',
@@ -315,6 +344,7 @@ export const components: ComponentMeta[] = [
   {
     id: 'select',
     name: 'Select',
+    aliases: ['셀렉트', '드롭다운', '선택', 'dropdown', 'combobox'],
     category: 'inputs',
     status: 'stable',
     addedIn: 'v0.7.0',
@@ -416,6 +446,7 @@ export const components: ComponentMeta[] = [
   {
     id: 'checkbox',
     name: 'Checkbox',
+    aliases: ['체크박스', '체크', '다중 선택', 'check'],
     category: 'inputs',
     status: 'stable',
     addedIn: 'v0.7.0',
@@ -524,6 +555,7 @@ export const components: ComponentMeta[] = [
   {
     id: 'radio',
     name: 'Radio',
+    aliases: ['라디오', '단일 선택', 'radio group'],
     category: 'inputs',
     status: 'stable',
     addedIn: 'v0.8.0',
@@ -626,6 +658,7 @@ export const components: ComponentMeta[] = [
   {
     id: 'switch',
     name: 'Switch',
+    aliases: ['스위치', '토글', 'toggle', '온오프', 'on off'],
     category: 'inputs',
     status: 'stable',
     addedIn: 'v0.8.0',
@@ -733,6 +766,7 @@ export const components: ComponentMeta[] = [
   {
     id: 'textarea',
     name: 'Textarea',
+    aliases: ['텍스트 영역', '여러 줄', 'multiline', '메모', '긴 글'],
     category: 'inputs',
     status: 'stable',
     addedIn: 'v0.8.0',
@@ -845,6 +879,7 @@ export const components: ComponentMeta[] = [
   {
     id: 'tabs',
     name: 'Tabs',
+    aliases: ['탭', 'tab', '전환'],
     category: 'navigation',
     status: 'stable',
     addedIn: 'v0.8.0',
@@ -938,6 +973,7 @@ export const components: ComponentMeta[] = [
   {
     id: 'breadcrumb',
     name: 'Breadcrumb',
+    aliases: ['경로', '빵부스러기', 'path', '위치'],
     category: 'navigation',
     status: 'stable',
     addedIn: 'v0.8.0',
@@ -1023,6 +1059,7 @@ export const components: ComponentMeta[] = [
   {
     id: 'pagination',
     name: 'Pagination',
+    aliases: ['페이지', '페이지네이션', '페이징', 'paging'],
     category: 'navigation',
     status: 'stable',
     addedIn: 'v0.8.0',
@@ -1103,6 +1140,7 @@ export const components: ComponentMeta[] = [
   {
     id: 'alert',
     name: 'Alert',
+    aliases: ['경고', '배너', 'banner', 'notice', '안내'],
     category: 'feedback',
     status: 'stable',
     addedIn: 'v0.8.0',
@@ -1198,6 +1236,7 @@ export const components: ComponentMeta[] = [
   {
     id: 'toast',
     name: 'Toast',
+    aliases: ['토스트', '스낵바', 'snackbar', '알림', 'notification'],
     category: 'feedback',
     status: 'stable',
     addedIn: 'v0.8.0',
@@ -1281,6 +1320,7 @@ export const components: ComponentMeta[] = [
   {
     id: 'table',
     name: 'Table',
+    aliases: ['테이블', '표', '목록', 'grid', 'list'],
     category: 'data-display',
     status: 'stable',
     addedIn: 'v0.8.0',
@@ -1385,6 +1425,7 @@ export const components: ComponentMeta[] = [
   {
     id: 'badge',
     name: 'Badge',
+    aliases: ['라벨', '태그', '뱃지', 'tag', 'label', 'chip'],
     category: 'data-display',
     status: 'stable',
     addedIn: 'v0.8.0',
@@ -1465,6 +1506,7 @@ export const components: ComponentMeta[] = [
   {
     id: 'tooltip',
     name: 'Tooltip',
+    aliases: ['툴팁', '말풍선', '설명', 'hint'],
     category: 'feedback',
     status: 'stable',
     addedIn: 'v0.8.0',
@@ -1528,6 +1570,7 @@ export const components: ComponentMeta[] = [
   {
     id: 'dialog',
     name: 'Dialog',
+    aliases: ['모달', '팝업', 'modal', 'popup', '확인창'],
     category: 'feedback',
     status: 'stable',
     addedIn: 'v0.8.0',
@@ -1601,6 +1644,7 @@ export const components: ComponentMeta[] = [
   {
     id: 'dropdown-menu',
     name: 'Dropdown Menu',
+    aliases: ['드롭다운', '메뉴', '더보기', 'menu', 'kebab', '케밥'],
     category: 'actions',
     status: 'stable',
     addedIn: 'v0.8.0',
@@ -1667,6 +1711,7 @@ export const components: ComponentMeta[] = [
   {
     id: 'avatar',
     name: 'Avatar',
+    aliases: ['프로필', '사진', 'profile', 'user', '유저'],
     category: 'data-display',
     status: 'stable',
     addedIn: 'v0.8.0',
@@ -1748,6 +1793,7 @@ export const components: ComponentMeta[] = [
   {
     id: 'separator',
     name: 'Separator',
+    aliases: ['구분선', '디바이더', 'divider', 'hr', '선'],
     category: 'data-display',
     status: 'stable',
     addedIn: 'v0.9.0',
@@ -1802,6 +1848,7 @@ export const components: ComponentMeta[] = [
   {
     id: 'skeleton',
     name: 'Skeleton',
+    aliases: ['스켈레톤', '로딩', '플레이스홀더', 'loading', 'placeholder'],
     category: 'feedback',
     status: 'stable',
     addedIn: 'v0.9.0',
@@ -1881,6 +1928,7 @@ export const components: ComponentMeta[] = [
   {
     id: 'card',
     name: 'Card',
+    aliases: ['카드', '패널', 'panel', '박스'],
     category: 'data-display',
     status: 'stable',
     addedIn: 'v0.9.0',
@@ -1985,6 +2033,14 @@ export function getComponent(id: string): ComponentMeta | undefined {
 
 export function getComponentsByCategory(category: ComponentCategory): ComponentMeta[] {
   return components.filter((c) => c.category === category)
+}
+
+/** 카테고리 순서대로 묶은 컴포넌트 목록. 묶음 안은 이름순이다. */
+export function componentsByCategory(): { category: ComponentCategory; items: ComponentMeta[] }[] {
+  return categoryOrder.map((category) => ({
+    category,
+    items: getComponentsByCategory(category).sort((a, b) => a.name.localeCompare(b.name)),
+  }))
 }
 
 export function getProperty(meta: ComponentMeta, name: string): ComponentProperty | undefined {
