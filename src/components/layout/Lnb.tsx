@@ -3,7 +3,6 @@ import { Link, NavLink, useLocation } from 'react-router'
 import type { DocLink } from '@/components/layout/nav-config'
 import { findSection, isGroup, sections } from '@/components/layout/nav-config'
 import { Badge } from '@/components/ui/badge'
-import { currentRelease } from '@/data/releases'
 import { isFresh } from '@/lib/freshness'
 import { cn } from '@/lib/utils'
 
@@ -133,14 +132,6 @@ export function Lnb({ open, onClose }: { open: boolean; onClose: () => void }) {
             ),
           )}
         </nav>
-
-        <div className="mt-auto rounded-md border p-2.5">
-          <div className="flex items-center gap-2">
-            <span className="bg-success size-1.5 rounded-full" />
-            <strong className="text-xs">{currentRelease.version}</strong>
-          </div>
-          <p className="text-muted-foreground mt-0.5 text-2xs">{currentRelease.title}</p>
-        </div>
       </aside>
     </>
   )

@@ -3,6 +3,7 @@ import { Command, Menu, Moon, Search, Sun } from 'lucide-react'
 import { Link, useLocation } from 'react-router'
 import { findSection, sections } from '@/components/layout/nav-config'
 import { SearchDialog } from '@/components/layout/SearchDialog'
+import { currentRelease } from '@/data/releases'
 import { useTheme } from '@/lib/theme'
 import { cn } from '@/lib/utils'
 
@@ -37,6 +38,7 @@ export function Gnb({ onMenuClick }: { onMenuClick: () => void }) {
             <Command size={14} strokeWidth={2.4} />
           </span>
           <span className="text-sm font-bold tracking-tight">서비스 대시보드</span>
+          <span className="text-muted-foreground text-2xs font-medium">{currentRelease.version}</span>
         </Link>
 
         <nav className="ml-6 hidden items-center gap-1 md:flex" aria-label="전역 메뉴">
