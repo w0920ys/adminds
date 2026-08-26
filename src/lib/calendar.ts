@@ -7,6 +7,8 @@ const WEEKS_IN_GRID = 6
 const DAYS_IN_WEEK = 7
 /** 하루를 대표하는 시각으로 자정이 아니라 정오를 쓴다. 아래 buildMonthGrid 주석 참고 */
 const NOON_UTC_HOUR = 12
+/** 하루의 밀리초. UTC 정오로 고정된 날짜끼리는 이 값을 더하고 빼도 서머타임에 흔들리지 않는다 */
+const MS_PER_DAY = 24 * 60 * 60 * 1000
 
 /**
  * 한 달 격자의 한 칸. date는 그 날 UTC 정오를 가리키는 시각이고, inMonth는 이 칸이
@@ -21,7 +23,7 @@ export type MonthGridCell = {
  * year·day로 그 달의 마지막 날짜를 구한다. month+1의 0번째 날은 곧 month의 마지막
  * 날이라는 달력 규칙을 쓴다 — 31을 하드코딩하지 않아 2월도 그대로 맞는다.
  */
-function daysInMonth(year: number, month: number): number {
+export function daysInMonth(year: number, month: number): number {
   return new Date(Date.UTC(year, month + 1, 0)).getUTCDate()
 }
 
@@ -98,4 +100,24 @@ export function isSameDay(a: Date | undefined, b: Date | undefined): boolean {
  */
 export function isBeforeDay(a: Date, b: Date): boolean {
   return formatISODate(a) < formatISODate(b)
+}
+
+/**
+ * date에 amount일을 더한다(음수면 뺀다). date가 buildMonthGrid의 칸처럼 UTC 정오를
+ * 가리키면, 이 함수가 어느 표준시에서 실행되든 정확히 amount일 뒤(앞)의 UTC 정오를
+ * 돌려준다 — 자정 기준으로 더했다면 서머타임 경계에서 겪었을 어긋남이 없다.
+ */
+export function addDays(date: Date, amount: number): Date {
+  return new Date(date.getTime() + amount * MS_PER_DAY)
+}
+
+/**
+ * date를 delta달만큼 옮긴다. 옮긴 달에 그 날짜가 없으면(예: 1월 31일에서 한 달 뒤로
+ * 가면 2월은 31일이 없다) 그 달의 마지막 날로 당겨(clamp) 존재하지 않는 날짜를
+ * 만들지 않는다. 결과도 buildMonthGrid의 칸과 같은 UTC 정오 기준이다.
+ */
+export function addMonthsToDate(date: Date, delta: number): Date {
+  const { year, month } = addMonths(date.getFullYear(), date.getMonth(), delta)
+  const day = Math.min(date.getDate(), daysInMonth(year, month))
+  return new Date(Date.UTC(year, month, day, NOON_UTC_HOUR))
 }

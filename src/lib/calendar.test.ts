@@ -1,5 +1,14 @@
 import { describe, expect, it } from 'vitest'
-import { addMonths, buildMonthGrid, formatISODate, isBeforeDay, isSameDay } from '@/lib/calendar'
+import {
+  addDays,
+  addMonths,
+  addMonthsToDate,
+  buildMonthGrid,
+  daysInMonth,
+  formatISODate,
+  isBeforeDay,
+  isSameDay,
+} from '@/lib/calendar'
 
 describe('buildMonthGrid', () => {
   it('여섯 주 곱하기 이레를 돌려준다', () => {
@@ -102,5 +111,79 @@ describe('isBeforeDay', () => {
 
   it('해가 달라도 정확히 비교한다', () => {
     expect(isBeforeDay(new Date(2026, 11, 31), new Date(2027, 0, 1))).toBe(true)
+  })
+})
+
+describe('addDays', () => {
+  it('하루를 더하면 다음 날 UTC 정오다', () => {
+    const day = new Date(Date.UTC(2026, 7, 26, 12))
+    const next = addDays(day, 1)
+    expect(next.getUTCDate()).toBe(27)
+    expect(next.getTime() - day.getTime()).toBe(24 * 60 * 60 * 1000)
+  })
+
+  it('음수를 더하면 이전 날이다', () => {
+    const day = new Date(Date.UTC(2026, 7, 1, 12))
+    const prev = addDays(day, -1)
+    expect(prev.getUTCMonth()).toBe(6)
+    expect(prev.getUTCDate()).toBe(31)
+  })
+
+  it('여러 날을 더해도 달을 정확히 넘는다', () => {
+    const day = new Date(Date.UTC(2026, 11, 28, 12))
+    const next = addDays(day, 7)
+    expect(next.getUTCFullYear()).toBe(2027)
+    expect(next.getUTCMonth()).toBe(0)
+    expect(next.getUTCDate()).toBe(4)
+  })
+})
+
+describe('addMonthsToDate', () => {
+  it('그 달에 같은 날짜가 있으면 날짜는 그대로다', () => {
+    const date = new Date(Date.UTC(2026, 6, 15, 12))
+    const next = addMonthsToDate(date, 1)
+    expect(next.getUTCMonth()).toBe(7)
+    expect(next.getUTCDate()).toBe(15)
+  })
+
+  it('옮긴 달에 그 날짜가 없으면 마지막 날로 당긴다', () => {
+    const jan31 = new Date(Date.UTC(2026, 0, 31, 12))
+    const next = addMonthsToDate(jan31, 1)
+    expect(next.getUTCMonth()).toBe(1)
+    expect(next.getUTCDate()).toBe(28)
+  })
+
+  it('윤년의 2월로 당길 때는 스물아홉 날까지 허용한다', () => {
+    const jan31 = new Date(Date.UTC(2028, 0, 31, 12))
+    const next = addMonthsToDate(jan31, 1)
+    expect(next.getUTCFullYear()).toBe(2028)
+    expect(next.getUTCMonth()).toBe(1)
+    expect(next.getUTCDate()).toBe(29)
+  })
+
+  it('해 경계를 넘어도 정확하다', () => {
+    const dec15 = new Date(Date.UTC(2026, 11, 15, 12))
+    const next = addMonthsToDate(dec15, 1)
+    expect(next.getUTCFullYear()).toBe(2027)
+    expect(next.getUTCMonth()).toBe(0)
+    expect(next.getUTCDate()).toBe(15)
+  })
+})
+
+describe('daysInMonth', () => {
+  it('1월은 서른한 날이다', () => {
+    expect(daysInMonth(2026, 0)).toBe(31)
+  })
+
+  it('평년의 2월은 스물여덟 날이다', () => {
+    expect(daysInMonth(2026, 1)).toBe(28)
+  })
+
+  it('윤년의 2월은 스물아홉 날이다', () => {
+    expect(daysInMonth(2028, 1)).toBe(29)
+  })
+
+  it('4월은 서른 날이다', () => {
+    expect(daysInMonth(2026, 3)).toBe(30)
   })
 })

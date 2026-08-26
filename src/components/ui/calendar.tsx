@@ -1,6 +1,14 @@
 import * as React from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
-import { addMonths, buildMonthGrid, isSameDay, type MonthGridCell } from '@/lib/calendar'
+import {
+  addDays,
+  addMonthsToDate,
+  buildMonthGrid,
+  formatISODate,
+  isBeforeDay,
+  isSameDay,
+  type MonthGridCell,
+} from '@/lib/calendar'
 import { cn } from '@/lib/utils'
 
 const WEEKDAY_LABELS = ['일', '월', '화', '수', '목', '금', '토']
@@ -58,8 +66,7 @@ type CalendarInternalProps = CalendarCommonProps & {
   onSelect?: (value: Date | CalendarRange) => void
 }
 
-function monthOf(date: Date | undefined): { year: number; month: number } | undefined {
-  if (!date) return undefined
+function monthOf(date: Date): { year: number; month: number } {
   return { year: date.getFullYear(), month: date.getMonth() }
 }
 
@@ -80,17 +87,51 @@ function Calendar(props: CalendarProps) {
   const rangeValue = isRange ? (selected as CalendarRange | undefined) : undefined
   const singleValue = !isRange ? (selected as Date | undefined) : undefined
 
-  const [view, setView] = React.useState(
-    () => monthOf(defaultMonth) ?? monthOf(rangeValue?.from) ?? monthOf(singleValue) ?? monthOf(today)!,
+  /*
+   * focusedDate 하나가 두 가지 뜻을 겸한다 — 지금 화면에 보이는 달(view는 여기서
+   * 파생만 된다)과, 격자 안에서 구르는 tabIndex(roving tabIndex)의 대상. 42칸을
+   * 모두 tab 순서에 두면 늦은 주의 날짜에 닿기까지 최대 41번 Tab을 눌러야 한다 —
+   * WAI-ARIA grid 패턴대로 격자 전체를 tab 정지점 하나로 줄이고, 화살표·Home·
+   * End·PageUp·PageDown이 이 안에서 초점을 옮긴다. 두 값을 하나로 묶어 두면
+   * '초점은 옮겼는데 보이는 달은 그대로'인 불일치가 애초에 생기지 않는다.
+   */
+  const [focusedDate, setFocusedDate] = React.useState<Date>(
+    () => defaultMonth ?? rangeValue?.from ?? singleValue ?? today,
   )
+  /* 키보드로 옮긴 경우에만 실제 DOM 포커스를 옮긴다 — 마우스 클릭은 브라우저가 이미 포커스를 준다 */
+  const shouldFocusRef = React.useRef(false)
+  /*
+   * 'YYYY-MM-DD' 문자열로 칸을 키·비교한다 — cell.date는 buildMonthGrid가 만든
+   * UTC 정오 기준 Date지만, focusedDate의 초기값(today·defaultMonth·selected)은
+   * 이 컴포넌트를 쓰는 페이지가 new Date(y, m, d)로 만든 로컬 자정 기준 Date일
+   * 수 있다. 같은 날이어도 두 표기의 getTime()은 절대 같지 않아, getTime()으로
+   * 비교하면 격자 어느 칸도 '지금 포커스가 가야 할 칸'과 맞아떨어지지 않고
+   * roving tabIndex가 하나도 0이 되지 않는 채로 남는다(격자 전체가 tab에서
+   * 사라진다). formatISODate는 로컬 연·월·일 게터만 보므로 두 표기가 같은
+   * 날이면 항상 같은 문자열이 된다.
+   */
+  const dayRefs = React.useRef(new Map<string, HTMLButtonElement>())
 
+  const view = React.useMemo(() => monthOf(focusedDate), [focusedDate])
   const grid = React.useMemo(() => buildMonthGrid(view.year, view.month), [view.year, view.month])
 
+  React.useEffect(() => {
+    if (!shouldFocusRef.current) return
+    shouldFocusRef.current = false
+    dayRefs.current.get(formatISODate(focusedDate))?.focus()
+  }, [focusedDate])
+
   function goToMonth(delta: number) {
-    setView((current) => addMonths(current.year, current.month, delta))
+    setFocusedDate((current) => addMonthsToDate(current, delta))
+  }
+
+  function moveFocus(next: Date) {
+    shouldFocusRef.current = true
+    setFocusedDate(next)
   }
 
   function handleDayClick(cell: MonthGridCell) {
+    setFocusedDate(cell.date)
     if (isDateDisabled?.(cell.date)) return
 
     if (isRange) {
@@ -106,6 +147,57 @@ function Calendar(props: CalendarProps) {
       onSelect?.(next)
     } else {
       onSelect?.(cell.date)
+    }
+  }
+
+  /*
+   * 화살표는 하루·이레, Home·End는 그 주의 처음·끝, PageUp·PageDown은 한 달
+   * 앞뒤로 옮긴다 — WAI-ARIA grid 패턴의 표준 키 배정이다. cell.date가
+   * buildMonthGrid의 UTC 정오 기준이라 addDays·addMonthsToDate로 옮겨도
+   * 서머타임에 흔들리지 않는다. 옮긴 날짜가 지금 보이는 달을 벗어나면
+   * view가 focusedDate에서 파생되므로 자연히 이웃 달로 넘어간다.
+   */
+  function handleDayKeyDown(event: React.KeyboardEvent<HTMLButtonElement>, cell: MonthGridCell) {
+    switch (event.key) {
+      case 'ArrowRight':
+        event.preventDefault()
+        moveFocus(addDays(cell.date, 1))
+        return
+      case 'ArrowLeft':
+        event.preventDefault()
+        moveFocus(addDays(cell.date, -1))
+        return
+      case 'ArrowDown':
+        event.preventDefault()
+        moveFocus(addDays(cell.date, 7))
+        return
+      case 'ArrowUp':
+        event.preventDefault()
+        moveFocus(addDays(cell.date, -7))
+        return
+      case 'Home':
+        event.preventDefault()
+        moveFocus(addDays(cell.date, -cell.date.getUTCDay()))
+        return
+      case 'End':
+        event.preventDefault()
+        moveFocus(addDays(cell.date, 6 - cell.date.getUTCDay()))
+        return
+      case 'PageUp':
+        event.preventDefault()
+        moveFocus(addMonthsToDate(cell.date, -1))
+        return
+      case 'PageDown':
+        event.preventDefault()
+        moveFocus(addMonthsToDate(cell.date, 1))
+        return
+      case 'Enter':
+      case ' ':
+        event.preventDefault()
+        handleDayClick(cell)
+        return
+      default:
+        return
     }
   }
 
@@ -133,7 +225,7 @@ function Calendar(props: CalendarProps) {
         </button>
       </div>
 
-      <table className="w-full border-collapse">
+      <table className="w-full border-collapse" role="grid">
         <thead>
           <tr>
             {WEEKDAY_LABELS.map((label) => (
@@ -160,14 +252,17 @@ function Calendar(props: CalendarProps) {
                   isRange &&
                   !!rangeValue?.from &&
                   !!rangeValue?.to &&
-                  cell.date.getTime() > rangeValue.from.getTime() &&
-                  cell.date.getTime() < rangeValue.to.getTime()
+                  isBeforeDay(rangeValue.from, cell.date) &&
+                  isBeforeDay(cell.date, rangeValue.to)
                 const disabled = isDateDisabled?.(cell.date) ?? false
+                const isoDate = formatISODate(cell.date)
+                const isRoving = isoDate === formatISODate(focusedDate)
                 const dayLabel = `${cell.date.getFullYear()}년 ${cell.date.getMonth() + 1}월 ${cell.date.getDate()}일`
 
                 return (
                   <td
-                    key={cell.date.getTime()}
+                    key={isoDate}
+                    role="gridcell"
                     className={cn(
                       'p-0 text-center',
                       isInRange && 'bg-accent',
@@ -175,26 +270,45 @@ function Calendar(props: CalendarProps) {
                       isRangeEnd && !isRangeStart && 'rounded-r-full',
                     )}
                   >
+                    {/*
+                     * disabled는 네이티브 disabled 속성을 쓰지 않는다 — 네이티브
+                     * disabled 버튼은 브라우저가 포커스·tab 순서에서 통째로
+                     * 빼 버려, 화살표로 이 칸까지 옮겨도 focus()가 아무 일도
+                     * 하지 못한다(격자 순회가 그 칸에서 조용히 끊긴다). 대신
+                     * aria-disabled로 알리고 클릭·Enter·Space는 handleDayClick
+                     * 내부에서 막는다 — 칸은 계속 순회할 수 있고 고를 수만 없다.
+                     */}
                     <button
+                      ref={(el) => {
+                        if (el) dayRefs.current.set(isoDate, el)
+                        else dayRefs.current.delete(isoDate)
+                      }}
                       type="button"
-                      disabled={disabled}
+                      tabIndex={isRoving ? 0 : -1}
+                      aria-disabled={disabled || undefined}
                       aria-current={isToday ? 'date' : undefined}
                       aria-selected={isBoundary || undefined}
                       title={disabled ? disabledReason : undefined}
                       aria-label={disabled && disabledReason ? `${dayLabel}, ${disabledReason}` : dayLabel}
                       onClick={() => handleDayClick(cell)}
+                      onKeyDown={(event) => handleDayKeyDown(event, cell)}
                       className={cn(
                         'grid place-items-center rounded-full font-medium outline-none transition',
+                        'focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-2',
                         CELL_SIZE[size],
                         !cell.inMonth && 'text-muted-foreground',
-                        cell.inMonth && !isBoundary && 'text-foreground',
-                        isToday && !isBoundary && 'border-foreground/60 border font-semibold',
-                        isBoundary && 'bg-primary text-primary-foreground',
-                        !disabled &&
-                          !isBoundary &&
-                          'hover:bg-accent hover:text-accent-foreground',
-                        !disabled && 'focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-2',
-                        disabled && 'pointer-events-none opacity-50',
+                        cell.inMonth && !isBoundary && !disabled && 'text-foreground',
+                        isToday && !isBoundary && !disabled && 'border-foreground/60 border font-semibold',
+                        isBoundary && !disabled && 'bg-primary text-primary-foreground',
+                        !disabled && !isBoundary && 'hover:bg-accent hover:text-accent-foreground',
+                        /*
+                         * text-foreground를 opacity-50으로 흐리던 이전 방식은
+                         * 라이트 테마에서 4.5:1에 못 미쳤다(재측정: 3.7:1 부근) —
+                         * 이미 4.5:1을 넉넉히 넘도록 조정된 muted-foreground를
+                         * 그대로 재사용하고, 흐림 대신 취소선으로 '고를 수 없음'을
+                         * 알린다. 색만으로 상태를 가르지 않는다는 원칙과도 맞는다.
+                         */
+                        disabled && 'text-muted-foreground line-through decoration-1 cursor-not-allowed',
                       )}
                     >
                       {cell.date.getDate()}
