@@ -9,6 +9,10 @@
   .state-hover & { @slot }
 }
 @custom-variant focus-visible (&:focus-visible, .state-focus &);
+/* File Upload의 드래그 오버 상태. 실제로는 파일을 끌고 영역 위에 왔을 때만
+   data-dragging="true"가 붙는다 — .state-dragging 안의 자손은 끌지 않아도
+   그 스타일을 강제로 받는다. */
+@custom-variant dragging (&[data-dragging='true'], .state-dragging &);
 
 :root {
   --radius: 0.5rem;

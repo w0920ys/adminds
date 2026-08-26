@@ -29,6 +29,39 @@ export type Release = {
 /** 최신 버전이 배열의 맨 앞이다. */
 export const releases: Release[] = [
   {
+    version: 'v0.10.0',
+    publishedAt: '2026-08-26',
+    title: '입력 카테고리를 열하나로 채우고, 이 저장소를 레지스트리로 다시 갖췄어요',
+    purpose:
+      '검색해서 고르고, 날짜를 고르고, 값을 범위로 조절하고, 파일을 올리는 네 가지 입력과 그 위에서 라벨·도움말·오류를 하나로 묶는 Field를 더해 Inputs 카테고리를 여섯에서 열하나로 채웠어요. Combobox와 Date Picker가 함께 기대는 뜨는 패널 Popover도 이번에 실었어요. 컴포넌트가 서른두 개로 늘어난 만큼 registry.json에도 여섯 항목을 마저 더했고, 문서(registry.ts)와 레지스트리(registry.json)가 어긋나면 조용히 넘어가지 않도록 양방향으로 지키는 테스트를 붙였어요.',
+    changes: [
+      { target: 'Popover', type: 'New', note: '뜨는 패널의 기본형이에요. @radix-ui/react-popover를 쓰고, Combobox와 Date Picker가 그 위에 얹혀요.' },
+      { target: 'Field', type: 'New', note: '라벨·도움말·오류를 하나의 id 계약으로 묶어요. FieldLabel·FieldControl·FieldHelp·FieldError가 컨텍스트에서 각자 htmlFor·id·aria-describedby를 스스로 읽어 손으로 맞출 일이 없어요.' },
+      { target: 'Slider', type: 'New', note: '값을 범위로 조절해요. @radix-ui/react-slider를 쓰고, 손잡이 둘로 구간도 고를 수 있어요.' },
+      { target: 'Combobox', type: 'New', note: '검색해서 값을 골라요. 부분 문자열(포함)로 옵션을 거르고, multiple이면 고른 값을 배지로 보여줘요.' },
+      { target: 'Date Picker', type: 'New', note: '날짜나 기간을 골라요. Popover 안에 격자를 그리고, 격자 안에서 화살표 키로 이동할 수 있어요.' },
+      { target: 'File Upload', type: 'New', note: '파일을 드래그하거나 골라 올려요. 크기는 formatFileSize로 사람이 읽는 단위(B·KB·MB·…)로 보여줘요.' },
+      { target: 'Registry', type: 'New', note: 'registry.json에 여섯 항목(Popover·Field·Slider·Combobox·Date Picker·File Upload)과 그 밑에서 쓰는 순수 함수 셋(calendar-lib·file-size·filter-options)을 더했어요. adminds 묶음도 서른두 개를 전부 가리키게 갱신했고, registry.ts와 registry.json이 서로 어긋나면 실패하는 테스트(registry-parity.test.ts)를 붙였어요.' },
+      { target: 'Updates', type: 'New', note: 'GNB에는 있었지만 준비 중이던 Updates 화면을 채웠어요. releases.ts의 기록을 최신 버전이 맨 위로 오게 늘어놓고, 버전을 열면 그 안의 변경 사항을 대상·종류·설명으로 보여줘요. 버전끼리 견줘 볼 수 있게 여러 개를 동시에 열 수 있어요.' },
+      { target: 'GNB / LNB', type: 'Updated', note: 'LNB 맨 아래 있던 버전 상자를 걷어내고, 버전 번호만 GNB의 제목 옆에 작게 붙였어요. 무엇이 바뀌었는지는 Updates 화면이 맡아요.' },
+      { target: 'Contents', type: 'Fixed', note: '아코디언 항목의 이름이 문서의 절인 것처럼 오른쪽 목차에 섞여 들던 것을 고쳤어요. Radix가 트리거를 h3로 감싸는데, Updates처럼 트리거 안에 버전·제목·날짜가 나란히 놓이면 그 셋이 공백 없이 이어 붙어 읽을 수 없는 목차 항목이 됐어요. 접히는 항목은 절이 아니라 컨트롤이라 목차에서 뺐어요.' },
+      { target: 'tailwind-merge', type: 'Fixed', note: '커스텀 컨트롤 높이 유틸리티(h-control-sm·h-control·h-control-lg)를 tailwind-merge가 몰라 뒤에 오는 클래스가 못 이기던 것을 size·h·min-h 세 그룹에 마저 등록했어요. 같은 틈에 있던 표의 행 높이(h-row·h-row-compact)도 h·min-h 두 그룹에 함께 등록했어요.' },
+      { target: 'Field', type: 'Fixed', note: '라벨이 이름을 붙이지 못하던 컨트롤 셋(Combobox·Date Picker·Slider)을 고쳤어요. label의 htmlFor는 input·button 같은 요소에만 걸려서, 트리거가 div이거나 Radix의 span인 이 셋은 라벨을 눌러도 포커스가 가지 않고 이름도 붙지 않았어요. FieldLabel이 자기 id를 달고 FieldControl이 그것을 aria-labelledby로 내려주도록 바꿔, 어떤 컴포넌트든 같은 방식으로 이름이 붙어요.' },
+      { target: 'Popover', type: 'Fixed', note: '뜨는 표면은 role="dialog"인데 이름이 없어 "이름 없는 대화상자"로 읽히던 것을 고쳤어요. Combobox와 Date Picker의 표면에 이름을 달고, 표면에 이름을 붙이는 지침을 Popover 문서에 더했어요. Combobox 트리거의 aria-haspopup도 실제로 열리는 것에 맞춰 listbox에서 dialog로 바로잡았어요.' },
+      { target: 'Popover / Tooltip', type: 'Fixed', note: '아이콘 전용 버튼 안의 장식 아이콘 여섯 곳(Popover 셋·Tooltip 셋)에 aria-hidden이 빠져 있던 것을 달았어요.' },
+      { target: 'Field', type: 'Fixed', note: 'horizontal에서 도움말 없이 오류만 있으면 빈 도움말 행의 gap이 위아래로 두 번 잡혀 간격이 두 배(6px 대신 12px)로 벌어지던 것을 고쳤어요.' },
+    ],
+    requests: [
+      { label: '남은 컴포넌트를 이어서 만들어주세요', done: true },
+      { label: '이 디자인시스템을 다른 서비스에서도 재활용할 수 있게 해주세요', done: true },
+    ],
+    reviewItems: [
+      { label: 'Date Picker 격자의 화살표 이동을 겨누는 자동 테스트가 없다 — 어떻게 덮을 것인가', category: 'Components', completed: false },
+      { label: '접근성 후속 묶음(포커스 링 대비, 이름 없는 라벨, Toast의 assertive 알림)을 언제 다룰 것인가', category: 'Components', completed: false },
+    ],
+    impact: ['Components', 'Foundations'],
+  },
+  {
     version: 'v0.9.0',
     publishedAt: '2026-08-26',
     title: '화면의 구조와 상태를 보여줄 여덟 개를 더하고, 찾기 쉽게 갈랐어요',

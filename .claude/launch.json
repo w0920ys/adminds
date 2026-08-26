@@ -13,21 +13,6 @@
         "--strictPort"
       ],
       "port": 5199
-    },
-    {
-      "name": "adminds-components",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": [
-        "--prefix",
-        "/Users/yoon/Desktop/데스크탑/바이브코딩/어드민 디자인시스템/.claude/worktrees/v0.9.0",
-        "run",
-        "dev",
-        "--",
-        "--port",
-        "5200",
-        "--strictPort"
-      ],
-      "port": 5200
     }
   ]
 }

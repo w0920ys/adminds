@@ -24,9 +24,19 @@ export function makeHeadingIds(texts: string[]): string[] {
   })
 }
 
-/** 아직 id가 없는 제목에만 붙인다. 이미 있는 id는 링크가 깨지므로 덮어쓰지 않는다 */
+/**
+ * 아직 id가 없는 제목에만 붙인다. 이미 있는 id는 링크가 깨지므로 덮어쓰지 않는다.
+ *
+ * 아코디언은 제외한다. Radix가 트리거를 h3로 감싸므로 접히는 항목의 이름이
+ * 문서의 절인 것처럼 목차에 섞여 든다. 그런데 그 이름은 하나의 텍스트가 아니라
+ * 여러 요소가 gap으로만 떨어져 있는 경우가 있어서(Updates의 버전·제목·날짜가
+ * 그렇다) textContent가 공백 없이 이어 붙는다 — 목차에도 id에도 읽을 수 없는
+ * 문자열이 남는다. 애초에 접히는 항목은 절이 아니라 컨트롤이다.
+ */
 export function assignHeadingIds(root: ParentNode): HTMLHeadingElement[] {
-  const nodes = [...root.querySelectorAll('h2, h3')] as HTMLHeadingElement[]
+  const nodes = ([...root.querySelectorAll('h2, h3')] as HTMLHeadingElement[]).filter(
+    (node) => !node.querySelector('[data-slot="accordion-trigger"]'),
+  )
   const ids = makeHeadingIds(nodes.map((node) => node.textContent ?? ''))
   nodes.forEach((node, index) => {
     if (!node.id) node.id = ids[index]

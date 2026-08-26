@@ -410,6 +410,453 @@ export const components: ComponentMeta[] = [
     verified: true,
   },
   {
+    id: 'combobox',
+    name: 'Combobox',
+    aliases: ['콤보박스', '검색 선택', '검색형 셀렉트', 'searchable select', 'autocomplete'],
+    category: 'inputs',
+    status: 'stable',
+    addedIn: 'v0.10.0',
+    changedIn: 'v0.10.0',
+    purpose: '많은 항목 중에서 검색해 하나 이상을 고르게 한다. Popover 위에 세우고 트리거는 Select와 같은 모양이다. 항목이 열 개 이하면 Select로 충분하다.',
+    /*
+     * Search·List·Item·Empty message는 열린 표면 안에서만 존재하고
+     * PopoverContent가 document.body로 포털한다 — Popover·Select가 이미
+     * 같은 이유로 anatomy를 무대 안에 남는 부위만으로 좁힌 것과 같은
+     * 결론이다. stage.querySelector가 포털된 노드를 찾지 못해 지시선을
+     * 그릴 수 없으므로, 여기서도 무대 안에 실제로 남는 Trigger·Value
+     * 둘만 부위로 둔다.
+     */
+    anatomy: [
+      {
+        part: 'trigger',
+        label: 'Trigger',
+        note: '테두리·높이·포커스 링은 Select의 트리거와 같은 토큰을 쓴다. 오른쪽 끝에 16×16 ChevronDown이 열림 여부와 무관하게 항상 보인다. 누르면 트리거 아래에 검색 칸과 걸러진 목록이 뜬다. 검색 칸에서 위아래 화살표로 항목을 옮기고 Enter로 고르며 Escape로 닫는다. 목록은 role=listbox, 항목은 role=option이고 지금 짚은 항목은 검색 칸의 aria-activedescendant가 알린다',
+      },
+      {
+        part: 'value',
+        label: 'Value',
+        note: 'layout이 single이면 고른 항목의 문구가 그대로 보인다. multiple이면 고른 항목마다 Badge가 쌓이고 각 배지 오른쪽에 지우는 버튼이 있다. 아직 고르지 않았으면 이 자리에 자리표시자가 대신 보인다',
+      },
+    ],
+    properties: [
+      {
+        name: 'size',
+        title: 'Size',
+        description: '트리거의 높이를 정한다. 같은 줄에 놓이는 컨트롤끼리는 크기를 맞춘다.',
+        display: 'row',
+        options: [{ value: 'sm' }, { value: 'default' }, { value: 'lg' }],
+      },
+      {
+        name: 'state',
+        title: 'State',
+        description: '상호작용 상태를 나타낸다.',
+        display: 'grid',
+        options: [
+          { value: 'default' },
+          { value: 'hover', note: '포인터가 올라간 동안' },
+          { value: 'focus', note: '키보드 포커스. 항상 보여야 한다' },
+          { value: 'disabled', note: '지금 선택을 바꿀 수 없음' },
+          { value: 'invalid', note: 'aria-invalid로 나타낸다. 테두리 색과 문구를 함께 쓴다' },
+        ],
+      },
+      {
+        name: 'layout',
+        title: 'Layout',
+        description: '하나만 고르는지 여럿을 고르는지를 정한다.',
+        display: 'row',
+        options: [
+          { value: 'single', note: '기본. 고른 항목의 문구가 트리거에 보인다' },
+          { value: 'multiple', note: '고른 항목이 트리거 안에 Badge로 쌓인다' },
+        ],
+      },
+    ],
+    guidelines: [
+      {
+        id: 'select-vs-combobox',
+        title: 'Select vs Combobox',
+        body: '항목이 열 개를 넘으면 Select 대신 Combobox를 씁니다. 그 아래에서는 검색 칸이 오히려 한 단계를 더합니다.',
+        do: ['항목이 열 개를 넘으면 Combobox를 쓴다', '항목이 적으면 Select로 충분하다'],
+        dont: ['항목이 몇 개뿐인데 검색 칸부터 앞세우지 않는다'],
+      },
+      {
+        id: 'substring-match',
+        title: 'Substring match',
+        body: "포함으로 거릅니다. 앞글자만 맞추면 '김하나'를 '하나'로 찾을 수 없습니다.",
+        do: ['문구 중간에 있는 일치도 찾아낸다', '대소문자를 가리지 않는다'],
+        dont: ['앞글자만 맞추는 거르기를 쓰지 않는다'],
+      },
+      {
+        id: 'empty-result-guidance',
+        title: 'Empty result guidance',
+        body: '결과가 없을 때 할 일을 알립니다. 빈 목록만 남기지 않고 무엇을 할 수 있는지 적습니다.',
+        do: ['검색어를 바꿔 보라는 안내를 함께 보인다'],
+        dont: ['빈 목록만 남기고 다음 행동을 알리지 않는다'],
+      },
+      {
+        id: 'reversible-selection',
+        title: 'Reversible selection',
+        body: '고른 것을 되돌릴 수 있게 합니다. 여럿 고르는 경우 각 항목에 지우는 자리를 둡니다.',
+        do: ['multiple에서 각 배지에 지우는 버튼을 둔다'],
+        dont: ['고른 항목을 지울 방법 없이 쌓아 두지 않는다'],
+      },
+    ],
+    usage: [
+      { id: 'assignee', title: '담당자 지정', note: '팀원이 많아 스크롤보다 검색이 빠른 자리에 쓴다' },
+      { id: 'tag-select', title: '태그 선택', note: 'multiple로 여러 태그를 함께 고른다' },
+      { id: 'product-search', title: '상품 검색', note: '이름 일부만 알아도 찾을 수 있다' },
+      { id: 'org-select', title: '소속 조직 선택', note: '조직이 계층 없이 평평하게 많을 때 쓴다' },
+    ],
+    cases: [
+      { id: 'no-results', title: '결과가 없는 경우', note: '검색어를 바꿔 보라는 안내를 함께 보인다' },
+      { id: 'many-options', title: '항목이 아주 많은 경우', note: '목록이 뷰포트를 넘으면 목록 안에서 스크롤된다' },
+      { id: 'many-selected', title: '고른 것이 많은 경우', note: '배지가 늘어나며 트리거가 여러 줄로 늘어난다' },
+      { id: 'narrow-screen', title: '좁은 화면', note: '트리거 폭이 줄어도 배지는 줄바꿈되어 잘리지 않는다' },
+    ],
+    verified: false,
+  },
+  {
+    id: 'date-picker',
+    name: 'Date Picker',
+    aliases: ['날짜 선택', '달력', '기간 선택', 'calendar', 'date range'],
+    category: 'inputs',
+    status: 'stable',
+    addedIn: 'v0.10.0',
+    changedIn: 'v0.10.0',
+    purpose:
+      '달력에서 날짜 하나 또는 기간을 고르게 한다. Popover 위에 Calendar를 놓고, 트리거는 Select와 같은 모양이다.',
+    /*
+     * Month header·Weekday row·Day grid·Day는 열린 표면 안에서만 존재하고
+     * PopoverContent가 document.body로 포털한다 — Combobox의 Search·List·
+     * Item·Empty message와 같은 이유로 stage.querySelector가 닿지 못해
+     * 지시선을 그릴 수 없다. 무대 안에 실제로 남는 Trigger·Value 둘만
+     * 부위로 둔다.
+     */
+    anatomy: [
+      {
+        part: 'trigger',
+        label: 'Trigger',
+        note: '테두리·높이·포커스 링은 Select의 트리거와 같은 토큰을 쓴다. 오른쪽 끝에 16×16 CalendarDays가 항상 보인다. 누르면 트리거 아래에 달력이 뜬다',
+      },
+      {
+        part: 'value',
+        label: 'Value',
+        note: "layout이 single이면 고른 날짜가 'YYYY-MM-DD'로 보인다. range면 시작과 끝을 '–'로 잇고, 시작만 골랐으면 '종료일을 고르세요'가 이어 붙는다. 아직 고르지 않았으면 이 자리에 자리표시자가 대신 보인다",
+      },
+    ],
+    properties: [
+      {
+        name: 'size',
+        title: 'Size',
+        description: '트리거의 높이와 달력 날짜 칸의 크기를 함께 정한다. 같은 줄에 놓이는 컨트롤끼리는 크기를 맞춘다.',
+        display: 'row',
+        options: [{ value: 'sm' }, { value: 'default' }, { value: 'lg' }],
+      },
+      {
+        name: 'state',
+        title: 'State',
+        description: '상호작용 상태를 나타낸다.',
+        display: 'grid',
+        options: [
+          { value: 'default' },
+          { value: 'hover', note: '포인터가 올라간 동안' },
+          { value: 'focus', note: '키보드 포커스. 항상 보여야 한다' },
+          { value: 'disabled', note: '지금 선택을 바꿀 수 없음' },
+          { value: 'invalid', note: 'aria-invalid로 나타낸다. 테두리 색과 문구를 함께 쓴다' },
+        ],
+      },
+      {
+        name: 'layout',
+        title: 'Layout',
+        description: '날짜 하나를 고르는지 기간을 고르는지를 정한다.',
+        display: 'row',
+        options: [
+          { value: 'single', note: '기본. 날짜 하나를 고른다' },
+          { value: 'range', note: '시작과 끝, 두 날짜를 고른다' },
+        ],
+      },
+    ],
+    guidelines: [
+      {
+        id: 'format-as-placeholder',
+        title: 'Format as placeholder',
+        body: "형식을 자리표시자로 알립니다. 'YYYY-MM-DD'처럼 어떤 모양으로 적는지 미리 보입니다.",
+        do: ["자리표시자에 실제 날짜 형식('YYYY-MM-DD')을 그대로 쓴다"],
+        dont: ["'날짜 선택'처럼 형식을 알리지 않는 자리표시자를 쓰지 않는다"],
+      },
+      {
+        id: 'today-vs-selected',
+        title: 'Today vs selected',
+        body: '오늘과 고른 날을 다르게 표시합니다. 둘이 같은 모양이면 오늘을 이미 고른 것으로 읽습니다.',
+        do: ['오늘은 테두리로, 고른 날은 채운 배경으로 나눈다'],
+        dont: ['오늘과 고른 날을 같은 채운 배경으로 그리지 않는다'],
+      },
+      {
+        id: 'disabled-reason',
+        title: 'Disabled reason',
+        body: '고를 수 없는 날은 이유를 알립니다. 흐리게만 두면 왜 안 되는지 알 수 없습니다.',
+        do: ['고를 수 없는 날에 이유를 title과 aria-label로 함께 단다'],
+        dont: ['이유 없이 흐리게만 두지 않는다'],
+      },
+      {
+        id: 'range-shows-both-ends',
+        title: 'Range shows both ends',
+        body: '범위는 시작과 끝을 함께 보입니다. 하나만 고른 중간 상태에서 무엇을 더 골라야 하는지 알립니다.',
+        do: ['시작만 골랐으면 종료일을 고르라고 트리거에 알린다'],
+        dont: ['시작만 고른 채로 아무 안내 없이 값 자리를 비워 두지 않는다'],
+      },
+    ],
+    usage: [
+      { id: 'period-filter', title: '기간 필터', note: 'range로 시작일과 종료일을 함께 고른다' },
+      { id: 'expiry-date', title: '만료일 설정', note: '오늘 이전 날짜는 고를 수 없게 막는다' },
+      { id: 'reservation-date', title: '예약일', note: '오늘과 다가올 날짜 중에서 고른다' },
+      { id: 'reference-date', title: '조회 기준일', note: '단일 날짜로 화면의 기준 시점을 정한다' },
+    ],
+    cases: [
+      { id: 'block-before-today', title: '오늘 이전을 막는 경우', note: '고를 수 없는 날에 이유를 함께 단다' },
+      { id: 'range-over-a-month', title: '범위가 한 달을 넘는 경우', note: '트리거는 달을 넘어도 시작·끝을 그대로 보인다' },
+      { id: 'no-value', title: '값이 없는 경우', note: "자리표시자로 형식('YYYY-MM-DD')을 미리 보인다" },
+      { id: 'narrow-screen', title: '좁은 화면', note: '트리거 폭이 줄어도 값이 잘리지 않고 줄임표로 대신한다' },
+    ],
+    verified: false,
+  },
+  {
+    id: 'field',
+    name: 'Field',
+    aliases: ['필드', '폼 필드', '입력 항목', 'form field', 'label'],
+    category: 'inputs',
+    status: 'stable',
+    addedIn: 'v0.10.0',
+    changedIn: 'v0.10.0',
+    purpose:
+      '라벨·도움말·오류를 입력 하나에 묶습니다. id를 잇는 일이 이 컴포넌트의 존재 이유입니다 — Field가 useId로 만든 id를 컨텍스트에 담아 FieldLabel의 htmlFor와 FieldControl의 aria-describedby·aria-invalid로 손 대지 않고 이어 줍니다.',
+    anatomy: [
+      {
+        part: 'container',
+        label: 'Container',
+        note: 'layout이 stacked면 세로로 쌓고, horizontal이면 grid-cols-[auto_1fr]로 라벨과 값 칸을 나눈다',
+      },
+      { part: 'label', label: 'Label', note: 'FieldLabel. htmlFor로 Control과 이어진다. text-sm font-medium' },
+      {
+        part: 'requirement-mark',
+        label: 'Requirement Mark',
+        note: "필수는 '*', 선택은 '(선택)'. 라벨 문구 뒤에 붙는다",
+        optional: true,
+      },
+      {
+        part: 'control',
+        label: 'Control',
+        note: 'FieldControl. Slot으로 자식 하나에 id · aria-describedby · aria-invalid를 내려 준다',
+      },
+      {
+        part: 'help',
+        label: 'Help',
+        note: 'FieldHelp. text-muted-foreground / text-xs. 자기 id를 Field에 등록해 aria-describedby에 실린다',
+        optional: true,
+      },
+      {
+        part: 'error',
+        label: 'Error',
+        note: 'FieldError. text-destructive / text-xs. 도움말이 있어도 지우지 않고 함께 등록된다',
+        optional: true,
+      },
+    ],
+    properties: [
+      {
+        name: 'layout',
+        title: 'Layout',
+        description: '라벨을 입력 위에 둘지, 왼쪽 고정 폭에 둘지 정한다.',
+        display: 'row',
+        options: [
+          { value: 'stacked', note: '기본. 라벨이 입력 위에 온다' },
+          { value: 'horizontal', note: '라벨이 왼쪽 고정 폭. 설정 화면처럼 라벨이 짧고 항목이 많을 때' },
+        ],
+      },
+      {
+        name: 'state',
+        title: 'State',
+        description: '입력의 상호작용과 값의 상태를 나타낸다.',
+        display: 'grid',
+        options: [
+          { value: 'default' },
+          { value: 'error', note: 'aria-invalid가 켜지고 FieldError가 함께 온다' },
+          { value: 'disabled', note: '라벨도 함께 흐려진다' },
+        ],
+      },
+      {
+        name: 'label',
+        title: 'Label',
+        description: '필수·선택 표시 여부를 정한다. 한 폼에서는 하나만 고른다.',
+        display: 'row',
+        options: [
+          { value: 'plain', note: '표시 없음' },
+          { value: 'required', note: "필수가 드문 폼에서 '*'로 표시" },
+          { value: 'optional', note: "선택이 드문 폼에서 '(선택)'으로 표시" },
+        ],
+      },
+    ],
+    guidelines: [
+      {
+        id: 'label-above-input',
+        title: 'Label above input',
+        body: '라벨을 입력 위에 둡니다. 시선이 아래로 내려가는 흐름과 맞고, 번역으로 라벨이 길어져도 자리가 흔들리지 않습니다.',
+        do: ['라벨을 입력 칸 바로 위에 놓는다'],
+        dont: ['입력 옆이나 아래에 라벨을 두어 시선의 흐름을 거스르지 않는다'],
+      },
+      {
+        id: 'help-before-error-after',
+        title: 'Help before, error after',
+        body: '도움말은 입력 앞에, 오류는 입력 뒤에 둡니다. 도움말은 적기 전에 읽어야 하고 오류는 적은 뒤에 나옵니다.',
+        do: ['도움말을 입력 위에, 오류를 입력 아래에 놓는다'],
+        dont: ['오류 문구를 입력 위에 두어 도움말과 자리를 다투게 하지 않는다'],
+      },
+      {
+        id: 'single-requirement-mark',
+        title: 'One requirement mark per form',
+        body: '필수 표시와 선택 표시 중 하나만 씁니다. 한 폼에서 둘을 섞으면 표시가 없는 항목이 무엇인지 알 수 없습니다.',
+        do: ['필수가 드문 폼에서는 필수만, 선택이 드문 폼에서는 선택만 표시한다'],
+        dont: ['같은 폼 안에서 필수 표시와 선택 표시를 함께 쓰지 않는다'],
+      },
+      {
+        id: 'keep-help-with-error',
+        title: "Don't clear help on error",
+        body: '오류가 나와도 도움말을 지우지 않습니다. 무엇이 틀렸는지와 무엇을 넣어야 하는지는 둘 다 필요합니다.',
+        do: ['오류가 나타난 뒤에도 도움말을 그대로 둔다'],
+        dont: ['오류 문구가 나타나면 도움말을 없애지 않는다'],
+      },
+      {
+        id: 'wrap-the-rendered-element',
+        title: 'Wrap the element that renders',
+        body:
+          'FieldControl은 Slot으로 자식에게 id를 내려줍니다. 그 자식이 실제로 DOM 노드를 그려야 id가 어딘가에 붙습니다. Select처럼 context만 제공하고 자기 노드를 그리지 않는 컴포넌트를 통째로 감싸면 id가 갈 곳이 없어 사라집니다. Select 안에서 실제로 렌더링되는 SelectTrigger처럼, 그 컴포넌트가 실제로 그리는 요소를 감싸야 합니다.',
+        do: ['Select 안에서 실제로 렌더링되는 SelectTrigger를 FieldControl로 감싼다'],
+        dont: ['Select처럼 context만 제공하는 컴포넌트를 통째로 FieldControl로 감싸지 않는다'],
+      },
+    ],
+    usage: [
+      { id: 'form-row', title: '폼 한 줄', note: '라벨과 입력 하나를 세로로 묶은 가장 흔한 자리' },
+      { id: 'setting-item', title: '설정 항목', note: '라벨이 왼쪽 고정 폭인 가로 배치' },
+      { id: 'table-filter', title: '표 위의 필터', note: '라벨 없이 입력만 두고 aria-label로 이름을 붙인다' },
+      {
+        id: 'grouped-inputs',
+        title: '여러 입력을 한 라벨로 묶는 경우',
+        note: 'htmlFor가 하나를 가리킬 수 없으므로 FieldControl 대신 fieldset·legend로 묶는다',
+      },
+    ],
+    cases: [
+      {
+        id: 'error-with-help',
+        title: '오류와 도움말이 함께 있는 경우',
+        note: 'aria-describedby가 두 id를 공백으로 이어 붙여 함께 가리킨다',
+      },
+      { id: 'long-label', title: '라벨이 긴 경우', note: 'horizontal에서도 라벨은 줄바꿈되고 값 칸의 폭은 그대로다' },
+      { id: 'no-label', title: '라벨이 필요 없는 입력', note: 'FieldLabel 없이 FieldControl만 두고 aria-label로 이름을 대신한다' },
+      { id: 'narrow-screen', title: '좁은 화면', note: '폭이 좁아지면 값 칸이 함께 줄어든다' },
+    ],
+    verified: false,
+  },
+  {
+    id: 'file-upload',
+    name: 'File Upload',
+    aliases: ['파일 업로드', '파일 첨부', '드롭존', '업로드', 'upload', 'dropzone'],
+    category: 'inputs',
+    status: 'stable',
+    addedIn: 'v0.10.0',
+    changedIn: 'v0.10.0',
+    purpose:
+      '파일을 고르거나 끌어다 놓아 올릴 준비를 하게 합니다. 네이티브 input을 감추고 그 위에 dropzone이나 버튼을 그립니다. 이 컴포넌트는 파일을 실제로 올리지 않습니다 — 올리는 일은 이 화면을 쓰는 서비스의 몫이고, 여기서는 그 화면만 정합니다.',
+    anatomy: [
+      {
+        part: 'dropzone',
+        label: 'Dropzone',
+        note: '점선 테두리의 영역이거나(dropzone) 버튼 하나(button). 눌러도 끌어다 놓아도 파일 창이 열린다',
+      },
+      { part: 'icon', label: 'Icon', note: '24×24, dropzone 위쪽', optional: true },
+      { part: 'instruction', label: 'Instruction', note: "'끌어다 놓거나 눌러서 올리세요' 같은 안내 문구" },
+      { part: 'constraint', label: 'Constraint', note: '허용 형식과 최대 크기. 올리기 전에 미리 알린다', optional: true },
+      { part: 'file-list', label: 'File List', note: '고른 파일들을 세로로 쌓는다', optional: true },
+      { part: 'file-item', label: 'File Item', note: '이름·크기·진행률·오류를 한 줄에 담는다' },
+      { part: 'remove', label: 'Remove', note: '이 파일을 목록에서 지운다' },
+    ],
+    properties: [
+      {
+        name: 'variant',
+        title: 'Variant',
+        description: '고르는 영역의 모양을 정한다.',
+        display: 'row',
+        options: [
+          { value: 'dropzone', note: '끌어다 놓기와 클릭을 함께 받는 넓은 영역' },
+          { value: 'button', note: '자리가 좁을 때. 클릭만 받는다' },
+        ],
+      },
+      {
+        name: 'state',
+        title: 'State',
+        description: '상호작용 상태를 나타낸다.',
+        display: 'grid',
+        options: [
+          { value: 'default' },
+          { value: 'hover', note: '포인터가 올라간 동안' },
+          { value: 'dragging', note: '파일을 끌고 영역 위에 온 동안' },
+          { value: 'disabled', note: '지금은 파일을 고를 수 없음' },
+          { value: 'invalid', note: 'aria-invalid로 나타낸다. 테두리 색과 문구를 함께 쓴다' },
+        ],
+      },
+      {
+        name: 'layout',
+        title: 'Layout',
+        description: '파일을 하나만 받는지 여러 개 받는지 정한다.',
+        display: 'row',
+        options: [
+          { value: 'single', note: '기본. 새로 고르면 이전 파일을 대신한다' },
+          { value: 'multiple', note: '고를 때마다 목록에 더한다' },
+        ],
+      },
+    ],
+    guidelines: [
+      {
+        id: 'clickable-button',
+        title: 'Clickable button, not drag alone',
+        body: '끌어다 놓기만으로는 부족합니다. 누를 수 있는 버튼을 함께 둡니다. 끌어다 놓기는 키보드로 할 수 없습니다.',
+        do: ['dropzone 안에도 눌러서 파일 창을 여는 동작을 함께 둔다'],
+        dont: ['끌어다 놓기만 되고 클릭으로는 열리지 않는 영역을 두지 않는다'],
+      },
+      {
+        id: 'announce-format-and-size',
+        title: 'Announce format and size upfront',
+        body: '허용 형식과 최대 크기를 미리 적습니다. 올린 뒤에 알리면 그 시간이 버려집니다.',
+        do: ['Constraint 문구에 허용 확장자와 최대 크기를 미리 적는다'],
+        dont: ['파일을 고른 뒤에야 형식이나 크기 제한을 알리지 않는다'],
+      },
+      {
+        id: 'show-progress',
+        title: 'Show progress',
+        body: '진행률을 보입니다. 큰 파일은 Progress를 함께 씁니다.',
+        do: ['큰 파일을 올리는 동안 FileUploadItem에 Progress를 함께 그린다'],
+        dont: ['큰 파일이 끝날 때까지 진행 표시 없이 그대로 두지 않는다'],
+      },
+      {
+        id: 'keep-failed-files',
+        title: "Don't remove failed files",
+        body: '실패한 파일을 목록에서 지우지 않습니다. 왜 실패했는지와 함께 남겨 다시 시도할 수 있게 합니다.',
+        do: ['실패한 파일에 이유를 문구로 남기고 목록에 그대로 둔다'],
+        dont: ['실패했다고 목록에서 조용히 지우지 않는다'],
+      },
+    ],
+    usage: [
+      { id: 'profile-image', title: '프로필 이미지', note: 'button 변형으로 이미지 하나만 빠르게 바꾼다' },
+      { id: 'bulk-import', title: '대량 등록 파일', note: '형식이 정해진 파일 하나를 끌어다 놓거나 골라 올린다' },
+      { id: 'attachment', title: '첨부 파일', note: '문서나 이미지 여러 개를 목록에 쌓는다' },
+      { id: 'logo-replace', title: '로고 교체', note: '기존 로고를 새 파일로 바꾼다' },
+    ],
+    cases: [
+      { id: 'wrong-format', title: '형식이 맞지 않는 경우', note: '지우지 않고 이유를 문구로 남긴다' },
+      { id: 'over-size-limit', title: '크기를 넘는 경우', note: '최대 크기를 넘겼다는 이유를 함께 남긴다' },
+      { id: 'uploading', title: '올리는 중', note: 'Progress로 진행률을 보인다' },
+      { id: 'multiple-files', title: '여러 파일', note: '고른 파일마다 이름·크기·지우기가 한 줄씩 쌓인다' },
+    ],
+    verified: false,
+  },
+  {
     id: 'input',
     name: 'Input',
     aliases: ['텍스트 필드', '입력', '인풋', 'text field', 'textfield'],
@@ -721,6 +1168,106 @@ export const components: ComponentMeta[] = [
       { id: 'empty-list', title: '비어 있는 목록', note: '항목이 없다는 안내를 목록 자리에 보여준다' },
     ],
     verified: true,
+  },
+  {
+    id: 'slider',
+    name: 'Slider',
+    aliases: ['슬라이더', '범위 선택', '값 조절', 'range slider'],
+    category: 'inputs',
+    status: 'stable',
+    addedIn: 'v0.10.0',
+    changedIn: 'v0.10.0',
+    purpose: '드래그하거나 화살표 키로 움직여 값을 어림잡아 고른다. Radix의 Slider를 감싼다.',
+    anatomy: [
+      { part: 'track', label: 'Track', note: '전체 범위를 나타내는 바탕. 늘 bg-muted다' },
+      {
+        part: 'range',
+        label: 'Range',
+        note: '손잡이가 하나면 시작부터 손잡이까지, range처럼 둘이면 두 손잡이 사이를 bg-primary로 채운다',
+      },
+      {
+        part: 'thumb',
+        label: 'Thumb',
+        note: '드래그하거나 화살표 키로 움직이는 손잡이. 테두리와 bg-background. layout이 range면 값의 개수만큼 둘이 된다',
+      },
+      { part: 'value', label: 'Value', note: '지금 값을 숫자로 보인다', optional: true },
+    ],
+    properties: [
+      {
+        name: 'size',
+        title: 'Size',
+        description: 'Track의 두께와 Thumb의 크기를 함께 정한다.',
+        display: 'row',
+        options: [
+          { value: 'sm', note: '표 행, 필터 바처럼 조밀한 자리' },
+          { value: 'default', note: '기본' },
+        ],
+      },
+      {
+        name: 'state',
+        title: 'State',
+        description: '상호작용 상태를 나타낸다.',
+        display: 'grid',
+        options: [
+          { value: 'default' },
+          { value: 'focus', note: '키보드 포커스. 화살표 키로 값을 움직일 수 있다' },
+          { value: 'disabled', note: '지금 값을 바꿀 수 없음' },
+        ],
+      },
+      {
+        name: 'layout',
+        title: 'Layout',
+        description: '손잡이가 하나인지 둘인지를 정한다.',
+        display: 'row',
+        options: [
+          { value: 'single', note: '값 하나를 고른다' },
+          { value: 'range', note: '값이 둘이다. 손잡이가 둘이고 그 사이가 채워진다' },
+        ],
+      },
+    ],
+    guidelines: [
+      {
+        id: 'show-value-as-number',
+        title: '값을 숫자로 함께 보인다',
+        body: '손잡이 위치만으로는 지금 값이 얼마인지 읽히지 않습니다.',
+        do: ['손잡이 곁에 지금 값을 숫자로 함께 보인다'],
+        dont: ['손잡이 위치만 보이고 값을 숫자로 남기지 않는다'],
+      },
+      {
+        id: 'exact-value-needs-input',
+        title: '정확한 값이 필요하면 입력 칸을 곁에 둔다',
+        body: '슬라이더는 어림잡는 도구입니다. 37을 정확히 맞춰야 하는 자리에는 맞지 않습니다.',
+        do: ['정확한 값이 중요하면 슬라이더 곁에 숫자 입력 칸을 둔다'],
+        dont: ['정확한 값이 필요한 자리에 슬라이더 하나만 두지 않는다'],
+      },
+      {
+        id: 'step-matches-unit',
+        title: '눈금 간격을 값의 단위에 맞춘다',
+        body: '0.01씩 움직이는 슬라이더는 손으로 맞출 수 없습니다.',
+        do: ['값이 실제로 뜻을 갖는 단위로 step을 정한다'],
+        dont: ['너무 잘게 나눈 step으로 손으로 맞추기 어렵게 두지 않는다'],
+      },
+      {
+        id: 'five-or-fewer-use-radio',
+        title: '선택지가 다섯 개 이하면 슬라이더를 쓰지 않는다',
+        body: 'Radio가 더 빠르고 정확합니다.',
+        do: ['선택지가 다섯 개를 넘고 연속된 값일 때 슬라이더를 쓴다'],
+        dont: ['다섯 개 이하의 정해진 선택지를 슬라이더로 고르게 하지 않는다'],
+      },
+    ],
+    usage: [
+      { id: 'price-range-filter', title: '가격 범위 필터', note: 'range로 최소·최대 가격을 함께 고른다' },
+      { id: 'threshold-setting', title: '임계값 설정', note: '알림을 보낼 기준값을 하나 고른다' },
+      { id: 'image-quality', title: '이미지 품질', note: '저장할 때 압축 정도를 고른다' },
+      { id: 'display-count', title: '표시 개수', note: '한 화면에 보일 항목 수를 고른다' },
+    ],
+    cases: [
+      { id: 'wide-range', title: '범위가 아주 넓은 경우', note: '전체 범위가 넓을수록 손잡이 하나가 움직이는 값의 폭도 커진다' },
+      { id: 'thumbs-at-same-value', title: '두 손잡이가 같은 값이 된 경우', note: '겹쳐도 각자 화살표 키로 다시 갈라 움직일 수 있다' },
+      { id: 'no-value', title: '값이 없는 경우', note: '아직 고르지 않았으면 범위의 시작값을 기본으로 둔다' },
+      { id: 'narrow-screen', title: '좁은 화면', note: '폭이 좁아져도 Track이 부모 폭을 그대로 따라간다' },
+    ],
+    verified: false,
   },
   {
     id: 'switch',
@@ -2248,6 +2795,83 @@ export const components: ComponentMeta[] = [
       { id: 'in-table', title: '표 안에 놓이는 경우', note: '표 안에서는 size를 compact로 두어 자리를 줄인다' },
       { id: 'two-actions', title: '동작이 둘인 경우', note: '주된 동작과 대안이 되는 동작을 나란히 둔다' },
       { id: 'narrow-screen', title: '좁은 화면', note: '폭이 좁아져도 Description은 줄바꿈되어 읽힌다' },
+    ],
+    verified: false,
+  },
+  {
+    id: 'popover',
+    name: 'Popover',
+    aliases: ['팝오버', '팝업', '플로팅 패널', 'popover'],
+    category: 'feedback',
+    status: 'stable',
+    addedIn: 'v0.10.0',
+    changedIn: 'v0.10.0',
+    purpose: '트리거를 누르면 그 곁에 곁들여 보는 내용을 띄운다.',
+    anatomy: [
+      {
+        part: 'trigger',
+        label: 'Trigger',
+        note: '누르면 곁에 bg-popover, text-popover-foreground, 테두리, radius-md, shadow-md인 내용이 뜬다. 쌓임 순서는 z-popover다. 트리거에서 sideOffset만큼 떨어지고 collisionPadding만큼 뷰포트 가장자리를 남긴 채 반대편으로 뒤집힌다. 안은 제목·보조 설명을 담는 Header(선택)·실제 상호작용이 있는 Body·적용·초기화 같은 동작을 담는 Footer(선택) 순서로 쌓일 수 있다. Radix가 이 표면을 document.body로 포털하므로 구조도 무대 안에 담을 수 없다 — Dialog·Tooltip·Dropdown Menu와 같은 이유로 Trigger 하나만 부위로 남긴다. 열린 표면의 구조는 Usage와 Cases에서 실제로 눌러서 본다. modal이 아니라 바깥을 눌러도 GNB를 포함해 그대로 눌린다',
+      },
+    ],
+    /*
+     * 열린 표면은 트리거의 변형이 아니라 다른 표면이다. 포털된 고정
+     * 위치 요소는 행 높이에 계산되지 않아 격자의 아래 칸을 덮는다 —
+     * Tooltip에서 이미 같은 결론에 이르렀다. properties를 빈 배열로
+     * 두면 ComponentPage가 절을 그리지 않는다.
+     */
+    properties: [],
+    guidelines: [
+      {
+        id: 'dialog-vs-popover',
+        title: 'Dialog vs Popover',
+        body: '하던 일을 멈추고 답해야 하면 Dialog를 쓰고, 곁들여 보는 것이면 Popover를 씁니다.',
+        do: ['필터·짧은 설명처럼 곁들여 보는 내용에는 Popover를 쓴다'],
+        dont: ['삭제 확인처럼 하던 일을 멈추고 답해야 하는 내용을 Popover에 담지 않는다'],
+      },
+      {
+        id: 'tooltip-vs-popover',
+        title: 'Tooltip vs Popover',
+        body: '안에 누를 수 있는 것이 하나라도 있으면 Popover를 씁니다. Tooltip은 마우스를 치우면 사라지므로 누를 수 없습니다.',
+        do: ['버튼이나 링크처럼 누를 수 있는 것이 있으면 Popover를 쓴다'],
+        dont: ['누를 수 있는 것을 Tooltip 안에 넣지 않는다'],
+      },
+      {
+        id: 'no-nested-popover',
+        title: 'No nested popovers',
+        body: '팝오버 안에서 또 팝오버를 열지 않습니다. 어느 것을 닫아야 뒤로 가는지 알 수 없게 됩니다.',
+        do: ['팝오버 하나로 끝나는 내용만 담는다'],
+        dont: ['팝오버 안에서 또 다른 팝오버를 열지 않는다'],
+      },
+      {
+        id: 'edge-reposition',
+        title: 'Reposition at screen edges',
+        body: '화면 가장자리에서는 잘리기 전에 반대편으로 뒤집힙니다. Radix가 맡는 일이므로 collisionPadding만 정합니다.',
+        do: ['뷰포트 가장자리에서 자동으로 뒤집히도록 그대로 둔다'],
+        dont: ['위치를 고정값으로 강제해 뒤집힘을 막지 않는다'],
+      },
+      {
+        id: 'name-the-surface',
+        title: 'Name the surface',
+        body: '열린 표면은 role="dialog"입니다. 이름이 없으면 스크린 리더가 이름 없는 대화상자로 읽으므로 표면마다 이름을 답니다.',
+        do: [
+          '표면 안에 제목이 있으면 그 제목의 id를 PopoverContent의 aria-labelledby로 잇는다',
+          '제목이 없으면 안에 무엇이 들었는지 밝히는 aria-label을 단다',
+        ],
+        dont: ['PopoverContent를 이름 없이 두지 않는다'],
+      },
+    ],
+    usage: [
+      { id: 'filter-group', title: '필터 묶음', note: '여러 조건을 한 자리에 묶어 고른다' },
+      { id: 'date-picker', title: '날짜 선택', note: '입력 곁에 자주 쓰는 날짜를 곁들인다' },
+      { id: 'item-search', title: '항목 검색', note: '입력하며 찾고 목록에서 고른다' },
+      { id: 'short-description-with-link', title: '짧은 설명과 링크', note: '몇 문장과 이어지는 링크를 함께 보인다' },
+    ],
+    cases: [
+      { id: 'screen-edge', title: '화면 가장자리', note: '자리가 없으면 반대쪽으로 자동으로 뒤집힌다' },
+      { id: 'long-content', title: '내용이 긴 경우', note: '세로로 넘치면 Content 안에서만 스크롤된다' },
+      { id: 'with-form', title: '안에 폼이 있는 경우', note: '입력을 마치기 전에는 바깥을 눌러도 값이 남는다' },
+      { id: 'narrow-screen', title: '좁은 화면', note: 'collisionPadding만큼 여백을 남기고 폭이 줄어든다' },
     ],
     verified: false,
   },

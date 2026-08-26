@@ -2,6 +2,7 @@
 import type { RouteObject } from 'react-router'
 import { AppShell } from '@/components/layout/AppShell'
 import { Placeholder } from '@/routes/Placeholder'
+import { UpdatesPage } from '@/routes/UpdatesPage'
 import { AccordionPage } from '@/routes/components/AccordionPage'
 import { AlertPage } from '@/routes/components/AlertPage'
 import { AvatarPage } from '@/routes/components/AvatarPage'
@@ -10,18 +11,24 @@ import { BreadcrumbPage } from '@/routes/components/BreadcrumbPage'
 import { ButtonPage } from '@/routes/components/ButtonPage'
 import { CardPage } from '@/routes/components/CardPage'
 import { CheckboxPage } from '@/routes/components/CheckboxPage'
+import { ComboboxPage } from '@/routes/components/ComboboxPage'
 import { ComponentsIndex } from '@/routes/components/ComponentsIndex'
+import { DatePickerPage } from '@/routes/components/DatePickerPage'
 import { DescriptionListPage } from '@/routes/components/DescriptionListPage'
 import { DialogPage } from '@/routes/components/DialogPage'
 import { DropdownMenuPage } from '@/routes/components/DropdownMenuPage'
 import { EmptyStatePage } from '@/routes/components/EmptyStatePage'
+import { FieldPage } from '@/routes/components/FieldPage'
+import { FileUploadPage } from '@/routes/components/FileUploadPage'
 import { InputPage } from '@/routes/components/InputPage'
 import { PaginationPage } from '@/routes/components/PaginationPage'
+import { PopoverPage } from '@/routes/components/PopoverPage'
 import { ProgressPage } from '@/routes/components/ProgressPage'
 import { RadioPage } from '@/routes/components/RadioPage'
 import { SelectPage } from '@/routes/components/SelectPage'
 import { SeparatorPage } from '@/routes/components/SeparatorPage'
 import { SkeletonPage } from '@/routes/components/SkeletonPage'
+import { SliderPage } from '@/routes/components/SliderPage'
 import { StepsPage } from '@/routes/components/StepsPage'
 import { SwitchPage } from '@/routes/components/SwitchPage'
 import { TablePage } from '@/routes/components/TablePage'
@@ -69,8 +76,13 @@ export const routes: RouteObject[] = [
           { path: 'button', element: <ButtonPage /> },
           { path: 'dropdown-menu', element: <DropdownMenuPage /> },
           { path: 'input', element: <InputPage /> },
+          { path: 'field', element: <FieldPage /> },
+          { path: 'file-upload', element: <FileUploadPage /> },
           { path: 'select', element: <SelectPage /> },
+          { path: 'slider', element: <SliderPage /> },
           { path: 'checkbox', element: <CheckboxPage /> },
+          { path: 'combobox', element: <ComboboxPage /> },
+          { path: 'date-picker', element: <DatePickerPage /> },
           { path: 'radio', element: <RadioPage /> },
           { path: 'switch', element: <SwitchPage /> },
           { path: 'textarea', element: <TextareaPage /> },
@@ -81,6 +93,7 @@ export const routes: RouteObject[] = [
           { path: 'alert', element: <AlertPage /> },
           { path: 'toast', element: <ToastPage /> },
           { path: 'tooltip', element: <TooltipPage /> },
+          { path: 'popover', element: <PopoverPage /> },
           { path: 'dialog', element: <DialogPage /> },
           { path: 'skeleton', element: <SkeletonPage /> },
           { path: 'progress', element: <ProgressPage /> },
@@ -96,7 +109,7 @@ export const routes: RouteObject[] = [
       },
 
       { path: 'patterns', element: <Placeholder title="Patterns" /> },
-      { path: 'updates', element: <Placeholder title="Updates" /> },
+      { path: 'updates', element: <UpdatesPage /> },
 
       { path: '*', element: <Placeholder title="페이지를 찾을 수 없습니다" /> },
     ],

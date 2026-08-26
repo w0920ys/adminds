@@ -3,7 +3,6 @@ import { Link, NavLink, useLocation } from 'react-router'
 import type { DocLink } from '@/components/layout/nav-config'
 import { findSection, isGroup, sections } from '@/components/layout/nav-config'
 import { Badge } from '@/components/ui/badge'
-import { currentRelease } from '@/data/releases'
 import { isFresh } from '@/lib/freshness'
 import { cn } from '@/lib/utils'
 
@@ -68,10 +67,16 @@ export function Lnb({ open, onClose }: { open: boolean; onClose: () => void }) {
           aria-label="메뉴 닫기"
         />
       )}
+      {/*
+       * overflow-y-auto는 md 밑에서도 켠다. 서랍은 fixed inset-y-0이라 높이가
+       * 화면에 묶이는데 목록은 그보다 길다 — 모바일에서 목록이 1368px까지 자라
+       * 아래쪽 항목에 손이 닿지 않았다. 게다가 잘리지 않은 만큼이 문서 높이로
+       * 새어 나가 html의 scrollHeight가 화면의 여덟 배가 됐다.
+       */}
       <aside
         className={cn(
-          'bg-surface fixed inset-y-0 left-0 z-drawer flex w-60 flex-col border-r p-3 transition-transform',
-          'md:static md:h-full md:shrink-0 md:translate-x-0 md:overflow-y-auto',
+          'bg-surface fixed inset-y-0 left-0 z-drawer flex w-60 flex-col overflow-y-auto border-r p-3 transition-transform',
+          'md:static md:h-full md:shrink-0 md:translate-x-0',
           open ? 'translate-x-0' : '-translate-x-full',
         )}
       >
@@ -127,14 +132,6 @@ export function Lnb({ open, onClose }: { open: boolean; onClose: () => void }) {
             ),
           )}
         </nav>
-
-        <div className="mt-auto rounded-md border p-2.5">
-          <div className="flex items-center gap-2">
-            <span className="bg-success size-1.5 rounded-full" />
-            <strong className="text-xs">{currentRelease.version}</strong>
-          </div>
-          <p className="text-muted-foreground mt-0.5 text-2xs">{currentRelease.title}</p>
-        </div>
       </aside>
     </>
   )
