@@ -263,8 +263,17 @@ function AnatomyPreview() {
  * 키보드
  *
  * 달 격자는 WAI-ARIA grid 패턴을 따르지만, 이 표는 그 패턴이 보통 어떻게
- * 생겼는지가 아니라 calendar.tsx의 handleDayKeyDown과 date-picker.tsx의
- * handleTriggerKeyDown이 실제로 다루는 키만 적는다.
+ * 생겼는지가 아니라 이 컴포넌트에서 실제로 동작하는 키만 적는다. 대부분은
+ * calendar.tsx의 handleDayKeyDown과 date-picker.tsx의 handleTriggerKeyDown이
+ * 맡지만, 격자 표의 Escape 한 줄은 둘 중 어느 쪽도 아니다.
+ *
+ * handleDayKeyDown에는 Escape 갈래가 없어 default로 떨어지고, 트리거의
+ * handleTriggerKeyDown은 Escape를 다루기는 해도 트리거에 포커스가 있을
+ * 때만이다 — PopoverContent는 트리거의 자식이 아니라 형제라, 날짜 칸에서
+ * 올라오는 키가 트리거의 onKeyDown에 닿지 않는다. 그 자리는 Radix Popover가
+ * 맡는다: 닫는 것은 DismissableLayer가, 포커스를 트리거로 되돌리는 것은
+ * FocusScope의 onCloseAutoFocus가 한다. popover.tsx는 둘 중 어느 쪽도
+ * 가로채지 않고 Radix의 기본 동작을 그대로 둔다.
  * ------------------------------------------------------------------ */
 
 const TRIGGER_KEYS: { keys: string; effect: string }[] = [

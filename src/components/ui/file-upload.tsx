@@ -268,10 +268,20 @@ type FileUploadItemProps = Omit<React.ComponentProps<'li'>, 'children'> & {
  * 컨트롤의 상태이고 목록의 한 줄(li)에는 그런 상태가 없다. 테두리 색을
  * 바꾸는 일만 남기면 되므로 그 자리는 data-invalid로 표시한다.
  *
- * 대신 실패 이유를 지우기 버튼의 aria-describedby로 잇는다. 이 줄에서
- * 포커스를 받는 것은 그 버튼 하나뿐이라, 잇지 않으면 버튼에 멈춘 스크린
- * 리더가 '…지우기, 버튼'만 읽고 무엇이 왜 실패했는지는 읽지 않는다 —
- * Field가 오류 문구를 컨트롤의 aria-describedby로 잇는 것과 같은 얼개다.
+ * 대신 실패 이유를 aria-describedby로 잇는다. 잇는 자리는 이 줄에서 포커스를
+ * 받는 요소가 있느냐에 따라 갈린다.
+ *
+ * onRemove가 있으면 지우기 버튼이 이 줄의 유일한 포커스 대상이라 그 버튼에
+ * 잇는다 — 잇지 않으면 버튼에 멈춘 스크린 리더가 '…지우기, 버튼'만 읽고
+ * 무엇이 왜 실패했는지는 읽지 않는다. Field가 오류 문구를 컨트롤의
+ * aria-describedby로 잇는 것과 같은 얼개다.
+ *
+ * onRemove가 없으면 이 줄에는 포커스를 받는 요소가 하나도 없어, 버튼에만
+ * 이어 두면 오류 문구를 가리키는 것이 아무것도 남지 않는다. 그때는 줄
+ * 자신(listitem)이 가리킨다 — aria-describedby는 전역 속성이라 listitem에도
+ * 유효하고, 목록을 줄 단위로 훑는 스크린 리더가 그 자리에서 이유를 함께
+ * 읽는다. 둘 중 한 자리에만 두는 것은 같은 문구가 두 번 읽히지 않게 하기
+ * 위해서다.
  */
 function FileUploadItem({
   name,
@@ -290,6 +300,7 @@ function FileUploadItem({
     <li
       data-slot="file-upload-item"
       data-invalid={error ? '' : undefined}
+      aria-describedby={error && !onRemove ? errorId : undefined}
       className={cn(
         'border-input bg-background flex flex-col gap-1.5 rounded-md border px-3 py-2.5',
         'data-[invalid]:border-destructive',
