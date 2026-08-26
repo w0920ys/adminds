@@ -47,7 +47,7 @@ const GROUPS: TokenGroup[] = [
   },
   {
     prefix: '--text-',
-    note: '글자 크기와 줄 간격입니다. 크기는 Tailwind 기본 스케일에 없는 것만 더하고, 줄 간격은 읽는 글이 놓이는 세 단계(xs·sm·base)만 기본값에서 올려 다시 정합니다.',
+    note: '글자 크기와 줄 간격입니다. 크기는 Tailwind 기본 스케일에 없는 2xs 하나만 더했습니다. 줄 간격은 네 줄인데, 그중 읽는 글이 놓이는 셋(xs·sm·base)을 기본값에서 올려 다시 정했고 2xs의 줄 간격은 더한 크기에 딸려 오는 짝입니다.',
     names: parseTokenNames(tokensCss, '--text-'),
   },
 ]
@@ -108,7 +108,8 @@ function useMeasuredGroups(): TokenRow[][] {
   const [rows, setRows] = useState<TokenRow[][]>(() => GROUPS.map(() => []))
 
   useEffect(() => {
-    const measure = () => setRows(GROUPS.map((group) => readTokens(group.names, group.prefix)))
+    const measure = () =>
+      setRows(GROUPS.map((group) => readTokens(group.names, group.prefix, tokensCss)))
     measure()
     const observer = new MutationObserver(measure)
     observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] })
