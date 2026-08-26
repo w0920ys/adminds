@@ -52,6 +52,7 @@ import { DetailPatternPage } from '@/routes/patterns/DetailPatternPage'
 import { EmptyAndErrorPatternPage } from '@/routes/patterns/EmptyAndErrorPatternPage'
 import { FormPatternPage } from '@/routes/patterns/FormPatternPage'
 import { ListPatternPage } from '@/routes/patterns/ListPatternPage'
+import { PatternsOverview } from '@/routes/patterns/PatternsOverview'
 
 export const routes: RouteObject[] = [
   {
@@ -116,7 +117,7 @@ export const routes: RouteObject[] = [
       {
         path: 'patterns',
         children: [
-          { index: true, element: <Placeholder title="Patterns" /> },
+          { index: true, element: <PatternsOverview /> },
           { path: 'list', element: <ListPatternPage /> },
           { path: 'detail', element: <DetailPatternPage /> },
           { path: 'form', element: <FormPatternPage /> },

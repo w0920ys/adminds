@@ -257,4 +257,11 @@ describe('Patterns 목록', () => {
     expect(docs.map((d) => d.to)).toEqual(patterns.map((p) => `/patterns/${p.id}`))
     expect(docs.map((d) => d.label)).toEqual(patterns.map((p) => p.name))
   })
+
+  it('모든 패턴 문서에 한 줄 설명이 있다', () => {
+    const section = sections.find((s) => s.id === 'patterns')!
+    for (const doc of topLevelDocs(section.items)) {
+      expect(doc.summary, doc.to).toBeTruthy()
+    }
+  })
 })

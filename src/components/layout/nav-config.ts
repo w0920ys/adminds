@@ -52,7 +52,7 @@ export const sections: NavSection[] = [
     label: 'Foundations',
     to: '/foundations',
     items: [
-      { to: '/foundations', label: 'Overview', summary: '컴포넌트보다 먼저 합의하는 것들', updatedAt: '2026-08-25' },
+      { to: '/foundations', label: 'Overview', summary: '컴포넌트보다 먼저 합의하는 것들', updatedAt: '2026-08-27' },
       { to: '/foundations/design-token', label: 'Design Token', summary: '토큰의 층과 이름 규칙, 전체 목록', updatedAt: '2026-08-25' },
       {
         to: '/foundations/color',
@@ -77,7 +77,7 @@ export const sections: NavSection[] = [
     label: 'Components',
     to: '/components',
     items: [
-      { to: '/components', label: 'Overview', summary: '화면을 이루는 낱개의 부품 목록', updatedAt: '2026-08-25' },
+      { to: '/components', label: 'Overview', summary: '화면을 이루는 낱개의 부품 목록', updatedAt: '2026-08-27' },
       {
         label: 'Actions',
         items: [
@@ -142,7 +142,7 @@ export const sections: NavSection[] = [
     label: 'Patterns',
     to: '/patterns',
     items: [
-      { to: '/patterns', label: 'Overview', summary: '여러 부품을 엮는 화면 단위의 규칙', updatedAt: '2026-08-25' },
+      { to: '/patterns', label: 'Overview', summary: '여러 부품을 엮는 화면 단위의 규칙', updatedAt: '2026-08-27' },
       { to: '/patterns/list', label: 'List', summary: '여러 항목을 훑고 걸러 하나를 고르는 화면', updatedAt: '2026-08-27' },
       { to: '/patterns/detail', label: 'Detail', summary: '항목 하나를 갈래로 나눠 보이는 화면', updatedAt: '2026-08-27' },
       { to: '/patterns/form', label: 'Form', summary: '라벨·도움말·오류의 배치를 정하는 입력 화면', updatedAt: '2026-08-27' },
