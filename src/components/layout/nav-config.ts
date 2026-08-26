@@ -93,6 +93,7 @@ export const sections: NavSection[] = [
           { to: '/components/input', label: 'Input', updatedAt: '2026-08-25' },
           { to: '/components/radio', label: 'Radio', updatedAt: '2026-08-26' },
           { to: '/components/select', label: 'Select', updatedAt: '2026-08-26' },
+          { to: '/components/slider', label: 'Slider', updatedAt: '2026-08-26' },
           { to: '/components/switch', label: 'Switch', updatedAt: '2026-08-26' },
           { to: '/components/textarea', label: 'Textarea', updatedAt: '2026-08-26' },
         ],

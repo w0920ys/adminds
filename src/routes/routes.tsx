@@ -24,6 +24,7 @@ import { RadioPage } from '@/routes/components/RadioPage'
 import { SelectPage } from '@/routes/components/SelectPage'
 import { SeparatorPage } from '@/routes/components/SeparatorPage'
 import { SkeletonPage } from '@/routes/components/SkeletonPage'
+import { SliderPage } from '@/routes/components/SliderPage'
 import { StepsPage } from '@/routes/components/StepsPage'
 import { SwitchPage } from '@/routes/components/SwitchPage'
 import { TablePage } from '@/routes/components/TablePage'
@@ -73,6 +74,7 @@ export const routes: RouteObject[] = [
           { path: 'input', element: <InputPage /> },
           { path: 'field', element: <FieldPage /> },
           { path: 'select', element: <SelectPage /> },
+          { path: 'slider', element: <SliderPage /> },
           { path: 'checkbox', element: <CheckboxPage /> },
           { path: 'radio', element: <RadioPage /> },
           { path: 'switch', element: <SwitchPage /> },
