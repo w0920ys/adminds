@@ -238,7 +238,16 @@ function Calendar(props: CalendarProps) {
         </button>
       </div>
 
-      <table className="w-full border-collapse" role="grid">
+      {/*
+       * range는 칸을 여럿 한꺼번에 고르는 격자라 aria-multiselectable을 켠다.
+       * single은 한 칸만 고르므로 켜지 않는다 — 이 속성이 아래 칸의
+       * aria-selected를 어떻게 달지까지 가른다.
+       */}
+      <table
+        className="w-full border-collapse"
+        role="grid"
+        aria-multiselectable={isRange || undefined}
+      >
         <thead>
           <tr>
             {WEEKDAY_LABELS.map((label) => (
@@ -275,6 +284,32 @@ function Calendar(props: CalendarProps) {
                 const isRoving = isoDate === formatISODate(focusedDate)
                 const dayLabel = `${cell.date.getFullYear()}년 ${cell.date.getMonth() + 1}월 ${cell.date.getDate()}일`
 
+                /*
+                 * aria-selected의 세 값은 서로 다른 말을 한다 — true는 '골랐다',
+                 * false는 '고를 수 있는데 안 골랐다', 속성 없음(undefined)은
+                 * '고를 수 있는 자리가 아니다'다(WAI-ARIA 1.2, aria-selected).
+                 *
+                 * single에서는 고른 칸에만 true를 달고 나머지에는 아예 달지
+                 * 않는다. APG의 두 날짜 선택 예시(Date Picker Dialog·Combobox
+                 * Date Picker)가 모두 "고른 칸 말고는 aria-selected를 두지
+                 * 않는다"고 못 박고, 참조 구현도 고를 때마다 나머지 칸에서
+                 * removeAttribute로 걷어낸다. 마흔두 칸 전부에 false를 뿌리는
+                 * 흔한 방식은 그 예시들과 어긋난다.
+                 *
+                 * range는 다르다. 칸을 여럿 고르는 격자라 위 table에
+                 * aria-multiselectable을 켰고, 스펙은 그 컨테이너 아래의 고를
+                 * 수 있는 칸이라면 true든 false든 값을 명시하라고 한다. 그래서
+                 * range에서만 false를 함께 단다 — 다만 고를 수 없는 칸
+                 * (isDateDisabled)에는 달지 않는다. 거기서는 속성이 없는 것이
+                 * 곧 '고를 수 없음'이라는 제 뜻을 낸다.
+                 */
+                const cellSelected = isBoundary || isInRange
+                const ariaSelected = isRange
+                  ? disabled
+                    ? undefined
+                    : cellSelected
+                  : cellSelected || undefined
+
                 return (
                   /*
                    * aria-selected는 칸(gridcell)에 단다. 안쪽 button에 달면
@@ -290,7 +325,7 @@ function Calendar(props: CalendarProps) {
                   <td
                     key={isoDate}
                     role="gridcell"
-                    aria-selected={isBoundary || isInRange || undefined}
+                    aria-selected={ariaSelected}
                     className={cn(
                       'p-0 text-center',
                       isInRange && 'bg-accent',

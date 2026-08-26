@@ -762,7 +762,7 @@ export const components: ComponentMeta[] = [
     category: 'inputs',
     status: 'stable',
     addedIn: 'v0.10.0',
-    changedIn: 'v0.10.0',
+    changedIn: 'v0.10.1',
     purpose:
       '파일을 고르거나 끌어다 놓아 올릴 준비를 하게 합니다. 네이티브 input을 감추고 그 위에 dropzone이나 버튼을 그립니다. 이 컴포넌트는 파일을 실제로 올리지 않습니다 — 올리는 일은 이 화면을 쓰는 서비스의 몫이고, 여기서는 그 화면만 정합니다.',
     anatomy: [
@@ -855,6 +855,11 @@ export const components: ComponentMeta[] = [
       { id: 'over-size-limit', title: '크기를 넘는 경우', note: '최대 크기를 넘겼다는 이유를 함께 남긴다' },
       { id: 'uploading', title: '올리는 중', note: 'Progress로 진행률을 보인다' },
       { id: 'multiple-files', title: '여러 파일', note: '고른 파일마다 이름·크기·지우기가 한 줄씩 쌓인다' },
+      {
+        id: 'field-error',
+        title: 'Field 안에서 오류인 경우',
+        note: 'Field state="error"가 dropzone에 aria-invalid를 내려주고, 이유는 FieldError가 잇는다',
+      },
     ],
     verified: false,
   },

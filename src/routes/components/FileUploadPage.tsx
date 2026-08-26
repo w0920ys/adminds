@@ -3,7 +3,7 @@ import type { ReactNode } from 'react'
 import { UploadCloud } from 'lucide-react'
 import { ComponentPage } from '@/components/docs/ComponentPage'
 import type { RenderOptions } from '@/components/docs/PropertyBlock'
-import { Field, FieldControl, FieldLabel } from '@/components/ui/field'
+import { Field, FieldControl, FieldError, FieldLabel } from '@/components/ui/field'
 import {
   FileUpload,
   FileUploadDropzone,
@@ -47,6 +47,7 @@ function DemoFileUpload({
   layout,
   disabled,
   invalid,
+  errorText,
   label,
   initialFiles = [],
   instruction = '파일을 끌어다 놓거나 눌러서 올리세요',
@@ -58,6 +59,8 @@ function DemoFileUpload({
   layout: DemoLayout
   disabled?: boolean
   invalid?: boolean
+  /** Field로 감싼 데모에서 오류 문구로 쓸 글. invalid와 label이 함께 있을 때만 그린다 */
+  errorText?: string
   label?: string
   initialFiles?: DemoFile[]
   instruction?: string
@@ -75,12 +78,20 @@ function DemoFileUpload({
 
   /*
    * 오류는 컨트롤 자신에게 붙은 aria-invalid로 나타낸다 — Input·Select 문서가
-   * 같은 축을 같은 방식으로 그린다. 값이 없을 때 속성 자체를 넘기지 않는 것은
-   * Field로 감싼 경우 때문이다: FieldControl은 Slot으로 aria-invalid를 내려
-   * 주는데 자식이 그 이름의 프로퍼티를 undefined로라도 들고 있으면 자식 쪽이
-   * 이긴다(Slot의 mergeProps).
+   * 같은 축을 같은 방식으로 그린다. 다만 그 속성이 어디서 오는지는 이 데모가
+   * Field로 감싸였는지에 따라 갈린다.
+   *
+   * Field로 감싸지 않은 자리(Playground·Properties)에서는 여기서 dropzone에
+   * 직접 단다. Field로 감싼 자리에서는 Field state="error"에 맡긴다 —
+   * FieldControl이 Slot으로 aria-invalid를 자식에게 내려 주는 그 길이다.
+   * 감싼 쪽에서 invalidProps를 아예 비워 두는 것이 이 길의 조건이다:
+   * Slot의 mergeProps는 자식이 그 이름의 프로퍼티를 undefined로라도 들고
+   * 있으면 자식 쪽을 남기므로, aria-invalid={undefined}를 함께 넘기면
+   * Field가 내려준 값이 지워진다. 아래 Cases의 '오류를 알리는 경우'가
+   * 실제로 이 길을 지난다.
    */
-  const invalidProps = invalid ? ({ 'aria-invalid': true } as const) : {}
+  const fieldWrapped = Boolean(label)
+  const invalidProps = invalid && !fieldWrapped ? ({ 'aria-invalid': true } as const) : {}
 
   const dropzone = (
     <FileUploadDropzone variant={variant} {...invalidProps}>
@@ -104,9 +115,10 @@ function DemoFileUpload({
       className={className}
     >
       {label ? (
-        <Field>
+        <Field state={invalid ? 'error' : 'default'}>
           <FieldLabel>{label}</FieldLabel>
           <FieldControl>{dropzone}</FieldControl>
+          {invalid && errorText && <FieldError>{errorText}</FieldError>}
         </Field>
       ) : (
         dropzone
@@ -292,7 +304,6 @@ function renderExample(exampleId: string): ReactNode {
             name="시연영상.mp4"
             size={182_000_000}
             error="5MB를 넘어 올릴 수 없습니다"
-            onRemove={() => {}}
           />
         </FileUploadList>
       )
@@ -316,6 +327,26 @@ function renderExample(exampleId: string): ReactNode {
             onRemove={() => {}}
           />
         </FileUploadList>
+      )
+
+    /*
+     * Field가 오류를 dropzone까지 내려보내는 길을 실제로 지나는 자리다.
+     * 여기 dropzone button의 aria-invalid는 이 화면이 직접 단 것이 아니라
+     * Field state="error"가 FieldControl의 Slot을 거쳐 내려준 값이고,
+     * 이유는 FieldError가 aria-describedby로 같은 button에 이어 준다.
+     */
+    case 'field-error':
+      return (
+        <DemoFileUpload
+          variant="dropzone"
+          layout="single"
+          label="사업자등록증"
+          invalid
+          errorText="PDF만 올릴 수 있습니다"
+          instruction="사업자등록증을 끌어다 놓거나 눌러서 올리세요"
+          constraint="PDF · 최대 5MB"
+          className="w-72"
+        />
       )
 
     default:
