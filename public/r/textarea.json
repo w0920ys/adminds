@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "textarea",
+  "title": "Textarea",
+  "dependencies": [
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "https://adminds.vercel.app/r/input.json",
+    "https://adminds.vercel.app/r/tokens.json",
+    "https://adminds.vercel.app/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/textarea.tsx",
+      "content": "import * as React from 'react'\nimport { cva, type VariantProps } from 'class-variance-authority'\nimport { inputVariants } from '@/components/ui/input'\nimport { cn } from '@/lib/utils'\n\n/*\n * 가로 크기 조절은 막는다. 폭이 바뀌면 옆 요소가 밀려 폼의 정렬이 무너진다.\n * 세로는 사용자가 늘릴 수 있게 두고, auto는 내용에 따라 자란다.\n */\nconst resizeVariants = cva('min-h-20 py-2', {\n  variants: {\n    resize: {\n      none: 'resize-none',\n      vertical: 'resize-y',\n      auto: 'resize-none field-sizing-content',\n    },\n  },\n  defaultVariants: { resize: 'vertical' },\n})\n\ntype TextareaProps = Omit<React.ComponentProps<'textarea'>, 'size'> &\n  VariantProps<typeof resizeVariants>\n\n/*\n * inputVariants를 size 없이 부른다 — controlShellVariants는 size에\n * defaultVariants가 없어서 h-control-* 중 어느 것도 붙지 않는다.\n * 예전처럼 h-auto로 그 높이를 되짚어 덮을 필요가 없다. placeholder:·\n * selection:·readonly 스타일은 Textarea도 실제 텍스트 필드라 그대로 쓴다.\n */\nfunction Textarea({ className, resize, ...props }: TextareaProps) {\n  return (\n    <textarea\n      data-slot=\"textarea\"\n      className={cn(inputVariants({}), resizeVariants({ resize }), className)}\n      {...props}\n    />\n  )\n}\n\nexport { Textarea }\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

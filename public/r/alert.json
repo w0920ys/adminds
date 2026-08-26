@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "alert",
+  "title": "Alert",
+  "dependencies": [
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "https://adminds.vercel.app/r/tokens.json",
+    "https://adminds.vercel.app/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/alert.tsx",
+      "content": "import * as React from 'react'\nimport { cva, type VariantProps } from 'class-variance-authority'\nimport { cn } from '@/lib/utils'\n\n/*\n * 아이콘은 CSS로 색만 물려받는다. 어떤 아이콘을 넣을지는 문서 페이지가 정하고,\n * 이 컴포넌트는 variant에 맞는 색만 [&>svg]로 물려준다 — Button이 svg에\n * 크기를 물려주는 것과 같은 방식이라 이 시스템에서 새 규칙이 아니다.\n *\n * 아이콘 색도 Badge와 같은 *-on-tint 토큰을 쓴다 — 옅게 탄 배경 위에\n * 원래 색을 그대로 얹는 같은 패턴이라 대비가 낮아지는 문제를 똑같이 안고\n * 있었다.\n */\nconst alertVariants = cva(\n  'relative flex w-full items-start gap-3 rounded-md border p-4 text-sm [&>svg]:mt-0.5 [&>svg]:size-4 [&>svg]:shrink-0',\n  {\n    variants: {\n      variant: {\n        info: 'border-info/30 bg-info/10 [&>svg]:text-info-on-tint',\n        success: 'border-success/30 bg-success/10 [&>svg]:text-success-on-tint',\n        warning: 'border-warning/30 bg-warning/10 [&>svg]:text-warning-on-tint',\n        destructive: 'border-destructive/30 bg-destructive/10 [&>svg]:text-destructive-on-tint',\n      },\n    },\n    defaultVariants: { variant: 'info' },\n  },\n)\n\n/*\n * role=\"alert\"는 aria-live=\"assertive\"를 뜻한다 — 마운트되는 순간 스크린\n * 리더가 하던 일을 끊고 읽는다. Alert 대부분은 화면에 계속 머무르는\n * 정적인 배너(권한 안내, 점검 공지)이고 그런 곳에는 실시간 알림이 전혀\n * 어울리지 않는다. 그래서 기본값은 role을 아예 두지 않는 'off'다.\n * 저장 완료처럼 사용자의 행동 직후에 결과를 즉시 알려야 하는 예외적인\n * 경우에만 호출한 쪽이 'assertive'(role=\"alert\")나 'polite'(role=\"status\")를\n * 골라 켠다.\n */\ntype AlertLive = 'assertive' | 'polite' | 'off'\n\nconst ALERT_LIVE_ROLE: Record<AlertLive, React.AriaRole | undefined> = {\n  assertive: 'alert',\n  polite: 'status',\n  off: undefined,\n}\n\nfunction Alert({\n  className,\n  variant,\n  live = 'off',\n  ...props\n}: React.ComponentProps<'div'> & VariantProps<typeof alertVariants> & { live?: AlertLive }) {\n  return (\n    <div\n      role={ALERT_LIVE_ROLE[live]}\n      data-slot=\"alert\"\n      className={cn(alertVariants({ variant, className }))}\n      {...props}\n    />\n  )\n}\n\nfunction AlertTitle({ className, ...props }: React.ComponentProps<'p'>) {\n  return <p data-slot=\"alert-title\" className={cn('font-medium', className)} {...props} />\n}\n\nfunction AlertDescription({ className, ...props }: React.ComponentProps<'p'>) {\n  return (\n    <p data-slot=\"alert-description\" className={cn('text-muted-foreground', className)} {...props} />\n  )\n}\n\nexport { Alert, AlertTitle, AlertDescription, alertVariants }\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

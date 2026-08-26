@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "separator",
+  "title": "Separator",
+  "dependencies": [
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "https://adminds.vercel.app/r/tokens.json",
+    "https://adminds.vercel.app/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/separator.tsx",
+      "content": "import * as React from 'react'\nimport { cva, type VariantProps } from 'class-variance-authority'\nimport { cn } from '@/lib/utils'\n\n/*\n * Radix를 쓰지 않는다. 이 컴포넌트가 하는 일은 방향에 따라 선을 긋고\n * 장식이면 접근성 트리에서 빼는 것 — 두 줄이다. 의존성 하나를 두 줄과\n * 바꾸지 않는다.\n *\n * 두께를 border가 아니라 크기로 준다. border를 쓰면 방향이 바뀔 때마다\n * 어느 변을 그을지 골라야 하고, flex 안에서 두께가 눌린다.\n */\nconst separatorVariants = cva('bg-border shrink-0', {\n  variants: {\n    orientation: {\n      horizontal: 'h-px w-full',\n      vertical: 'h-full w-px',\n    },\n  },\n  defaultVariants: { orientation: 'horizontal' },\n})\n\ntype SeparatorProps = React.ComponentProps<'div'> &\n  VariantProps<typeof separatorVariants> & {\n    /** 눈으로만 나누는 선인지. 참이면 접근성 트리에서 뺀다 */\n    decorative?: boolean\n  }\n\nfunction Separator({\n  className,\n  orientation = 'horizontal',\n  decorative = true,\n  ...props\n}: SeparatorProps) {\n  return (\n    <div\n      data-slot=\"separator\"\n      role={decorative ? 'none' : 'separator'}\n      aria-orientation={decorative ? undefined : (orientation ?? 'horizontal')}\n      className={cn(separatorVariants({ orientation, className }))}\n      {...props}\n    />\n  )\n}\n\nexport { Separator, separatorVariants }\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

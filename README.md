@@ -44,7 +44,28 @@ src/
 1. `src/components/ui/`에 컴포넌트를 직접 작성합니다 (shadcn CLI로 생성한 것과 같은 형태를 손으로 맞춰 넣습니다).
 2. `src/data/registry.ts`에 컴포넌트 메타(설명, variants, sizes, anatomy, guidelines 등)를 등록합니다.
 3. `src/routes/components/`에 전시 페이지를 만듭니다 (`PropertyBlock`, `Anatomy` 등 `components/docs`의 도구를 사용).
-4. `src/routes/router.tsx`에 라우트를 한 줄 추가합니다.
+4. `src/routes/routes.tsx`에 라우트를 한 줄 추가합니다.
+5. `npm run registry`로 레지스트리를 다시 만듭니다 — 새 컴포넌트가 다른 프로젝트에 닿는 통로입니다.
+
+## 다른 프로젝트에서 가져다 쓰기
+
+이 저장소는 문서 사이트인 동시에 **shadcn 레지스트리**입니다. 다른 프로젝트에서 필요한 것만 받아 갑니다.
+
+```bash
+npx shadcn@latest add https://adminds.vercel.app/r/table.json   # 하나만
+npx shadcn@latest add https://adminds.vercel.app/r/adminds.json # 토큰과 26개 전부
+```
+
+소스가 그쪽 `src/components/ui/`에 들어가므로 받은 쪽이 고쳐 씁니다. 나중에 같은 명령을 다시 돌리면 갱신되지만, 고쳐 둔 것은 덮어써집니다.
+
+받는 쪽에 필요한 것:
+
+- **Tailwind v4.** 토큰이 `@theme inline` 문법이라 v3에서는 동작하지 않습니다.
+- **`globals.css`의 들이는 순서** — `tailwindcss` → `tw-animate-css` → `tokens.css`. `tokens.css`가 먼저 오면 다크 변형과 색 토큰이 풀리지 않습니다.
+- **`tsconfig.json`의 `paths`** — `"paths": { "@/*": ["./src/*"] }`가 `tsconfig.json`에도 있어야 합니다. Vite 템플릿은 이것을 `tsconfig.app.json`에만 두는데, 그러면 파일이 `@/`라는 이름의 폴더에 통째로 떨어집니다. `baseUrl`은 넣지 않습니다 — TypeScript 6에서 하드 에러입니다.
+
+레지스트리는 `registry.json`이 원본이고 `npm run registry`가 `public/r/`을 다시 만듭니다. 컴포넌트를 더하거나 고친 뒤에는 이 명령을 돌려야 바깥에 닿습니다.
+
 
 ## 제약
 

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "empty-state",
+  "title": "Empty State",
+  "dependencies": [
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "https://adminds.vercel.app/r/tokens.json",
+    "https://adminds.vercel.app/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/empty-state.tsx",
+      "content": "import * as React from 'react'\nimport { cva } from 'class-variance-authority'\nimport { cn } from '@/lib/utils'\n\n/*\n * 아이콘은 컴포넌트가 고르지 않는다. EmptyStateIcon은 감싸개일 뿐이고\n * 어떤 아이콘을 넣을지는 호출하는 쪽이 정한다 — Alert가 [&>svg]로\n * 색만 물려주는 것과 같은 방식이다. variant가 정하는 것은 아이콘의\n * 색과 배경(옅게 탄 원형)이지 아이콘의 모양이 아니다.\n *\n * variant와 size는 EmptyState가 정하고 EmptyStateIcon이 Context로\n * 읽는다 — DescriptionList의 layout이 DescriptionItem으로 내려가는\n * 것과 같은 구조다.\n */\ntype EmptyStateVariant = 'empty' | 'no-results' | 'error' | 'no-permission'\ntype EmptyStateSize = 'default' | 'compact'\n\ntype EmptyStateContextValue = {\n  variant: EmptyStateVariant\n  size: EmptyStateSize\n}\n\nconst EmptyStateContext = React.createContext<EmptyStateContextValue>({\n  variant: 'empty',\n  size: 'default',\n})\n\nconst emptyStateVariants = cva('flex flex-col items-center text-center', {\n  variants: {\n    size: {\n      default: 'gap-4 py-12',\n      compact: 'gap-2 py-6',\n    },\n  },\n  defaultVariants: { size: 'default' },\n})\n\ntype EmptyStateProps = React.ComponentProps<'div'> & {\n  variant?: EmptyStateVariant\n  size?: EmptyStateSize\n}\n\nfunction EmptyState({ className, variant = 'empty', size = 'default', ...props }: EmptyStateProps) {\n  return (\n    <EmptyStateContext.Provider value={{ variant, size }}>\n      <div\n        data-slot=\"empty-state\"\n        className={cn(emptyStateVariants({ size, className }))}\n        {...props}\n      />\n    </EmptyStateContext.Provider>\n  )\n}\n\n/*\n * empty와 no-results가 같은 색(text-muted-foreground · bg-muted)인\n * 것은 의도다 — 둘 다 오류가 아니다. 구별은 문구가 한다. error와\n * no-permission은 옅게 탄 배경(/10) 위에 아이콘을 얹으므로 Alert와\n * 같은 이유로 *-on-tint 토큰을 쓴다 — 원래 색을 그대로 얹으면\n * 대비가 낮아진다.\n */\nconst emptyStateIconVariants = cva('flex shrink-0 items-center justify-center rounded-full', {\n  variants: {\n    variant: {\n      empty: 'bg-muted text-muted-foreground',\n      'no-results': 'bg-muted text-muted-foreground',\n      error: 'bg-destructive/10 text-destructive-on-tint',\n      'no-permission': 'bg-warning/10 text-warning-on-tint',\n    },\n    size: {\n      default: 'size-16 [&>svg]:size-8',\n      compact: 'size-12 [&>svg]:size-6',\n    },\n  },\n  defaultVariants: { variant: 'empty', size: 'default' },\n})\n\nfunction EmptyStateIcon({ className, ...props }: React.ComponentProps<'div'>) {\n  const { variant, size } = React.useContext(EmptyStateContext)\n  return (\n    <div\n      data-slot=\"empty-state-icon\"\n      className={cn(emptyStateIconVariants({ variant, size, className }))}\n      {...props}\n    />\n  )\n}\n\nfunction EmptyStateTitle({ className, ...props }: React.ComponentProps<'p'>) {\n  return (\n    <p data-slot=\"empty-state-title\" className={cn('text-sm font-semibold', className)} {...props} />\n  )\n}\n\nfunction EmptyStateDescription({ className, ...props }: React.ComponentProps<'p'>) {\n  return (\n    <p\n      data-slot=\"empty-state-description\"\n      className={cn('text-muted-foreground max-w-sm text-sm', className)}\n      {...props}\n    />\n  )\n}\n\n/*\n * 할 수 있는 일이 있을 때만 쓴다 — 없다면 아예 렌더링하지 않는 것이\n * 호출하는 쪽의 일이다. 동작이 둘일 수 있어 gap을 두고 나란히 놓는다.\n */\nfunction EmptyStateAction({ className, ...props }: React.ComponentProps<'div'>) {\n  return (\n    <div\n      data-slot=\"empty-state-action\"\n      className={cn('flex flex-wrap items-center justify-center gap-2', className)}\n      {...props}\n    />\n  )\n}\n\nexport {\n  EmptyState,\n  EmptyStateIcon,\n  EmptyStateTitle,\n  EmptyStateDescription,\n  EmptyStateAction,\n  emptyStateVariants,\n  emptyStateIconVariants,\n}\nexport type { EmptyStateVariant, EmptyStateSize }\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}
