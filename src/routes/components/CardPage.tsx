@@ -172,7 +172,7 @@ function renderExample(exampleId: string): ReactNode {
           </CardHeader>
           <CardContent className="flex flex-col gap-1">
             <p className="text-2xl font-semibold">₩12,480,000</p>
-            <p className="text-success text-xs">전월 대비 +8.2%</p>
+            <p className="text-success-on-tint text-xs">전월 대비 +8.2%</p>
           </CardContent>
         </Card>
       )

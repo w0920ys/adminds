@@ -19,18 +19,22 @@ const CardPaddingContext = React.createContext<CardPadding>('default')
  * 어드민 화면은 카드가 여럿 나란히 놓이는 일이 많고, 그림자가 여럿이면
  * 화면이 들뜬다 — 그래서 outlined가 기본이다. elevated는 배경 위에
  * 홀로 떠 있어야 하는 카드에 쓴다.
- */
-/*
- * elevated의 shadow-sm은 라이트에서는 옅게라도 보이지만(브라우저로 확인함),
- * 다크에서는 색이 rgba(0,0,0,0.1)이라 이미 어두운 배경에 묻혀 outlined와
- * 구별되지 않는다(마찬가지로 브라우저로 확인함). 다크에서만 테두리를
- * 더해 두 variant가 항상 구별되게 한다.
+ *
+ * elevated의 shadow-sm은 라이트에서는 보이지만(브라우저로 확인함),
+ * 다크에서는 색이 rgba(0,0,0,0.1)이라 이미 어두운 배경에 묻혀
+ * 보이지 않는다(마찬가지로 브라우저로 확인함). 다크에서 outlined에
+ * 테두리를 더해 메우면 outlined도 이미 테두리를 가지고 있어 두 값이
+ * 오히려 같아진다 — 축의 두 칸이 똑같이 보이는 결함(Input·Select의
+ * hover에서 이미 한 번 고쳤다)을 새로 만드는 셈이라 쓰지 않는다.
+ * 대신 다크에서는 밝기로 떠 있음을 말한다 — elevated는 다크에서 한
+ * 단계 밝은 표면(--surface-raised)에 얹히고 그림자·테두리 둘 다
+ * 두지 않는다. outlined는 라이트·다크 모두 테두리 + bg-card로 고정이다.
  */
 const cardVariants = cva('flex flex-col gap-6 rounded-lg py-6 text-card-foreground', {
   variants: {
     variant: {
       outlined: 'border bg-card',
-      elevated: 'bg-card shadow-sm dark:border',
+      elevated: 'bg-card shadow-sm dark:bg-surface-raised dark:shadow-none',
     },
   },
   defaultVariants: { variant: 'outlined' },
