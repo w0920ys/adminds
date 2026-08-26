@@ -49,6 +49,42 @@
       ]
     },
     {
+      "name": "calendar-lib",
+      "type": "registry:lib",
+      "title": "Calendar",
+      "description": "한 달의 격자를 만드는 순수 함수들. Date Picker와 그 안의 Calendar가 함께 쓴다.",
+      "files": [
+        {
+          "path": "src/lib/calendar.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "file-size",
+      "type": "registry:lib",
+      "title": "File Size",
+      "description": "바이트 수를 사람이 읽는 단위로 바꾸는 순수 함수. File Upload가 파일 크기를 보일 때 쓴다.",
+      "files": [
+        {
+          "path": "src/lib/file-size.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "filter-options",
+      "type": "registry:lib",
+      "title": "Filter Options",
+      "description": "부분 문자열로 옵션을 거르는 순수 함수. Combobox가 검색어로 목록을 좁힐 때 쓴다.",
+      "files": [
+        {
+          "path": "src/lib/filter-options.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
       "name": "accordion",
       "type": "registry:ui",
       "title": "Accordion",
@@ -198,6 +234,53 @@
       ]
     },
     {
+      "name": "combobox",
+      "type": "registry:ui",
+      "title": "Combobox",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://adminds.vercel.app/r/badge.json",
+        "https://adminds.vercel.app/r/filter-options.json",
+        "https://adminds.vercel.app/r/input.json",
+        "https://adminds.vercel.app/r/popover.json",
+        "https://adminds.vercel.app/r/tokens.json",
+        "https://adminds.vercel.app/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/combobox.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "date-picker",
+      "type": "registry:ui",
+      "title": "Date Picker",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://adminds.vercel.app/r/calendar-lib.json",
+        "https://adminds.vercel.app/r/input.json",
+        "https://adminds.vercel.app/r/popover.json",
+        "https://adminds.vercel.app/r/tokens.json",
+        "https://adminds.vercel.app/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/date-picker.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/components/ui/calendar.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "description-list",
       "type": "registry:ui",
       "title": "Description List",
@@ -272,6 +355,45 @@
       ]
     },
     {
+      "name": "field",
+      "type": "registry:ui",
+      "title": "Field",
+      "dependencies": [
+        "@radix-ui/react-slot"
+      ],
+      "registryDependencies": [
+        "https://adminds.vercel.app/r/tokens.json",
+        "https://adminds.vercel.app/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/field.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "file-upload",
+      "type": "registry:ui",
+      "title": "File Upload",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://adminds.vercel.app/r/button.json",
+        "https://adminds.vercel.app/r/file-size.json",
+        "https://adminds.vercel.app/r/progress.json",
+        "https://adminds.vercel.app/r/tokens.json",
+        "https://adminds.vercel.app/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/file-upload.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "input",
       "type": "registry:ui",
       "title": "Input",
@@ -300,6 +422,24 @@
       "files": [
         {
           "path": "src/components/ui/pagination.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "popover",
+      "type": "registry:ui",
+      "title": "Popover",
+      "dependencies": [
+        "@radix-ui/react-popover"
+      ],
+      "registryDependencies": [
+        "https://adminds.vercel.app/r/tokens.json",
+        "https://adminds.vercel.app/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/popover.tsx",
           "type": "registry:ui"
         }
       ]
@@ -393,6 +533,25 @@
       "files": [
         {
           "path": "src/components/ui/skeleton.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "slider",
+      "type": "registry:ui",
+      "title": "Slider",
+      "dependencies": [
+        "@radix-ui/react-slider",
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "https://adminds.vercel.app/r/tokens.json",
+        "https://adminds.vercel.app/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/slider.tsx",
           "type": "registry:ui"
         }
       ]
@@ -529,7 +688,7 @@
       "name": "adminds",
       "type": "registry:item",
       "title": "Admin Design System",
-      "description": "토큰과 컴포넌트 스물여섯 개를 한 번에 가져온다.",
+      "description": "토큰과 컴포넌트 서른두 개를 한 번에 가져온다.",
       "registryDependencies": [
         "https://adminds.vercel.app/r/accordion.json",
         "https://adminds.vercel.app/r/alert.json",
@@ -539,17 +698,23 @@
         "https://adminds.vercel.app/r/button.json",
         "https://adminds.vercel.app/r/card.json",
         "https://adminds.vercel.app/r/checkbox.json",
+        "https://adminds.vercel.app/r/combobox.json",
+        "https://adminds.vercel.app/r/date-picker.json",
         "https://adminds.vercel.app/r/description-list.json",
         "https://adminds.vercel.app/r/dialog.json",
         "https://adminds.vercel.app/r/dropdown-menu.json",
         "https://adminds.vercel.app/r/empty-state.json",
+        "https://adminds.vercel.app/r/field.json",
+        "https://adminds.vercel.app/r/file-upload.json",
         "https://adminds.vercel.app/r/input.json",
         "https://adminds.vercel.app/r/pagination.json",
+        "https://adminds.vercel.app/r/popover.json",
         "https://adminds.vercel.app/r/progress.json",
         "https://adminds.vercel.app/r/radio.json",
         "https://adminds.vercel.app/r/select.json",
         "https://adminds.vercel.app/r/separator.json",
         "https://adminds.vercel.app/r/skeleton.json",
+        "https://adminds.vercel.app/r/slider.json",
         "https://adminds.vercel.app/r/steps.json",
         "https://adminds.vercel.app/r/switch.json",
         "https://adminds.vercel.app/r/table.json",

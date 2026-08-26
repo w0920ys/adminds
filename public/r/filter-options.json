@@ -1,0 +1,14 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "filter-options",
+  "title": "Filter Options",
+  "description": "부분 문자열로 옵션을 거르는 순수 함수. Combobox가 검색어로 목록을 좁힐 때 쓴다.",
+  "files": [
+    {
+      "path": "src/lib/filter-options.ts",
+      "content": "export type ComboboxOption = { value: string; label: string }\n\n/**\n * 앞글자가 아니라 포함으로 맞춘다 — 앞글자만 맞추면 '김하나'를 '하나'로 찾을 수 없다.\n * 원본 순서를 지킨다. 항목 순서에 뜻이 담기는 경우가 많아 점수순으로 흩뜨리지 않는다.\n */\nexport function filterOptions<T extends ComboboxOption>(options: T[], query: string): T[] {\n  const needle = query.trim().toLowerCase()\n  if (!needle) return options\n  return options.filter((option) => option.label.toLowerCase().includes(needle))\n}\n",
+      "type": "registry:lib"
+    }
+  ],
+  "type": "registry:lib"
+}

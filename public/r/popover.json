@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "popover",
+  "title": "Popover",
+  "dependencies": [
+    "@radix-ui/react-popover"
+  ],
+  "registryDependencies": [
+    "https://adminds.vercel.app/r/tokens.json",
+    "https://adminds.vercel.app/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/popover.tsx",
+      "content": "import * as React from 'react'\nimport * as PopoverPrimitive from '@radix-ui/react-popover'\nimport { cn } from '@/lib/utils'\n\n/*\n * modal을 켜지 않는다 — Radix Popover는 기본이 modal=false라 손대지\n * 않으면 그대로 유지된다. 켜면 Select·Dialog·DropdownMenu에서 겪은\n * pointer-events: none · aria-hidden이 GNB까지 번진다.\n */\nconst Popover = PopoverPrimitive.Root\nconst PopoverTrigger = PopoverPrimitive.Trigger\n\nfunction PopoverContent({\n  className,\n  align = 'center',\n  sideOffset = 8,\n  collisionPadding = 16,\n  ...props\n}: React.ComponentProps<typeof PopoverPrimitive.Content>) {\n  return (\n    <PopoverPrimitive.Portal>\n      <PopoverPrimitive.Content\n        data-slot=\"popover-content\"\n        align={align}\n        sideOffset={sideOffset}\n        collisionPadding={collisionPadding}\n        className={cn(\n          'bg-popover text-popover-foreground z-popover w-72 rounded-md border p-4 shadow-md outline-none',\n          'data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95',\n          className,\n        )}\n        {...props}\n      />\n    </PopoverPrimitive.Portal>\n  )\n}\n\nexport { Popover, PopoverTrigger, PopoverContent }\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

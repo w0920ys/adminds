@@ -94,7 +94,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
         <Popover>
           <PopoverTrigger asChild>
             <Button variant="ghost" size="icon" aria-label="정보">
-              <Info />
+              <Info aria-hidden />
             </Button>
           </PopoverTrigger>
           <PopoverContent className="w-56">
@@ -110,7 +110,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
         <Popover>
           <PopoverTrigger asChild>
             <Button variant="ghost" size="icon" aria-label="정보">
-              <Info />
+              <Info aria-hidden />
             </Button>
           </PopoverTrigger>
           <PopoverContent className="w-56">
@@ -275,7 +275,7 @@ function renderExample(exampleId: string): ReactNode {
         <Popover>
           <PopoverTrigger asChild>
             <Button variant="ghost" size="icon" aria-label="전환율 설명">
-              <Info />
+              <Info aria-hidden />
             </Button>
           </PopoverTrigger>
           <PopoverContent className="w-56">

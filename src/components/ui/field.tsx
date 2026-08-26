@@ -76,9 +76,12 @@ type FieldProps = Omit<React.ComponentProps<'div'>, 'children'> & {
  * 때 라벨이 도움말과 한 행에 붙고 Control이 짝 없이 다음 행으로
  * 밀려나는 결함이 있었다 — horizontal이 존재하는 이유(짧은 라벨이
  * Control과 나란히 서는 것) 자체가 깨졌다. 그래서 행도 부위별로
- * 고정한다: Label과 Control은 항상 1행에 나란히 서고(도움말이 있든
- * 없든 이 짝은 흔들리지 않는다), Help는 2행, Error는 3행이다. 인스턴스가
- * Help 없이 쓰이면 2행은 그냥 빈 채로 0 높이라 자리를 차지하지 않는다.
+ * 고정한다: Label과 Control은 항상 1행에 나란히 선다(도움말이 있든
+ * 없든 이 짝은 흔들리지 않는다). Help는 항상 2행이다. Error는 Help가
+ * 있으면 3행, 없으면 2행이다 — Help가 없는데도 Error를 3행에 고정하면
+ * 비어 있는 2행의 gap이 위아래로 두 번 잡혀 간격이 두 배(6px 대신
+ * 12px)로 벌어진다. FieldError가 hasHelp를 읽어 자기 행을 스스로
+ * 고르는 이유다.
  *
  * 이 배치는 화면에 보이는 순서(Label+Control → Help → Error)를
  * DOM 순서보다 우선한다 — DOM에 Help가 Control보다 앞서 있어도 grid가
@@ -195,14 +198,18 @@ function FieldHelp({ className, ...props }: React.ComponentProps<'p'>) {
 }
 
 function FieldError({ className, ...props }: React.ComponentProps<'p'>) {
-  const { layout, errorId, registerError } = React.useContext(FieldContext)
+  const { layout, errorId, hasHelp, registerError } = React.useContext(FieldContext)
   React.useLayoutEffect(() => registerError(), [registerError])
 
   return (
     <p
       id={errorId}
       data-slot="field-error"
-      className={cn('text-destructive text-xs', layout === 'horizontal' && 'col-start-2 row-start-3', className)}
+      className={cn(
+        'text-destructive text-xs',
+        layout === 'horizontal' && (hasHelp ? 'col-start-2 row-start-3' : 'col-start-2 row-start-2'),
+        className,
+      )}
       {...props}
     />
   )

@@ -159,7 +159,7 @@ function renderExample(exampleId: string): ReactNode {
           <Tooltip>
             <TooltipTrigger asChild>
               <button type="button" aria-label="전환율 설명" className="text-muted-foreground">
-                <Info size={13} />
+                <Info size={13} aria-hidden />
               </button>
             </TooltipTrigger>
             <TooltipContent side="bottom">방문자 중 결제까지 이어진 비율입니다</TooltipContent>
@@ -187,7 +187,7 @@ function renderExample(exampleId: string): ReactNode {
           <Tooltip>
             <TooltipTrigger asChild>
               <Button variant="ghost" size="icon" aria-label="더보기">
-                <Info />
+                <Info aria-hidden />
               </Button>
             </TooltipTrigger>
             <TooltipContent side="left">화면 밖으로 나가면 반대쪽으로 뒤집힌다</TooltipContent>
@@ -200,7 +200,7 @@ function renderExample(exampleId: string): ReactNode {
         <Tooltip>
           <TooltipTrigger asChild>
             <Button variant="ghost" size="icon" aria-label="새로고침">
-              <Info />
+              <Info aria-hidden />
             </Button>
           </TooltipTrigger>
           <TooltipContent>터치 기기에서는 뜨지 않으므로 aria-label이 이름을 대신한다</TooltipContent>
