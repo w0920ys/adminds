@@ -29,6 +29,39 @@ export type Release = {
 /** 최신 버전이 배열의 맨 앞이다. */
 export const releases: Release[] = [
   {
+    version: 'v0.12.0',
+    publishedAt: '2026-08-27',
+    title: '덮는 것, 묻는 것, 접는 것 여섯을 더했어요',
+    purpose:
+      '어드민에서 늘 나오는데 이 시스템에 없던 여섯을 더했어요. 가장자리에서 열리는 Sheet, 실수로 닫히지 않는 Alert Dialog, 눌려 있는 버튼 Toggle과 그 묶음, 접히는 자리 하나를 위한 Collapsible, 크기가 정해진 상자를 위한 Scroll Area, 그리고 쳐서 찾아 곧장 가는 Command예요. 여섯 중 Sheet는 이미 있는 Dialog 패키지를 다시 쓰고 Command는 패키지 없이 이 저장소가 이미 하던 방식(순수 함수 + Dialog)으로 세워서, 새로 들인 패키지는 다섯이에요. 만들고 나서 소스로 다시 확인해 고친 자리가 넷인데, 둘은 지침이 경고하는 결함을 그 지침의 예시가 그대로 저지르고 있던 것(Toggle·Collapsible)이고 둘은 적어 둔 근거가 실제 소스와 달랐던 것(Destructive confirm·Scroll Area)이었어요.',
+    changes: [
+      { target: 'Sheet', type: 'New', note: '가장자리에 붙은 Dialog예요. 새 패키지 없이 이미 있는 @radix-ui/react-dialog를 다시 썼어요. dialog.tsx를 고쳐 겸용하지 않은 것은 DialogContent가 덮개를 가운데 정렬 그릇으로 쓰기 때문이에요 — 한 파일에서 두 배치를 분기로 다루면 두 컴포넌트의 규칙이 섞여요. 네 방향과 세 크기를 갖는데 축으로는 두지 않았어요 — 닫힌 트리거에서는 일곱 값이 전부 똑같아 보여 격자에 담기지 않거든요. Dialog가 size를 축에서 뺀 것과 같은 이유예요.' },
+      { target: 'Alert Dialog', type: 'New', note: 'Dialog의 variant로 두지 않고 자기 컴포넌트로 뒀어요. 차이가 보이는 게 아니라 동작하는 거라서요 — 바깥을 눌러도 닫히지 않고, 접근성 트리에서 alertdialog로 읽히고, 나가는 길이 취소 하나예요. 닫기 X를 두지 않았어요. X는 취소인지 그냥 닫기인지 말하지 않거든요. size 축도 두지 않았어요 — 경고가 길어질 자리를 만들지 않으려고요.' },
+      { target: 'Toggle', type: 'New', note: '눌려 있는 버튼 하나와 그 묶음이에요. 문서도 레지스트리 항목도 하나로 두고 파일 둘을 함께 실어요 — 둘의 차이가 값이 하나인지 여럿인지뿐이라 축 하나로 표현되거든요. toggleVariants는 toggle.tsx가 정의해 내보내고 toggle-group.tsx가 그대로 써서, 한 묶음 안에서 크기가 갈리지 않아요. Switch와 겹치지 않아요 — Switch는 설정을 켜고 그 자리에서 저장되고, Toggle은 지금 보고 있는 것에 서식이나 필터를 걸어요.' },
+      { target: 'Collapsible', type: 'New', note: '접히는 자리가 하나일 때 쓰는 거예요. Accordion은 트리거를 h3으로 감싸서, 접히는 자리가 하나뿐인데 Accordion을 쓰면 있지도 않은 절이 하나 생겨요. Collapsible에는 그 머리글 요소가 없어서 카드 안이든 표 행 안이든 제목 층위를 만들지 않고 놓을 수 있어요. Indicator는 Trigger 안에서 그려져 밖에서 닿을 수 없어, Switch의 thumbProps와 같은 자리에 indicatorProps 통로를 두어 Anatomy 미리보기가 지시선을 그릴 수 있게 했어요.' },
+      { target: 'Scroll Area', type: 'New', note: '크기가 정해진 상자 안에서만 굴러가요. 굴리는 일은 브라우저가 그대로 하고 Radix는 스크롤바만 다시 그려요 — 기본 스크롤바가 운영체제마다 다르게 생기고 다크 모드에서 색이 안 따라와서요. Thumb 색은 shadcn이 쓰는 bg-border를 그대로 두지 않고 bg-muted-foreground로 갈랐어요. bg-border는 트랙 뒤 배경과 대비가 1.2:1 안팎이라 사실상 안 보였거든요. 지침 둘도 함께 적었어요 — 막대를 감추기만 할지(scrollbar-none) 감추는 대신 새로 그릴지(ScrollArea)를 가르는 기준, 그리고 Radix가 Viewport에 tabIndex를 주지 않아 Tab만으로는 이 영역에 들어갈 수 없고 안에 포커스 가능한 요소가 있어야 통로가 생긴다는 것이에요.' },
+      { target: 'Command', type: 'New', note: 'shadcn은 이걸 cmdk로 만드는데 여기서는 패키지를 들이지 않았어요. 이 저장소는 같은 일을 Combobox와 SearchDialog에서 이미 두 번 손으로 했고, 패키지를 들이면 cmdk의 필터 규칙이 filterOptions의 규칙과 갈려 한 저장소 안에서 두 검색이 다르게 걸러져요. 거르고 묶는 일은 command-filter.ts의 순수 함수 둘로 빼서 테스트가 지켜요. 묶음 머리글은 제목 요소로 그리지 않아요 — Command는 포털을 쓰지 않고 main 안에 놓여서, h3을 쓰면 오른쪽 목차가 그걸 문서의 절로 잡아요.' },
+      { target: 'Destructive confirm', type: 'Updated', note: '삭제 확인 패턴을 Dialog에서 Alert Dialog로 옮겼어요. Alert Dialog가 실린 순간 이 패턴이 "Dialog로 묻는다"고 말하는 게 거짓이 됐거든요 — 화면에서 눈으로 잡히지 않는 종류의 거짓이라 미루지 않았어요. 실행 실패 케이스 하나만 Button을 그대로 뒀어요. 그 자리 문구가 "대화상자는 닫지 않고 다시 시도할 수 있게 둔다"인데, AlertDialogAction도 onClick에서 event.preventDefault()를 부르면 닫히지 않기는 해요. 다만 그러려면 누를 때마다 기본 동작을 눌러 두는 우회로가 필요해서 Button으로 뒀고, 처음에 "막을 방법이 없다"고 적었던 주석은 Radix 소스를 읽고 정정했어요.' },
+      { target: 'Toggle · Collapsible 예시', type: 'Fixed', note: '두 문서의 DON\'T 예시가 지침이 경고하는 결함을 그대로 띄우고 있었어요. Toggle 쪽은 이름 없는 아이콘 토글이 실제로 포커스되고 탭 순서에 들어갔고, Collapsible 쪽은 진짜 Accordion이 h3 트리거를 DOM에 남겼어요. 둘 다 inert를 얹어 생김새는 그대로 두되 클릭도 포커스도 받지 않고 접근성 트리에서도 빠지게 했어요 — aria-hidden은 포커스 가능한 요소에 붙이면 그 자체로 결함이라 답이 될 수 없거든요. Collapsible 쪽 근거도 함께 정정했어요. 목차는 아코디언 h3을 이미 걸러 내므로 목차가 오염되는 게 아니라, h3 자체는 DOM에 남고 화면 낭독기의 제목 탐색이 태그를 훑는 게 문제였어요.' },
+      { target: 'Properties 격자', type: 'Fixed', note: 'PropertyBlock의 격자 칸이 min-width:auto인 채로 가로로 굴러가는 넓은 내용을 품으면, 375px 화면에서 main 전체가 스크롤바 없이 가로로 밀렸어요. Scroll Area의 horizontal 예시를 실으면서 드러났고, ExampleList가 같은 문제를 이미 min-w-0으로 막고 있던 것과 같은 처방을 썼어요.' },
+      { target: 'Registry', type: 'Updated', note: 'registry.json에 컴포넌트 여섯과 순수 함수 하나(command-filter)를 더했어요. Toggle은 toggle.tsx와 toggle-group.tsx 두 파일을 한 항목으로 실어요. adminds 묶음도 서른여덟 개를 전부 가리키게 갱신했어요.' },
+      { target: 'README', type: 'Fixed', note: '레지스트리 묶음을 받는 명령 옆에 "32개 전부"라고 적어 둔 게 또 낡아 있었어요. registry.ts와 registry.json에서 세어 실제 개수인 38개로 고쳤어요.' },
+    ],
+    requests: [
+      { label: '컴포넌트를 이어서 더해 주세요 — Sheet·Alert Dialog·Toggle·Collapsible·Scroll Area·Command 여섯', done: true },
+    ],
+    reviewItems: [
+      { label: 'SearchDialog를 Command 위로 옮길 수 있는가 — 결과 한 줄의 생김새(강조·경로·New 배지)를 제품 컴포넌트가 알게 하지 않으면서', category: 'Components', completed: false },
+      { label: '이번에 들어온 여섯 중 Command만 verified다 — 나머지 다섯을 눈으로 확인해 올릴 시점이 언제인가', category: 'Components', completed: false },
+      { label: 'Alert Dialog가 실렸는데 Dialog 문서는 아직 destructive 축과 삭제 확인·대량 작업 확인 Usage를 자기 것으로 갖고 있고, Form 패턴의 unsaved-changes 케이스도 Dialog로 묻는다 — 어느 쪽으로 정리할 것인가', category: 'Components', completed: false },
+      { label: '접근성 후속 묶음(포커스 링 대비, 이름 없는 라벨, Toast의 assertive 알림)을 언제 다룰 것인가', category: 'Components', completed: false },
+      { label: 'useMeasuredTokens가 여러 Foundations 페이지에 중복되는 것을 걷어낼 수 있는가', category: 'Foundations', completed: false },
+      { label: '패턴 문서의 Example이 커서 List·Detail 두 파일이 사백 줄을 넘는다 — 조각을 나눌 자리가 어디인가', category: 'Patterns', completed: false },
+      { label: '다섯 패턴이 모두 draft다 — 눈으로 확인을 마치고 verified로 올릴 시점이 언제인가', category: 'Patterns', completed: false },
+    ],
+    impact: ['Components', 'Patterns', 'Updates'],
+  },
+  {
     version: 'v0.11.0',
     publishedAt: '2026-08-27',
     title: '첫 화면과 Patterns를 채워 GNB의 빈 자리를 없앴어요',
