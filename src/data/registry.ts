@@ -2401,6 +2401,87 @@ export const components: ComponentMeta[] = [
     verified: false,
   },
   {
+    id: 'collapsible',
+    name: 'Collapsible',
+    aliases: ['접기', '펼치기', '더 보기', 'collapse', 'expander', '접이식'],
+    category: 'data-display',
+    status: 'stable',
+    addedIn: 'v0.12.0',
+    changedIn: 'v0.12.0',
+    purpose:
+      '접히는 자리 하나를 감싼다. Accordion과 달리 트리거를 헤딩으로 감싸지 않아, 카드 안이든 표 행 안이든 제목 층위를 새로 만들지 않고 놓을 수 있다.',
+    anatomy: [
+      { part: 'trigger', label: 'Trigger', note: '버튼 하나. h로 감싸지 않는다' },
+      {
+        part: 'indicator',
+        label: 'Indicator',
+        note: 'ChevronDown. 열림 여부를 회전으로 보인다. Trigger 안에서 그려진다',
+      },
+      {
+        part: 'content',
+        label: 'Content',
+        note: '열렸을 때 보이는 내용. --radix-collapsible-content-height로 높이를 여닫는다',
+      },
+    ],
+    properties: [
+      {
+        name: 'state',
+        title: 'State',
+        description: '접혀 있는지와 상호작용을 나타낸다.',
+        display: 'grid',
+        options: [
+          { value: 'collapsed', note: '기본. 접힌 상태' },
+          { value: 'expanded', note: '펼쳐진 상태. defaultOpen으로 보인다' },
+          { value: 'focus', note: '키보드 포커스. 항상 보여야 한다' },
+          { value: 'disabled', note: '열고 닫을 수 없음' },
+        ],
+      },
+    ],
+    guidelines: [
+      {
+        id: 'distinguish-from-accordion',
+        title: 'Accordion과 구별한다',
+        body: '접히는 자리가 하나면 Collapsible, 여럿을 늘어놓고 그중에서 고르면 Accordion입니다.',
+        do: ['접히는 자리가 하나뿐이면 Collapsible을 쓴다', '여럿을 늘어놓고 그중 하나를 고르게 하면 Accordion을 쓴다'],
+        dont: ['접히는 자리 하나에 Accordion을 써서 있지도 않은 제목을 만들지 않는다'],
+      },
+      {
+        id: 'announce-hidden-content',
+        title: '접힌 채로 무엇이 있는지 알린다',
+        body: "'더 보기'만으로는 무엇이 더 있는지 알 수 없습니다. '조건 3개 더'처럼 안에 든 것을 말합니다.",
+        do: ["Trigger 라벨에 안에 든 것을 구체적으로 적는다 (예: '조건 3개 더')"],
+        dont: ["'더 보기'처럼 안에 무엇이 있는지 알 수 없는 라벨만 쓰지 않는다"],
+      },
+      {
+        id: 'dont-hide-important-content',
+        title: '중요한 내용을 접어 두지 않는다',
+        body: '접힌 것은 없는 것과 같습니다. 반드시 봐야 하는 내용은 펼쳐 둡니다.',
+        do: ['반드시 봐야 하는 내용은 Collapsible 밖에 두거나 펼친 채로 둔다'],
+        dont: ['중요한 안내를 접힌 Content 안에 숨겨 두지 않는다'],
+      },
+      {
+        id: 'dont-make-whole-row-trigger',
+        title: '표 행 전체를 트리거로 만들지 않는다',
+        body: '행 안에 링크나 버튼이 함께 있으면 어디를 눌러야 펴지는지 알 수 없습니다. 펴는 자리를 따로 둡니다.',
+        do: ['표 행에서는 펴는 자리를 따로 둔다'],
+        dont: ['행 안에 다른 링크나 버튼이 있는데 행 전체를 트리거로 만들지 않는다'],
+      },
+    ],
+    usage: [
+      { id: 'advanced-search', title: '고급 검색 조건', note: '자주 안 쓰는 검색 조건을 접어 두어 기본 조건에 집중하게 한다' },
+      { id: 'card-detail', title: '카드 안의 부가 정보', note: '카드의 핵심 정보 아래에 부가 정보를 접어 둔다' },
+      { id: 'long-log', title: '긴 로그 한 덩이', note: '길게 이어지는 로그를 접어 두고 필요할 때만 펼친다' },
+      { id: 'table-row-detail', title: '표 행의 하위 내용', note: '행마다 딸린 하위 내용을 접어 두고 필요한 행만 펼친다' },
+    ],
+    cases: [
+      { id: 'long-content', title: '내용이 아주 긴 경우', note: '내용이 길어도 높이를 그대로 따라 늘어난다' },
+      { id: 'start-collapsed', title: '접힌 채로 시작하는 경우', note: 'defaultOpen을 주지 않으면 접힌 채로 시작한다' },
+      { id: 'form-inside', title: '안에 폼이 있는 경우', note: '접혀 있는 동안 안의 입력은 접근성 트리에서도 함께 빠진다' },
+      { id: 'narrow-screen', title: '좁은 화면', note: '폭이 좁아져도 Trigger와 Content는 그대로 줄어든다' },
+    ],
+    verified: false,
+  },
+  {
     id: 'description-list',
     name: 'Description List',
     aliases: ['정의 목록', '키값', '상세 정보', 'dl', 'definition list', '속성 목록'],

@@ -12,6 +12,7 @@ import { BreadcrumbPage } from '@/routes/components/BreadcrumbPage'
 import { ButtonPage } from '@/routes/components/ButtonPage'
 import { CardPage } from '@/routes/components/CardPage'
 import { CheckboxPage } from '@/routes/components/CheckboxPage'
+import { CollapsiblePage } from '@/routes/components/CollapsiblePage'
 import { ComboboxPage } from '@/routes/components/ComboboxPage'
 import { ComponentsIndex } from '@/routes/components/ComponentsIndex'
 import { DatePickerPage } from '@/routes/components/DatePickerPage'
@@ -117,6 +118,7 @@ export const routes: RouteObject[] = [
           { path: 'badge', element: <BadgePage /> },
           { path: 'avatar', element: <AvatarPage /> },
           { path: 'card', element: <CardPage /> },
+          { path: 'collapsible', element: <CollapsiblePage /> },
           { path: 'separator', element: <SeparatorPage /> },
           { path: 'description-list', element: <DescriptionListPage /> },
           { path: 'accordion', element: <AccordionPage /> },

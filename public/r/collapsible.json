@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "collapsible",
+  "title": "Collapsible",
+  "dependencies": [
+    "@radix-ui/react-collapsible",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://adminds.vercel.app/r/tokens.json",
+    "https://adminds.vercel.app/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/collapsible.tsx",
+      "content": "import * as React from 'react'\nimport * as CollapsiblePrimitive from '@radix-ui/react-collapsible'\nimport { ChevronDown } from 'lucide-react'\nimport { cn } from '@/lib/utils'\n\nconst Collapsible = CollapsiblePrimitive.Root\n\ntype CollapsibleTriggerProps = React.ComponentProps<typeof CollapsiblePrimitive.Trigger> & {\n  /*\n   * 화살표(Indicator)는 Trigger 안에서 그려져 소비자가 직접 닿을 수\n   * 없다 — Switch의 thumbProps와 같은 이유로 임의의 속성을 그대로\n   * 전달하는 통로만 열어 둔다. 무엇을 전달할지는 소비자가 정하므로 이\n   * 컴포넌트는 그 내용을 알지 못한다. 문서의 Anatomy 미리보기가\n   * data-anatomy=\"indicator\"를 여기로 흘려보낸다.\n   */\n  indicatorProps?: React.ComponentProps<typeof ChevronDown> & {\n    [dataAttr: `data-${string}`]: string\n  }\n}\n\n/*\n * Accordion과 달리 트리거를 h3으로 감싸지 않는다. 접히는 자리가 하나면\n * 그것은 절이 아니라 컨트롤이고, 있지도 않은 제목을 하나 만들면\n * assignHeadingIds가 그것을 문서의 절로 보고 목차에 올린다. Accordion이\n * 그 문제를 data-slot으로 걸러 내야 했던 것과 같은 뿌리다.\n */\nfunction CollapsibleTrigger({\n  className,\n  children,\n  indicatorProps,\n  ...props\n}: CollapsibleTriggerProps) {\n  return (\n    <CollapsiblePrimitive.Trigger\n      data-slot=\"collapsible-trigger\"\n      className={cn(\n        'group flex w-full items-center justify-between gap-2 rounded-md py-2 text-sm font-medium outline-none',\n        'focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-2',\n        'disabled:pointer-events-none disabled:opacity-50',\n        className,\n      )}\n      {...props}\n    >\n      {children}\n      <ChevronDown\n        aria-hidden\n        {...indicatorProps}\n        data-slot=\"collapsible-indicator\"\n        className={cn(\n          'size-4 shrink-0 transition-transform group-data-[state=open]:rotate-180',\n          indicatorProps?.className,\n        )}\n      />\n    </CollapsiblePrimitive.Trigger>\n  )\n}\n\n/*\n * 접힌 동안 콘텐츠는 접근성 트리에서 완전히 빠진다 —\n * node_modules/@radix-ui/react-collapsible/dist/index.js의\n * CollapsibleContentImpl이 `hidden: !isOpen`을 무대 요소에 직접 건다.\n * 시각적으로 잘라내는 것(overflow-hidden)과는 다른 층이다.\n */\nfunction CollapsibleContent({\n  className,\n  children,\n  ...props\n}: React.ComponentProps<typeof CollapsiblePrimitive.Content>) {\n  return (\n    <CollapsiblePrimitive.Content\n      data-slot=\"collapsible-content\"\n      className=\"data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down overflow-hidden text-sm\"\n      {...props}\n    >\n      <div className={cn('text-muted-foreground pt-0 pb-2', className)}>{children}</div>\n    </CollapsiblePrimitive.Content>\n  )\n}\n\nexport { Collapsible, CollapsibleTrigger, CollapsibleContent }\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}
