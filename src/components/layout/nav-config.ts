@@ -126,6 +126,7 @@ export const sections: NavSection[] = [
         label: 'Feedback',
         items: [
           { to: '/components/alert', label: 'Alert', updatedAt: '2026-08-26' },
+          { to: '/components/alert-dialog', label: 'Alert Dialog', updatedAt: '2026-08-27' },
           { to: '/components/dialog', label: 'Dialog', updatedAt: '2026-08-26' },
           { to: '/components/empty-state', label: 'Empty State', updatedAt: '2026-08-26' },
           { to: '/components/popover', label: 'Popover', updatedAt: '2026-08-26' },

@@ -4,6 +4,7 @@ import { AppShell } from '@/components/layout/AppShell'
 import { Placeholder } from '@/routes/Placeholder'
 import { UpdatesPage } from '@/routes/UpdatesPage'
 import { AccordionPage } from '@/routes/components/AccordionPage'
+import { AlertDialogPage } from '@/routes/components/AlertDialogPage'
 import { AlertPage } from '@/routes/components/AlertPage'
 import { AvatarPage } from '@/routes/components/AvatarPage'
 import { BadgePage } from '@/routes/components/BadgePage'
@@ -105,6 +106,7 @@ export const routes: RouteObject[] = [
           { path: 'tooltip', element: <TooltipPage /> },
           { path: 'popover', element: <PopoverPage /> },
           { path: 'dialog', element: <DialogPage /> },
+          { path: 'alert-dialog', element: <AlertDialogPage /> },
           { path: 'skeleton', element: <SkeletonPage /> },
           { path: 'sheet', element: <SheetPage /> },
           { path: 'progress', element: <ProgressPage /> },

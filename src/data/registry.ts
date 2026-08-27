@@ -2629,6 +2629,82 @@ export const components: ComponentMeta[] = [
     verified: true,
   },
   {
+    id: 'alert-dialog',
+    name: 'Alert Dialog',
+    aliases: ['경고 대화상자', '확인 대화상자', '삭제 확인', 'confirm', '확인창'],
+    category: 'feedback',
+    status: 'stable',
+    addedIn: 'v0.12.0',
+    changedIn: 'v0.12.0',
+    purpose: '되돌릴 수 없는 동작을 실행하기 전에 취소와 실행 중 하나를 고르게 한다.',
+    anatomy: [
+      {
+        part: 'trigger',
+        label: 'Trigger',
+        note: '누르면 화면 전체를 덮는 반투명 덮개(bg-black/50)와 가운데 정렬된 컨테이너(bg-background, 테두리, radius-lg, shadow-lg)가 뜬다. 컨테이너 안은 제목(text-lg font-semibold)·본문(text-sm text-muted-foreground)·오른쪽 정렬된 취소·실행 버튼 순서로 쌓이고, Dialog와 달리 닫기(X) 아이콘이 없다 — 나가는 길은 취소 버튼 하나다. 바깥을 눌러도 닫히지 않고 접근성 트리에서 alertdialog로 읽힌다(설치한 패키지의 소스로 확인). 쌓임 순서는 z-overlay. 컨테이너는 화면 전체를 덮어 구조도 무대 안에 담을 수 없으므로 나머지 부위는 Usage에서 실제로 눌러서 본다',
+      },
+    ],
+    properties: [
+      {
+        name: 'variant',
+        title: 'Variant',
+        description: '되돌릴 수 없는 동작인지에 따라 실행 버튼의 색과 제목의 문구가 달라진다.',
+        display: 'row',
+        options: [
+          { value: 'default', note: '되돌릴 수 있지만 한 번 물어야 하는 동작' },
+          { value: 'destructive', note: '삭제처럼 되돌릴 수 없는 동작. 실행 버튼이 destructive 색을 쓴다' },
+        ],
+      },
+    ],
+    guidelines: [
+      {
+        id: 'distinguish-dialog',
+        title: 'Distinguish from Dialog',
+        body: '잃을 것이 있으면 Alert Dialog입니다. 바깥을 눌러도 닫히지 않고, 나가는 길이 취소 하나뿐입니다.',
+        do: ['되돌릴 수 없는 동작을 확인할 때 Alert Dialog를 쓴다'],
+        dont: ['묻고 답하면 그만인 상호작용에 Alert Dialog를 쓰지 않는다(Dialog를 쓴다)'],
+      },
+      {
+        id: 'paired-actions',
+        title: 'Paired actions',
+        body: '동작을 반드시 쌍으로 둡니다. 취소와 실행 둘입니다. 닫기 X를 두지 않습니다 — X는 취소인지 그냥 닫기인지 말하지 않습니다.',
+        do: ['취소와 실행 버튼을 항상 함께 둔다'],
+        dont: ['닫기 X 아이콘으로 나가는 길을 하나 더 만들지 않는다'],
+      },
+      {
+        id: 'specific-title',
+        title: 'Specific title',
+        body: "제목에 무엇이 일어나는지 적습니다. '정말 실행하시겠습니까'만으로는 무엇이 사라지는지 알 수 없습니다.",
+        do: ["'게시글 12건을 삭제하시겠습니까'처럼 대상과 개수를 제목에 밝힌다"],
+        dont: ["'정말 실행하시겠습니까'처럼 대상 없이 묻지 않는다"],
+      },
+      {
+        id: 'not-for-reversible',
+        title: 'Not for reversible actions',
+        body: '되돌릴 수 있는 동작에는 쓰지 않습니다. 되돌릴 수 있으면 묻지 말고 실행한 뒤 Toast에 되돌리기를 둡니다. 묻는 단계와 되돌리는 단계를 둘 다 두면 확인이 소음이 됩니다.',
+        do: ['되돌릴 수 있는 동작은 바로 실행하고 Toast로 되돌리기를 제공한다'],
+        dont: ['되돌릴 수 있는 동작까지 Alert Dialog로 한 번 더 묻지 않는다'],
+      },
+    ],
+    usage: [
+      { id: 'delete-confirm', title: '삭제 확인', note: '무엇이 지워지는지 제목에 밝히고 destructive 색을 쓴다' },
+      {
+        id: 'discard-changes',
+        title: '저장하지 않은 변경 버리기',
+        note: '나가면 입력한 내용을 잃는다는 사실을 본문에 적는다',
+      },
+      { id: 'revoke-permission', title: '권한 회수', note: '누구의 어떤 권한이 사라지는지 제목에 밝힌다' },
+      { id: 'bulk-confirm', title: '대량 작업 확인', note: '몇 건에 어떤 일이 일어나는지 본문에 적는다' },
+    ],
+    cases: [
+      { id: 'irreversible', title: '되돌릴 수 없는 경우', note: '실행 버튼이 destructive 색을 쓰고 제목이 대상을 밝힌다' },
+      { id: 'action-failed', title: '실행이 실패한 경우', note: '닫지 않고 다시 시도할 수 있게 둔다' },
+      { id: 'long-body', title: '본문이 긴 경우', note: '컨테이너는 늘어나지 않고 본문 안에서 세로로 스크롤된다' },
+      { id: 'narrow-screen', title: '좁은 화면', note: '가장자리에 여백을 두고 너비를 채운다' },
+    ],
+    verified: false,
+  },
+  {
     id: 'dialog',
     name: 'Dialog',
     aliases: ['모달', '팝업', 'modal', 'popup', '확인창'],
