@@ -297,9 +297,13 @@ function IrreversibleCase() {
  * 시도할 수 있게 둔다.
  *
  * 실행 버튼은 AlertDialogAction으로 옮기지 않는다. AlertDialogAction은
- * Radix의 Close를 그대로 감싼 컴포넌트라 눌리는 즉시 대화상자를
- * 닫는다 — onClick으로 막을 방법이 없다. 이 자리는 "닫지 않고 다시
- * 시도"를 요구하므로 Button을 그대로 둔다.
+ * Radix의 Close를 그대로 감싼 컴포넌트라 기본값이 "눌리면 닫힌다"다 —
+ * composeEventHandlers가 전달한 onClick을 먼저 실행하고
+ * event.preventDefault()가 없을 때만 onOpenChange(false)를 부른다.
+ * 그러니 여기서도 쓰려면 onClick 안에서 매번 preventDefault()를 불러
+ * 그 기본 동작을 눌러야 한다 — 컴포넌트가 존재하는 이유 하나를 막으려고
+ * 우회로를 얹는 셈이라, 애초에 닫히지 않는 Button을 쓰는 쪽이 더
+ * 간단하다.
  */
 function FailedCase() {
   const [failed, setFailed] = useState(false)
