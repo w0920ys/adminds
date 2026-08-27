@@ -520,6 +520,24 @@
       ]
     },
     {
+      "name": "scroll-area",
+      "type": "registry:ui",
+      "title": "Scroll Area",
+      "dependencies": [
+        "@radix-ui/react-scroll-area"
+      ],
+      "registryDependencies": [
+        "https://adminds.vercel.app/r/tokens.json",
+        "https://adminds.vercel.app/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/scroll-area.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "select",
       "type": "registry:ui",
       "title": "Select",
@@ -770,7 +788,7 @@
       "name": "adminds",
       "type": "registry:item",
       "title": "Admin Design System",
-      "description": "토큰과 컴포넌트 서른여섯 개를 한 번에 가져온다.",
+      "description": "토큰과 컴포넌트 서른일곱 개를 한 번에 가져온다.",
       "registryDependencies": [
         "https://adminds.vercel.app/r/accordion.json",
         "https://adminds.vercel.app/r/alert.json",
@@ -795,6 +813,7 @@
         "https://adminds.vercel.app/r/popover.json",
         "https://adminds.vercel.app/r/progress.json",
         "https://adminds.vercel.app/r/radio.json",
+        "https://adminds.vercel.app/r/scroll-area.json",
         "https://adminds.vercel.app/r/select.json",
         "https://adminds.vercel.app/r/separator.json",
         "https://adminds.vercel.app/r/sheet.json",

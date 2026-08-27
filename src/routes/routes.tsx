@@ -27,6 +27,7 @@ import { PaginationPage } from '@/routes/components/PaginationPage'
 import { PopoverPage } from '@/routes/components/PopoverPage'
 import { ProgressPage } from '@/routes/components/ProgressPage'
 import { RadioPage } from '@/routes/components/RadioPage'
+import { ScrollAreaPage } from '@/routes/components/ScrollAreaPage'
 import { SelectPage } from '@/routes/components/SelectPage'
 import { SeparatorPage } from '@/routes/components/SeparatorPage'
 import { SheetPage } from '@/routes/components/SheetPage'
@@ -119,6 +120,7 @@ export const routes: RouteObject[] = [
           { path: 'avatar', element: <AvatarPage /> },
           { path: 'card', element: <CardPage /> },
           { path: 'collapsible', element: <CollapsiblePage /> },
+          { path: 'scroll-area', element: <ScrollAreaPage /> },
           { path: 'separator', element: <SeparatorPage /> },
           { path: 'description-list', element: <DescriptionListPage /> },
           { path: 'accordion', element: <AccordionPage /> },

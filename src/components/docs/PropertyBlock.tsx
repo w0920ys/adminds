@@ -87,7 +87,13 @@ export function PropertyBlock({
           }
         >
           {property.options.map((option) => (
-            <div key={option.value} className="flex flex-col gap-3">
+            /*
+             * min-w-0이 필요하다. 칸은 기본이 min-width:auto라 안에 든
+             * 내용(가로로 굴러가는 ScrollArea처럼 자기 폭보다 넓은
+             * 내용)이 칸을 자기 폭만큼 벌린다 — ExampleList.tsx가 같은
+             * 이유로 이미 쓰고 있는 것과 같은 처방이다.
+             */
+            <div key={option.value} className="flex min-w-0 flex-col gap-3">
               <p className="text-muted-foreground text-xs font-bold">{option.value}</p>
               <div
                 className={cn(
