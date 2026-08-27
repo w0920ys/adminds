@@ -2583,7 +2583,7 @@ export const components: ComponentMeta[] = [
       { part: 'viewport', label: 'Viewport', note: '실제로 넘치고 굴러가는 자리. 부모가 준 크기 안에서만 동작한다' },
       { part: 'content', label: 'Content', note: 'Viewport 안에 놓이는 내용' },
       { part: 'scrollbar', label: 'Scrollbar', note: '방향마다 하나. hover면 마우스가 올라왔을 때만 보인다' },
-      { part: 'thumb', label: 'Thumb', note: 'Scrollbar 안에서 움직이는 막대. bg-border로 칠한다' },
+      { part: 'thumb', label: 'Thumb', note: 'Scrollbar 안에서 움직이는 막대. bg-muted-foreground로 칠한다 — bg-border는 실측 대비가 1.2:1 안팎이라 트랙 뒤 배경과 사실상 구분되지 않았다' },
     ],
     properties: [
       {
@@ -2636,6 +2636,25 @@ export const components: ComponentMeta[] = [
         body: "hover로 두면 마우스가 없는 화면에서 '더 있다'는 신호가 사라진다. 목록이 굴러간다는 사실 자체가 중요한 자리에는 always를 쓴다.",
         do: ['목록이 굴러간다는 사실 자체가 중요한 자리에는 visibility를 always로 둔다'],
         dont: ["always가 필요한 자리에 기본값인 hover를 그대로 두어 신호를 놓치지 않는다"],
+      },
+      {
+        id: 'choose-over-scrollbar-none',
+        title: '막대만 감출지 새로 그릴지 가른다',
+        body: 'src/styles/tokens.css의 scrollbar-none은 막대만 감추고 스크롤은 그대로 둔다. ScrollArea는 반대로 막대를 감추는 대신 Radix가 새로 그린 막대로 바꾼다 — 그 자리에 스크롤이 있다는 사실 자체를 보여야 하는지가 둘을 가른다.',
+        do: [
+          '막대가 안 보여도 그만인 자리(예: 페이지 전체를 감싸는 main)에는 scrollbar-none을 쓴다',
+          '작은 상자 안에서 더 있다는 것 자체를 알려야 하는 자리에는 ScrollArea를 쓴다',
+        ],
+        dont: ['다크 모드에서 기본 막대 색이 안 맞는다는 이유만으로 scrollbar-none을 골라 스크롤 신호 자체를 지우지 않는다'],
+      },
+      {
+        id: 'keyboard-focus-path',
+        title: '포커스 가능한 요소로 통로를 만든다',
+        body: 'Radix가 Viewport에 tabIndex를 주지 않아, Tab만으로는 이 영역 자체에 들어갈 수 없다. 안에 링크·버튼·입력처럼 포커스를 받는 요소가 있으면 그것이 통로가 되어 거기서부터 방향키로 나머지를 훑을 수 있다.',
+        do: [
+          '안에 최소 하나는 포커스 가능한 요소(버튼·링크·입력)를 두어 키보드 통로를 만든다',
+          '포커스 가능한 요소가 전혀 없는 순수 텍스트라면, 키보드만으로는 이 상자 안에 들어갈 수 없다는 것을 받아들이고 쓴다',
+        ],
       },
     ],
     usage: [
