@@ -321,7 +321,7 @@ export const components: ComponentMeta[] = [
       {
         part: 'group-container',
         label: 'Group Container',
-        note: '여러 Toggle Group Item을 가로로 늘어놓는다. 항목 사이 간격은 4px',
+        note: '여러 Toggle Group Item을 가로로 늘어놓고, 폭이 모자라면 다음 줄로 넘긴다. 항목 사이 간격은 4px',
         optional: true,
       },
     ],

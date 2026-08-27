@@ -15,6 +15,12 @@ const ToggleGroupContext = React.createContext<VariantProps<typeof toggleVariant
   size: 'default',
 })
 
+/*
+ * flex-wrap은 w-fit과 짝이다. w-fit(= fit-content)이라 넓은 자리에서는
+ * 항목 전부가 한 줄에 그대로 서고, 부모가 좁으면 fit-content가 부모까지만
+ * 줄어들면서 넘치는 항목이 다음 줄로 넘어간다. 표의 열 고르기·서식 도구는
+ * 항목이 많은 게 정상인 자리라, 이것이 없으면 묶음이 부모를 넘쳐 흐른다.
+ */
 function ToggleGroup({
   className,
   variant = 'default',
@@ -25,7 +31,7 @@ function ToggleGroup({
   return (
     <ToggleGroupPrimitive.Root
       data-slot="toggle-group"
-      className={cn('flex w-fit items-center gap-1', className)}
+      className={cn('flex w-fit flex-wrap items-center gap-1', className)}
       {...props}
     >
       <ToggleGroupContext.Provider value={{ variant, size }}>{children}</ToggleGroupContext.Provider>

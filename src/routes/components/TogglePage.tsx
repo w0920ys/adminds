@@ -256,7 +256,7 @@ function renderExample(exampleId: string): ReactNode {
 
     case 'many-items':
       return (
-        <ToggleGroup type="multiple" defaultValue={['name']} size="sm" className="w-full flex-wrap">
+        <ToggleGroup type="multiple" defaultValue={['name']} size="sm">
           <ToggleGroupItem value="name">이름</ToggleGroupItem>
           <ToggleGroupItem value="role">역할</ToggleGroupItem>
           <ToggleGroupItem value="team">소속</ToggleGroupItem>
@@ -270,10 +270,11 @@ function renderExample(exampleId: string): ReactNode {
     case 'narrow-screen':
       return (
         <Bounds className="w-40">
-          <ToggleGroup type="multiple" defaultValue={['name']} size="sm" className="w-full flex-wrap">
+          <ToggleGroup type="multiple" defaultValue={['name']} size="sm">
             <ToggleGroupItem value="name">이름</ToggleGroupItem>
             <ToggleGroupItem value="role">역할</ToggleGroupItem>
             <ToggleGroupItem value="team">소속</ToggleGroupItem>
+            <ToggleGroupItem value="email">이메일</ToggleGroupItem>
           </ToggleGroup>
         </Bounds>
       )
