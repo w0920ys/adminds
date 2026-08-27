@@ -27,6 +27,7 @@ import { ProgressPage } from '@/routes/components/ProgressPage'
 import { RadioPage } from '@/routes/components/RadioPage'
 import { SelectPage } from '@/routes/components/SelectPage'
 import { SeparatorPage } from '@/routes/components/SeparatorPage'
+import { SheetPage } from '@/routes/components/SheetPage'
 import { SkeletonPage } from '@/routes/components/SkeletonPage'
 import { SliderPage } from '@/routes/components/SliderPage'
 import { StepsPage } from '@/routes/components/StepsPage'
@@ -105,6 +106,7 @@ export const routes: RouteObject[] = [
           { path: 'popover', element: <PopoverPage /> },
           { path: 'dialog', element: <DialogPage /> },
           { path: 'skeleton', element: <SkeletonPage /> },
+          { path: 'sheet', element: <SheetPage /> },
           { path: 'progress', element: <ProgressPage /> },
           { path: 'empty-state', element: <EmptyStatePage /> },
           { path: 'table', element: <TablePage /> },

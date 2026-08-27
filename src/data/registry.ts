@@ -3014,6 +3014,82 @@ export const components: ComponentMeta[] = [
     verified: false,
   },
   {
+    id: 'sheet',
+    name: 'Sheet',
+    aliases: ['시트', '사이드 패널', '드로어', 'drawer', 'side panel', '슬라이드 패널'],
+    category: 'feedback',
+    status: 'stable',
+    addedIn: 'v0.12.0',
+    changedIn: 'v0.12.0',
+    purpose: 'Radix의 Dialog를 감싸 가장자리에 붙인다. 목록이나 작업 맥락을 곁에 둔 채 이어서 일할 때 쓴다.',
+    anatomy: [
+      {
+        part: 'trigger',
+        label: 'Trigger',
+        note: '누르면 화면 전체를 덮는 반투명 덮개(bg-black/50)와 side가 정한 가장자리에 붙는 컨테이너(bg-background, 테두리, shadow-lg)가 뜬다. 컨테이너는 좌우에서 열리면 세로 전체를, 위아래에서 열리면 가로 전체를 채우고 반대쪽 치수만 size가 정한 max-w 또는 max-h로 제한한다. 안은 제목(text-lg font-semibold)·본문(text-sm text-muted-foreground)이 있는 Header, 스크롤되는 Body, 오른쪽 정렬된 동작 버튼이 있는 Footer 순서로 쌓이고, 오른쪽 위 모서리에 닫기(X) 아이콘이 항상 있다. 쌓임 순서는 z-overlay. 컨테이너는 화면 가장자리에 붙어 구조도 무대 안에 담을 수 없으므로 나머지 부위는 Usage에서 실제로 눌러서 본다',
+      },
+    ],
+    /*
+     * side의 네 값도 size의 세 값도 닫힌 트리거에서는 완전히 같아
+     * 보인다 — Dialog가 size를 축에서 뺀 것과 같은 이유로 격자의
+     * 칸마다 똑같은 버튼만 남는다. properties를 빈 배열로 두면
+     * ComponentPage가 이 절을 그리지 않는다. side·size prop 자체는
+     * 컴포넌트에 그대로 있고, 네 방향과 세 크기 모두 Usage와
+     * Cases에서 실제로 열어 확인한다.
+     */
+    properties: [],
+    guidelines: [
+      {
+        id: 'distinguish-dialog',
+        title: 'Distinguish from Dialog',
+        body: '묻고 답하고 원래 자리로 돌아가면 Dialog입니다. 목록을 곁에 둔 채로 이어서 일하면 Sheet입니다.',
+        do: ['목록이나 작업 맥락을 유지한 채 이어서 편집할 때 Sheet를 쓴다'],
+        dont: ['묻고 답하면 원래 화면으로 돌아가는 상호작용에 Sheet를 쓰지 않는다(Dialog를 쓴다)'],
+      },
+      {
+        id: 'consistent-side',
+        title: 'Give the side meaning',
+        body: '한 제품 안에서 방향에 뜻을 줍니다. 편집은 오른쪽, 이동은 왼쪽처럼 미리 정합니다. 화면마다 방향이 바뀌면 어디서 나올지 예측할 수 없습니다.',
+        do: ['같은 제품 안에서는 뜻이 같은 동작을 늘 같은 방향에 연다'],
+        dont: ['같은 동작을 화면마다 다른 방향에서 열지 않는다'],
+      },
+      {
+        id: 'no-nested-sheet',
+        title: 'No nested sheets',
+        body: 'Sheet 위에 Sheet를 열지 않습니다. 어느 것을 닫아야 뒤로 가는지 알 수 없게 됩니다. Popover에서 이미 같은 결론에 이르렀습니다.',
+        do: ['Sheet 안에서 확인이 더 필요하면 Dialog를 그 위에 연다'],
+        dont: ['Sheet 위에 또 다른 Sheet를 쌓지 않는다'],
+      },
+      {
+        id: 'outside-click',
+        title: 'Outside click',
+        body: '안에 입력 중인 폼이 있으면 바깥 클릭으로 닫지 않습니다. Dialog의 outside-click 지침이 그대로 적용됩니다.',
+        do: ['확인만 하는 Sheet는 바깥 클릭으로 닫히게 둔다'],
+        dont: ['입력 중인 폼이 있는 Sheet를 바깥 클릭 한 번으로 닫히게 두지 않는다'],
+      },
+      {
+        id: 'pin-header-footer',
+        title: 'Pin header and footer',
+        body: '머리와 발을 고정하고 본문만 굴립니다. 내용이 세로로 길면 제목과 동작 버튼이 늘 보여야 합니다. 본문에 Scroll Area를 씁니다.',
+        do: ['제목과 동작 버튼을 고정하고 본문만 세로로 스크롤되게 한다'],
+        dont: ['본문이 길어질 때 컨테이너 전체가 늘어나 제목이나 버튼이 화면 밖으로 밀려나게 두지 않는다'],
+      },
+    ],
+    usage: [
+      { id: 'filter-panel', title: '필터 패널', note: '목록을 곁에 둔 채 여러 조건을 고르고 바로 적용한다' },
+      { id: 'detail-edit', title: '상세 편집', note: '필드가 많은 편집 폼은 lg 크기로 넉넉하게 연다' },
+      { id: 'narrow-nav', title: '좁은 화면의 내비게이션', note: '좁은 화면에서 메뉴를 왼쪽에서 끌어낸다' },
+      { id: 'activity-log', title: '활동 기록', note: '지금 화면 아래에서 최근 활동을 시간순으로 보인다' },
+    ],
+    cases: [
+      { id: 'long-body', title: '본문이 긴 경우', note: '머리와 발은 고정되고 본문만 안에서 세로로 스크롤된다' },
+      { id: 'form-inside', title: '안에 폼이 있는 경우', note: '바깥 클릭으로 닫히지 않고 취소 버튼으로만 닫힌다' },
+      { id: 'top-bottom', title: '위·아래에서 여는 경우', note: '좌우와 달리 폭이 아니라 높이가 size로 제한된다' },
+      { id: 'narrow-screen', title: '좁은 화면', note: '가장자리에 여백을 두고 너비를 채운다' },
+    ],
+    verified: false,
+  },
+  {
     id: 'skeleton',
     name: 'Skeleton',
     aliases: ['스켈레톤', '로딩', '플레이스홀더', 'loading', 'placeholder'],
