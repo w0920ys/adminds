@@ -136,7 +136,15 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
           <code className="bg-muted rounded px-1.5 py-1 text-2xs">aria-label='굵게'</code>
         </div>
       ) : (
-        <Toggle>
+        /*
+         * inert로 눌러도 반응하지 않고 탭 순서에서도 빠지며 접근성
+         * 트리에서도 사라진다 — 이름 없는 아이콘 버튼이 실제로 초점을
+         * 받거나 스크린 리더에 노출되는 살아 있는 결함으로 남지 않으면서도
+         * 생김새는 그대로 보여 준다. aria-hidden만으로는 포커스 가능한
+         * 요소가 접근성 트리에서만 사라질 뿐 탭 순서에는 남아 그 자체로
+         * 결함이 된다.
+         */
+        <Toggle inert>
           <Bold aria-hidden />
         </Toggle>
       )
