@@ -42,9 +42,18 @@ function CollapsibleTrigger({
       {...props}
     >
       {children}
+      {/*
+       * aria-hidden과 data-slot은 spread 뒤에 둔다 — 둘 다 이
+       * 컴포넌트가 지키는 값이라 indicatorProps로도 덮이지 않는다.
+       * aria-hidden은 화살표가 늘 장식으로만 남아야 하고(펼침 여부는
+       * Trigger의 aria-expanded가 이미 알린다), data-slot은
+       * group-data-[state=open] 선택자와 Anatomy 미리보기가 함께
+       * 기대는 식별자라 소비자의 data-* 값에 밀리면 안 된다. className만
+       * cn()으로 병합해 소비자가 보탤 수 있게 열어 둔다.
+       */}
       <ChevronDown
-        aria-hidden
         {...indicatorProps}
+        aria-hidden
         data-slot="collapsible-indicator"
         className={cn(
           'size-4 shrink-0 transition-transform group-data-[state=open]:rotate-180',

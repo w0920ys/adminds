@@ -1,6 +1,12 @@
 import type { ReactNode } from 'react'
 import { ComponentPage } from '@/components/docs/ComponentPage'
 import type { RenderOptions } from '@/components/docs/PropertyBlock'
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
 import { Field, FieldControl, FieldLabel } from '@/components/ui/field'
@@ -73,9 +79,18 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
     case 'distinguish-from-accordion':
       /*
        * DO는 접히는 자리 하나뿐인 Collapsible이다. DON'T는 실제
-       * Accordion을 그대로 가져오지 않는다 — 이 문서 안에서 그것을
-       * 렌더링하면 h3 트리거가 생겨 이 페이지의 목차에 섞여 드는 바로
-       * 그 문제를 다시 만들기 때문이다. 대신 그 결과만 글로 짚는다.
+       * Accordion을 그대로 띄운다 — assignHeadingIds(src/lib/heading-id.ts)는
+       * [data-slot="accordion-trigger"]를 가진 h3에 id를 달지 않을 뿐,
+       * h3 자체는 DOM에 그대로 남는다. 이 페이지에서 실제로 그 h3가
+       * id 없이도 남는지 확인했다 — Accordion 문서 페이지에는 h3
+       * 트리거가 34개 있고 그중 id를 받은 것은 0개, Contents 앵커는
+       * 여전히 11개뿐이다(제목 목록에서는 섞여 들지 않는다). 하지만
+       * 화면 낭독기의 '다음 제목' 탐색은 id가 아니라 h1~h6 태그 자체를
+       * 훑으므로, id 없는 h3라도 접히는 자리 하나를 위한 가짜 절로
+       * 걸린다 — 지침이 경고하는 결함 그 자체다. Task 4가 이름 없는
+       * 아이콘 Toggle에 썼던 것과 같은 방법으로, inert를 얹어 생김새는
+       * 그대로 두되 접근성 트리(그리고 그 h3)를 통째로 빼서 이 문서
+       * 자신이 그 결함을 사용자에게 실어 나르지 않게 했다.
        */
       return kind === 'do' ? (
         <Collapsible className="w-full max-w-64">
@@ -83,10 +98,12 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
           <CollapsibleContent>카드 뒷자리 4242 · 승인번호 82931002</CollapsibleContent>
         </Collapsible>
       ) : (
-        <div className="text-muted-foreground w-full max-w-64 rounded-lg border border-dashed p-4 text-xs">
-          접히는 자리가 하나뿐인데 Accordion을 쓰면, 있지도 않은 문서의
-          절(h3)이 하나 생겨 목차에 섞여 듭니다.
-        </div>
+        <Accordion inert type="single" collapsible className="w-full max-w-64">
+          <AccordionItem variant="plain" value="payment">
+            <AccordionTrigger>결제 상세</AccordionTrigger>
+            <AccordionContent>카드 뒷자리 4242 · 승인번호 82931002</AccordionContent>
+          </AccordionItem>
+        </Accordion>
       )
 
     case 'announce-hidden-content':
