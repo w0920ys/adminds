@@ -171,7 +171,7 @@ function DatePicker(props: DatePickerProps) {
           className={cn(
             controlShellVariants({ size }),
             'cursor-pointer items-center justify-between gap-2 text-left',
-            disabled && 'pointer-events-none cursor-not-allowed opacity-50',
+            disabled && 'pointer-events-none opacity-50',
             className,
           )}
         >
