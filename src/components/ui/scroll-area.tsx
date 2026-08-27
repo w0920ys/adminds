@@ -27,9 +27,17 @@ function ScrollArea({
       className={cn('relative overflow-hidden', className)}
       {...props}
     >
+      {/*
+        Viewport에는 포커스 링을 두지 않는다. Radix가 여기에 tabIndex를 주지
+        않고 ScrollArea도 Viewport로 prop을 흘려보내지 않아, 이 요소는
+        :focus-visible이 될 길 자체가 없다 — 링을 그려 두면 절대 켜지지 않는
+        클래스가 남아 "포커스를 받는 자리"라고 잘못 말한다. 키보드로 들어오는
+        길은 안에 놓인 포커스 가능한 요소가 만들고, 그 사정은 지침
+        keyboard-focus-path가 적고 있다.
+      */}
       <ScrollAreaPrimitive.Viewport
         data-slot="scroll-area-viewport"
-        className="size-full rounded-[inherit] outline-none focus-visible:ring-ring/50 focus-visible:ring-2"
+        className="size-full rounded-[inherit]"
       >
         {children}
       </ScrollAreaPrimitive.Viewport>
