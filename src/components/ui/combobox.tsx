@@ -139,6 +139,18 @@ function Combobox(props: ComboboxProps) {
   const activeId = activeOption ? `${listId}-option-${activeOption.value}` : undefined
 
   /*
+   * 짚은 항목을 보이는 곳으로 직접 끌어온다. 포커스는 검색 입력에 머물고
+   * 짚은 자리는 aria-activedescendant로만 알리는 방식이라, 브라우저가
+   * 포커스를 따라 굴려 주는 일이 여기서는 일어나지 않는다. 목록이
+   * max-h-64라 옵션이 열 개만 넘어도 강조된 줄이 상자 밖으로 나간다.
+   * Command·SearchDialog가 같은 이유로 같은 값을 쓴다.
+   */
+  React.useEffect(() => {
+    if (!activeId) return
+    document.getElementById(activeId)?.scrollIntoView({ block: 'nearest' })
+  }, [activeId])
+
+  /*
    * 열릴 때 검색 입력으로 포커스를 옮기는 일은 DOM(바깥 시스템)과
    * 동기화하는 일이라 effect가 맞다. 짚은 항목을 되돌리는 setActiveIndex는
    * 열림 자체가 원인일 때만 여기 둔다 — 검색어가 바뀔 때의 초기화는
@@ -231,7 +243,7 @@ function Combobox(props: ComboboxProps) {
             controlShellVariants({ size }),
             'cursor-pointer items-center justify-between gap-2 text-left',
             isMultiple && cn('h-auto flex-wrap gap-1.5 py-1.5', MIN_HEIGHT_MULTIPLE[size]),
-            disabled && 'pointer-events-none cursor-not-allowed opacity-50',
+            disabled && 'pointer-events-none opacity-50',
             className,
           )}
         >

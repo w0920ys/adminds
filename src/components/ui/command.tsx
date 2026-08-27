@@ -83,6 +83,19 @@ function Command({
   const activeEntry = reachable[activeIndex]
   const activeId = activeEntry ? `${listId}-item-${activeEntry.value}` : undefined
 
+  /*
+   * 짚은 항목을 보이는 곳으로 직접 끌어온다. 포커스는 검색 입력에 머물고
+   * 짚은 자리는 aria-activedescendant로만 알리는 방식이라, 브라우저가
+   * 포커스를 따라 굴려 주는 일이 여기서는 일어나지 않는다. 목록이
+   * max-h-96이라 열몇 번만 내려가도 강조된 줄이 상자 밖으로 나간다.
+   * block: 'nearest'는 이미 보이는 항목은 건드리지 않는다 —
+   * SearchDialog가 같은 이유로 같은 값을 쓴다.
+   */
+  React.useEffect(() => {
+    if (!activeId) return
+    document.getElementById(activeId)?.scrollIntoView({ block: 'nearest' })
+  }, [activeId])
+
   function select(entry: CommandEntry) {
     if (entry.disabled) return
     onSelect?.(entry)
@@ -188,7 +201,7 @@ function Command({
                       className={cn(
                         'flex w-full cursor-default items-center gap-2 rounded-sm px-2 py-1.5 text-sm select-none',
                         isActive && 'bg-accent text-accent-foreground',
-                        entry.disabled && 'pointer-events-none cursor-not-allowed opacity-50',
+                        entry.disabled && 'pointer-events-none opacity-50',
                         itemProps?.className,
                       )}
                     >
