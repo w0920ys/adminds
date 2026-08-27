@@ -11,7 +11,11 @@ import { components } from '@/data/registry'
 const registryItems = registryJson.items as {
   name: string
   type: string
+  title?: string
+  description?: string
+  dependencies?: string[]
   registryDependencies?: string[]
+  docs?: string
   files?: { path: string }[]
 }[]
 const uiNames = new Set(registryItems.filter((i) => i.type === 'registry:ui').map((i) => i.name))
@@ -162,5 +166,104 @@ describe('public/r의 구운 payload', () => {
   it('견줄 파일이 실제로 있다', () => {
     // declaredFileCount가 0이면 위 테스트는 아무것도 하지 않고 통과한다.
     expect(declaredFileCount).toBeGreaterThan(0)
+  })
+
+  /*
+   * 위의 바이트 비교는 files[].content만 본다. 그래서 files가 없는 항목은
+   * 루프를 지나가기만 하고 아무것도 지켜지지 않는다 — registry.json의
+   * adminds(묶음)와 tokens가 그렇고, 그중 adminds는 "이거 하나면 다 받는다"로
+   * 안내하는 항목이라 실제로 가장 많이 나가는 payload다. 컴포넌트를 더하고
+   * npm run registry를 잊으면 개별 컴포넌트는 바이트 비교에 걸리지만 묶음의
+   * registryDependencies는 조용히 낡는다.
+   *
+   * 그래서 항목의 메타도 함께 견준다. 파일이 있든 없든 모든 항목이 이
+   * 비교를 지난다. 여기서도 '아무것도 견주지 않고 통과'를 막으려고 실제로
+   * 견준 칸 수를 마지막에 확인한다.
+   */
+  const META_KEYS = ['type', 'title', 'description', 'dependencies', 'registryDependencies', 'docs'] as const
+
+  it('구운 payload의 항목 메타가 registry.json과 같다', () => {
+    const missingPayload: string[] = []
+    const mismatched: string[] = []
+    let compared = 0
+
+    for (const item of registryItems) {
+      const rawPayload = builtPayloads.get(`public/r/${item.name}.json`)
+      if (rawPayload === undefined) {
+        missingPayload.push(item.name)
+        continue
+      }
+
+      const built = JSON.parse(rawPayload) as Record<string, unknown>
+      for (const key of META_KEYS) {
+        // 없는 칸끼리도 같다고 봐야 한다 — description이 없는 항목이 실제로 있다.
+        const declared = JSON.stringify(item[key] ?? null)
+        const baked = JSON.stringify(built[key] ?? null)
+        compared += 1
+        if (declared !== baked) {
+          mismatched.push(`${item.name}.${key}: registry.json=${declared} payload=${baked}`)
+        }
+      }
+    }
+
+    expect(missingPayload, 'public/r에 구운 payload가 없는 항목').toEqual([])
+    expect(mismatched, '항목 메타가 어긋났다 — npm run registry').toEqual([])
+    expect(compared, '실제로 견준 메타 칸 수').toBe(registryItems.length * META_KEYS.length)
+  })
+
+  it('견줄 항목이 실제로 있다', () => {
+    // registryItems가 비면 위 테스트는 아무것도 하지 않고 통과한다.
+    expect(registryItems.length).toBeGreaterThan(0)
+  })
+})
+
+/**
+ * 묶음 항목과 README는 "몇 개가 들어 있는가"를 손으로 적는다. 이 숫자는
+ * v0.10.0에서 26개로, v0.11.0에서 32개로 두 번 낡았고 두 번 다 사후에 고쳤다.
+ * 컴포넌트를 더하는 사람이 고칠 자리를 기억해야 하는 한 세 번째가 온다.
+ *
+ * 문장을 통째로 못 박지는 않는다 — 문구는 다시 쓸 수 있어야 한다. 문장에서
+ * 숫자만 꺼내 components.length와 견준다.
+ */
+const readmeGlob = import.meta.glob('../../README.md', {
+  query: '?raw',
+  import: 'default',
+  eager: true,
+})
+const readme = Object.values(readmeGlob)[0] as string | undefined
+
+/** 토박이말 수사(1~99)를 숫자로 되돌린다. 묶음 설명이 '서른여덟'처럼 적기 때문이다 */
+const TENS: Record<string, number> = { 열: 10, 스물: 20, 서른: 30, 마흔: 40, 쉰: 50, 예순: 60, 일흔: 70, 여든: 80, 아흔: 90 }
+const ONES: Record<string, number> = { 하나: 1, 한: 1, 둘: 2, 두: 2, 셋: 3, 세: 3, 넷: 4, 네: 4, 다섯: 5, 여섯: 6, 일곱: 7, 여덟: 8, 아홉: 9 }
+
+/** '…개' 앞에 붙은 수를 읽는다. 아라비아 숫자도 토박이말 수사도 받는다 */
+function readCount(text: string, pattern: RegExp): number | null {
+  const found = text.match(pattern)
+  if (!found) return null
+  const word = found[1]
+  if (/^\d+$/.test(word)) return Number(word)
+  for (const [tensWord, tens] of Object.entries(TENS)) {
+    if (!word.startsWith(tensWord)) continue
+    const rest = word.slice(tensWord.length)
+    if (rest === '') return tens
+    return rest in ONES ? tens + ONES[rest] : null
+  }
+  return word in ONES ? ONES[word] : null
+}
+
+describe('손으로 적은 컴포넌트 개수', () => {
+  const bundle = registryItems.find((i) => i.name === 'adminds')!
+
+  it('묶음 설명의 개수가 실제 컴포넌트 수와 같다', () => {
+    const counted = readCount(bundle.description ?? '', /컴포넌트 (\S+?) 개/)
+    expect(counted, `묶음 설명에서 개수를 읽지 못했다: ${bundle.description}`).not.toBeNull()
+    expect(counted, 'adminds 설명의 개수').toBe(components.length)
+  })
+
+  it('README가 적는 개수가 실제 컴포넌트 수와 같다', () => {
+    expect(readme, 'README.md를 읽지 못했다').toBeTypeOf('string')
+    const counted = readCount(readme ?? '', /adminds\.json # 토큰과 (\S+?)개 전부/)
+    expect(counted, 'README에서 개수를 읽지 못했다 — 문구가 바뀌었으면 이 테스트도 함께 고친다').not.toBeNull()
+    expect(counted, 'README가 적는 개수').toBe(components.length)
   })
 })
