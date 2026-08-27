@@ -39,6 +39,20 @@ const NAVIGATION_ENTRIES: CommandEntry[] = COMPONENT_ENTRIES.filter(
   (entry) => entry.group === categoryLabel.navigation,
 )
 
+/** Inputs 묶음 하나만 남긴 목록. groups-are-labels의 DON'T가 Navigation과 나란히 쪼개 쓴다 */
+const INPUTS_ENTRIES: CommandEntry[] = COMPONENT_ENTRIES.filter(
+  (entry) => entry.group === categoryLabel.inputs,
+)
+
+/*
+ * Inputs와 Navigation 두 묶음을 한 목록에 합친 것. groups-are-labels의 DO가
+ * 쓴다 — DON'T는 이 둘을 서로 다른 CommandDialog로 쪼개고, DO는 같은 두
+ * 묶음을 한 목록 안에 이름표로만 나눈다. 같은 데이터를 합쳤는지 쪼갰는지로만
+ * 갈라야 "여러 묶음을 한 목록 안에" 주장이 실제로 보인다 — 묶음이 하나뿐인
+ * 목록으로는 그 주장을 보일 수 없다.
+ */
+const TWO_GROUP_ENTRIES: CommandEntry[] = [...INPUTS_ENTRIES, ...NAVIGATION_ENTRIES]
+
 /** Foundations 문서도 nav-config에서 그대로 가져온다 — 손으로 적지 않는다 */
 const FOUNDATION_ENTRIES: CommandEntry[] = (
   sections.find((section) => section.id === 'foundations')?.items ?? []
@@ -170,14 +184,10 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
      */
     case 'groups-are-labels':
       return kind === 'do' ? (
-        <CommandDialogDemo label="빠른 이동" entries={NAVIGATION_ENTRIES} placeholder="컴포넌트 검색" />
+        <CommandDialogDemo label="빠른 이동" entries={TWO_GROUP_ENTRIES} placeholder="컴포넌트 검색" />
       ) : (
         <div className="flex flex-wrap gap-2">
-          <CommandDialogDemo
-            label="Inputs 이동"
-            entries={COMPONENT_ENTRIES.filter((entry) => entry.group === categoryLabel.inputs)}
-            placeholder="Inputs 검색"
-          />
+          <CommandDialogDemo label="Inputs 이동" entries={INPUTS_ENTRIES} placeholder="Inputs 검색" />
           <CommandDialogDemo
             label="Navigation 이동"
             entries={NAVIGATION_ENTRIES}

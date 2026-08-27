@@ -4,6 +4,7 @@ import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog'
 import { inputVariants } from '@/components/ui/input'
 import {
   filterCommandEntries,
+  flattenCommandSections,
   groupCommandEntries,
   type CommandEntry,
 } from '@/lib/command-filter'
@@ -41,9 +42,15 @@ export type CommandProps = {
  * 그 인덱스가 가리키는 항목의 id를 알린다. 마우스 hover도 같은 activeIndex를
  * 옮겨서 키보드로 짚은 것과 마우스로 짚은 것이 항상 같은 항목을 가리키게 한다.
  *
- * 위아래 이동은 걸러진 뒤 disabled를 뺀 평탄한 목록(reachable) 하나를 두고
- * 그 인덱스로 짚는다 — 묶음마다 번호를 다시 세지 않아 이동이 묶음 경계를
- * 넘어 이어지고, disabled 항목은 애초에 이 목록에 없어 짚히지 않는다.
+ * 위아래 이동은 화면에 그려지는 순서(sections를 편 것) 위에서 disabled를 뺀
+ * 평탄한 목록(reachable) 하나를 두고 그 인덱스로 짚는다 — 묶음마다 번호를
+ * 다시 세지 않아 이동이 묶음 경계를 넘어 이어지고, disabled 항목은 애초에
+ * 이 목록에 없어 짚히지 않는다. filtered(원본 순서)가 아니라 반드시
+ * flattenCommandSections(sections)에서 시작해야 한다 — 원본 배열에서 묶음이
+ * 뒤섞여 있으면(A(X)·B(Y)·C(X)) 화면은 A·C·B로 그리는데 filtered는 A·B·C라
+ * 순서가 갈린다. 걸러 놓고 그 순서로 짚으면 A에서 아래로 갈 때 화면의
+ * 세 번째(B)로 건너뛰고 그다음은 화면에서 B보다 앞선 C로 되돌아가는 식으로
+ * 어긋난다.
  *
  * Escape는 여기서 다루지 않는다 — CommandDialog로 쓰일 때는 Dialog의
  * DismissableLayer가 이미 Escape로 닫는다. Command 혼자 페이지 안에
@@ -69,7 +76,10 @@ function Command({
 
   const filtered = React.useMemo(() => filterCommandEntries(entries, query), [entries, query])
   const sections = React.useMemo(() => groupCommandEntries(filtered), [filtered])
-  const reachable = React.useMemo(() => filtered.filter((entry) => !entry.disabled), [filtered])
+  const reachable = React.useMemo(
+    () => flattenCommandSections(sections).filter((entry) => !entry.disabled),
+    [sections],
+  )
   const activeEntry = reachable[activeIndex]
   const activeId = activeEntry ? `${listId}-item-${activeEntry.value}` : undefined
 

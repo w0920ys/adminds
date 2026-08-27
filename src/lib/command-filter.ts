@@ -51,3 +51,14 @@ export function groupCommandEntries(entries: CommandEntry[]): CommandSection[] {
 
   return sections
 }
+
+/**
+ * 화면은 sections를 그대로 그린다 — 묶음마다 머리글, 그 아래 항목들. 위아래
+ * 이동이 그 화면 순서를 따라야 하는데, 원본 배열(filtered)의 순서를 그대로
+ * 짚으면 묶음이 뒤섞인 원본에서는 화면 순서와 갈린다. A(X)·B(Y)·C(X)라면
+ * 화면은 A·C·B로 그리는데 원본은 A·B·C라 다르다. 그래서 짚는 인덱스는
+ * 반드시 이 함수로 편 배열 위에서 세야 한다.
+ */
+export function flattenCommandSections(sections: CommandSection[]): CommandEntry[] {
+  return sections.flatMap((section) => section.entries)
+}

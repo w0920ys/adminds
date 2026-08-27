@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import {
   filterCommandEntries,
+  flattenCommandSections,
   groupCommandEntries,
   type CommandEntry,
 } from '@/lib/command-filter'
@@ -71,3 +72,43 @@ describe('groupCommandEntries', () => {
     expect(groupCommandEntries([])).toEqual([])
   })
 })
+
+/*
+ * 묶음이 원본 배열에서 뒤섞여 있는 경우 — A(X), B(Y), C(X). groupCommandEntries는
+ * 화면에 A, C, B 순으로 그린다(X 묶음이 먼저 나와 A·C를 먼저 모으고, Y 묶음인
+ * B가 그 뒤에 온다). 위아래 이동은 이 화면 순서를 따라야 하는데, 걸러진
+ * 원본 배열(A, B, C)을 그대로 짚으면 어긋난다 — 리뷰가 손으로 추적해 잡아낸
+ * 자리다: A에서 아래로 가면 화면에서 세 번째인 B로 건너뛰고, 그다음 아래로
+ * 가면 화면에서 B보다 앞선 C로 되돌아간다.
+ */
+const INTERLEAVED_ENTRIES: CommandEntry[] = [
+  { value: 'a', label: 'A', group: 'X' },
+  { value: 'b', label: 'B', group: 'Y' },
+  { value: 'c', label: 'C', group: 'X' },
+]
+
+describe('flattenCommandSections', () => {
+  it('묶음이 뒤섞여 있어도 화면에 그려지는 순서(A, C, B)로 편다', () => {
+    const sections = groupCommandEntries(INTERLEAVED_ENTRIES)
+    expect(flattenCommandSections(sections).map((e) => e.value)).toEqual(['a', 'c', 'b'])
+  })
+
+  it('원본 배열 순서(A, B, C)와는 다르다 — 이 차이가 바로 버그였던 자리다', () => {
+    const sections = groupCommandEntries(INTERLEAVED_ENTRIES)
+    const flattened = flattenCommandSections(sections).map((e) => e.value)
+    const original = INTERLEAVED_ENTRIES.map((e) => e.value)
+    expect(flattened).not.toEqual(original)
+  })
+
+  it('묶음이 뒤섞이지 않았으면 원본 순서와 같다', () => {
+    const sections = groupCommandEntries(ENTRIES)
+    expect(flattenCommandSections(sections).map((e) => e.value)).toEqual(
+      ENTRIES.map((e) => e.value),
+    )
+  })
+
+  it('빈 묶음 목록은 빈 배열로 편다', () => {
+    expect(flattenCommandSections([])).toEqual([])
+  })
+})
+
