@@ -1,0 +1,27 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "toggle",
+  "title": "Toggle",
+  "dependencies": [
+    "@radix-ui/react-toggle",
+    "@radix-ui/react-toggle-group",
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "https://adminds.vercel.app/r/tokens.json",
+    "https://adminds.vercel.app/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/toggle.tsx",
+      "content": "import * as React from 'react'\nimport * as TogglePrimitive from '@radix-ui/react-toggle'\nimport { cva, type VariantProps } from 'class-variance-authority'\nimport { cn } from '@/lib/utils'\n\n/*\n * 켜진 모습은 data-state=\"on\"으로 온다. Radix가 붙이는 속성이라 문서의\n * state 격자에서도 그 속성만 강제하면 실제와 같은 모습이 나온다.\n * 높이는 Button과 같은 control 토큰을 쓴다 — 같은 줄에 나란히 놓이는\n * 자리가 많아 높이가 어긋나면 바로 보인다.\n */\nconst toggleVariants = cva(\n  \"inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium whitespace-nowrap transition-colors outline-none hover:bg-muted hover:text-foreground focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-50 data-[state=on]:bg-accent data-[state=on]:text-accent-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4\",\n  {\n    variants: {\n      variant: {\n        default: 'bg-transparent',\n        outline: 'border bg-background shadow-xs',\n      },\n      size: {\n        sm: 'h-control-sm min-w-control-sm px-2',\n        default: 'h-control min-w-control px-2.5',\n        lg: 'h-control-lg min-w-control-lg px-3',\n      },\n    },\n    defaultVariants: { variant: 'default', size: 'default' },\n  },\n)\n\nfunction Toggle({\n  className,\n  variant,\n  size,\n  ...props\n}: React.ComponentProps<typeof TogglePrimitive.Root> & VariantProps<typeof toggleVariants>) {\n  return (\n    <TogglePrimitive.Root\n      data-slot=\"toggle\"\n      className={cn(toggleVariants({ variant, size }), className)}\n      {...props}\n    />\n  )\n}\n\nexport { Toggle, toggleVariants }\n",
+      "type": "registry:ui"
+    },
+    {
+      "path": "src/components/ui/toggle-group.tsx",
+      "content": "import * as React from 'react'\nimport * as ToggleGroupPrimitive from '@radix-ui/react-toggle-group'\nimport { type VariantProps } from 'class-variance-authority'\nimport { toggleVariants } from '@/components/ui/toggle'\nimport { cn } from '@/lib/utils'\n\n/*\n * 묶음이 정하고 항목이 따른다. 항목이 variant·size를 각자 받으면 한\n * 묶음 안에서 크기가 갈릴 수 있는데, 그것은 이 컴포넌트가 있는 이유와\n * 반대다. 항목이 직접 넘긴 값이 있으면 그것을 우선한다 — 예외를 아예\n * 막지는 않는다.\n */\nconst ToggleGroupContext = React.createContext<VariantProps<typeof toggleVariants>>({\n  variant: 'default',\n  size: 'default',\n})\n\nfunction ToggleGroup({\n  className,\n  variant = 'default',\n  size = 'default',\n  children,\n  ...props\n}: React.ComponentProps<typeof ToggleGroupPrimitive.Root> & VariantProps<typeof toggleVariants>) {\n  return (\n    <ToggleGroupPrimitive.Root\n      data-slot=\"toggle-group\"\n      className={cn('flex w-fit items-center gap-1', className)}\n      {...props}\n    >\n      <ToggleGroupContext.Provider value={{ variant, size }}>{children}</ToggleGroupContext.Provider>\n    </ToggleGroupPrimitive.Root>\n  )\n}\n\nfunction ToggleGroupItem({\n  className,\n  variant,\n  size,\n  ...props\n}: React.ComponentProps<typeof ToggleGroupPrimitive.Item> & VariantProps<typeof toggleVariants>) {\n  const context = React.useContext(ToggleGroupContext)\n  return (\n    <ToggleGroupPrimitive.Item\n      data-slot=\"toggle-group-item\"\n      className={cn(\n        toggleVariants({ variant: variant ?? context.variant, size: size ?? context.size }),\n        className,\n      )}\n      {...props}\n    />\n  )\n}\n\nexport { ToggleGroup, ToggleGroupItem }\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

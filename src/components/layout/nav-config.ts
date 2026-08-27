@@ -83,6 +83,7 @@ export const sections: NavSection[] = [
         items: [
           { to: '/components/button', label: 'Button', updatedAt: '2026-08-25' },
           { to: '/components/dropdown-menu', label: 'Dropdown Menu', updatedAt: '2026-08-26' },
+          { to: '/components/toggle', label: 'Toggle', updatedAt: '2026-08-27' },
         ],
       },
       {

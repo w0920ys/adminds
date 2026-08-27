@@ -37,6 +37,7 @@ import { TablePage } from '@/routes/components/TablePage'
 import { TabsPage } from '@/routes/components/TabsPage'
 import { TextareaPage } from '@/routes/components/TextareaPage'
 import { ToastPage } from '@/routes/components/ToastPage'
+import { TogglePage } from '@/routes/components/TogglePage'
 import { TooltipPage } from '@/routes/components/TooltipPage'
 import { ColorPage } from '@/routes/foundations/ColorPage'
 import { ColorRolePage } from '@/routes/foundations/ColorRolePage'
@@ -86,6 +87,7 @@ export const routes: RouteObject[] = [
           { index: true, element: <ComponentsIndex /> },
           { path: 'button', element: <ButtonPage /> },
           { path: 'dropdown-menu', element: <DropdownMenuPage /> },
+          { path: 'toggle', element: <TogglePage /> },
           { path: 'input', element: <InputPage /> },
           { path: 'field', element: <FieldPage /> },
           { path: 'file-upload', element: <FileUploadPage /> },
