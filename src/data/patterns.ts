@@ -270,14 +270,14 @@ export const patterns: PatternMeta[] = [
     aliases: ['삭제 확인', '위험 동작', '확인 대화상자', '되돌릴 수 없는 동작'],
     status: 'draft',
     addedIn: 'v0.11.0',
-    changedIn: 'v0.11.0',
+    changedIn: 'v0.12.0',
     purpose:
-      '되돌릴 수 없는 동작을 실행하기 전에 한 번 멈추는 흐름이다. Dialog로 묻고 Toast로 결과를 알린다.',
+      '되돌릴 수 없는 동작을 실행하기 전에 한 번 멈추는 흐름이다. Alert Dialog로 묻고 Toast로 결과를 알린다.',
     structure: [
       { slot: '위험 동작 Button', note: 'destructive 버튼이거나 Dropdown Menu 안의 항목이다', components: ['button', 'dropdown-menu'] },
-      { slot: 'Dialog 제목', note: '무엇이 지워지는지 적는다. "삭제하시겠습니까"만으로는 대상을 알 수 없다', components: ['dialog'] },
-      { slot: 'Dialog 본문', note: '영향 범위를 적는다. 되돌릴 수 없으면 그 사실을 여기에 적는다', components: ['dialog'] },
-      { slot: '취소와 실행', note: '취소는 왼쪽 outline, 실행은 오른쪽 destructive', components: ['button'] },
+      { slot: 'Alert Dialog 제목', note: '무엇이 지워지는지 적는다. "삭제하시겠습니까"만으로는 대상을 알 수 없다', components: ['alert-dialog'] },
+      { slot: 'Alert Dialog 본문', note: '영향 범위를 적는다. 되돌릴 수 없으면 그 사실을 여기에 적는다', components: ['alert-dialog'] },
+      { slot: '취소와 실행', note: '취소는 왼쪽 outline, 실행은 오른쪽 destructive. 바깥을 눌러도 닫히지 않는다', components: ['alert-dialog'] },
       { slot: 'Toast', note: '실행한 뒤에 결과를 알린다. 되돌릴 수 있으면 여기에 되돌리기를 둔다', components: ['toast'] },
     ],
     guidelines: [
@@ -312,7 +312,7 @@ export const patterns: PatternMeta[] = [
     ],
     example: {
       title: '사용자 삭제',
-      note: '버튼을 눌러 Dialog를 열고, 삭제를 누르면 그 자리에 Toast가 뜨는 흐름 전체다.',
+      note: '버튼을 눌러 Alert Dialog를 열고, 삭제를 누르면 그 자리에 Toast가 뜨는 흐름 전체다.',
     },
     cases: [
       { id: 'delete-one', title: '하나 삭제', note: '제목에 대상의 이름을 적는다.' },

@@ -1,24 +1,25 @@
 import { useState, type ReactNode } from 'react'
 import { PatternPage } from '@/components/docs/PatternPage'
-import { Button } from '@/components/ui/button'
 import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog'
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog'
+import { Button } from '@/components/ui/button'
 import { Toast, ToastAction, ToastClose, ToastProvider, ToastTitle, ToastViewport } from '@/components/ui/toast'
 import { getPattern } from '@/data/patterns'
 import { Placeholder } from '@/routes/Placeholder'
 
 /*
- * Example은 흐름 전체를 한 조각에 담는다 — 버튼을 눌러 Dialog를 열고,
- * 삭제를 누르면 Dialog가 닫히며 그 자리에 Toast가 뜬다. Dialog는
- * `open`의 초기값이 `false`라 닫힌 채로 마운트된다.
+ * Example은 흐름 전체를 한 조각에 담는다 — 버튼을 눌러 Alert Dialog를
+ * 열고, 삭제를 누르면 Alert Dialog가 닫히며 그 자리에 Toast가 뜬다.
+ * Alert Dialog는 `open`의 초기값이 `false`라 닫힌 채로 마운트된다.
  *
  * 이 Toast에는 되돌리기를 두지 않는다 — 본문이 "삭제하면 되돌릴 수
  * 없습니다"라고 말하기 때문이다. 되돌리기가 있는 쪽은 undo-in-toast
@@ -36,35 +37,32 @@ function DestructiveFlow() {
   return (
     <ToastProvider duration={Infinity}>
       <div className="flex flex-col items-start gap-4">
-        <Dialog open={open} onOpenChange={setOpen}>
-          <DialogTrigger asChild>
+        <AlertDialog open={open} onOpenChange={setOpen}>
+          <AlertDialogTrigger asChild>
             <Button variant="destructive" size="sm">
               사용자 삭제
             </Button>
-          </DialogTrigger>
-          <DialogContent size="sm">
-            <DialogHeader>
-              <DialogTitle>'홍길동'을 삭제하시겠습니까</DialogTitle>
-              <DialogDescription>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>'홍길동'을 삭제하시겠습니까</AlertDialogTitle>
+              <AlertDialogDescription>
                 이 사용자의 주문 12건도 함께 지워집니다. 삭제하면 되돌릴 수 없습니다.
-              </DialogDescription>
-            </DialogHeader>
-            <DialogFooter>
-              <DialogClose asChild>
-                <Button variant="outline">취소</Button>
-              </DialogClose>
-              <Button
-                variant="destructive"
-                onClick={() => {
-                  setOpen(false)
-                  setDone(true)
-                }}
-              >
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>취소</AlertDialogCancel>
+              {/*
+                AlertDialogAction은 Radix Close라 눌리면 스스로 닫힌다.
+                setOpen(false)를 따로 부를 필요가 없다 — open은
+                AlertDialog에 그대로 넘긴 채 setDone(true)만 한다.
+              */}
+              <AlertDialogAction variant="destructive" onClick={() => setDone(true)}>
                 삭제
-              </Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
 
         {done && (
           <Toast className="w-full max-w-72" onOpenChange={(next) => !next && setDone(false)}>
@@ -79,58 +77,54 @@ function DestructiveFlow() {
 }
 
 /*
- * Guideline 예시. Dialog는 DialogPage와 같은 방법으로 트리거 뒤에
- * 닫힌 채로 둔다 — 목업을 그리지 않고, 열려 있는 상태로 마운트하지
- * 않는다.
+ * Guideline 예시. Alert Dialog는 AlertDialogPage와 같은 방법으로
+ * 트리거 뒤에 닫힌 채로 둔다 — 목업을 그리지 않고, 열려 있는 상태로
+ * 마운트하지 않는다.
  */
 function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): ReactNode {
   switch (guidelineId) {
     case 'name-the-target':
       // do: 제목이 대상의 이름을 말한다. dont: 무엇을 지우는지 제목만으로는 알 수 없다.
       return (
-        <Dialog>
-          <DialogTrigger asChild>
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
             <Button variant="destructive" size="sm">
               사용자 삭제
             </Button>
-          </DialogTrigger>
-          <DialogContent size="sm">
-            <DialogHeader>
-              <DialogTitle>{kind === 'do' ? "'홍길동'을 삭제하시겠습니까" : '삭제하시겠습니까'}</DialogTitle>
-              <DialogDescription>삭제하면 되돌릴 수 없습니다.</DialogDescription>
-            </DialogHeader>
-            <DialogFooter>
-              <DialogClose asChild>
-                <Button variant="outline">취소</Button>
-              </DialogClose>
-              <Button variant="destructive">삭제</Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>{kind === 'do' ? "'홍길동'을 삭제하시겠습니까" : '삭제하시겠습니까'}</AlertDialogTitle>
+              <AlertDialogDescription>삭제하면 되돌릴 수 없습니다.</AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>취소</AlertDialogCancel>
+              <AlertDialogAction variant="destructive">삭제</AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       )
 
     case 'show-the-count':
       // do: 몇 건인지 제목에 적는다. dont: 개수 없이 "항목"이라고만 적는다.
       return (
-        <Dialog>
-          <DialogTrigger asChild>
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
             <Button variant="destructive" size="sm">
               선택 삭제
             </Button>
-          </DialogTrigger>
-          <DialogContent size="sm">
-            <DialogHeader>
-              <DialogTitle>{kind === 'do' ? '선택한 12건을 삭제합니다' : '선택한 항목을 삭제합니다'}</DialogTitle>
-              <DialogDescription>삭제하면 되돌릴 수 없습니다.</DialogDescription>
-            </DialogHeader>
-            <DialogFooter>
-              <DialogClose asChild>
-                <Button variant="outline">취소</Button>
-              </DialogClose>
-              <Button variant="destructive">삭제</Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>{kind === 'do' ? '선택한 12건을 삭제합니다' : '선택한 항목을 삭제합니다'}</AlertDialogTitle>
+              <AlertDialogDescription>삭제하면 되돌릴 수 없습니다.</AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>취소</AlertDialogCancel>
+              <AlertDialogAction variant="destructive">삭제</AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       )
 
     case 'undo-in-toast':
@@ -146,31 +140,30 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
           <ToastViewport className="static right-auto bottom-auto w-auto max-w-none flex-none" />
         </ToastProvider>
       ) : (
-        // 되돌리기를 누르면 곧장 되돌리는 대신 Dialog가 한 번 더 묻는다.
-        // DialogTrigger가 ToastAction을 그대로 감싸 실제 ToastAction의
-        // DOM에 Dialog를 여는 동작을 얹는다 — 텍스트만 흉내 낸 버튼이 아니다.
+        // 되돌리기를 누르면 곧장 되돌리는 대신 Alert Dialog가 한 번 더
+        // 묻는다. AlertDialogTrigger가 ToastAction을 그대로 감싸 실제
+        // ToastAction의 DOM에 Alert Dialog를 여는 동작을 얹는다 —
+        // 텍스트만 흉내 낸 버튼이 아니다.
         <ToastProvider duration={Infinity}>
           <div className="flex flex-col items-start gap-4">
-            <Dialog>
+            <AlertDialog>
               <Toast className="w-full max-w-72">
                 <ToastTitle>게시글을 삭제했습니다</ToastTitle>
-                <DialogTrigger asChild>
+                <AlertDialogTrigger asChild>
                   <ToastAction altText="되돌리기">되돌리기</ToastAction>
-                </DialogTrigger>
+                </AlertDialogTrigger>
                 <ToastClose />
               </Toast>
-              <DialogContent size="sm">
-                <DialogHeader>
-                  <DialogTitle>되돌리시겠습니까</DialogTitle>
-                </DialogHeader>
-                <DialogFooter>
-                  <DialogClose asChild>
-                    <Button variant="outline">아니요</Button>
-                  </DialogClose>
-                  <Button>되돌리기</Button>
-                </DialogFooter>
-              </DialogContent>
-            </Dialog>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>되돌리시겠습니까</AlertDialogTitle>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>아니요</AlertDialogCancel>
+                  <AlertDialogAction>되돌리기</AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
             <ToastViewport className="static right-auto bottom-auto w-auto max-w-none flex-none" />
           </div>
         </ToastProvider>
@@ -179,27 +172,25 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
     case 'say-when-irreversible':
       // do: 본문에 되돌릴 수 없다고 적는다. dont: 본문 없이 제목만 두고 실행 버튼을 붉게 칠한다.
       return (
-        <Dialog>
-          <DialogTrigger asChild>
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
             <Button variant="destructive" size="sm">
               사용자 삭제
             </Button>
-          </DialogTrigger>
-          <DialogContent size="sm">
-            <DialogHeader>
-              <DialogTitle>'홍길동'을 삭제하시겠습니까</DialogTitle>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>'홍길동'을 삭제하시겠습니까</AlertDialogTitle>
               {kind === 'do' && (
-                <DialogDescription>삭제하면 되돌릴 수 없습니다.</DialogDescription>
+                <AlertDialogDescription>삭제하면 되돌릴 수 없습니다.</AlertDialogDescription>
               )}
-            </DialogHeader>
-            <DialogFooter>
-              <DialogClose asChild>
-                <Button variant="outline">취소</Button>
-              </DialogClose>
-              <Button variant="destructive">삭제</Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>취소</AlertDialogCancel>
+              <AlertDialogAction variant="destructive">삭제</AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       )
 
     default:
@@ -210,52 +201,48 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
 /** delete-one: 제목에 대상의 이름을 적는다 */
 function DeleteOneCase() {
   return (
-    <Dialog>
-      <DialogTrigger asChild>
+    <AlertDialog>
+      <AlertDialogTrigger asChild>
         <Button variant="destructive" size="sm">
           문서 삭제
         </Button>
-      </DialogTrigger>
-      <DialogContent size="sm">
-        <DialogHeader>
-          <DialogTitle>'2026년 3월 보고서'를 삭제하시겠습니까</DialogTitle>
-          <DialogDescription>삭제하면 되돌릴 수 없습니다.</DialogDescription>
-        </DialogHeader>
-        <DialogFooter>
-          <DialogClose asChild>
-            <Button variant="outline">취소</Button>
-          </DialogClose>
-          <Button variant="destructive">삭제</Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+      </AlertDialogTrigger>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>'2026년 3월 보고서'를 삭제하시겠습니까</AlertDialogTitle>
+          <AlertDialogDescription>삭제하면 되돌릴 수 없습니다.</AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel>취소</AlertDialogCancel>
+          <AlertDialogAction variant="destructive">삭제</AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
   )
 }
 
 /** delete-many: 제목에 개수를 적고 본문에 무엇이 함께 지워지는지 적는다 */
 function DeleteManyCase() {
   return (
-    <Dialog>
-      <DialogTrigger asChild>
+    <AlertDialog>
+      <AlertDialogTrigger asChild>
         <Button variant="destructive" size="sm">
           선택 항목 삭제
         </Button>
-      </DialogTrigger>
-      <DialogContent size="sm">
-        <DialogHeader>
-          <DialogTitle>선택한 12건을 삭제하시겠습니까</DialogTitle>
-          <DialogDescription>
+      </AlertDialogTrigger>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>선택한 12건을 삭제하시겠습니까</AlertDialogTitle>
+          <AlertDialogDescription>
             선택한 게시글과 그에 달린 댓글이 모두 함께 지워집니다. 삭제하면 되돌릴 수 없습니다.
-          </DialogDescription>
-        </DialogHeader>
-        <DialogFooter>
-          <DialogClose asChild>
-            <Button variant="outline">취소</Button>
-          </DialogClose>
-          <Button variant="destructive">삭제</Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel>취소</AlertDialogCancel>
+          <AlertDialogAction variant="destructive">삭제</AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
   )
 }
 
@@ -271,35 +258,27 @@ function IrreversibleCase() {
   return (
     <ToastProvider duration={Infinity}>
       <div className="flex flex-col items-start gap-4">
-        <Dialog open={open} onOpenChange={setOpen}>
-          <DialogTrigger asChild>
+        <AlertDialog open={open} onOpenChange={setOpen}>
+          <AlertDialogTrigger asChild>
             <Button variant="destructive" size="sm">
               API 키 삭제
             </Button>
-          </DialogTrigger>
-          <DialogContent size="sm">
-            <DialogHeader>
-              <DialogTitle>'프로덕션 키'를 삭제하시겠습니까</DialogTitle>
-              <DialogDescription>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>'프로덕션 키'를 삭제하시겠습니까</AlertDialogTitle>
+              <AlertDialogDescription>
                 이 키를 쓰는 모든 연동이 즉시 끊깁니다. 삭제하면 되돌릴 수 없습니다.
-              </DialogDescription>
-            </DialogHeader>
-            <DialogFooter>
-              <DialogClose asChild>
-                <Button variant="outline">취소</Button>
-              </DialogClose>
-              <Button
-                variant="destructive"
-                onClick={() => {
-                  setOpen(false)
-                  setDone(true)
-                }}
-              >
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>취소</AlertDialogCancel>
+              <AlertDialogAction variant="destructive" onClick={() => setDone(true)}>
                 삭제
-              </Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
 
         {done && (
           <Toast className="w-full max-w-72" onOpenChange={(next) => !next && setDone(false)}>
@@ -314,8 +293,13 @@ function IrreversibleCase() {
 }
 
 /*
- * failed: destructive Toast로 알린다. Dialog는 닫지 않고 다시 시도할
- * 수 있게 둔다 — 확인 버튼을 눌러도 setOpen(false)를 부르지 않는다.
+ * failed: destructive Toast로 알린다. 대화상자는 닫지 않고 다시
+ * 시도할 수 있게 둔다.
+ *
+ * 실행 버튼은 AlertDialogAction으로 옮기지 않는다. AlertDialogAction은
+ * Radix의 Close를 그대로 감싼 컴포넌트라 눌리는 즉시 대화상자를
+ * 닫는다 — onClick으로 막을 방법이 없다. 이 자리는 "닫지 않고 다시
+ * 시도"를 요구하므로 Button을 그대로 둔다.
  */
 function FailedCase() {
   const [failed, setFailed] = useState(false)
@@ -323,27 +307,25 @@ function FailedCase() {
   return (
     <ToastProvider duration={Infinity}>
       <div className="flex flex-col items-start gap-4">
-        <Dialog>
-          <DialogTrigger asChild>
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
             <Button variant="destructive" size="sm">
               사용자 삭제
             </Button>
-          </DialogTrigger>
-          <DialogContent size="sm">
-            <DialogHeader>
-              <DialogTitle>'홍길동'을 삭제하시겠습니까</DialogTitle>
-              <DialogDescription>삭제하면 되돌릴 수 없습니다.</DialogDescription>
-            </DialogHeader>
-            <DialogFooter>
-              <DialogClose asChild>
-                <Button variant="outline">취소</Button>
-              </DialogClose>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>'홍길동'을 삭제하시겠습니까</AlertDialogTitle>
+              <AlertDialogDescription>삭제하면 되돌릴 수 없습니다.</AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>취소</AlertDialogCancel>
               <Button variant="destructive" onClick={() => setFailed(true)}>
                 삭제
               </Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
 
         {failed && (
           <Toast
