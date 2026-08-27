@@ -85,6 +85,18 @@
       ]
     },
     {
+      "name": "command-filter",
+      "type": "registry:lib",
+      "title": "Command Filter",
+      "description": "이름과 별칭으로 항목을 거르고 처음 나온 순서로 묶는 순수 함수. Command가 쓴다.",
+      "files": [
+        {
+          "path": "src/lib/command-filter.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
       "name": "accordion",
       "type": "registry:ui",
       "title": "Accordion",
@@ -289,6 +301,27 @@
       "files": [
         {
           "path": "src/components/ui/combobox.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "command",
+      "type": "registry:ui",
+      "title": "Command",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://adminds.vercel.app/r/command-filter.json",
+        "https://adminds.vercel.app/r/dialog.json",
+        "https://adminds.vercel.app/r/input.json",
+        "https://adminds.vercel.app/r/tokens.json",
+        "https://adminds.vercel.app/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/command.tsx",
           "type": "registry:ui"
         }
       ]
@@ -788,7 +821,7 @@
       "name": "adminds",
       "type": "registry:item",
       "title": "Admin Design System",
-      "description": "토큰과 컴포넌트 서른일곱 개를 한 번에 가져온다.",
+      "description": "토큰과 컴포넌트 서른여덟 개를 한 번에 가져온다.",
       "registryDependencies": [
         "https://adminds.vercel.app/r/accordion.json",
         "https://adminds.vercel.app/r/alert.json",
@@ -801,6 +834,7 @@
         "https://adminds.vercel.app/r/checkbox.json",
         "https://adminds.vercel.app/r/collapsible.json",
         "https://adminds.vercel.app/r/combobox.json",
+        "https://adminds.vercel.app/r/command.json",
         "https://adminds.vercel.app/r/date-picker.json",
         "https://adminds.vercel.app/r/description-list.json",
         "https://adminds.vercel.app/r/dialog.json",

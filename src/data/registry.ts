@@ -1706,6 +1706,102 @@ export const components: ComponentMeta[] = [
     verified: true,
   },
   {
+    id: 'command',
+    name: 'Command',
+    aliases: ['커맨드', '명령 팔레트', 'command palette', '빠른 이동', '검색', 'cmdk'],
+    category: 'navigation',
+    status: 'stable',
+    addedIn: 'v0.12.0',
+    changedIn: 'v0.12.0',
+    purpose:
+      '검색해서 곧장 실행한다. 값을 골라 폼에 담으면 Combobox고, 어딘가로 가거나 동작을 실행하면 Command다. cmdk 없이 Dialog와 이 저장소의 순수 함수만으로 세웠다.',
+    anatomy: [
+      {
+        part: 'search',
+        label: 'Search',
+        note: '검색 칸. 왼쪽에 16×16 Search 아이콘이 있고 아래 목록과 테두리로 나뉜다. 위아래 화살표로 짚은 자리를 옮기고 Enter로 실행한다',
+      },
+      {
+        part: 'list',
+        label: 'List',
+        note: '걸러진 항목이 담기는 자리. role=listbox이고 세로로 스크롤된다',
+      },
+      {
+        part: 'group-label',
+        label: 'Group label',
+        note: '항목이 속한 묶음의 이름표. 이름표가 없는 항목은 이 부위 없이 곧장 나열된다',
+        optional: true,
+      },
+      {
+        part: 'item',
+        label: 'Item',
+        note: '실행할 수 있는 낱개 항목. role=option이고 지금 짚은 항목은 aria-activedescendant가 알린다',
+      },
+      {
+        part: 'empty-message',
+        label: 'Empty message',
+        note: '걸러진 결과가 없을 때 목록 자리를 대신하는 문구. 결과가 있는 상태에서는 나타나지 않는다',
+        optional: true,
+      },
+    ],
+    properties: [
+      {
+        name: 'state',
+        title: 'State',
+        description: '질의에 따라 목록이 어떻게 달라지는지 보인다. 포털을 쓰지 않아 세 모습이 격자 안에 그대로 담긴다.',
+        display: 'grid',
+        options: [
+          { value: 'default', note: '기본. 질의가 비어 전체가 보인다' },
+          { value: 'filtered', note: '질의로 좁혀진 목록' },
+          { value: 'empty', note: '맞는 것이 없다' },
+        ],
+      },
+    ],
+    guidelines: [
+      {
+        id: 'distinguish-combobox',
+        title: 'Distinguish from Combobox',
+        body: '값을 골라 폼에 담으면 Combobox입니다. 어딘가로 가거나 무언가를 실행하면 Command입니다.',
+        do: ['눌러서 곧장 실행되는 동작에는 Command를 쓴다', '검색해서 값 하나를 폼에 담을 때는 Combobox를 쓴다'],
+        dont: ['실행되는 동작을 값처럼 트리거에 남겨 두지 않는다'],
+      },
+      {
+        id: 'empty-state-teaches',
+        title: 'Empty state teaches',
+        body: '질의가 비었을 때 전체를 쏟지 않고 자주 쓰는 것이나 최근 것을 보입니다.',
+        do: ['빈 화면에 최근 항목처럼 무엇을 칠 수 있는지 보여준다'],
+        dont: ['빈 화면에 전체 목록을 쏟아 무엇부터 봐야 할지 알 수 없게 두지 않는다'],
+      },
+      {
+        id: 'groups-are-labels',
+        title: 'Groups are labels, not walls',
+        body: '위아래 이동은 묶음 경계를 넘어 이어집니다. 묶음마다 멈추면 아래쪽 묶음에 손이 닿지 않습니다.',
+        do: ['여러 묶음을 한 목록 안에 이름표로만 나눈다'],
+        dont: ['묶음마다 목록을 따로 떼어 옮겨 다녀야 하게 만들지 않는다'],
+      },
+      {
+        id: 'keywords-carry-aliases',
+        title: 'Keywords carry aliases',
+        body: "이름만으로는 사람이 치는 말에 닿지 않습니다. '모달'로 Dialog를 찾으려면 항목이 그 말을 들고 있어야 합니다.",
+        do: ['항목마다 사람이 실제로 치는 다른 이름을 keywords로 함께 태운다'],
+        dont: ['영문 이름 하나만 놓고 그 말을 몰라도 찾을 수 있으리라 기대하지 않는다'],
+      },
+    ],
+    usage: [
+      { id: 'quick-navigation', title: '빠른 이동', note: '문서 컴포넌트 목록에서 원하는 페이지로 곧장 이동한다' },
+      { id: 'run-action', title: '동작 실행', note: '폼을 거치지 않고 자주 쓰는 동작을 곧바로 수행한다' },
+      { id: 'column-picker', title: '표에서 보일 열 고르기', note: '고른 열이 바로 반영된다. 값을 쌓아 두는 Combobox와 다르다' },
+      { id: 'global-search', title: '전역 검색', note: '컴포넌트와 Foundations 문서를 한 자리에서 함께 찾는다' },
+    ],
+    cases: [
+      { id: 'no-results', title: '결과가 없는 경우', note: '검색어를 바꿔 보라는 안내를 함께 보인다' },
+      { id: 'many-entries', title: '항목이 아주 많은 경우', note: '목록이 자리를 넘으면 목록 안에서 스크롤된다' },
+      { id: 'single-group', title: '묶음이 하나뿐인 경우', note: '묶음이 하나면 그 이름표 하나만 보인다' },
+      { id: 'narrow-screen', title: '좁은 화면', note: '검색 칸과 목록 모두 폭이 줄어도 넘치지 않는다' },
+    ],
+    verified: true,
+  },
+  {
     id: 'pagination',
     name: 'Pagination',
     aliases: ['페이지', '페이지네이션', '페이징', 'paging'],

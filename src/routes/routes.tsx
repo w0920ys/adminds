@@ -14,6 +14,7 @@ import { CardPage } from '@/routes/components/CardPage'
 import { CheckboxPage } from '@/routes/components/CheckboxPage'
 import { CollapsiblePage } from '@/routes/components/CollapsiblePage'
 import { ComboboxPage } from '@/routes/components/ComboboxPage'
+import { CommandPage } from '@/routes/components/CommandPage'
 import { ComponentsIndex } from '@/routes/components/ComponentsIndex'
 import { DatePickerPage } from '@/routes/components/DatePickerPage'
 import { DescriptionListPage } from '@/routes/components/DescriptionListPage'
@@ -103,6 +104,7 @@ export const routes: RouteObject[] = [
           { path: 'textarea', element: <TextareaPage /> },
           { path: 'tabs', element: <TabsPage /> },
           { path: 'breadcrumb', element: <BreadcrumbPage /> },
+          { path: 'command', element: <CommandPage /> },
           { path: 'pagination', element: <PaginationPage /> },
           { path: 'steps', element: <StepsPage /> },
           { path: 'alert', element: <AlertPage /> },

@@ -106,6 +106,7 @@ export const sections: NavSection[] = [
         label: 'Navigation',
         items: [
           { to: '/components/breadcrumb', label: 'Breadcrumb', updatedAt: '2026-08-26' },
+          { to: '/components/command', label: 'Command', updatedAt: '2026-08-27' },
           { to: '/components/pagination', label: 'Pagination', updatedAt: '2026-08-26' },
           { to: '/components/steps', label: 'Steps', updatedAt: '2026-08-26' },
           { to: '/components/tabs', label: 'Tabs', updatedAt: '2026-08-26' },

@@ -1,0 +1,14 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "command-filter",
+  "title": "Command Filter",
+  "description": "이름과 별칭으로 항목을 거르고 처음 나온 순서로 묶는 순수 함수. Command가 쓴다.",
+  "files": [
+    {
+      "path": "src/lib/command-filter.ts",
+      "content": "export type CommandEntry = {\n  value: string\n  label: string\n  /** 이 항목이 속한 묶음의 이름. 없으면 이름표 없는 묶음에 담긴다 */\n  group?: string\n  /** 사람이 실제로 치는 다른 이름들. 이름과 함께 훑는다 */\n  keywords?: string[]\n  disabled?: boolean\n}\n\nexport type CommandSection = { label: string; entries: CommandEntry[] }\n\n/**\n * 거르는 규칙은 filterOptions와 같다 — 공백을 걷고, 대소문자를 가리지\n * 않고, 앞글자가 아니라 포함으로 맞추고, 원본 순서를 지킨다. 항목 순서에\n * 뜻이 담기는 경우가 많아 점수순으로 흩뜨리지 않는다.\n *\n * 다른 것은 훑는 자리 하나다. filterOptions는 label만 보는데 여기서는\n * keywords까지 함께 본다 — '모달'로 Dialog에 닿으려면 항목이 그 말을\n * 들고 있어야 한다. 그 필요 때문에 filterOptions를 넓히지는 않았다.\n * 넓히면 Combobox가 쓰는 ComboboxOption이 함께 넓어진다.\n */\nexport function filterCommandEntries(entries: CommandEntry[], query: string): CommandEntry[] {\n  const needle = query.trim().toLowerCase()\n  if (!needle) return entries\n  return entries.filter((entry) =>\n    [entry.label, ...(entry.keywords ?? [])].some((text) => text.toLowerCase().includes(needle)),\n  )\n}\n\n/**\n * 묶음은 처음 나온 순서로 놓는다. 목록의 순서에 이미 뜻이 있으므로\n * 이름순으로 다시 세우지 않는다. 묶음이 없는 항목은 이름표가 빈\n * 묶음에 담기고, 그 묶음은 첫 무묶음 항목이 있던 자리에 놓인다 —\n * 이름표가 비면 화면에 머리글을 그리지 않는다.\n */\nexport function groupCommandEntries(entries: CommandEntry[]): CommandSection[] {\n  const sections: CommandSection[] = []\n  const byLabel = new Map<string, CommandSection>()\n\n  for (const entry of entries) {\n    const label = entry.group ?? ''\n    let section = byLabel.get(label)\n    if (!section) {\n      section = { label, entries: [] }\n      byLabel.set(label, section)\n      sections.push(section)\n    }\n    section.entries.push(entry)\n  }\n\n  return sections\n}\n",
+      "type": "registry:lib"
+    }
+  ],
+  "type": "registry:lib"
+}
