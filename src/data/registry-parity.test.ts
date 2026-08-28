@@ -170,8 +170,8 @@ describe('public/r의 구운 payload', () => {
 
   /*
    * 위의 바이트 비교는 files[].content만 본다. 그래서 files가 없는 항목은
-   * 루프를 지나가기만 하고 아무것도 지켜지지 않는다 — registry.json의
-   * adminds(묶음)와 tokens가 그렇고, 그중 adminds는 "이거 하나면 다 받는다"로
+   * 루프를 지나가기만 하고 아무것도 지켜지지 않는다 — registry.json에서는
+   * adminds(묶음) 하나가 그렇고, 그것이 하필 "이거 하나면 다 받는다"로
    * 안내하는 항목이라 실제로 가장 많이 나가는 payload다. 컴포넌트를 더하고
    * npm run registry를 잊으면 개별 컴포넌트는 바이트 비교에 걸리지만 묶음의
    * registryDependencies는 조용히 낡는다.
