@@ -1,5 +1,6 @@
-import { X } from 'lucide-react'
-import { Link, NavLink, useLocation } from 'react-router'
+import { ChevronLeft, X } from 'lucide-react'
+import { useState } from 'react'
+import { NavLink, useLocation } from 'react-router'
 import type { DocLink } from '@/components/layout/nav-config'
 import { findSection, isGroup, sections, UPDATE_DOT_SECTION_IDS } from '@/components/layout/nav-config'
 import { UpdateDot } from '@/components/layout/UpdateDot'
@@ -46,12 +47,42 @@ function LnbItem({
   )
 }
 
+/*
+ * 모바일 서랍은 두 화면을 오간다 — 'sections'(1depth, 전역 섹션 목록)와
+ * 'section'(2depth, 한 섹션의 문서 목록). 어느 섹션을 2depth에서 보여줄지는
+ * 경로가 아니라 이 상태가 정한다 — 1depth에서 섹션을 탭해도 아직 이동한
+ * 게 아니므로(문서를 탭하기 전까지는), 실제 경로가 속한 섹션과 다를 수
+ * 있다. 데스크톱 정적 사이드바는 이 상태를 쓰지 않는다 — 항상 2depth만
+ * 보여주고 뒤로가기가 없다.
+ */
+type LnbView = { kind: 'sections' } | { kind: 'section'; sectionId: string }
+
 export function Lnb({ open, onClose }: { open: boolean; onClose: () => void }) {
   const { pathname } = useLocation()
-  const section = findSection(pathname)
+  const routeSection = findSection(pathname)
+
+  const [view, setView] = useState<LnbView>({ kind: 'section', sectionId: routeSection.id })
+
+  /*
+   * 서랍을 새로 열 때마다 현재 경로의 섹션 2depth부터 다시 시작한다 —
+   * 마지막으로 보던 화면(1depth였든 다른 섹션이었든)을 기억하지 않는다.
+   * useEffect로 "prop이 바뀌면 state를 리셋"하지 않는다 — 렌더 중에
+   * 이전 open 값과 비교해 바로 맞춘다(React가 권하는 패턴이고, 이
+   * 프로젝트의 oxlint가 effect 안 setState를 이미 경고로 잡는다).
+   */
+  const [wasOpen, setWasOpen] = useState(open)
+  if (open !== wasOpen) {
+    setWasOpen(open)
+    if (open) setView({ kind: 'section', sectionId: routeSection.id })
+  }
+
+  const browsedSection =
+    view.kind === 'section'
+      ? (sections.find((item) => item.id === view.sectionId) ?? routeSection)
+      : routeSection
 
   /* 업데이트 점은 세 섹션(foundations·components·patterns)에서만 보인다 */
-  const showDots = UPDATE_DOT_SECTION_IDS.has(section.id)
+  const showDots = UPDATE_DOT_SECTION_IDS.has(browsedSection.id)
 
   return (
     <>
@@ -70,48 +101,85 @@ export function Lnb({ open, onClose }: { open: boolean; onClose: () => void }) {
        */}
       <aside
         className={cn(
-          'bg-surface fixed inset-y-0 left-0 z-drawer flex w-60 flex-col overflow-y-auto border-r p-3 transition-transform',
+          'bg-surface fixed inset-y-0 right-0 z-drawer flex w-60 flex-col overflow-y-auto border-l p-3 transition-transform',
           'md:static md:h-full md:shrink-0 md:translate-x-0',
-          open ? 'translate-x-0' : '-translate-x-full',
+          open ? 'translate-x-0' : 'translate-x-full',
         )}
       >
-        <div className="flex h-9 items-center px-2">
-          <p className="text-muted-foreground text-11 font-bold tracking-widest">
-            {section.label.toUpperCase()}
-          </p>
-          <button
-            className="text-muted-foreground ml-auto md:hidden"
-            onClick={onClose}
-            aria-label="메뉴 닫기"
-          >
-            <X size={18} />
-          </button>
-        </div>
-
-        <div className="mb-3 flex flex-col border-b pb-3 md:hidden">
-          <p className="text-muted-foreground mb-1.5 px-2 text-11 font-bold tracking-widest">
-            Sections
-          </p>
-          {sections.map((item) => (
-            <Link
-              key={item.id}
-              to={item.to}
+        {/*
+         * 헤더 행은 1depth와 2depth가 다르다 — 1depth는 "Sections" 라벨만,
+         * 2depth는 뒤로가기+섹션 이름. 뒤로가기는 md:hidden이다(데스크톱
+         * 정적 사이드바는 1depth 자체가 없다).
+         */}
+        {view.kind === 'sections' ? (
+          <div className="flex h-9 items-center px-2">
+            <p className="text-muted-foreground text-11 font-bold tracking-widest">Sections</p>
+            <button
+              className="text-muted-foreground ml-auto md:hidden"
               onClick={onClose}
-              aria-current={item.id === section.id ? 'page' : undefined}
-              className={cn(
-                'flex h-control items-center rounded-md px-2 text-16',
-                item.id === section.id
-                  ? 'bg-accent text-accent-foreground font-semibold'
-                  : 'text-muted-foreground',
-              )}
+              aria-label="메뉴 닫기"
             >
-              {item.label}
-            </Link>
-          ))}
-        </div>
+              <X size={18} />
+            </button>
+          </div>
+        ) : (
+          <div className="flex h-9 items-center gap-1 px-2">
+            <button
+              className="text-muted-foreground -ml-1 md:hidden"
+              onClick={() => setView({ kind: 'sections' })}
+              aria-label="섹션 목록으로 돌아가기"
+            >
+              <ChevronLeft size={18} />
+            </button>
+            <p className="text-muted-foreground text-11 font-bold tracking-widest">
+              {browsedSection.label.toUpperCase()}
+            </p>
+            <button
+              className="text-muted-foreground ml-auto md:hidden"
+              onClick={onClose}
+              aria-label="메뉴 닫기"
+            >
+              <X size={18} />
+            </button>
+          </div>
+        )}
 
-        <nav className="mt-2 flex flex-col" aria-label={`${section.label} 문서 목록`}>
-          {section.items.map((item) =>
+        {/*
+         * 1depth: 전역 섹션 목록. 탭해도 이동하지 않는다 — 2depth 미리보기로
+         * 전환할 뿐이다(그래서 Link가 아니라 button이다). 데스크톱에는 없다.
+         */}
+        {view.kind === 'sections' && (
+          <nav className="mt-2 flex flex-col md:hidden" aria-label="섹션 목록">
+            {sections.map((item) => (
+              <button
+                key={item.id}
+                type="button"
+                onClick={() => setView({ kind: 'section', sectionId: item.id })}
+                aria-current={item.id === routeSection.id ? 'page' : undefined}
+                className={cn(
+                  'flex h-control items-center rounded-md px-2 text-left text-16',
+                  item.id === routeSection.id
+                    ? 'bg-accent text-accent-foreground font-semibold'
+                    : 'text-muted-foreground hover:bg-accent/60',
+                )}
+              >
+                {item.label}
+              </button>
+            ))}
+          </nav>
+        )}
+
+        {/*
+         * 2depth: 한 섹션의 문서 목록. 데스크톱에서는 항상 이것만 보인다 —
+         * view.kind가 'sections'여도 md 이상에서는 md:flex가 hidden을 덮는다
+         * (모바일 폭에서 뒤로가기를 누른 채로 창을 넓히는 드문 경우까지 desktop
+         * 정적 사이드바가 항상 문서 목록을 보여주게 한다).
+         */}
+        <nav
+          className={cn('mt-2 flex flex-col', view.kind === 'sections' && 'hidden md:flex')}
+          aria-label={`${browsedSection.label} 문서 목록`}
+        >
+          {browsedSection.items.map((item) =>
             isGroup(item) ? (
               /* 묶음은 이동하지 않으므로 링크가 아니라 목록의 머리글이다 */
               <section key={item.label} className="mt-8 flex flex-col first:mt-0">
