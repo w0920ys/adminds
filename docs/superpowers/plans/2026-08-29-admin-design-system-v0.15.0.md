@@ -177,16 +177,26 @@ export function Lnb({ open, onClose }: { open: boolean; onClose: () => void }) {
   const [view, setView] = useState<LnbView>({ kind: 'section', sectionId: routeSection.id })
 
   /*
-   * 서랍을 새로 열 때마다 현재 경로의 섹션 2depth부터 다시 시작한다 —
-   * 마지막으로 보던 화면(1depth였든 다른 섹션이었든)을 기억하지 않는다.
-   * useEffect로 "prop이 바뀌면 state를 리셋"하지 않는다 — 렌더 중에
-   * 이전 open 값과 비교해 바로 맞춘다(React가 권하는 패턴이고, 이
+   * view를 현재 경로 기준으로 다시 맞춰야 하는 순간이 둘이다 —
+   * (1) 서랍을 새로 열 때(마지막으로 보던 화면을 기억하지 않는다),
+   * (2) 경로 자체가 바뀔 때(데스크톱 정적 사이드바가 이 경우다 — open은
+   * 데스크톱에서 절대 안 바뀌므로, pathname 변화만이 유일한 신호다).
+   * 이 둘을 안 가르면 데스크톱에서 링크를 눌러 다른 섹션으로 가도
+   * 사이드바가 첫 마운트 때의 섹션에 멈춰 있는다.
+   * useEffect로 "prop/경로가 바뀌면 state를 리셋"하지 않는다 — 렌더 중에
+   * 이전 값과 비교해 바로 맞춘다(React가 권하는 패턴이고, 이
    * 프로젝트의 oxlint가 effect 안 setState를 이미 경고로 잡는다).
    */
-  const [wasOpen, setWasOpen] = useState(open)
-  if (open !== wasOpen) {
-    setWasOpen(open)
-    if (open) setView({ kind: 'section', sectionId: routeSection.id })
+  const [prevOpen, setPrevOpen] = useState(open)
+  const [prevPathname, setPrevPathname] = useState(pathname)
+  if (prevOpen !== open || prevPathname !== pathname) {
+    const openedJustNow = open && !prevOpen
+    const navigated = pathname !== prevPathname
+    setPrevOpen(open)
+    setPrevPathname(pathname)
+    if (openedJustNow || navigated) {
+      setView({ kind: 'section', sectionId: routeSection.id })
+    }
   }
 
   const browsedSection =
@@ -316,7 +326,7 @@ export function Lnb({ open, onClose }: { open: boolean; onClose: () => void }) {
 
 주의할 점 셋:
 1. `Link` import를 뺐다 — 1depth 섹션 목록이 이제 `button`이라 더 안 쓴다. `NavLink`는 `LnbItem` 안에서 여전히 쓴다.
-2. `useEffect`를 안 쓴다 — Global Constraints에 적은 대로, 렌더 중 `open`과 `wasOpen`을 비교해 상태를 맞춘다.
+2. `useEffect`를 안 쓴다 — Global Constraints에 적은 대로, 렌더 중 `open`·`pathname`을 이전 값과 비교해 상태를 맞춘다. `open` 전환만 보면 데스크톱(거기서는 `open`이 절대 안 바뀐다)에서 섹션 간 이동 시 사이드바가 갱신되지 않는다 — 그래서 `pathname` 변화도 같은 자격의 리셋 신호로 같이 본다.
 3. 데스크톱(`md:` 이상)에서는 `open` prop과 무관하게 `aside`가 항상 화면에 보인다(`md:translate-x-0`) — 그래서 2depth `nav`의 `hidden md:flex`가 중요하다. 이게 없으면 아주 드문 경우(모바일 폭에서 뒤로가기를 누른 채 창을 넓힘)에 데스크톱 사이드바가 빈 채로 보인다.
 
 - [ ] **Step 3: 검사**
