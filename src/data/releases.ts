@@ -29,6 +29,26 @@ export type Release = {
 /** 최신 버전이 배열의 맨 앞이다. */
 export const releases: Release[] = [
   {
+    version: 'v0.14.0',
+    publishedAt: '2026-08-28',
+    title: '본문 기본값을 16px로 올리고 스케일 열두 단계를 다시 짰어요',
+    purpose:
+      '본문 기본값이 14에서 16으로 올랐고, 전체 글자 크기 스케일을 픽셀 이름을 쓰는 열두 단계로 다시 정의했어요.',
+    changes: [
+      { target: 'Foundations / Typography', type: 'Updated', note: '스케일 표를 새 열두 단계(11~48)로 다시 썼어요.' },
+      { target: '제목류', type: 'Updated', note: '소제목 18, 다이얼로그류 제목 20, 페이지 제목 32, 섹션 제목 22로 옮겼어요.' },
+      { target: '통계·개수 표시', type: 'Updated', note: '강조 숫자 티어(32/40/48)로 옮기고 굵기를 bold로 맞췄어요.' },
+      { target: 'Patterns 예시 제목', type: 'Updated', note: '상세 28, 목록 24로 갈라 뒀어요.' },
+      { target: '제품 컴포넌트 · 레이아웃', type: 'Updated', note: '본문을 16으로 올리고, Table 등 조밀한 자리는 14로 남겼어요.' },
+      { target: '문서 전시 시스템 · 컴포넌트 문서 페이지', type: 'Updated', note: '본문을 16으로 올렸어요.' },
+      { target: 'cn 유틸', type: 'Fixed', note: 'text-11 같은 픽셀 크기 클래스가 뒤따르는 색 클래스에 지워지던 것을 고쳤어요.' },
+      { target: 'Registry', type: 'Fixed', note: 'Dialog·Sheet 등 해부도 설명이 옛 클래스명(text-sm·text-lg 등)을 그대로 적고 있던 것을 실제 클래스로 고쳤어요.' },
+    ],
+    requests: [],
+    reviewItems: [],
+    impact: ['Foundations', 'Components', 'Patterns', 'Get started', 'Updates'],
+  },
+  {
     version: 'v0.13.0',
     publishedAt: '2026-08-28',
     title: 'Data Table을 싣고 Table이 약속한 정렬을 코드로 지켰어요',

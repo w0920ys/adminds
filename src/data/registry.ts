@@ -112,7 +112,7 @@ export const components: ComponentMeta[] = [
     anatomy: [
       { part: 'container', label: 'Container', note: '높이는 size 토큰, 모서리는 radius-md' },
       { part: 'prefix-icon', label: 'Prefix Icon', note: '16×16, 라벨과 8px 간격', optional: true },
-      { part: 'label', label: 'Label', note: 'text-sm / font-medium' },
+      { part: 'label', label: 'Label', note: 'text-16 / font-medium' },
       { part: 'suffix-icon', label: 'Suffix Icon', note: '16×16, 라벨과 8px 간격', optional: true },
     ],
     properties: [
@@ -246,7 +246,7 @@ export const components: ComponentMeta[] = [
       {
         part: 'trigger',
         label: 'Trigger',
-        note: "누르면 트리거 아래에 목록이 뜬다. bg-popover, 테두리, radius-md, 쌓임 순서는 z-popover. 각 항목은 text-sm이고 포커스되면 bg-accent, 위험한 항목은 text-destructive다. 위험한 항목은 구분선(bg-border, 1px) 아래로 모은다. Select와 달리 고른 항목에 Check 표시가 남지 않는다 — 여기서는 값을 고르는 것이 아니라 동작을 실행하는 것이고, 실행되면 메뉴가 닫힌다. Radix DropdownMenu는 기본이 modal이라(RemoveScroll·FocusScope·hideOthers) 열린 목록은 구조도 무대에 담지 않는다",
+        note: "누르면 트리거 아래에 목록이 뜬다. bg-popover, 테두리, radius-md, 쌓임 순서는 z-popover. 각 항목은 text-16이고 포커스되면 bg-accent, 위험한 항목은 text-destructive다. 위험한 항목은 구분선(bg-border, 1px) 아래로 모은다. Select와 달리 고른 항목에 Check 표시가 남지 않는다 — 여기서는 값을 고르는 것이 아니라 동작을 실행하는 것이고, 실행되면 메뉴가 닫힌다. Radix DropdownMenu는 기본이 modal이라(RemoveScroll·FocusScope·hideOthers) 열린 목록은 구조도 무대에 담지 않는다",
       },
     ],
     properties: [
@@ -317,7 +317,7 @@ export const components: ComponentMeta[] = [
         note: '높이는 Button과 같은 control 토큰, 모서리는 radius-md. 눌리면 Radix가 data-state="on"을 붙이고 배경이 accent로 바뀐다',
       },
       { part: 'icon', label: 'Icon', note: '16×16, 라벨과 8px 간격', optional: true },
-      { part: 'label', label: 'Label', note: 'text-sm / font-medium', optional: true },
+      { part: 'label', label: 'Label', note: 'text-16 / font-medium', optional: true },
       {
         part: 'group-container',
         label: 'Group Container',
@@ -431,11 +431,11 @@ export const components: ComponentMeta[] = [
         label: 'Box',
         note: '4×4(16px), 꺼짐은 border-input, 켜짐은 bg-primary, 모서리는 radius-sm. 켜지거나 중간 상태면 안쪽에 Check 또는 Minus가 그려진다',
       },
-      { part: 'label', label: 'Label', note: 'text-sm. 상자와 함께 눌리는 자리', optional: true },
+      { part: 'label', label: 'Label', note: 'text-16. 상자와 함께 눌리는 자리', optional: true },
       {
         part: 'description',
         label: 'Description',
-        note: '라벨 아래의 보조 설명. text-muted-foreground / text-xs',
+        note: '라벨 아래의 보조 설명. text-muted-foreground / text-12',
         optional: true,
       },
     ],
@@ -752,7 +752,7 @@ export const components: ComponentMeta[] = [
         label: 'Container',
         note: 'layout이 stacked면 세로로 쌓고, horizontal이면 grid-cols-[auto_1fr]로 라벨과 값 칸을 나눈다',
       },
-      { part: 'label', label: 'Label', note: 'FieldLabel. htmlFor로 Control과 이어진다. text-sm font-medium' },
+      { part: 'label', label: 'Label', note: 'FieldLabel. htmlFor로 Control과 이어진다. text-16 font-medium' },
       {
         part: 'requirement-mark',
         label: 'Requirement Mark',
@@ -767,13 +767,13 @@ export const components: ComponentMeta[] = [
       {
         part: 'help',
         label: 'Help',
-        note: 'FieldHelp. text-muted-foreground / text-xs. 자기 id를 Field에 등록해 aria-describedby에 실린다',
+        note: 'FieldHelp. text-muted-foreground / text-12. 자기 id를 Field에 등록해 aria-describedby에 실린다',
         optional: true,
       },
       {
         part: 'error',
         label: 'Error',
-        note: 'FieldError. text-destructive / text-xs. 도움말이 있어도 지우지 않고 함께 등록된다',
+        note: 'FieldError. text-destructive / text-12. 도움말이 있어도 지우지 않고 함께 등록된다',
         optional: true,
       },
     ],
@@ -993,7 +993,7 @@ export const components: ComponentMeta[] = [
       {
         part: 'value',
         label: 'Value',
-        note: '사용자가 입력한 값. text-sm. 비어 있으면 이 자리에 자리표시자가 대신 보인다',
+        note: '사용자가 입력한 값. text-16. 비어 있으면 이 자리에 자리표시자가 대신 보인다',
       },
       {
         part: 'prefix-icon',
@@ -1107,11 +1107,11 @@ export const components: ComponentMeta[] = [
         label: 'Item',
         note: '4×4(16px) 원, 꺼짐은 border-input, 켜지면 border-primary. 켜지면 안쪽에 지름 8px 점이 채워진다',
       },
-      { part: 'label', label: 'Label', note: 'text-sm. 항목과 함께 눌리는 자리' },
+      { part: 'label', label: 'Label', note: 'text-16. 항목과 함께 눌리는 자리' },
       {
         part: 'description',
         label: 'Description',
-        note: '라벨 아래의 보조 설명. text-muted-foreground / text-xs',
+        note: '라벨 아래의 보조 설명. text-muted-foreground / text-12',
         optional: true,
       },
     ],
@@ -1203,7 +1203,7 @@ export const components: ComponentMeta[] = [
       {
         part: 'trigger',
         label: 'Trigger',
-        note: '테두리·높이·포커스 링은 Input과 같은 토큰을 쓴다. 나란히 놓여도 어긋나지 않는다. 오른쪽 끝에 16×16 ChevronDown이 열림 여부와 무관하게 항상 보인다. 열리면 트리거 아래에 목록이 뜬다. bg-popover, 모서리는 radius-md, 쌓임 순서는 z-popover. 목록의 각 줄은 text-sm이고 포커스되면 bg-accent, 고른 항목에는 오른쪽에 16×16 Check 아이콘이 함께 보인다',
+        note: '테두리·높이·포커스 링은 Input과 같은 토큰을 쓴다. 나란히 놓여도 어긋나지 않는다. 오른쪽 끝에 16×16 ChevronDown이 열림 여부와 무관하게 항상 보인다. 열리면 트리거 아래에 목록이 뜬다. bg-popover, 모서리는 radius-md, 쌓임 순서는 z-popover. 목록의 각 줄은 text-16이고 포커스되면 bg-accent, 고른 항목에는 오른쪽에 16×16 Check 아이콘이 함께 보인다',
       },
       {
         part: 'value',
@@ -1419,11 +1419,11 @@ export const components: ComponentMeta[] = [
         label: 'Thumb',
         note: '5×5(20px)의 흰 원. 상태에 따라 트랙의 왼쪽이나 오른쪽으로 옮겨간다. pending이면 이 자리에 스피너가 대신 그려진다',
       },
-      { part: 'label', label: 'Label', note: 'text-sm. 켜진 상태를 뜻하는 말로 적는다', optional: true },
+      { part: 'label', label: 'Label', note: 'text-16. 켜진 상태를 뜻하는 말로 적는다', optional: true },
       {
         part: 'description',
         label: 'Description',
-        note: '라벨 아래의 보조 설명. text-muted-foreground / text-xs',
+        note: '라벨 아래의 보조 설명. text-muted-foreground / text-12',
         optional: true,
       },
     ],
@@ -1524,7 +1524,7 @@ export const components: ComponentMeta[] = [
       {
         part: 'value',
         label: 'Value',
-        note: '사용자가 입력한 값. text-sm. 비어 있으면 이 자리에 자리표시자가 대신 보인다',
+        note: '사용자가 입력한 값. text-16. 비어 있으면 이 자리에 자리표시자가 대신 보인다',
       },
       {
         part: 'handle',
@@ -1535,7 +1535,7 @@ export const components: ComponentMeta[] = [
       {
         part: 'char-count',
         label: 'Character Count',
-        note: '글자 수 제한이 있을 때 남은 수를 보인다. text-muted-foreground / text-xs',
+        note: '글자 수 제한이 있을 때 남은 수를 보인다. text-muted-foreground / text-12',
         optional: true,
       },
     ],
@@ -1637,7 +1637,7 @@ export const components: ComponentMeta[] = [
       {
         part: 'item',
         label: 'Item',
-        note: '지나온 계층으로 가는 링크. text-sm, text-muted-foreground, hover에서 text-foreground',
+        note: '지나온 계층으로 가는 링크. text-16, text-muted-foreground, hover에서 text-foreground',
       },
       {
         part: 'separator',
@@ -2041,7 +2041,7 @@ export const components: ComponentMeta[] = [
       {
         part: 'tab',
         label: 'Tab',
-        note: "role='tab'. text-sm / font-medium, 기본은 text-muted-foreground, 활성이면 text-foreground",
+        note: "role='tab'. text-16 / font-medium, 기본은 text-muted-foreground, 활성이면 text-foreground",
       },
       {
         part: 'active-indicator',
@@ -2251,7 +2251,7 @@ export const components: ComponentMeta[] = [
       {
         part: 'content',
         label: 'Content',
-        note: '이미지가 성공적으로 불러와지면 그 사진(object-cover)이 안을 채운다. 이미지가 없거나 아직 불러오는 동안에는 대체 글자가 대신한다 — 이름이 있으면 이니셜(첫 글자), 이름조차 없으면 일반 사람 아이콘. bg-muted, text-muted-foreground, text-xs',
+        note: '이미지가 성공적으로 불러와지면 그 사진(object-cover)이 안을 채운다. 이미지가 없거나 아직 불러오는 동안에는 대체 글자가 대신한다 — 이름이 있으면 이니셜(첫 글자), 이름조차 없으면 일반 사람 아이콘. bg-muted, text-muted-foreground, text-12',
       },
     ],
     properties: [
@@ -2332,7 +2332,7 @@ export const components: ComponentMeta[] = [
         note: '1.5×1.5, bg-current로 글자색을 그대로 물려받는다',
         optional: true,
       },
-      { part: 'label', label: 'Label', note: 'text-2xs / font-bold' },
+      { part: 'label', label: 'Label', note: 'text-11 / font-bold' },
     ],
     properties: [
       {
@@ -2417,7 +2417,7 @@ export const components: ComponentMeta[] = [
       {
         part: 'description',
         label: 'Description',
-        note: 'text-muted-foreground text-sm',
+        note: 'text-muted-foreground text-16',
         optional: true,
       },
       {
@@ -3011,9 +3011,9 @@ export const components: ComponentMeta[] = [
     changedIn: 'v0.13.0',
     purpose: '어드민의 중심 화면이다. 여러 행의 데이터를 칸으로 나누어 보이고, 정렬 가능한 열은 이름을 누르는 단추로, 지금 방향은 aria-sort로 드러낸다. 다음 방향을 고르는 일은 호출하는 쪽의 몫이다.',
     anatomy: [
-      { part: 'header', label: 'Header', note: 'bg-surface. 열 이름을 담는 행. text-xs font-bold' },
+      { part: 'header', label: 'Header', note: 'bg-surface. 열 이름을 담는 행. text-12 font-bold' },
       { part: 'row', label: 'Row', note: '높이는 density가 정한다 — --spacing-row 또는 --spacing-row-compact' },
-      { part: 'cell', label: 'Cell', note: 'text-sm. 숫자 칸은 text-right에 tabular-nums' },
+      { part: 'cell', label: 'Cell', note: 'text-14. 숫자 칸은 text-right에 tabular-nums' },
       {
         part: 'select-cell',
         label: 'Select cell',
@@ -3117,8 +3117,8 @@ export const components: ComponentMeta[] = [
     purpose: '화면에 머무르는 알림을 보인다. 잠깐 나타났다 사라져도 되면 Toast를 쓴다.',
     anatomy: [
       { part: 'icon', label: 'Icon', note: '16×16, variant가 정하는 색을 그대로 물려받는다' },
-      { part: 'title', label: 'Title', note: 'text-sm / font-medium' },
-      { part: 'body', label: 'Body', note: 'text-muted-foreground / text-sm', optional: true },
+      { part: 'title', label: 'Title', note: 'text-16 / font-medium' },
+      { part: 'body', label: 'Body', note: 'text-muted-foreground / text-16', optional: true },
       { part: 'action', label: 'Action', note: 'Button을 그대로 재사용한다', optional: true },
       { part: 'dismiss', label: 'Dismiss', note: '닫기 버튼. 16×16', optional: true },
     ],
@@ -3215,7 +3215,7 @@ export const components: ComponentMeta[] = [
       {
         part: 'trigger',
         label: 'Trigger',
-        note: '누르면 화면 전체를 덮는 반투명 덮개(bg-black/50)와 가운데 정렬된 컨테이너(bg-background, 테두리, radius-lg, shadow-lg)가 뜬다. 컨테이너 안은 제목(text-lg font-semibold)·본문(text-sm text-muted-foreground)·오른쪽 정렬된 취소·실행 버튼 순서로 쌓이고, Dialog와 달리 닫기(X) 아이콘이 없다 — 나가는 길은 취소 버튼 하나다. 바깥을 눌러도 닫히지 않고 접근성 트리에서 alertdialog로 읽힌다(설치한 패키지의 소스로 확인). 쌓임 순서는 z-overlay. 컨테이너는 화면 전체를 덮어 구조도 무대 안에 담을 수 없으므로 나머지 부위는 Usage에서 실제로 눌러서 본다',
+        note: '누르면 화면 전체를 덮는 반투명 덮개(bg-black/50)와 가운데 정렬된 컨테이너(bg-background, 테두리, radius-lg, shadow-lg)가 뜬다. 컨테이너 안은 제목(text-20 font-semibold)·본문(text-16 text-muted-foreground)·오른쪽 정렬된 취소·실행 버튼 순서로 쌓이고, Dialog와 달리 닫기(X) 아이콘이 없다 — 나가는 길은 취소 버튼 하나다. 바깥을 눌러도 닫히지 않고 접근성 트리에서 alertdialog로 읽힌다(설치한 패키지의 소스로 확인). 쌓임 순서는 z-overlay. 컨테이너는 화면 전체를 덮어 구조도 무대 안에 담을 수 없으므로 나머지 부위는 Usage에서 실제로 눌러서 본다',
       },
     ],
     properties: [
@@ -3291,7 +3291,7 @@ export const components: ComponentMeta[] = [
       {
         part: 'trigger',
         label: 'Trigger',
-        note: '누르면 화면 전체를 덮는 반투명 덮개(bg-black/50)와 가운데 정렬된 컨테이너(bg-background, 테두리, radius-lg, shadow-lg)가 뜬다. 컨테이너 안은 제목(text-lg font-semibold)·본문(text-sm text-muted-foreground)·오른쪽 정렬된 동작 버튼 순서로 쌓이고, 오른쪽 위 모서리에 닫기(X) 아이콘이 항상 있다. 쌓임 순서는 z-overlay. 컨테이너는 화면 전체를 덮어 구조도 무대 안에 담을 수 없으므로 나머지 부위는 Usage에서 실제로 눌러서 본다',
+        note: '누르면 화면 전체를 덮는 반투명 덮개(bg-black/50)와 가운데 정렬된 컨테이너(bg-background, 테두리, radius-lg, shadow-lg)가 뜬다. 컨테이너 안은 제목(text-20 font-semibold)·본문(text-16 text-muted-foreground)·오른쪽 정렬된 동작 버튼 순서로 쌓이고, 오른쪽 위 모서리에 닫기(X) 아이콘이 항상 있다. 쌓임 순서는 z-overlay. 컨테이너는 화면 전체를 덮어 구조도 무대 안에 담을 수 없으므로 나머지 부위는 Usage에서 실제로 눌러서 본다',
       },
     ],
     /*
@@ -3676,7 +3676,7 @@ export const components: ComponentMeta[] = [
       {
         part: 'trigger',
         label: 'Trigger',
-        note: '누르면 화면 전체를 덮는 반투명 덮개(bg-black/50)와 side가 정한 가장자리에 붙는 컨테이너(bg-background, 테두리, shadow-lg)가 뜬다. 컨테이너는 좌우에서 열리면 세로 전체를, 위아래에서 열리면 가로 전체를 채우고 반대쪽 치수만 size가 정한 max-w 또는 max-h로 제한한다. 안은 제목(text-lg font-semibold)·본문(text-sm text-muted-foreground)이 있는 Header, 스크롤되는 Body, 오른쪽 정렬된 동작 버튼이 있는 Footer 순서로 쌓이고, 오른쪽 위 모서리에 닫기(X) 아이콘이 항상 있다. 쌓임 순서는 z-overlay. 컨테이너는 화면 가장자리에 붙어 구조도 무대 안에 담을 수 없으므로 나머지 부위는 Usage에서 실제로 눌러서 본다',
+        note: '누르면 화면 전체를 덮는 반투명 덮개(bg-black/50)와 side가 정한 가장자리에 붙는 컨테이너(bg-background, 테두리, shadow-lg)가 뜬다. 컨테이너는 좌우에서 열리면 세로 전체를, 위아래에서 열리면 가로 전체를 채우고 반대쪽 치수만 size가 정한 max-w 또는 max-h로 제한한다. 안은 제목(text-20 font-semibold)·본문(text-16 text-muted-foreground)이 있는 Header, 스크롤되는 Body, 오른쪽 정렬된 동작 버튼이 있는 Footer 순서로 쌓이고, 오른쪽 위 모서리에 닫기(X) 아이콘이 항상 있다. 쌓임 순서는 z-overlay. 컨테이너는 화면 가장자리에 붙어 구조도 무대 안에 담을 수 없으므로 나머지 부위는 Usage에서 실제로 눌러서 본다',
       },
     ],
     /*
@@ -3834,7 +3834,7 @@ export const components: ComponentMeta[] = [
         label: 'Container',
         note: 'bg-popover, 테두리, radius-md, 쌓임 순서는 z-toast(50). variant마다 테두리·배경 색조가 다르고 아이콘은 없다. Toast는 항상 앱 전체에 하나뿐인 뷰포트로 Portal되어 화면 오른쪽 아래에 뜬다 — 이 문서의 예시는 격자마다 제자리에 보여야 하므로 문서 전용 뷰포트에 열림 상태를 고정해 두었다. 실제 Toast는 이렇게 붙박이로 있지 않고 5초 안에 사라진다. Usage의 저장 완료만 진짜로 나타났다 사라지는 예시다',
       },
-      { part: 'message', label: 'Message', note: 'text-sm. 한두 줄 안에서 끝나는 짧은 문장' },
+      { part: 'message', label: 'Message', note: 'text-16. 한두 줄 안에서 끝나는 짧은 문장' },
       {
         part: 'action',
         label: 'Action',
@@ -3916,7 +3916,7 @@ export const components: ComponentMeta[] = [
       {
         part: 'trigger',
         label: 'Trigger',
-        note: '호버하거나 포커스하면 트리거 주변에 말풍선이 뜬다. bg-popover, 테두리, radius-md, 쌓임 순서는 z-popover. 글자는 text-xs이고 트리거를 향한 작은 꼬리(Arrow)가 함께 붙는다. 표 헤더처럼 넘침이 있는 컨테이너 안에서도 잘리지 않도록 Portal로 렌더링된다',
+        note: '호버하거나 포커스하면 트리거 주변에 말풍선이 뜬다. bg-popover, 테두리, radius-md, 쌓임 순서는 z-popover. 글자는 text-12이고 트리거를 향한 작은 꼬리(Arrow)가 함께 붙는다. 표 헤더처럼 넘침이 있는 컨테이너 안에서도 잘리지 않도록 Portal로 렌더링된다',
       },
     ],
     /*
