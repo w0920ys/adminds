@@ -15,13 +15,26 @@ const SPECIMEN = '사용자 관리'
  * 스케일을 바꾸면 표의 순서까지 따라온다.
  */
 const SCALE = [
-  { className: 'text-2xl', role: '통계 숫자 · 대시보드 지표' },
-  { className: 'text-xl', role: '페이지 제목 · 문서 섹션 제목' },
-  { className: 'text-lg', role: '다이얼로그 · 시트 제목' },
-  { className: 'text-base', role: '문서 소제목 · 문서 설명 문단' },
-  { className: 'text-sm', role: '본문 · 컨트롤 라벨 — 기본값' },
-  { className: 'text-12', role: '설명 · 캡션 · 도움말' },
-  { className: 'text-11', role: '배지 · 메뉴 그룹 라벨 · 요일 머리' },
+  { className: 'text-48', role: '강조 숫자·텍스트 대', weight: 'bold' },
+  { className: 'text-40', role: '강조 숫자·텍스트 중', weight: 'bold' },
+  { className: 'text-32', role: '페이지 제목(h1)·강조 숫자·텍스트 소', weight: 'bold' },
+  { className: 'text-28', role: '상세 화면 제목', weight: 'semibold' },
+  { className: 'text-24', role: '목록·카드 화면 제목', weight: 'semibold' },
+  { className: 'text-22', role: '문서 섹션 제목(h2)', weight: 'semibold' },
+  { className: 'text-20', role: '다이얼로그·시트·얼럿다이얼로그 제목', weight: 'semibold' },
+  {
+    className: 'text-18',
+    role: '문서 소제목·카드 제목(semibold) · 설명 문단(normal)',
+    weight: '제목 semibold · 문단 normal',
+  },
+  {
+    className: 'text-16',
+    role: '본문·컨트롤 라벨 — 새 기본값',
+    weight: '본문 normal · 라벨 medium',
+  },
+  { className: 'text-14', role: '조밀 모드 전용 — 표 셀 등', weight: 'normal' },
+  { className: 'text-12', role: '설명·캡션·도움말', weight: 'normal' },
+  { className: 'text-11', role: '배지·메뉴 그룹 라벨·요일 머리', weight: 'bold' },
 ]
 
 /** 여기도 선언 순서는 무관하다. 실측한 font-weight 내림차순으로 늘어놓는다 */
@@ -59,11 +72,12 @@ const STATS = [
 ]
 
 /** 크기를 제각각 준 나쁜 예시. 스케일 안의 클래스만 쓰되 한 줄에 섞는다 */
-const MIXED_STAT_SIZES = ['text-2xl', 'text-base', 'text-12']
+const INCONSISTENT_STAT_SIZES = ['text-40', 'text-16', 'text-12']
 
 type ScaleRow = {
   className: string
   role: string
+  weight: string
   fontSize: string
   lineHeight: string
   letterSpacing: string
@@ -189,7 +203,7 @@ export function TypographyPage() {
       description="어드민은 한 화면에 많은 정보를 담습니다. 크기를 늘리기보다 굵기와 색으로 위계를 만드는 편이 밀도를 지키면서 읽히게 합니다."
     >
       <DocSection title="Overview">
-        <p className="text-muted-foreground text-sm">
+        <p className="text-muted-foreground text-16">
           글자 크기와 굵기로 정보 위계를 표현하는 규칙을 정합니다. 어떤 글꼴을 쓰고 한글을 어디서
           끊어 줄을 바꿀지도 여기서 정합니다. 글자에 쓰는 색은{' '}
           <Link to="/foundations/color" className="underline underline-offset-2">
@@ -204,15 +218,16 @@ export function TypographyPage() {
       </DocSection>
 
       <DocSection title="Font">
-        <p className="text-muted-foreground text-sm">
+        <p className="text-muted-foreground text-16">
           기본 글꼴은 Pretendard입니다. 어드민 화면은 한 줄에 한글과 영문, 숫자가 섞이는데 시스템
           기본 글꼴은 기기마다 달라 같은 표가 맥과 윈도우에서 다른 밀도로 보입니다. Pretendard는
           한글 자소의 크기와 무게를 고르게 맞춰 놓아 12px 언저리에서도 획이 뭉치지 않습니다. 또
           가변 폰트라 아래 Weight 네 단계가 모두 글꼴이 실제로 가진 굵기입니다 — 중간 굵기가 없는
           글꼴에서는 브라우저가 획을 부풀려 흉내 내고, 작은 글자에서 그 차이가 지저분하게
-          보입니다.
+          보입니다. 자간(letter-spacing)은 이 스케일에서 건드리지 않습니다 — Pretendard는 한글
+          중심 폰트라 다국어 대응 폰트만큼의 자간 미세조정이 필요하지 않습니다.
         </p>
-        <p className="text-muted-foreground text-sm">
+        <p className="text-muted-foreground text-16">
           스택은 왼쪽부터 순서대로 시도하고, 앞의 글꼴에 없는 글자만 다음으로 넘어갑니다. 맨 앞 두
           자리가 Pretendard입니다 — CDN에서 받은 가변 버전을 먼저 찾고, 없으면 사용자가 직접
           설치한 정적 버전을 씁니다. 가운데는 운영체제가 정한 기본 글꼴과 라틴 글꼴 자리라 영문과
@@ -220,7 +235,7 @@ export function TypographyPage() {
           경우를 위한 자리입니다. CDN이 막힌 망에서도 한글이 네모로 깨지지 않게 하는 것이 이
           순서의 목적입니다.
         </p>
-        <p className="text-muted-foreground text-sm">
+        <p className="text-muted-foreground text-16">
           아래 값은 지금 이 화면의 <code>body</code>에서 실측한 것입니다. 문서에 옮겨 적은 값이
           아니라 브라우저가 실제로 적용한 스택이라 코드에 그대로 붙여 넣어도 어긋나지 않습니다.
         </p>
@@ -244,14 +259,20 @@ export function TypographyPage() {
       </DocSection>
 
       <DocSection title="Scale">
-        <p className="text-muted-foreground text-sm">
-          여덟 단계로 끝냅니다. 크기·행간·자간은 화면 밖에 숨긴 요소에 각 클래스를 걸고 실측한
+        <p className="text-muted-foreground text-16">
+          제목류(다이얼로그 제목 이상)는 굵기를 semibold 이상으로 씁니다. 본문은
+          normal이 기본이고 컨트롤 라벨만 한 단계 진한 medium을 씁니다. 크기
+          차이가 크지 않은 자리(소제목 18px과 본문 16px)는 굵기가 실제 위계를
+          만듭니다.
+        </p>
+        <p className="text-muted-foreground text-16">
+          열두 단계로 끝냅니다. 크기·행간·자간은 화면 밖에 숨긴 요소에 각 클래스를 걸고 실측한
           값이고, 표의 순서도 실측한 크기가 정합니다 — 스케일을 바꾸면 이 표의 순서까지
           따라옵니다. 자간은 단계마다 따로 정하지 않습니다. 자간 칸의 <code>normal</code>은 그 단계에 값을
           정하지 않아 글꼴이 잡은 자간을 그대로 쓴다는 뜻입니다.
         </p>
         <div className="overflow-x-auto rounded-lg border">
-          <table className="w-full text-left text-sm">
+          <table className="w-full text-left text-14">
             <thead>
               <tr className="text-muted-foreground text-11 tracking-widest">
                 <th scope="col" className="px-3 py-2 font-bold">스타일</th>
@@ -259,6 +280,7 @@ export function TypographyPage() {
                 <th scope="col" className="px-3 py-2 font-bold">크기</th>
                 <th scope="col" className="px-3 py-2 font-bold">행간</th>
                 <th scope="col" className="px-3 py-2 font-bold">자간</th>
+                <th scope="col" className="px-3 py-2 font-bold">굵기</th>
                 <th scope="col" className="px-3 py-2 font-bold">용도</th>
               </tr>
             </thead>
@@ -280,32 +302,43 @@ export function TypographyPage() {
                   <td className="text-muted-foreground border-t px-3 py-2 whitespace-nowrap">
                     {row.letterSpacing}
                   </td>
+                  <td className="text-muted-foreground border-t px-3 py-2 whitespace-nowrap">
+                    {row.weight}
+                  </td>
                   <td className="text-muted-foreground border-t px-3 py-2 text-12">{row.role}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-        <p className="text-muted-foreground text-sm">
-          <code>text-sm</code>은 두 역할을 겸합니다 — 읽는 문단이자 버튼·인풋·표 셀·메뉴 항목 같은
-          컨트롤 텍스트입니다. 표의 행간(24px)은 문단 기준으로 잡은 값이고, 컨트롤의 높이는{' '}
-          <code>--spacing-control-*</code> 토큰이 따로 잡으므로 행간이 컨트롤 쪽으로 새지 않습니다.
+        <p className="text-muted-foreground text-16">
+          본문(16px) 대비 제목류 크기 비율은 소제목 1.125배부터 강조 숫자·텍스트 대 3배까지
+          걸쳐 있습니다. 다이얼로그 제목(20px)부터 목록·카드 화면 제목(24px)까지는 1.25~1.5배
+          사이에 모여 있지만, 상세 화면 제목(28px)부터는 1.75배 이상으로 벌어져 강조용 크기와
+          가까워집니다. 소제목(18px)만 1.125배로 그 아래인데, 굵기(semibold)로 위계를
+          보완했습니다. 헤딩을 h1~h4까지 네 단계로 나누는 참고 사례도 있지만, 이 시스템은
+          h1~h3까지만 실제로 쓰는 곳이 있어 세 단계로 둡니다.
         </p>
-        <p className="text-muted-foreground text-sm">
-          크기는 Tailwind 기본 스케일에 없는 <code>2xs</code> 하나만 새로 더했고, 나머지 일곱 단계는
-          Tailwind 기본값 그대로입니다. 그래서 이 표는 강제하는 장치가 아니라 지키기로 한 약속입니다 —
-          표에 없는 크기도 여전히 쓸 수 있는 유틸리티로 남아 있으니, 새 화면을 만들 때는 위 여덟 단계
-          안에서 고릅니다.
+        <p className="text-muted-foreground text-16">
+          <code>text-16</code>은 두 역할을 겸합니다 — 읽는 문단이자 버튼·인풋·메뉴 항목 같은
+          컨트롤 텍스트입니다. 문단의 행간(28px)을 그대로 쓰고, 컨트롤의 높이는{' '}
+          <code>--spacing-control-*</code> 토큰이 따로 잡으므로 행간이 컨트롤 쪽으로 새지 않습니다.
+          표 셀은 조밀 모드 전용인 <code>text-14</code>를 따로 씁니다.
+        </p>
+        <p className="text-muted-foreground text-16">
+          크기는 열두 단계 모두 Tailwind 기본값이 아니라 이 프로젝트가 새로 정의한 값입니다.
+          그래서 이 표는 강제하는 장치가 아니라 지키기로 한 약속입니다 — 새 화면을 만들 때는
+          위 열두 단계 안에서 고릅니다.
         </p>
       </DocSection>
 
       <DocSection title="Weight">
-        <p className="text-muted-foreground text-sm">
+        <p className="text-muted-foreground text-16">
           네 단계만 씁니다. 더 얇거나 더 두꺼운 단계는 본문 크기에서 차이가 거의 보이지 않으면서
           고를 것만 늘립니다. 값은 실측한 <code>font-weight</code>이고, 순서도 그 값이 정합니다.
         </p>
         <div className="overflow-x-auto rounded-lg border">
-          <table className="w-full text-left text-sm">
+          <table className="w-full text-left text-14">
             <thead>
               <tr className="text-muted-foreground text-11 tracking-widest">
                 <th scope="col" className="px-3 py-2 font-bold">스타일</th>
@@ -321,7 +354,7 @@ export function TypographyPage() {
                     <code className="text-12">{row.className}</code>
                   </th>
                   <td className="border-t px-3 py-2">
-                    <span className={`text-sm ${row.className}`}>{SPECIMEN}</span>
+                    <span className={`text-16 ${row.className}`}>{SPECIMEN}</span>
                   </td>
                   <td className="text-muted-foreground border-t px-3 py-2 whitespace-nowrap">
                     {row.fontWeight}
@@ -335,19 +368,19 @@ export function TypographyPage() {
       </DocSection>
 
       <DocSection title="Line breaking">
-        <p className="text-muted-foreground text-sm">
+        <p className="text-muted-foreground text-16">
           한글은 음절 단위로 끊습니다. <code>word-break: normal</code>이 브라우저 기본값이지만{' '}
           <code>body</code>에 명시해 두어 어디서도 뒤집히지 않게 했습니다. 이 값에서 브라우저는
           한글의 음절 사이를 모두 줄을 바꿀 수 있는 자리로 봅니다.
         </p>
-        <p className="text-muted-foreground text-sm">
+        <p className="text-muted-foreground text-16">
           반대 선택지는 <code>word-break: keep-all</code>입니다. 어절을 통째로 묶어 낱말이 중간에서
           잘리지 않지만, 어드민에서 글이 놓이는 자리는 사이드바·표 셀·다이얼로그처럼 좁습니다.
           거기서는 긴 어절 하나가 통째로 다음 줄로 밀리면서 앞 줄이 크게 빕니다. 낱말 하나가 온전한
           것보다 줄이 고르게 차는 쪽을 택했습니다. 띄어쓰기가 없는 URL이나 토큰은{' '}
           <code>overflow-wrap: anywhere</code>가 따로 받아 상자 밖으로 넘치지 않게 합니다.
         </p>
-        <p className="text-muted-foreground text-sm">
+        <p className="text-muted-foreground text-16">
           같은 문장을 좁은 칸에 두 규칙으로 나란히 놓았습니다. 각 상자 아래 값은 그 상자에서 실측한
           것입니다.
         </p>
@@ -358,7 +391,7 @@ export function TypographyPage() {
                 <p className="text-11 text-muted-foreground font-bold tracking-widest">
                   {demo.title}
                 </p>
-                <p data-wrap={demo.key} className={`max-w-40 text-sm ${demo.className}`}>
+                <p data-wrap={demo.key} className={`max-w-40 text-16 ${demo.className}`}>
                   {WRAP_SPECIMEN}
                 </p>
                 {wrapRules[demo.key] && (
@@ -374,17 +407,17 @@ export function TypographyPage() {
       </DocSection>
 
       <DocSection title="Guidelines">
-        <p className="text-muted-foreground text-sm">
+        <p className="text-muted-foreground text-16">
           새 텍스트에 무엇을 쓸지는 아래 순서로 정합니다. 위에서부터 내려오다가 답이 나오면 거기서
           멈춥니다.
         </p>
-        <ol className="flex list-decimal flex-col gap-2 rounded-lg border p-4 pl-8 text-sm">
+        <ol className="flex list-decimal flex-col gap-2 rounded-lg border p-4 pl-8 text-16">
           <li>
             이 텍스트가 화면에서 몇 번째 층인지 먼저 정합니다. 한 화면에 페이지 제목 하나, 섹션
             제목 하나, 나머지는 전부 본문입니다.
           </li>
           <li>
-            층이 정해지면 크기는 위 표에서 그대로 가져옵니다. 본문은 <code>text-sm</code>, 설명과
+            층이 정해지면 크기는 위 표에서 그대로 가져옵니다. 본문은 <code>text-16</code>, 설명과
             캡션은 <code>text-12</code>가 기본이라 대부분은 이 둘에서 끝납니다.
           </li>
           <li>
@@ -400,7 +433,7 @@ export function TypographyPage() {
             다시 봅니다.
           </li>
         </ol>
-        <p className="text-muted-foreground text-sm">
+        <p className="text-muted-foreground text-16">
           한 화면에 쓰는 크기 단계는 4개 이하로 둡니다. 어드민 화면 하나는 보통 페이지 제목·섹션
           제목·본문·보조 넷이면 충분하고, 다섯 번째 단계가 필요하다고 느끼면 그 화면이 한 페이지에
           너무 많은 것을 담고 있다는 신호입니다.
@@ -408,22 +441,22 @@ export function TypographyPage() {
         <div className="grid gap-3 md:grid-cols-2">
           <ExampleFrame kind="do">
             <div className="flex flex-col gap-1">
-              <p className="text-sm font-semibold">결제 실패 5건</p>
-              <p className="text-sm">2026-08-25 03:12에 마지막으로 발생했습니다.</p>
-              <p className="text-muted-foreground text-sm">
+              <p className="text-18 font-semibold">결제 실패 5건</p>
+              <p className="text-16">2026-08-25 03:12에 마지막으로 발생했습니다.</p>
+              <p className="text-muted-foreground text-16">
                 재시도는 10분 간격으로 3회까지 자동 실행됩니다.
               </p>
             </div>
           </ExampleFrame>
           <ExampleFrame kind="dont">
             <div className="flex flex-col gap-1">
-              <p className="text-2xl font-bold">결제 실패 5건</p>
-              <p className="text-lg">2026-08-25 03:12에 마지막으로 발생했습니다.</p>
-              <p className="text-base">재시도는 10분 간격으로 3회까지 자동 실행됩니다.</p>
+              <p className="text-32 font-bold">결제 실패 5건</p>
+              <p className="text-20">2026-08-25 03:12에 마지막으로 발생했습니다.</p>
+              <p className="text-14">재시도는 10분 간격으로 3회까지 자동 실행됩니다.</p>
             </div>
           </ExampleFrame>
         </div>
-        <p className="text-muted-foreground text-sm">
+        <p className="text-muted-foreground text-16">
           같은 줄이나 같은 열에 놓인 숫자는 크기를 맞춥니다. 하나만 키우면 값이 커서 큰 것인지
           중요해서 큰 것인지 구분되지 않고, 자릿수를 눈으로 비교하기도 어려워집니다.
         </p>
@@ -433,7 +466,7 @@ export function TypographyPage() {
               {STATS.map((stat) => (
                 <div key={stat.label} className="flex flex-col gap-0.5">
                   <dt className="text-muted-foreground text-12">{stat.label}</dt>
-                  <dd className="text-2xl font-semibold">{stat.value}</dd>
+                  <dd className="text-32 font-bold">{stat.value}</dd>
                 </div>
               ))}
             </dl>
@@ -443,18 +476,31 @@ export function TypographyPage() {
               {STATS.map((stat, index) => (
                 <div key={stat.label} className="flex flex-col gap-0.5">
                   <dt className="text-muted-foreground text-12">{stat.label}</dt>
-                  <dd className={`font-semibold ${MIXED_STAT_SIZES[index]}`}>{stat.value}</dd>
+                  <dd className={`font-semibold ${INCONSISTENT_STAT_SIZES[index]}`}>
+                    {stat.value}
+                  </dd>
                 </div>
               ))}
             </dl>
           </ExampleFrame>
         </div>
+        <p className="text-muted-foreground text-16">
+          표와 목록은 본문보다 한 단계 낮은 조밀 모드(<code>text-14</code>)를
+          씁니다. 머리 행은 그보다 작은 설명 크기(<code>text-12</code>)에
+          굵기만 올려 구분합니다. 목록은 깊이가 있어도 크기를 줄이지 않고
+          들여쓰기·마커로만 구분합니다. 자세한 값은{' '}
+          <Link to="/components/data-table" className="underline underline-offset-2">
+            Data Table
+          </Link>
+          에서 확인할 수 있습니다.
+        </p>
         <DoDont
           do={[
             '위계는 크기보다 굵기와 색으로 만든다',
             '한 화면에서 크기 단계를 4개 이하로 유지한다',
             '같은 줄이나 같은 열의 숫자는 크기를 맞춘다',
-            '본문은 text-sm, 보조 설명은 text-12를 기본으로 둔다',
+            '본문은 text-16, 보조 설명은 text-12를 기본으로 둔다',
+            '밑줄은 텍스트 링크에만 쓰고 강조는 굵기·색으로 한다',
           ]}
           dont={[
             '강조를 위해 크기를 계속 키우지 않는다',
@@ -476,7 +522,7 @@ export function TypographyPage() {
           <span
             key={item.className}
             data-weight={item.className}
-            className={`text-sm ${item.className}`}
+            className={`text-16 ${item.className}`}
           >
             {SPECIMEN}
           </span>
