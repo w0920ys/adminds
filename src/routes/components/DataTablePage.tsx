@@ -2,7 +2,7 @@ import { useState, type ReactNode } from 'react'
 import { SearchX } from 'lucide-react'
 import { Bounds } from '@/components/docs/Bounds'
 import { ComponentPage } from '@/components/docs/ComponentPage'
-import type { RenderOptions } from '@/components/docs/PropertyBlock'
+import type { RenderContext, RenderOptions } from '@/components/docs/PropertyBlock'
 import { Button } from '@/components/ui/button'
 import { DataTable } from '@/components/ui/data-table'
 import { Input } from '@/components/ui/input'
@@ -100,20 +100,26 @@ const axisRows = components.slice(0, 7)
 
 /*
  * label은 필수 prop이고 표를 감싼 role="region"의 이름이 된다. 한 화면에
- * 표가 여럿이면 이름도 여럿이어야 하므로, 축 무대는 지금 그리고 있는 축의
- * 값을 그대로 이름에 넣는다 — 무대마다 이름이 갈리고, 그 이름이 이 무대가
- * 무엇을 보이는지도 함께 말한다.
+ * 표가 여럿이면 이름도 여럿이어야 하므로 축 값을 그대로 이름에 넣는다.
+ *
+ * 축 값만으로는 모자란다. 이 함수를 Playground와 축 무대 셋이 함께 부르는데,
+ * 축 무대는 자기 축 하나만 바꾸고 나머지는 첫 옵션으로 두므로 축마다 나오는
+ * 기본 조합 칸이 같은 값이 된다 — 실제로 이 페이지에 같은 이름의 region이
+ * 넷 있었다(Playground 하나 + 축 셋의 기본 칸). 그래서 어느 자리에서 그리는
+ * 중인지도(context) 이름 앞에 세운다.
  */
-function renderDataTable(options: RenderOptions) {
+function renderDataTable(options: RenderOptions, context?: RenderContext) {
   const density = options.density === 'default' ? 'default' : 'compact'
   const selection = options.selection ?? 'none'
   const state =
     options.state === 'loading' ? 'loading' : options.state === 'empty' ? 'empty' : 'default'
 
+  const stage = context ? `${context.title} 축` : 'Playground'
+
   return (
     <div className="w-full max-w-sm">
       <DataTable
-        label={`밀도 ${density} · 선택 ${selection} · 상태 ${state}인 컴포넌트 목록`}
+        label={`${stage} · 밀도 ${density} · 선택 ${selection} · 상태 ${state}인 컴포넌트 목록`}
         columns={axisColumns}
         rows={axisRows}
         getRowId={rowId}

@@ -5,15 +5,19 @@ import { DocStatus } from '@/components/docs/DocStatus'
 import { ExampleList } from '@/components/docs/ExampleList'
 import { GuidelineBlock } from '@/components/docs/GuidelineBlock'
 import { Playground } from '@/components/docs/Playground'
-import { PropertyBlock, type RenderOptions } from '@/components/docs/PropertyBlock'
+import { PropertyBlock, type PropertyRender } from '@/components/docs/PropertyBlock'
 import type { ComponentMeta } from '@/data/registry'
 
 export type ComponentPageProps = {
   meta: ComponentMeta
   /** Anatomy 무대에 놓일 미리보기. 각 부위에 data-anatomy 속성이 있어야 한다 */
   preview: ReactNode
-  /** 축 이름 → 선택된 값을 받아 컴포넌트를 렌더링한다 */
-  render: (options: RenderOptions) => ReactNode
+  /**
+   * 축 이름 → 선택된 값을 받아 컴포넌트를 렌더링한다. Playground와 Properties의
+   * 축 무대가 같은 함수를 부르므로, 이름이 필요한 컴포넌트는 두 번째 인자로
+   * 오는 무대의 정체(RenderContext)를 그 이름에 넣어 자리마다 갈라 준다.
+   */
+  render: PropertyRender
   /** 이 컴포넌트에만 필요한 섹션 */
   extraSections?: { title: string; node: ReactNode }[]
   /** guideline의 do/don't 예시를 주입한다 */

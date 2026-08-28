@@ -8,6 +8,24 @@ import { cn } from '@/lib/utils'
 
 export type RenderOptions = Record<string, string>
 
+/**
+ * 지금 그리는 칸이 어느 축의 무대에 속하는지 알려 준다.
+ *
+ * 이름을 요구하는 컴포넌트(가로로 구르는 표의 region처럼)는 축 값만으로는
+ * 이름이 갈리지 않는다 — 축마다 그리는 기본 조합 칸이 baseOptions 하나에서
+ * 나오므로 축이 셋이면 같은 이름이 셋이다. 무대 이름을 함께 넘겨야 갈린다.
+ * Playground처럼 축 하나를 그리는 자리가 아니면 넘기지 않는다.
+ */
+export type RenderContext = {
+  /** 이 무대가 바꾸고 있는 축의 prop 이름 */
+  property: string
+  /** 그 축의 제목. Properties 절의 h3에 서는 이름과 같다 */
+  title: string
+}
+
+/** 축 이름 → 값을 받아 컴포넌트를 그린다. 두 번째 인자는 그리는 자리의 정체다 */
+export type PropertyRender = (options: RenderOptions, context?: RenderContext) => ReactNode
+
 /** 축의 첫 옵션들로 기본 조합을 만든다. 격자의 각 칸은 여기서 한 축만 바꾼다. */
 function baseOptions(meta: ComponentMeta): RenderOptions {
   return Object.fromEntries(meta.properties.map((p) => [p.name, p.options[0].value]))
@@ -20,7 +38,7 @@ export function PropertyBlock({
 }: {
   meta: ComponentMeta
   property: ComponentProperty
-  render: (options: RenderOptions) => ReactNode
+  render: PropertyRender
 }) {
   const base = baseOptions(meta)
   const cross = property.crossWith ? getProperty(meta, property.crossWith) : undefined
@@ -66,11 +84,14 @@ export function PropertyBlock({
                   </th>
                   {cross.options.map((crossOption) => (
                     <td key={crossOption.value} className="border-t px-3 py-3">
-                      {render({
-                        ...base,
-                        [property.name]: option.value,
-                        [cross.name]: crossOption.value,
-                      })}
+                      {render(
+                        {
+                          ...base,
+                          [property.name]: option.value,
+                          [cross.name]: crossOption.value,
+                        },
+                        { property: property.name, title: property.title },
+                      )}
                     </td>
                   ))}
                 </tr>
@@ -101,7 +122,10 @@ export function PropertyBlock({
                   property.name === 'state' ? forcedStateClass(option.value) : undefined,
                 )}
               >
-                {render({ ...base, [property.name]: option.value })}
+                {render(
+                  { ...base, [property.name]: option.value },
+                  { property: property.name, title: property.title },
+                )}
               </div>
               {option.note && (
                 <p className="text-muted-foreground max-w-48 text-xs">{option.note}</p>

@@ -1,7 +1,7 @@
-import { useState, type ReactNode } from 'react'
+import { useState } from 'react'
 import { RotateCcw } from 'lucide-react'
 import type { ComponentMeta } from '@/data/registry'
-import type { RenderOptions } from '@/components/docs/PropertyBlock'
+import type { PropertyRender, RenderOptions } from '@/components/docs/PropertyBlock'
 import { forcedStateClass } from '@/components/docs/state-preview'
 import { cn } from '@/lib/utils'
 
@@ -14,7 +14,7 @@ export function Playground({
   render,
 }: {
   meta: ComponentMeta
-  render: (options: RenderOptions) => ReactNode
+  render: PropertyRender
 }) {
   const [options, setOptions] = useState<RenderOptions>(() => initialOptions(meta))
   const base = initialOptions(meta)

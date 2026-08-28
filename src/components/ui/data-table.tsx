@@ -160,9 +160,12 @@ export function DataTable<T>({
    * 이유다 — 폭이 패딩과 체크박스 크기의 합으로 정해지면 토큰과 갈라진다.
    * 폭은 w-0과 min-w를 함께 준다. table-layout이 auto라 둘의 역할이 다르다
    * — min-w가 40px을 아래에서 받치고, w-0이 '남는 폭을 더 가져가지 않는다'는
-   * 뜻을 낸다. min-w만 두면 표가 그릇보다 좁을 때 이 칸이 남는 폭을 나눠
-   * 받아 210px까지 벌어진다(재어 보고 골랐다). 40px 안에서 16px 체크박스를
-   * 가운데 두므로 보이는 모습은 px-3일 때와 같다.
+   * 뜻을 낸다. table은 늘 w-full이므로(table.tsx) 열의 내용이 그릇보다 좁으면
+   * 남는 폭이 열마다 나뉘는데, min-w만 두면 이 칸도 그 몫을 받아 40px보다
+   * 벌어진다. 얼마나 벌어지는지는 그릇 폭과 열 수에 달려 한 값으로 못 박히지
+   * 않는다 — 이 저장소의 selectable 표 열넷에서 w-0을 떼고 재어 보니
+   * 375px에서 최대 50.1px, 1440px에서 최대 88.9px이었다.
+   * 40px 안에서 16px 체크박스를 가운데 두므로 보이는 모습은 px-3일 때와 같다.
    */
   const stickySelect = selectable && columns.some((column) => column.sticky)
   const selectCellClassName = 'w-0 min-w-control-lg px-0 text-center'
