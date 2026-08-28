@@ -52,8 +52,11 @@ function LnbItem({
  * 'section'(2depth, 한 섹션의 문서 목록). 어느 섹션을 2depth에서 보여줄지는
  * 경로가 아니라 이 상태가 정한다 — 1depth에서 섹션을 탭해도 아직 이동한
  * 게 아니므로(문서를 탭하기 전까지는), 실제 경로가 속한 섹션과 다를 수
- * 있다. 데스크톱 정적 사이드바는 이 상태를 쓰지 않는다 — 항상 2depth만
- * 보여주고 뒤로가기가 없다.
+ * 있다. 데스크톱 정적 사이드바도 이 view/browsedSection을 그대로 읽는다
+ * (2depth의 문서 목록은 모바일 2depth와 데스크톱이 공유하는 화면이다) —
+ * 다만 데스크톱에는 1depth로 전환할 UI가 없다(뒤로가기 버튼도, open이
+ * 바뀌어 서랍을 다시 여는 순간도 데스크톱에는 없다). 그래서 실질적으로
+ * 데스크톱은 항상 현재 경로가 속한 섹션의 2depth만 보여준다.
  */
 type LnbView = { kind: 'sections' } | { kind: 'section'; sectionId: string }
 
@@ -118,12 +121,14 @@ export function Lnb({ open, onClose }: { open: boolean; onClose: () => void }) {
       >
         {/*
          * 헤더 행은 1depth와 2depth가 다르다 — 1depth는 "Sections" 라벨만,
-         * 2depth는 뒤로가기+섹션 이름. 뒤로가기는 md:hidden이다(데스크톱
-         * 정적 사이드바는 1depth 자체가 없다).
+         * 2depth는 뒤로가기+섹션 이름. 데스크톱 정적 사이드바에는 1depth
+         * 자체가 없으므로(위 주석 참고) 1depth 헤더는 라벨과 닫기 버튼
+         * 모두 md:hidden이다 — 모바일에서 뒤로가기를 눌러 1depth로 간 채
+         * 창을 넓혀도 "Sections" 라벨이 데스크톱에 남지 않는다.
          */}
         {view.kind === 'sections' ? (
           <div className="flex h-9 items-center px-2">
-            <p className="text-muted-foreground text-11 font-bold tracking-widest">Sections</p>
+            <p className="text-muted-foreground text-11 font-bold tracking-widest md:hidden">Sections</p>
             <button
               className="text-muted-foreground ml-auto md:hidden"
               onClick={onClose}
