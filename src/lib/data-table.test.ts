@@ -1,5 +1,13 @@
 import { describe, expect, it } from 'vitest'
-import { nextSortState, sortRows, type DataTableColumn } from '@/lib/data-table'
+import {
+  nextSortState,
+  pageSelectionState,
+  paginate,
+  sortRows,
+  toggleAllOnPage,
+  toggleRow,
+  type DataTableColumn,
+} from '@/lib/data-table'
 
 type Row = { id: string; name: string; amount: number; owner: string | null }
 
@@ -85,5 +93,93 @@ describe('sortRows', () => {
       { id: 'z', name: '같음', amount: 1, owner: null },
     ]
     expect(ids(sortRows(tied, { columnId: 'name', direction: 'desc' }, COLUMNS))).toEqual(['x', 'y', 'z'])
+  })
+})
+
+describe('paginate', () => {
+  const rows = ['a', 'b', 'c', 'd', 'e']
+
+  it('그 페이지의 행만 돌려준다', () => {
+    expect(paginate(rows, 1, 2).rows).toEqual(['a', 'b'])
+    expect(paginate(rows, 2, 2).rows).toEqual(['c', 'd'])
+  })
+
+  it('마지막 페이지는 덜 찰 수 있다', () => {
+    expect(paginate(rows, 3, 2).rows).toEqual(['e'])
+  })
+
+  it('전체 페이지 수를 센다', () => {
+    expect(paginate(rows, 1, 2).pageCount).toBe(3)
+  })
+
+  it('행이 없어도 페이지 수는 1이다 — 0페이지짜리 표는 없다', () => {
+    expect(paginate([], 1, 20)).toEqual({ rows: [], page: 1, pageCount: 1 })
+  })
+
+  it('범위를 넘은 페이지는 마지막 페이지로 당기고 그 사실을 돌려준다', () => {
+    expect(paginate(rows, 9, 2)).toEqual({ rows: ['e'], page: 3, pageCount: 3 })
+  })
+
+  it('1보다 작은 페이지는 첫 페이지로 당긴다', () => {
+    expect(paginate(rows, 0, 2)).toEqual({ rows: ['a', 'b'], page: 1, pageCount: 3 })
+  })
+
+  it('입력 배열을 바꾸지 않는다', () => {
+    const before = [...rows]
+    paginate(rows, 2, 2)
+    expect(rows).toEqual(before)
+  })
+})
+
+describe('toggleRow', () => {
+  it('없던 것을 넣는다', () => {
+    expect([...toggleRow(new Set(['a']), 'b')]).toEqual(['a', 'b'])
+  })
+
+  it('있던 것을 뺀다', () => {
+    expect([...toggleRow(new Set(['a', 'b']), 'a')]).toEqual(['b'])
+  })
+
+  it('원래 집합을 바꾸지 않는다', () => {
+    const selected = new Set(['a'])
+    toggleRow(selected, 'b')
+    expect([...selected]).toEqual(['a'])
+  })
+})
+
+describe('toggleAllOnPage', () => {
+  it('이 페이지가 다 골라져 있지 않으면 이 페이지를 다 넣는다', () => {
+    expect([...toggleAllOnPage(new Set(['a']), ['a', 'b', 'c'])]).toEqual(['a', 'b', 'c'])
+  })
+
+  it('이 페이지가 다 골라져 있으면 이 페이지만 뺀다', () => {
+    expect([...toggleAllOnPage(new Set(['a', 'b', 'z']), ['a', 'b'])]).toEqual(['z'])
+  })
+
+  it('다른 페이지에서 고른 것은 건드리지 않는다', () => {
+    expect([...toggleAllOnPage(new Set(['z']), ['a', 'b'])]).toEqual(['z', 'a', 'b'])
+  })
+})
+
+describe('pageSelectionState', () => {
+  it('이 페이지에서 아무것도 안 골랐으면 none이다', () => {
+    expect(pageSelectionState(new Set(['z']), ['a', 'b'])).toBe('none')
+  })
+
+  it('일부만 골랐으면 some이다', () => {
+    expect(pageSelectionState(new Set(['a']), ['a', 'b'])).toBe('some')
+  })
+
+  it('다 골랐으면 all이다', () => {
+    expect(pageSelectionState(new Set(['a', 'b', 'z']), ['a', 'b'])).toBe('all')
+  })
+
+  it('행이 없는 페이지는 none이다 — 빈 페이지를 다 골랐다고 하지 않는다', () => {
+    expect(pageSelectionState(new Set(['z']), [])).toBe('none')
+  })
+
+  it('다른 페이지의 선택은 이 페이지의 상태를 바꾸지 않는다', () => {
+    expect(pageSelectionState(new Set(['a', 'b', 'z']), ['a', 'b'])).toBe('all')
+    expect(pageSelectionState(new Set(['a']), ['a', 'b'])).toBe('some')
   })
 })
