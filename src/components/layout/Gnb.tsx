@@ -29,10 +29,6 @@ export function Gnb({ onMenuClick }: { onMenuClick: () => void }) {
   return (
     <header className="bg-surface/90 shrink-0 border-b backdrop-blur">
       <div className="flex h-14 items-center gap-2 px-4 md:px-6">
-        <button className="md:hidden" onClick={onMenuClick} aria-label="메뉴 열기">
-          <Menu size={20} />
-        </button>
-
         <Link to="/" className="flex items-center gap-2">
           <span className="bg-primary text-primary-foreground grid size-6 place-items-center rounded-md">
             <Command size={14} strokeWidth={2.4} />
@@ -77,6 +73,10 @@ export function Gnb({ onMenuClick }: { onMenuClick: () => void }) {
           aria-label={theme === 'dark' ? '라이트 모드로 전환' : '다크 모드로 전환'}
         >
           {theme === 'dark' ? <Sun size={17} /> : <Moon size={17} />}
+        </button>
+
+        <button className="ml-1 md:hidden" onClick={onMenuClick} aria-label="메뉴 열기">
+          <Menu size={20} />
         </button>
       </div>
 
