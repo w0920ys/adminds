@@ -82,7 +82,7 @@ function FormExample() {
        */}
       <div className="flex items-center gap-2">
         <Checkbox id="form-pattern-notify" />
-        <label htmlFor="form-pattern-notify" className="text-sm">
+        <label htmlFor="form-pattern-notify" className="text-16">
           가입 안내 메일을 보냅니다
         </label>
       </div>
@@ -167,7 +167,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
         <div className="flex flex-col gap-3">
           <div className="flex items-center gap-2">
             <Checkbox id="form-pattern-agree-do" />
-            <label htmlFor="form-pattern-agree-do" className="text-sm">
+            <label htmlFor="form-pattern-agree-do" className="text-16">
               가입 안내 메일을 보냅니다
             </label>
           </div>
@@ -179,7 +179,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
         <div className="flex flex-col gap-3">
           <div className="flex items-center gap-2">
             <Switch id="form-pattern-agree-dont" />
-            <label htmlFor="form-pattern-agree-dont" className="text-sm">
+            <label htmlFor="form-pattern-agree-dont" className="text-16">
               가입 안내 메일을 보냅니다
             </label>
           </div>

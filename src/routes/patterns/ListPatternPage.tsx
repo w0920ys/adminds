@@ -202,7 +202,7 @@ function FilterRow({ filter, showCount = true }: { filter: ListFilter; showCount
     <div className="flex flex-wrap items-center gap-2">
       <SearchField value={filter.query} onChange={filter.setQuery} />
       <CategorySelect value={filter.category} onChange={filter.setCategory} />
-      {showCount && <p className="text-muted-foreground ml-auto text-sm">{filter.rows.length}건</p>}
+      {showCount && <p className="text-muted-foreground ml-auto text-16">{filter.rows.length}건</p>}
     </div>
   )
 }
@@ -257,7 +257,7 @@ function FilterRowExample({ showCount }: { showCount: boolean }) {
 function BulkBar({ count, onClear }: { count: number; onClear?: () => void }) {
   return (
     <div className="flex flex-wrap items-center gap-2">
-      <p className="text-sm font-medium">{count}건 선택됨</p>
+      <p className="text-16 font-medium">{count}건 선택됨</p>
       <div className="ml-auto flex items-center gap-2">
         <Button variant="outline" size="sm">
           상태 변경
@@ -283,7 +283,7 @@ function BulkBarStacked() {
     <div className="flex flex-col gap-2">
       <FilterRow filter={filter} />
       <div className="flex flex-wrap items-center gap-2 rounded-md border p-2">
-        <p className="text-sm font-medium">3건 선택됨</p>
+        <p className="text-16 font-medium">3건 선택됨</p>
         <div className="ml-auto flex items-center gap-2">
           <Button variant="outline" size="sm">
             상태 변경

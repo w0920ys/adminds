@@ -170,7 +170,7 @@ function ActivityPanel() {
   return (
     <ul className="flex flex-col gap-3">
       {ACTIVITIES.map((activity) => (
-        <li key={activity.id} className="flex items-center justify-between gap-4 text-sm">
+        <li key={activity.id} className="flex items-center justify-between gap-4 text-16">
           <span>{activity.label}</span>
           <span className="text-muted-foreground text-12">{activity.at}</span>
         </li>
