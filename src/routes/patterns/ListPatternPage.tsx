@@ -109,7 +109,7 @@ function ScreenHeader() {
         </BreadcrumbList>
       </Breadcrumb>
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h4 className="text-xl font-semibold tracking-tight">컴포넌트</h4>
+        <h4 className="text-24 font-semibold tracking-tight">컴포넌트</h4>
         <Button size="sm">
           <Plus aria-hidden />
           컴포넌트 추가
@@ -298,7 +298,7 @@ function BulkBarStacked() {
 function ActionRow({ filled }: { filled: 1 | 2 }) {
   return (
     <div className="flex flex-wrap items-center justify-between gap-3">
-      <h4 className="text-xl font-semibold tracking-tight">컴포넌트</h4>
+      <h4 className="text-24 font-semibold tracking-tight">컴포넌트</h4>
       <div className="flex items-center gap-2">
         <Button size="sm" variant={filled === 2 ? 'default' : 'outline'}>
           <Download aria-hidden />

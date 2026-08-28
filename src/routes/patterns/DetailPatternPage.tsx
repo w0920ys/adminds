@@ -112,7 +112,7 @@ function ScreenHeader() {
       <OriginBreadcrumb />
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-2">
-          <h4 className="text-xl font-semibold tracking-tight">{USER_NAME}</h4>
+          <h4 className="text-28 font-semibold tracking-tight">{USER_NAME}</h4>
           <Badge variant="success">활성</Badge>
         </div>
         <div className="flex items-center gap-2">
@@ -212,7 +212,7 @@ function DetailExample() {
 
 /** breadcrumb-shows-origin의 dont: 상위 갈래 없이 제목만 남는다 */
 function TitleOnlyHeader() {
-  return <h4 className="text-xl font-semibold tracking-tight">{USER_NAME}</h4>
+  return <h4 className="text-28 font-semibold tracking-tight">{USER_NAME}</h4>
 }
 
 /** breadcrumb-shows-origin의 do: Breadcrumb 아래에 제목을 둔다 */
@@ -229,7 +229,7 @@ function BreadcrumbHeader() {
 function DangerInlineHeader() {
   return (
     <div className="flex flex-wrap items-center justify-between gap-3">
-      <h4 className="text-xl font-semibold tracking-tight">{USER_NAME}</h4>
+      <h4 className="text-28 font-semibold tracking-tight">{USER_NAME}</h4>
       <div className="flex items-center gap-2">
         <Button variant="outline" size="sm">
           수정
@@ -246,7 +246,7 @@ function DangerInlineHeader() {
 function DangerInMenuHeader() {
   return (
     <div className="flex flex-wrap items-center justify-between gap-3">
-      <h4 className="text-xl font-semibold tracking-tight">{USER_NAME}</h4>
+      <h4 className="text-28 font-semibold tracking-tight">{USER_NAME}</h4>
       <div className="flex items-center gap-2">
         <Button variant="outline" size="sm">
           수정
@@ -312,7 +312,7 @@ function LongTitleCase() {
   return (
     <div className="max-w-sm">
       <div className="flex flex-wrap items-start gap-3">
-        <h4 className="min-w-0 flex-1 text-xl font-semibold tracking-tight">
+        <h4 className="min-w-0 flex-1 text-28 font-semibold tracking-tight">
           주식회사 아주 긴 이름의 고객사를 담당하는 홍길동
         </h4>
         <div className="ml-auto flex shrink-0 items-center gap-2">
@@ -375,7 +375,7 @@ function NarrowScreenCase() {
         <div className="flex flex-col gap-4">
           <div className="flex flex-col items-start gap-3">
             <div className="flex items-center gap-2">
-              <h4 className="text-xl font-semibold tracking-tight">{USER_NAME}</h4>
+              <h4 className="text-28 font-semibold tracking-tight">{USER_NAME}</h4>
               <Badge variant="success">활성</Badge>
             </div>
             <div className="flex items-center gap-2">
