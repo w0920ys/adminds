@@ -71,7 +71,7 @@ function AvatarStack() {
           <AvatarFallback>{getInitials(name)}</AvatarFallback>
         </Avatar>
       ))}
-      <span className="bg-muted text-muted-foreground ring-background -ml-2 flex size-control-sm shrink-0 items-center justify-center rounded-full text-xs font-medium ring-2">
+      <span className="bg-muted text-muted-foreground ring-background -ml-2 flex size-control-sm shrink-0 items-center justify-center rounded-full text-12 font-medium ring-2">
         +3
       </span>
     </div>
@@ -148,7 +148,7 @@ function renderExample(exampleId: string): ReactNode {
           </Avatar>
           <div>
             <p className="text-sm font-medium">홍길동</p>
-            <p className="text-muted-foreground text-xs">이 항목 확인했습니다</p>
+            <p className="text-muted-foreground text-12">이 항목 확인했습니다</p>
           </div>
         </div>
       )

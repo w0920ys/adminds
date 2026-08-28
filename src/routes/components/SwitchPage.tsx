@@ -29,7 +29,7 @@ function renderSwitch(options: RenderOptions) {
         <span className="pt-0.5">{control}</span>
         <span className="flex flex-col">
           <span className="text-sm">자동 갱신</span>
-          <span className="text-muted-foreground text-xs">만료일에 자동으로 결제하고 연장합니다</span>
+          <span className="text-muted-foreground text-12">만료일에 자동으로 결제하고 연장합니다</span>
         </span>
       </label>
     )
@@ -137,7 +137,7 @@ function renderExample(exampleId: string): ReactNode {
           </span>
           <span className="flex flex-col">
             <span className="text-sm">프로필 공개</span>
-            <span className="text-muted-foreground text-xs">
+            <span className="text-muted-foreground text-12">
               다른 사용자가 내 프로필을 볼 수 있습니다
             </span>
           </span>
@@ -152,7 +152,7 @@ function renderExample(exampleId: string): ReactNode {
           </span>
           <span className="flex flex-col">
             <span className="text-sm">자동 갱신</span>
-            <span className="text-muted-foreground text-xs">
+            <span className="text-muted-foreground text-12">
               만료일에 자동으로 결제하고 연장합니다
             </span>
           </span>
@@ -163,7 +163,7 @@ function renderExample(exampleId: string): ReactNode {
       return (
         <div className="bg-surface flex h-row-compact items-center gap-3 rounded-md border px-3">
           <span className="flex-1 truncate text-sm">홍길동</span>
-          <span className="text-muted-foreground text-xs">활성</span>
+          <span className="text-muted-foreground text-12">활성</span>
           <Switch defaultChecked aria-label="'홍길동' 활성 여부" />
         </div>
       )
@@ -175,7 +175,7 @@ function renderExample(exampleId: string): ReactNode {
             <Switch />
             자동 갱신
           </label>
-          <p className="text-destructive text-xs">반영에 실패했습니다. 다시 시도해 주세요.</p>
+          <p className="text-destructive text-12">반영에 실패했습니다. 다시 시도해 주세요.</p>
         </div>
       )
 
@@ -186,7 +186,7 @@ function renderExample(exampleId: string): ReactNode {
             <Switch disabled />
             <span className="text-muted-foreground">2단계 인증 강제</span>
           </label>
-          <p className="text-muted-foreground text-xs">관리자만 바꿀 수 있습니다</p>
+          <p className="text-muted-foreground text-12">관리자만 바꿀 수 있습니다</p>
         </div>
       )
 
@@ -236,7 +236,7 @@ export function SwitchPage() {
             <span data-anatomy="label" className="text-sm">
               자동 갱신
             </span>
-            <span data-anatomy="description" className="text-muted-foreground text-xs">
+            <span data-anatomy="description" className="text-muted-foreground text-12">
               만료일에 자동으로 결제하고 연장합니다
             </span>
           </span>

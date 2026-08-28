@@ -14,7 +14,7 @@ export function SiteFooter() {
             <Link
               key={section.id}
               to={section.to}
-              className="text-muted-foreground hover:text-foreground text-xs"
+              className="text-muted-foreground hover:text-foreground text-12"
             >
               {section.label}
             </Link>
@@ -25,19 +25,19 @@ export function SiteFooter() {
             href={LINKEDIN}
             target="_blank"
             rel="noreferrer"
-            className="text-muted-foreground hover:text-foreground text-xs"
+            className="text-muted-foreground hover:text-foreground text-12"
           >
             LinkedIn
           </a>
           <a
             href={`mailto:${EMAIL}`}
-            className="text-muted-foreground hover:text-foreground text-xs"
+            className="text-muted-foreground hover:text-foreground text-12"
           >
             {EMAIL}
           </a>
         </nav>
       </div>
-      <p className="text-muted-foreground text-2xs">
+      <p className="text-muted-foreground text-11">
         © {new Date().getFullYear()} sunwooyoon. All rights reserved.
       </p>
     </footer>

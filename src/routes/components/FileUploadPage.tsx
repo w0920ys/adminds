@@ -99,7 +99,7 @@ function DemoFileUpload({
         <>
           <UploadCloud className="text-muted-foreground size-6" aria-hidden />
           <p className="text-sm font-medium">{instruction}</p>
-          <p className="text-muted-foreground text-xs">{constraint}</p>
+          <p className="text-muted-foreground text-12">{constraint}</p>
         </>
       ) : (
         buttonLabel
@@ -369,7 +369,7 @@ function AnatomyPreview() {
           <p data-anatomy="instruction" className="text-sm font-medium">
             파일을 끌어다 놓거나 눌러서 올리세요
           </p>
-          <p data-anatomy="constraint" className="text-muted-foreground text-xs">
+          <p data-anatomy="constraint" className="text-muted-foreground text-12">
             PNG, JPG · 최대 5MB
           </p>
         </FileUploadDropzone>

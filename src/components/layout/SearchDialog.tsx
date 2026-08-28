@@ -146,7 +146,7 @@ export function SearchDialog({
 
           {groups.map((group, groupIndex) => (
             <section key={group.kind + group.label} className="mb-2 last:mb-0">
-              <h3 className="text-muted-foreground px-2 py-1 text-2xs font-bold tracking-widest">
+              <h3 className="text-muted-foreground px-2 py-1 text-11 font-bold tracking-widest">
                 {group.label.toUpperCase()}
               </h3>
               {group.hits.map((hit, i) => {
@@ -174,7 +174,7 @@ export function SearchDialog({
                         {showsUpdateDot(hit.to, hit.updatedAt) && <UpdateDot />}
                       </span>
                       {hit.snippet && (
-                        <span className="text-muted-foreground mt-0.5 line-clamp-2 block text-xs">
+                        <span className="text-muted-foreground mt-0.5 line-clamp-2 block text-12">
                           {hit.snippet[0]}
                           <mark className="bg-info/20 text-info-on-tint rounded-xs font-semibold">
                             {hit.snippet[1]}
@@ -183,11 +183,11 @@ export function SearchDialog({
                         </span>
                       )}
                       {!hit.snippet && hit.summary && (
-                        <span className="text-muted-foreground mt-0.5 line-clamp-1 block text-xs">
+                        <span className="text-muted-foreground mt-0.5 line-clamp-1 block text-12">
                           {hit.summary}
                         </span>
                       )}
-                      <span className="text-muted-foreground mt-1 block text-2xs">
+                      <span className="text-muted-foreground mt-1 block text-11">
                         {hit.breadcrumb.join(' › ')}
                       </span>
                     </span>
@@ -198,7 +198,7 @@ export function SearchDialog({
           ))}
         </div>
 
-        <div className="text-muted-foreground flex gap-3 border-t px-4 py-2 text-2xs">
+        <div className="text-muted-foreground flex gap-3 border-t px-4 py-2 text-11">
           <span>↵ 이동</span>
           <span>↑↓ 선택</span>
           <span>esc 닫기</span>

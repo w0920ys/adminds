@@ -49,7 +49,7 @@ export function UpdatesPage() {
                   <Badge variant="neutral">{release.version}</Badge>
                   <span className="font-medium">{release.title}</span>
                   <time
-                    className="text-muted-foreground ml-auto shrink-0 text-2xs font-normal"
+                    className="text-muted-foreground ml-auto shrink-0 text-11 font-normal"
                     dateTime={release.publishedAt}
                   >
                     {release.publishedAt}

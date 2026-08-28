@@ -172,7 +172,7 @@ function ActivityPanel() {
       {ACTIVITIES.map((activity) => (
         <li key={activity.id} className="flex items-center justify-between gap-4 text-sm">
           <span>{activity.label}</span>
-          <span className="text-muted-foreground text-xs">{activity.at}</span>
+          <span className="text-muted-foreground text-12">{activity.at}</span>
         </li>
       ))}
     </ul>
@@ -362,7 +362,7 @@ function LockedTabCase() {
           <OrdersPanel />
         </TabsContent>
       </Tabs>
-      <p className="text-muted-foreground text-xs">활동 탭은 열람 권한이 없어 잠겼습니다.</p>
+      <p className="text-muted-foreground text-12">활동 탭은 열람 권한이 없어 잠겼습니다.</p>
     </div>
   )
 }
@@ -406,7 +406,7 @@ function NarrowScreenCase() {
           </Tabs>
         </div>
       </div>
-      <p className="text-muted-foreground text-2xs">
+      <p className="text-muted-foreground text-11">
         점선은 화면 폭입니다. 제목과 동작은 세로로 쌓이고, Description List는 한 줄씩 놓입니다.
       </p>
     </div>

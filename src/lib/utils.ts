@@ -52,8 +52,27 @@ import { extendTailwindMerge } from 'tailwind-merge'
  * 가늠하기 어렵다. 실제로 토큰 유틸이 쓰이는 그룹만 정확히 넓히면
  * 다른 유틸리티의 병합 규칙은 그대로다.
  */
+/*
+ * font-size 스케일도 같은 틈에 빠진다 — tailwind-merge의 기본 text 테마는
+ * xs·sm·base·lg·xl·2xl 같은 T셔츠 사이즈 이름만 알아본다. 이 프로젝트가
+ * tokens.css에 심은 text-11·text-12·text-14 같은 순수 숫자 이름은 그
+ * 패턴에 안 걸려 font-size 그룹 밖으로 밀려나고, tailwind-merge는 색
+ * 이름을 뭐든 다 받아주는 text-color 그룹(color: [isAny])에 대신 떨어뜨린다.
+ * 그 상태에서 Badge처럼 text-11 뒤에 text-success-on-tint 같은 색 유틸이
+ * 오면 둘 다 text-color 그룹 소속으로 잡혀 충돌 처리되고, 나중에 온
+ * text-success-on-tint가 이겨 text-11이 통째로 지워진다 — 브라우저 실측
+ * 결과 배지 글자가 11px가 아니라 상속된 16px로 나온 원인이 이거였다.
+ *
+ * theme.text에 스케일 열두 값을 전부 등록해 font-size 그룹이 먼저
+ * 그 값들을 가져가게 한다. 그러면 같은 문자열이 더는 text-color의
+ * isAny에 떨어질 일이 없어 색 유틸과 충돌하지 않고, text-11과 text-14가
+ * 나란히 오면 font-size 그룹 안에서 정상적으로 하나만 남는다.
+ */
 const twMerge = extendTailwindMerge({
   extend: {
+    theme: {
+      text: ['11', '12', '14', '16', '18', '20', '22', '24', '28', '32', '40', '48'],
+    },
     classGroups: {
       h: [{ h: ['control', 'control-sm', 'control-lg', 'row', 'row-compact'] }],
       'min-h': [{ 'min-h': ['control', 'control-sm', 'control-lg', 'row', 'row-compact'] }],

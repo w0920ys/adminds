@@ -311,7 +311,7 @@ function FileUploadItem({
       <div className="flex items-center gap-2">
         <div className="min-w-0 flex-1">
           <p className="truncate text-sm font-medium">{name}</p>
-          {size != null && <p className="text-muted-foreground text-xs">{formatFileSize(size)}</p>}
+          {size != null && <p className="text-muted-foreground text-12">{formatFileSize(size)}</p>}
         </div>
         {onRemove && (
           <button
@@ -333,7 +333,7 @@ function FileUploadItem({
       </div>
       {progress != null && <Progress value={progress} size="sm" />}
       {error && (
-        <p id={errorId} className="text-destructive text-xs">
+        <p id={errorId} className="text-destructive text-12">
           {error}
         </p>
       )}

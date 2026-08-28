@@ -33,7 +33,7 @@ function SliderField({
       <FieldLabel className="flex items-center justify-between">
         <span>{label}</span>
         {valueLabel != null && (
-          <span className="text-muted-foreground text-xs font-normal">{valueLabel}</span>
+          <span className="text-muted-foreground text-12 font-normal">{valueLabel}</span>
         )}
       </FieldLabel>
       <FieldControl>
@@ -157,7 +157,7 @@ function renderExample(exampleId: string): ReactNode {
         <Field className="w-72">
           <FieldLabel className="flex items-center justify-between">
             <span>가격</span>
-            <span className="text-muted-foreground text-xs font-normal">₩20,000 – ₩120,000</span>
+            <span className="text-muted-foreground text-12 font-normal">₩20,000 – ₩120,000</span>
           </FieldLabel>
           <FieldControl>
             <Slider defaultValue={[20000, 120000]} min={0} max={200000} step={1000} />
@@ -230,7 +230,7 @@ function renderExample(exampleId: string): ReactNode {
         <Field state="error" className="w-64">
           <FieldLabel className="flex items-center justify-between">
             <span>재고 부족 알림 기준</span>
-            <span className="text-muted-foreground text-xs font-normal">120개 이하</span>
+            <span className="text-muted-foreground text-12 font-normal">120개 이하</span>
           </FieldLabel>
           <FieldHelp>재고가 이 값 이하로 떨어지면 담당자에게 알립니다</FieldHelp>
           <FieldControl>
@@ -263,7 +263,7 @@ function AnatomyPreview() {
     <Field className="w-64">
       <FieldLabel className="flex items-center justify-between">
         <span>이미지 품질</span>
-        <span data-anatomy="value" className="text-muted-foreground text-xs font-normal">
+        <span data-anatomy="value" className="text-muted-foreground text-12 font-normal">
           72%
         </span>
       </FieldLabel>

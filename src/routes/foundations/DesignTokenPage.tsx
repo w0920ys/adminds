@@ -94,7 +94,7 @@ const NAMING_RULES = [
   { shape: '--radius-<크기>', meaning: '모서리 단계', example: '--radius-md' },
   { shape: '--shadow-<용도>', meaning: '그림자 단계', example: '--shadow-card' },
   { shape: '--z-index-<레이어>', meaning: '쌓임 순서', example: '--z-index-drawer' },
-  { shape: '--text-<크기>', meaning: '글자 크기', example: '--text-2xs' },
+  { shape: '--text-<크기>', meaning: '글자 크기', example: '--text-11' },
   {
     /* Tailwind가 정한 짝 이름이다. text-<크기> 유틸리티가 이 이름을 줄 간격으로 읽는다 */
     shape: '--text-<크기>--line-height',
@@ -142,7 +142,7 @@ export function DesignTokenPage() {
               <span className="text-muted-foreground w-6 shrink-0 text-sm">{layer.step}</span>
               <span className="w-28 shrink-0 text-sm font-medium">{layer.name}</span>
               <span className="flex-1 text-sm">{layer.body}</span>
-              <span className="text-muted-foreground w-full text-xs md:w-32 md:shrink-0">
+              <span className="text-muted-foreground w-full text-12 md:w-32 md:shrink-0">
                 {layer.where}
               </span>
             </div>
@@ -156,9 +156,9 @@ export function DesignTokenPage() {
         </p>
         <p className="text-muted-foreground text-sm">
           새 토큰을 더할 때는 테마에 따라 값이 달라지는지를 먼저 봅니다. 달라지면{' '}
-          <code className="text-xs">:root</code>와 <code className="text-xs">.dark</code> 양쪽에 값을
-          적고 <code className="text-xs">@theme inline</code>에서 접두사가 붙은 이름으로 이어줍니다.
-          달라지지 않으면 <code className="text-xs">@theme inline</code>에 값을 바로 적습니다 — 지금
+          <code className="text-12">:root</code>와 <code className="text-12">.dark</code> 양쪽에 값을
+          적고 <code className="text-12">@theme inline</code>에서 접두사가 붙은 이름으로 이어줍니다.
+          달라지지 않으면 <code className="text-12">@theme inline</code>에 값을 바로 적습니다 — 지금
           간격, 그림자, 쌓임 순서, 글자 크기가 그렇습니다. 어느 쪽이든 컴포넌트가 만지는 것은
           유틸리티 클래스뿐입니다.
         </p>
@@ -172,7 +172,7 @@ export function DesignTokenPage() {
         <div className="overflow-x-auto rounded-lg border">
           <table className="w-full text-left text-sm">
             <thead>
-              <tr className="text-muted-foreground text-2xs tracking-widest">
+              <tr className="text-muted-foreground text-11 tracking-widest">
                 <th scope="col" className="px-3 py-2 font-bold">형태</th>
                 <th scope="col" className="px-3 py-2 font-bold">뜻</th>
                 <th scope="col" className="px-3 py-2 font-bold">예</th>
@@ -182,11 +182,11 @@ export function DesignTokenPage() {
               {NAMING_RULES.map((rule) => (
                 <tr key={rule.shape}>
                   <th scope="row" className="border-t px-3 py-2 font-medium">
-                    <code className="text-xs">{rule.shape}</code>
+                    <code className="text-12">{rule.shape}</code>
                   </th>
                   <td className="border-t px-3 py-2">{rule.meaning}</td>
                   <td className="text-muted-foreground border-t px-3 py-2">
-                    <code className="text-xs">{rule.example}</code>
+                    <code className="text-12">{rule.example}</code>
                   </td>
                 </tr>
               ))}
@@ -195,9 +195,9 @@ export function DesignTokenPage() {
         </div>
         <p className="text-muted-foreground text-sm">
           짝 규칙이 하나 있습니다. 배경으로 쓰는 색 토큰에는 같은 이름에{' '}
-          <code className="text-xs">-foreground</code>를 붙인 짝이 있고, 그 배경을 쓰면 글자색은 반드시
-          그 짝을 씁니다 — <code className="text-xs">bg-primary</code> 위의 글자는{' '}
-          <code className="text-xs">text-primary-foreground</code>입니다. 짝을 지키면 라이트와 다크
+          <code className="text-12">-foreground</code>를 붙인 짝이 있고, 그 배경을 쓰면 글자색은 반드시
+          그 짝을 씁니다 — <code className="text-12">bg-primary</code> 위의 글자는{' '}
+          <code className="text-12">text-primary-foreground</code>입니다. 짝을 지키면 라이트와 다크
           어느 쪽에서도 글자가 배경에 묻히지 않습니다.
         </p>
       </DocSection>
@@ -213,10 +213,10 @@ export function DesignTokenPage() {
               <h3 className="text-sm font-medium">
                 <code>{group.prefix}</code>
               </h3>
-              <span className="text-muted-foreground text-2xs">{group.names.length}개</span>
+              <span className="text-muted-foreground text-11">{group.names.length}개</span>
             </div>
-            <p className="text-muted-foreground text-xs">{group.note}</p>
-            {group.caution && <p className="text-annotation text-xs">{group.caution}</p>}
+            <p className="text-muted-foreground text-12">{group.note}</p>
+            {group.caution && <p className="text-annotation text-12">{group.caution}</p>}
             <TokenTable rows={measured[index]} />
           </div>
         ))}

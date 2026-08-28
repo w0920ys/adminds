@@ -29,7 +29,7 @@ function LabeledProgress({
     <div className={className ?? 'flex w-64 flex-col gap-1.5'}>
       <div className="flex items-center justify-between text-sm">
         <span>{label}</span>
-        {value != null && <span className="text-muted-foreground text-xs">{value}%</span>}
+        {value != null && <span className="text-muted-foreground text-12">{value}%</span>}
       </div>
       <Progress value={value} size={size} variant={variant} />
     </div>
@@ -78,7 +78,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
       return kind === 'do' ? (
         <div className="flex w-64 flex-col gap-1.5">
           <LabeledProgress label="파일 업로드" value={42} size="sm" variant="destructive" />
-          <p className="text-muted-foreground text-xs">네트워크 오류로 업로드에 실패했습니다</p>
+          <p className="text-muted-foreground text-12">네트워크 오류로 업로드에 실패했습니다</p>
         </div>
       ) : (
         <LabeledProgress label="파일 업로드" value={42} size="sm" variant="destructive" />
@@ -109,10 +109,10 @@ function renderExample(exampleId: string): ReactNode {
         <div className="flex w-72 flex-col gap-2 rounded-lg border p-4">
           <div className="flex items-center justify-between text-sm font-medium">
             <span>보고서.xlsx</span>
-            <span className="text-muted-foreground text-xs">72%</span>
+            <span className="text-muted-foreground text-12">72%</span>
           </div>
           <Progress value={72} size="sm" />
-          <p className="text-muted-foreground text-xs">1.4MB / 2.0MB 업로드 중</p>
+          <p className="text-muted-foreground text-12">1.4MB / 2.0MB 업로드 중</p>
         </div>
       )
 
@@ -121,7 +121,7 @@ function renderExample(exampleId: string): ReactNode {
         <div className="flex w-72 flex-col gap-2 rounded-lg border p-4">
           <div className="flex items-center justify-between text-sm font-medium">
             <span>상품 일괄 등록</span>
-            <span className="text-muted-foreground text-xs">340 / 500건</span>
+            <span className="text-muted-foreground text-12">340 / 500건</span>
           </div>
           <Progress value={68} />
         </div>
@@ -132,7 +132,7 @@ function renderExample(exampleId: string): ReactNode {
         <div className="flex w-72 flex-col gap-2 rounded-lg border p-4">
           <div className="flex items-center justify-between text-sm font-medium">
             <span>이번 달 API 호출</span>
-            <span className="text-muted-foreground text-xs">8,200 / 10,000회</span>
+            <span className="text-muted-foreground text-12">8,200 / 10,000회</span>
           </div>
           <Progress value={82} variant="warning" />
         </div>
@@ -143,7 +143,7 @@ function renderExample(exampleId: string): ReactNode {
         <div className="flex w-72 flex-col gap-2 rounded-lg border p-4">
           <div className="flex items-center justify-between text-sm font-medium">
             <span>가입 절차</span>
-            <span className="text-muted-foreground text-xs">3 / 4단계</span>
+            <span className="text-muted-foreground text-12">3 / 4단계</span>
           </div>
           <Progress value={75} />
         </div>
@@ -169,7 +169,7 @@ function renderExample(exampleId: string): ReactNode {
       return (
         <div className="flex w-64 flex-col gap-1.5">
           <LabeledProgress label="파일 업로드" value={42} size="sm" variant="destructive" />
-          <p className="text-muted-foreground text-xs">네트워크 오류로 업로드에 실패했습니다</p>
+          <p className="text-muted-foreground text-12">네트워크 오류로 업로드에 실패했습니다</p>
         </div>
       )
 
@@ -201,7 +201,7 @@ function AnatomyPreview() {
     <div className="flex w-72 flex-col gap-1.5">
       <div className="flex items-center justify-between text-sm">
         <span data-anatomy="label">파일 업로드</span>
-        <span data-anatomy="value" className="text-muted-foreground text-xs">
+        <span data-anatomy="value" className="text-muted-foreground text-12">
           64%
         </span>
       </div>

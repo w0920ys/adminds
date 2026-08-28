@@ -136,10 +136,10 @@ function TokenChip({ row, hex, partner }: { row: TokenRow; hex: string; partner?
         aria-hidden
       />
       <div className="min-w-0 flex-1">
-        <CopyValue value={row.name} className="text-xs font-medium" />
-        {hex && <CopyValue value={hex} className="text-muted-foreground text-2xs" />}
+        <CopyValue value={row.name} className="text-12 font-medium" />
+        {hex && <CopyValue value={hex} className="text-muted-foreground text-11" />}
         {partner && (
-          <p className="text-muted-foreground truncate px-1.5 text-2xs">짝 {partner}</p>
+          <p className="text-muted-foreground truncate px-1.5 text-11">짝 {partner}</p>
         )}
       </div>
     </div>
@@ -153,9 +153,9 @@ function Layer({ index, hexes }: { index: number; hexes: Record<string, string> 
   return (
     <div className={cn('rounded-lg border p-3', layer.className)}>
       <div className="mb-2 flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
-        <code className="text-xs font-medium">{layer.name}</code>
-        <span className="text-muted-foreground text-2xs">{hexes[layer.name]}</span>
-        <span className="text-muted-foreground text-2xs">{layer.note}</span>
+        <code className="text-12 font-medium">{layer.name}</code>
+        <span className="text-muted-foreground text-11">{hexes[layer.name]}</span>
+        <span className="text-muted-foreground text-11">{layer.note}</span>
       </div>
       <Layer index={index + 1} hexes={hexes} />
     </div>
@@ -269,7 +269,7 @@ export function ColorRolePage() {
         <div className="overflow-x-auto rounded-lg border">
           <table className="w-full text-left text-sm">
             <thead>
-              <tr className="text-muted-foreground text-2xs tracking-widest">
+              <tr className="text-muted-foreground text-11 tracking-widest">
                 <th scope="col" className="px-3 py-2 font-bold">Background</th>
                 <th scope="col" className="px-3 py-2 font-bold">Foreground</th>
                 <th scope="col" className="px-3 py-2 font-bold">Background HEX</th>
@@ -293,10 +293,10 @@ export function ColorRolePage() {
                     </th>
                     <td className="text-muted-foreground border-t px-3 py-2">{pair}</td>
                     <td className="text-muted-foreground border-t px-1.5 py-1">
-                      {hexes[row.name] && <CopyValue value={hexes[row.name]} className="text-2xs" />}
+                      {hexes[row.name] && <CopyValue value={hexes[row.name]} className="text-11" />}
                     </td>
                     <td className="text-muted-foreground border-t px-1.5 py-1">
-                      {hexes[pair] && <CopyValue value={hexes[pair]} className="text-2xs" />}
+                      {hexes[pair] && <CopyValue value={hexes[pair]} className="text-11" />}
                     </td>
                   </tr>
                 )
@@ -312,7 +312,7 @@ export function ColorRolePage() {
             <div className="bg-primary text-primary-foreground rounded-md px-3 py-2 text-sm">
               변경 사항 저장
             </div>
-            <p className="text-muted-foreground mt-2 text-xs">
+            <p className="text-muted-foreground mt-2 text-12">
               bg-primary 위에 text-primary-foreground
             </p>
           </ExampleFrame>
@@ -320,7 +320,7 @@ export function ColorRolePage() {
             <div className="bg-primary text-muted-foreground rounded-md px-3 py-2 text-sm">
               변경 사항 저장
             </div>
-            <p className="text-muted-foreground mt-2 text-xs">
+            <p className="text-muted-foreground mt-2 text-12">
               bg-primary 위에 text-muted-foreground
             </p>
           </ExampleFrame>
@@ -350,13 +350,13 @@ export function ColorRolePage() {
                       style={{ background: `var(${row.cssVar})` }}
                       aria-hidden
                     />
-                    <code className="text-xs font-medium">{row.name}</code>
-                    <span className="text-muted-foreground text-2xs">{hexes[row.name]}</span>
+                    <code className="text-12 font-medium">{row.name}</code>
+                    <span className="text-muted-foreground text-11">{hexes[row.name]}</span>
                   </div>
                   {meaning && (
                     <>
                       <p className="text-muted-foreground mt-2.5 text-sm">{meaning.when}</p>
-                      <p className="text-muted-foreground mt-1.5 text-xs">{meaning.not}</p>
+                      <p className="text-muted-foreground mt-1.5 text-12">{meaning.not}</p>
                     </>
                   )}
                 </div>

@@ -101,7 +101,7 @@ export function StatePage() {
         <div className="divide-y rounded-lg border">
           {STATES.map((state) => (
             <div key={state.name} className="flex flex-wrap items-baseline gap-x-4 gap-y-1 p-4">
-              <code className="w-20 shrink-0 text-xs font-medium">{state.name}</code>
+              <code className="w-20 shrink-0 text-12 font-medium">{state.name}</code>
               <span className="text-muted-foreground text-sm">{state.line}</span>
             </div>
           ))}
@@ -118,11 +118,11 @@ export function StatePage() {
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {DEMOS.map((demo) => (
             <div key={demo.name} className="rounded-lg border p-4">
-              <p className="text-muted-foreground mb-3 text-2xs font-bold tracking-widest">
+              <p className="text-muted-foreground mb-3 text-11 font-bold tracking-widest">
                 {demo.name.toUpperCase()}
               </p>
               <div className={cn('flex min-h-10 items-center', demo.force)}>{demo.node}</div>
-              <p className="text-muted-foreground mt-3 text-xs">{demo.note}</p>
+              <p className="text-muted-foreground mt-3 text-12">{demo.note}</p>
             </div>
           ))}
         </div>
@@ -160,7 +160,7 @@ export function StatePage() {
             />
             <p
               id="state-error-demo-message"
-              className="text-destructive flex items-start gap-1.5 text-xs"
+              className="text-destructive flex items-start gap-1.5 text-12"
             >
               <TriangleAlert size={13} className="mt-0.5 shrink-0" aria-hidden />
               이메일 형식이 아닙니다. example@company.com 형태로 입력하세요.

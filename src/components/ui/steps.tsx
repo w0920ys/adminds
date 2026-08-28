@@ -123,7 +123,7 @@ function StepDescription({ className, ...props }: React.ComponentProps<'p'>) {
     <p
       data-slot="step-description"
       className={cn(
-        'text-muted-foreground text-xs',
+        'text-muted-foreground text-12',
         orientation === 'vertical' && 'col-start-2 row-start-2',
         className,
       )}

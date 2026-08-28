@@ -15,7 +15,7 @@ import { DoDont } from '@/components/docs/DoDont'
 import { Button } from '@/components/ui/button'
 
 const SIZES = [
-  { size: 12, where: '배지 안', note: 'text-2xs 옆에 놓을 때만' },
+  { size: 12, where: '배지 안', note: 'text-11 옆에 놓을 때만' },
   { size: 14, where: '보조 텍스트 옆', note: '테이블 셀 설명, 도움말 문장 앞' },
   { size: 16, where: '버튼과 컨트롤', note: '기본값. 정하기 어려우면 16을 쓴다' },
   { size: 20, where: '툴바', note: '라벨 없이 아이콘만 클릭 대상일 때' },
@@ -61,14 +61,14 @@ export function IconographyPage() {
         <div className="divide-y rounded-lg border">
           {SIZES.map((item) => (
             <div key={item.size} className="flex flex-wrap items-center gap-x-4 gap-y-2 p-4">
-              <code className="text-muted-foreground w-8 shrink-0 text-xs">{item.size}</code>
+              <code className="text-muted-foreground w-8 shrink-0 text-12">{item.size}</code>
               <div className="flex w-24 shrink-0 items-center justify-start gap-3">
                 <Plus size={item.size} aria-hidden />
                 <Search size={item.size} aria-hidden />
                 <Trash2 size={item.size} aria-hidden />
               </div>
               <span className="text-sm font-medium">{item.where}</span>
-              <span className="text-muted-foreground ml-auto text-2xs">{item.note}</span>
+              <span className="text-muted-foreground ml-auto text-11">{item.note}</span>
             </div>
           ))}
         </div>
@@ -89,7 +89,7 @@ export function IconographyPage() {
                 <p className="text-sm font-medium">
                   {item.width} · {item.role}
                 </p>
-                <p className="text-muted-foreground mt-1 text-xs">{item.note}</p>
+                <p className="text-muted-foreground mt-1 text-12">{item.note}</p>
               </div>
             </div>
           ))}
@@ -108,8 +108,8 @@ export function IconographyPage() {
               <div key={row.name} className="flex flex-wrap items-center gap-x-4 gap-y-1 p-4">
                 <Icon size={16} className="shrink-0" aria-hidden />
                 <span className="w-14 shrink-0 text-sm font-medium">{row.meaning}</span>
-                <code className="text-muted-foreground w-36 shrink-0 text-xs">{row.name}</code>
-                <span className="text-muted-foreground text-xs">{row.where}</span>
+                <code className="text-muted-foreground w-36 shrink-0 text-12">{row.name}</code>
+                <span className="text-muted-foreground text-12">{row.where}</span>
               </div>
             )
           })}
@@ -123,8 +123,8 @@ export function IconographyPage() {
       <DocSection title="Accessibility">
         <p className="text-muted-foreground text-sm">
           아이콘은 스크린리더에 아무 이름도 주지 않습니다. 둘 중 하나는 반드시 붙습니다 — 아이콘이 유일한
-          라벨이면 <code className="text-xs">aria-label</code>, 옆에 글자가 있으면{' '}
-          <code className="text-xs">aria-hidden</code>.
+          라벨이면 <code className="text-12">aria-label</code>, 옆에 글자가 있으면{' '}
+          <code className="text-12">aria-hidden</code>.
         </p>
         <div className="grid gap-3 md:grid-cols-2">
           <div className="flex flex-col gap-3 rounded-lg border p-4">
@@ -135,7 +135,7 @@ export function IconographyPage() {
             </div>
             <div>
               <p className="text-sm font-medium">아이콘만 있는 버튼 · aria-label</p>
-              <p className="text-muted-foreground mt-1 text-xs">
+              <p className="text-muted-foreground mt-1 text-12">
                 스크린리더가 '사용자 추가, 버튼'으로 읽습니다. 라벨이 없으면 '버튼'까지만 읽혀 무엇을 하는
                 버튼인지 알 수 없습니다. 문구는 툴팁에 쓰는 말과 같게 맞춥니다.
               </p>
@@ -150,7 +150,7 @@ export function IconographyPage() {
             </div>
             <div>
               <p className="text-sm font-medium">라벨 옆 아이콘 · aria-hidden</p>
-              <p className="text-muted-foreground mt-1 text-xs">
+              <p className="text-muted-foreground mt-1 text-12">
                 옆의 글자가 이미 라벨입니다. 아이콘을 숨기지 않으면 같은 말이 두 번 읽힙니다. 장식으로 붙인
                 아이콘은 예외 없이 숨깁니다.
               </p>

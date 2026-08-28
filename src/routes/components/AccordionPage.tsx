@@ -64,7 +64,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
       return kind === 'do' ? (
         <div className="w-64 rounded-lg border p-4">
           <p className="text-sm font-medium">결제가 거부되었습니다</p>
-          <p className="text-muted-foreground mt-1 text-xs">
+          <p className="text-muted-foreground mt-1 text-12">
             카드 한도를 초과했습니다. 다른 카드를 사용해 주세요.
           </p>
         </div>

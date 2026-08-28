@@ -38,7 +38,7 @@ export function Gnb({ onMenuClick }: { onMenuClick: () => void }) {
             <Command size={14} strokeWidth={2.4} />
           </span>
           <span className="text-sm font-bold tracking-tight">서비스 대시보드</span>
-          <span className="text-muted-foreground text-2xs font-medium">{currentRelease.version}</span>
+          <span className="text-muted-foreground text-11 font-medium">{currentRelease.version}</span>
         </Link>
 
         <nav className="ml-6 hidden items-center gap-1 md:flex" aria-label="전역 메뉴">
@@ -65,8 +65,8 @@ export function Gnb({ onMenuClick }: { onMenuClick: () => void }) {
           aria-label="문서 검색"
         >
           <Search size={15} aria-hidden />
-          <span className="hidden text-xs sm:inline">검색</span>
-          <kbd className="bg-muted hidden rounded px-1 py-0.5 text-2xs font-medium sm:inline">
+          <span className="hidden text-12 sm:inline">검색</span>
+          <kbd className="bg-muted hidden rounded px-1 py-0.5 text-11 font-medium sm:inline">
             ⌘K
           </kbd>
         </button>

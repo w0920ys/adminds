@@ -36,7 +36,7 @@ export function FoundationsOverview() {
                 className="hover:bg-accent/50 flex h-full flex-col rounded-lg border p-4"
               >
                 <strong className="text-sm">{page.label}</strong>
-                <p className="text-muted-foreground mt-1 text-xs">{page.summary}</p>
+                <p className="text-muted-foreground mt-1 text-12">{page.summary}</p>
               </Link>
             </li>
           ))}

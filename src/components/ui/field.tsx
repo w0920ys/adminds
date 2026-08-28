@@ -254,7 +254,7 @@ function FieldHelp({ className, ...props }: React.ComponentProps<'p'>) {
     <p
       id={helpId}
       data-slot="field-help"
-      className={cn('text-muted-foreground text-xs', layout === 'horizontal' && 'col-start-2 row-start-2', className)}
+      className={cn('text-muted-foreground text-12', layout === 'horizontal' && 'col-start-2 row-start-2', className)}
       {...props}
     />
   )
@@ -269,7 +269,7 @@ function FieldError({ className, ...props }: React.ComponentProps<'p'>) {
       id={errorId}
       data-slot="field-error"
       className={cn(
-        'text-destructive text-xs',
+        'text-destructive text-12',
         layout === 'horizontal' && (hasHelp ? 'col-start-2 row-start-3' : 'col-start-2 row-start-2'),
         className,
       )}

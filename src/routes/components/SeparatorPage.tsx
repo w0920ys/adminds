@@ -61,23 +61,23 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
         <div className="flex w-56 flex-col gap-6 text-sm">
           <div className="flex flex-col gap-1">
             <p className="font-medium">일반</p>
-            <p className="text-muted-foreground text-xs">계정 정보를 관리합니다</p>
+            <p className="text-muted-foreground text-12">계정 정보를 관리합니다</p>
           </div>
           <div className="flex flex-col gap-1">
             <p className="font-medium">보안</p>
-            <p className="text-muted-foreground text-xs">비밀번호와 인증을 관리합니다</p>
+            <p className="text-muted-foreground text-12">비밀번호와 인증을 관리합니다</p>
           </div>
         </div>
       ) : (
         <div className="flex w-56 flex-col gap-6 text-sm">
           <div className="flex flex-col gap-1">
             <p className="font-medium">일반</p>
-            <p className="text-muted-foreground text-xs">계정 정보를 관리합니다</p>
+            <p className="text-muted-foreground text-12">계정 정보를 관리합니다</p>
           </div>
           <Separator />
           <div className="flex flex-col gap-1">
             <p className="font-medium">보안</p>
-            <p className="text-muted-foreground text-xs">비밀번호와 인증을 관리합니다</p>
+            <p className="text-muted-foreground text-12">비밀번호와 인증을 관리합니다</p>
           </div>
         </div>
       )
@@ -112,12 +112,12 @@ function renderExample(exampleId: string): ReactNode {
         <div className="bg-surface flex w-64 flex-col gap-3 rounded-md border p-4 text-sm">
           <div>
             <p className="font-medium">일반</p>
-            <p className="text-muted-foreground text-xs">계정 정보를 관리합니다</p>
+            <p className="text-muted-foreground text-12">계정 정보를 관리합니다</p>
           </div>
           <Separator />
           <div>
             <p className="font-medium">보안</p>
-            <p className="text-muted-foreground text-xs">비밀번호와 인증을 관리합니다</p>
+            <p className="text-muted-foreground text-12">비밀번호와 인증을 관리합니다</p>
           </div>
         </div>
       )

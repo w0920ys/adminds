@@ -18,7 +18,7 @@ function StructureList({ steps }: { steps: PatternStructureStep[] }) {
     <ol className="flex flex-col gap-2">
       {steps.map((step, index) => (
         <li key={step.slot} className="flex items-start gap-2.5 rounded-md p-2">
-          <span className="bg-muted text-neutral-on-tint mt-0.5 grid size-5 shrink-0 place-items-center rounded-full text-2xs font-bold">
+          <span className="bg-muted text-neutral-on-tint mt-0.5 grid size-5 shrink-0 place-items-center rounded-full text-11 font-bold">
             {index + 1}
           </span>
           <span className="min-w-0">
@@ -28,14 +28,14 @@ function StructureList({ steps }: { steps: PatternStructureStep[] }) {
                 <span className="text-muted-foreground font-normal"> (Optional)</span>
               )}
             </strong>
-            <span className="text-muted-foreground block text-xs">{step.note}</span>
+            <span className="text-muted-foreground block text-12">{step.note}</span>
             {step.components && step.components.length > 0 && (
               <span className="mt-1.5 flex flex-wrap gap-1.5">
                 {step.components.map((id) => (
                   <Link
                     key={id}
                     to={`/components/${id}`}
-                    className="hover:bg-accent text-muted-foreground rounded border px-1.5 py-0.5 text-2xs"
+                    className="hover:bg-accent text-muted-foreground rounded border px-1.5 py-0.5 text-11"
                   >
                     {/* id가 registry에 실재하는지는 patterns.test.ts가 지킨다 */}
                     {getComponent(id)?.name ?? id}
@@ -107,7 +107,7 @@ export function PatternPage({
         <div className="flex flex-col gap-2">
           <div>
             <strong className="text-sm">{meta.example.title}</strong>
-            <p className="text-muted-foreground mt-1 text-xs">{meta.example.note}</p>
+            <p className="text-muted-foreground mt-1 text-12">{meta.example.note}</p>
           </div>
           <ExampleFrame>{example}</ExampleFrame>
         </div>

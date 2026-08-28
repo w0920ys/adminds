@@ -20,8 +20,8 @@ const SCALE = [
   { className: 'text-lg', role: '다이얼로그 · 시트 제목' },
   { className: 'text-base', role: '문서 소제목 · 문서 설명 문단' },
   { className: 'text-sm', role: '본문 · 컨트롤 라벨 — 기본값' },
-  { className: 'text-xs', role: '설명 · 캡션 · 도움말' },
-  { className: 'text-2xs', role: '배지 · 메뉴 그룹 라벨 · 요일 머리' },
+  { className: 'text-12', role: '설명 · 캡션 · 도움말' },
+  { className: 'text-11', role: '배지 · 메뉴 그룹 라벨 · 요일 머리' },
 ]
 
 /** 여기도 선언 순서는 무관하다. 실측한 font-weight 내림차순으로 늘어놓는다 */
@@ -59,7 +59,7 @@ const STATS = [
 ]
 
 /** 크기를 제각각 준 나쁜 예시. 스케일 안의 클래스만 쓰되 한 줄에 섞는다 */
-const MIXED_STAT_SIZES = ['text-2xl', 'text-base', 'text-xs']
+const MIXED_STAT_SIZES = ['text-2xl', 'text-base', 'text-12']
 
 type ScaleRow = {
   className: string
@@ -226,7 +226,7 @@ export function TypographyPage() {
         </p>
         <div className="flex flex-col gap-2 rounded-lg border p-4">
           <div className="flex items-center justify-between gap-3">
-            <span className="text-2xs text-muted-foreground font-bold tracking-widest">
+            <span className="text-11 text-muted-foreground font-bold tracking-widest">
               FONT STACK
             </span>
             <CopyStackButton value={declaration} />
@@ -238,7 +238,7 @@ export function TypographyPage() {
             value={declaration}
             aria-label="폰트 스택 선언"
             onFocus={(event) => event.currentTarget.select()}
-            className="bg-surface-raised w-full resize-y rounded-md border p-3 font-mono text-xs leading-relaxed"
+            className="bg-surface-raised w-full resize-y rounded-md border p-3 font-mono text-12 leading-relaxed"
           />
         </div>
       </DocSection>
@@ -253,7 +253,7 @@ export function TypographyPage() {
         <div className="overflow-x-auto rounded-lg border">
           <table className="w-full text-left text-sm">
             <thead>
-              <tr className="text-muted-foreground text-2xs tracking-widest">
+              <tr className="text-muted-foreground text-11 tracking-widest">
                 <th scope="col" className="px-3 py-2 font-bold">스타일</th>
                 <th scope="col" className="px-3 py-2 font-bold">예시</th>
                 <th scope="col" className="px-3 py-2 font-bold">크기</th>
@@ -266,7 +266,7 @@ export function TypographyPage() {
               {scale.map((row) => (
                 <tr key={row.className}>
                   <th scope="row" className="border-t px-3 py-2 font-medium whitespace-nowrap">
-                    <code className="text-xs">{row.className}</code>
+                    <code className="text-12">{row.className}</code>
                   </th>
                   <td className="border-t px-3 py-2">
                     <span className={row.className}>{SPECIMEN}</span>
@@ -280,7 +280,7 @@ export function TypographyPage() {
                   <td className="text-muted-foreground border-t px-3 py-2 whitespace-nowrap">
                     {row.letterSpacing}
                   </td>
-                  <td className="text-muted-foreground border-t px-3 py-2 text-xs">{row.role}</td>
+                  <td className="text-muted-foreground border-t px-3 py-2 text-12">{row.role}</td>
                 </tr>
               ))}
             </tbody>
@@ -307,7 +307,7 @@ export function TypographyPage() {
         <div className="overflow-x-auto rounded-lg border">
           <table className="w-full text-left text-sm">
             <thead>
-              <tr className="text-muted-foreground text-2xs tracking-widest">
+              <tr className="text-muted-foreground text-11 tracking-widest">
                 <th scope="col" className="px-3 py-2 font-bold">스타일</th>
                 <th scope="col" className="px-3 py-2 font-bold">예시</th>
                 <th scope="col" className="px-3 py-2 font-bold">값</th>
@@ -318,7 +318,7 @@ export function TypographyPage() {
               {weights.map((row) => (
                 <tr key={row.className}>
                   <th scope="row" className="border-t px-3 py-2 font-medium whitespace-nowrap">
-                    <code className="text-xs">{row.className}</code>
+                    <code className="text-12">{row.className}</code>
                   </th>
                   <td className="border-t px-3 py-2">
                     <span className={`text-sm ${row.className}`}>{SPECIMEN}</span>
@@ -326,7 +326,7 @@ export function TypographyPage() {
                   <td className="text-muted-foreground border-t px-3 py-2 whitespace-nowrap">
                     {row.fontWeight}
                   </td>
-                  <td className="text-muted-foreground border-t px-3 py-2 text-xs">{row.role}</td>
+                  <td className="text-muted-foreground border-t px-3 py-2 text-12">{row.role}</td>
                 </tr>
               ))}
             </tbody>
@@ -355,18 +355,18 @@ export function TypographyPage() {
           {WRAP_DEMOS.map((demo) => (
             <ExampleFrame key={demo.key} kind={demo.kind}>
               <div className="flex flex-col gap-2">
-                <p className="text-2xs text-muted-foreground font-bold tracking-widest">
+                <p className="text-11 text-muted-foreground font-bold tracking-widest">
                   {demo.title}
                 </p>
                 <p data-wrap={demo.key} className={`max-w-40 text-sm ${demo.className}`}>
                   {WRAP_SPECIMEN}
                 </p>
                 {wrapRules[demo.key] && (
-                  <p className="text-muted-foreground text-xs">
+                  <p className="text-muted-foreground text-12">
                     <code>word-break: {wrapRules[demo.key]}</code>
                   </p>
                 )}
-                <p className="text-muted-foreground text-xs">{demo.note}</p>
+                <p className="text-muted-foreground text-12">{demo.note}</p>
               </div>
             </ExampleFrame>
           ))}
@@ -385,7 +385,7 @@ export function TypographyPage() {
           </li>
           <li>
             층이 정해지면 크기는 위 표에서 그대로 가져옵니다. 본문은 <code>text-sm</code>, 설명과
-            캡션은 <code>text-xs</code>가 기본이라 대부분은 이 둘에서 끝납니다.
+            캡션은 <code>text-12</code>가 기본이라 대부분은 이 둘에서 끝납니다.
           </li>
           <li>
             같은 층 안에서 더 눈에 띄어야 하면 크기가 아니라 굵기를 한 단계 올립니다 —{' '}
@@ -432,7 +432,7 @@ export function TypographyPage() {
             <dl className="flex gap-6">
               {STATS.map((stat) => (
                 <div key={stat.label} className="flex flex-col gap-0.5">
-                  <dt className="text-muted-foreground text-xs">{stat.label}</dt>
+                  <dt className="text-muted-foreground text-12">{stat.label}</dt>
                   <dd className="text-2xl font-semibold">{stat.value}</dd>
                 </div>
               ))}
@@ -442,7 +442,7 @@ export function TypographyPage() {
             <dl className="flex items-baseline gap-6">
               {STATS.map((stat, index) => (
                 <div key={stat.label} className="flex flex-col gap-0.5">
-                  <dt className="text-muted-foreground text-xs">{stat.label}</dt>
+                  <dt className="text-muted-foreground text-12">{stat.label}</dt>
                   <dd className={`font-semibold ${MIXED_STAT_SIZES[index]}`}>{stat.value}</dd>
                 </div>
               ))}
@@ -454,7 +454,7 @@ export function TypographyPage() {
             '위계는 크기보다 굵기와 색으로 만든다',
             '한 화면에서 크기 단계를 4개 이하로 유지한다',
             '같은 줄이나 같은 열의 숫자는 크기를 맞춘다',
-            '본문은 text-sm, 보조 설명은 text-xs를 기본으로 둔다',
+            '본문은 text-sm, 보조 설명은 text-12를 기본으로 둔다',
           ]}
           dont={[
             '강조를 위해 크기를 계속 키우지 않는다',

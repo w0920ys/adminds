@@ -58,7 +58,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
             </TooltipTrigger>
             <TooltipContent>권한이 없습니다</TooltipContent>
           </Tooltip>
-          <p className="text-muted-foreground text-xs">권한이 없어 승인할 수 없습니다</p>
+          <p className="text-muted-foreground text-12">권한이 없어 승인할 수 없습니다</p>
         </div>
       ) : (
         <Tooltip>
@@ -148,14 +148,14 @@ function renderExample(exampleId: string): ReactNode {
             </TooltipTrigger>
             <TooltipContent side="right">필수 항목을 먼저 채우세요</TooltipContent>
           </Tooltip>
-          <p className="text-muted-foreground text-xs">필수 항목을 먼저 채워야 게시할 수 있습니다</p>
+          <p className="text-muted-foreground text-12">필수 항목을 먼저 채워야 게시할 수 있습니다</p>
         </div>
       )
 
     case 'table-header':
       return (
         <div className="bg-surface flex items-center gap-1 rounded-md border px-3 py-2">
-          <span className="text-xs font-medium">전환율</span>
+          <span className="text-12 font-medium">전환율</span>
           <Tooltip>
             <TooltipTrigger asChild>
               <button type="button" aria-label="전환율 설명" className="text-muted-foreground">

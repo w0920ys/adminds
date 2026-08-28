@@ -27,7 +27,7 @@ function renderCheckbox(options: RenderOptions) {
         <span className="pt-0.5">{box}</span>
         <span className="flex flex-col">
           <span className="text-sm">자동 백업</span>
-          <span className="text-muted-foreground text-xs">매일 오전 3시에 백업을 실행합니다</span>
+          <span className="text-muted-foreground text-12">매일 오전 3시에 백업을 실행합니다</span>
         </span>
       </label>
     )
@@ -75,7 +75,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
             <Checkbox checked="indeterminate" />
             전체 선택
           </label>
-          <p className="text-muted-foreground text-xs">5개 항목 중 2개 선택됨</p>
+          <p className="text-muted-foreground text-12">5개 항목 중 2개 선택됨</p>
         </div>
       ) : (
         <div className="flex flex-col gap-1.5">
@@ -83,7 +83,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
             <Checkbox checked="indeterminate" />
             국적 선택 안 함
           </label>
-          <p className="text-muted-foreground text-xs">
+          <p className="text-muted-foreground text-12">
             아무것도 고르지 않았을 뿐 일부가 선택된 것이 아니다
           </p>
         </div>
@@ -165,12 +165,12 @@ function renderExample(exampleId: string): ReactNode {
           <div className="flex h-row-compact items-center gap-3 px-3">
             <Checkbox aria-label="'홍길동' 선택" defaultChecked />
             <span className="flex-1 truncate text-sm">홍길동</span>
-            <span className="text-muted-foreground text-xs">관리자</span>
+            <span className="text-muted-foreground text-12">관리자</span>
           </div>
           <div className="flex h-row-compact items-center gap-3 px-3">
             <Checkbox aria-label="'김서연' 선택" />
             <span className="flex-1 truncate text-sm">김서연</span>
-            <span className="text-muted-foreground text-xs">편집자</span>
+            <span className="text-muted-foreground text-12">편집자</span>
           </div>
         </div>
       )
@@ -180,7 +180,7 @@ function renderExample(exampleId: string): ReactNode {
         <div className="bg-surface divide-y overflow-hidden rounded-md border">
           <div className="flex h-row-compact items-center gap-3 px-3">
             <Checkbox aria-label="전체 선택" checked="indeterminate" />
-            <span className="text-muted-foreground flex-1 text-xs font-bold">이름</span>
+            <span className="text-muted-foreground flex-1 text-12 font-bold">이름</span>
           </div>
           <div className="flex h-row-compact items-center gap-3 px-3">
             <Checkbox aria-label="'홍길동' 선택" defaultChecked />
@@ -211,7 +211,7 @@ function renderExample(exampleId: string): ReactNode {
           </span>
           <span className="flex flex-col">
             <span className="text-sm">2단계 인증</span>
-            <span className="text-muted-foreground text-xs">
+            <span className="text-muted-foreground text-12">
               로그인할 때마다 인증 코드를 요구합니다
             </span>
           </span>
@@ -294,7 +294,7 @@ export function CheckboxPage() {
             <span data-anatomy="label" className="text-sm">
               자동 백업
             </span>
-            <span data-anatomy="description" className="text-muted-foreground text-xs">
+            <span data-anatomy="description" className="text-muted-foreground text-12">
               매일 오전 3시에 백업을 실행합니다
             </span>
           </span>

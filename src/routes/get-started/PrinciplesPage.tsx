@@ -13,7 +13,7 @@ function PrincipleCard({ principle }: { principle: Principle }) {
       <strong className="text-base font-semibold">{principle.title}</strong>
       <p className="text-muted-foreground text-sm">{principle.body}</p>
       {doc && (
-        <Link to={doc.to} className="text-primary text-xs underline-offset-4 hover:underline">
+        <Link to={doc.to} className="text-primary text-12 underline-offset-4 hover:underline">
           {doc.label}에서 자세히
         </Link>
       )}

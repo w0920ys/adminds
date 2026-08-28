@@ -318,7 +318,7 @@ function renderExample(exampleId: string): ReactNode {
               </div>
             </Pagination>
           </Bounds>
-          <p className="text-muted-foreground text-2xs">
+          <p className="text-muted-foreground text-11">
             점선은 컨테이너 폭입니다. 자리가 부족하면 다음 줄로 넘어갑니다.
           </p>
         </div>

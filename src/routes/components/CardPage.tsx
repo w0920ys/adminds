@@ -81,12 +81,12 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
           <CardContent className="flex flex-col gap-3">
             <div>
               <p className="text-sm font-medium">일반</p>
-              <p className="text-muted-foreground text-xs">계정 정보를 관리합니다</p>
+              <p className="text-muted-foreground text-12">계정 정보를 관리합니다</p>
             </div>
             <Separator />
             <div>
               <p className="text-sm font-medium">보안</p>
-              <p className="text-muted-foreground text-xs">비밀번호와 인증을 관리합니다</p>
+              <p className="text-muted-foreground text-12">비밀번호와 인증을 관리합니다</p>
             </div>
           </CardContent>
         </Card>
@@ -98,7 +98,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
                 <CardTitle>보안</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-muted-foreground text-xs">비밀번호와 인증을 관리합니다</p>
+                <p className="text-muted-foreground text-12">비밀번호와 인증을 관리합니다</p>
               </CardContent>
             </Card>
           </CardContent>
@@ -172,7 +172,7 @@ function renderExample(exampleId: string): ReactNode {
           </CardHeader>
           <CardContent className="flex flex-col gap-1">
             <p className="text-2xl font-semibold">₩12,480,000</p>
-            <p className="text-success-on-tint text-xs">전월 대비 +8.2%</p>
+            <p className="text-success-on-tint text-12">전월 대비 +8.2%</p>
           </CardContent>
         </Card>
       )

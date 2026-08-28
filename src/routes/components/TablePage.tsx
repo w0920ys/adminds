@@ -404,7 +404,7 @@ function renderExample(exampleId: string): ReactNode {
               </TableBody>
             </Table>
           </Bounds>
-          <p className="text-muted-foreground text-2xs">
+          <p className="text-muted-foreground text-11">
             점선은 화면 폭입니다. 표 안에서 가로로 스크롤되고 첫 열은 고정됩니다.
           </p>
         </div>

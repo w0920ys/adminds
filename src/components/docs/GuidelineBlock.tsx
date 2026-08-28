@@ -26,7 +26,7 @@ function Side({
        */}
       <p
         className={cn(
-          'flex items-center gap-1.5 text-2xs font-bold tracking-widest',
+          'flex items-center gap-1.5 text-11 font-bold tracking-widest',
           kind === 'do' ? 'text-success-on-tint' : 'text-destructive',
         )}
       >

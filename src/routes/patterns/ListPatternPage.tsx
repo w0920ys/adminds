@@ -424,7 +424,7 @@ function NarrowScreen() {
       <Bounds className="max-w-xs p-3">
         <ListScreen label="좁은 화면의 컴포넌트 목록" perPage={3} />
       </Bounds>
-      <p className="text-muted-foreground text-2xs">
+      <p className="text-muted-foreground text-11">
         점선은 화면 폭입니다. 필터 줄은 세로로 쌓이고, 표는 안에서 가로로 스크롤됩니다. 제목 줄은
         폭이 남는 동안 한 줄에 머뭅니다.
       </p>

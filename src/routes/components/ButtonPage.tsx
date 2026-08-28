@@ -116,7 +116,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
         <div className="flex flex-col items-start gap-3">
           <p className="text-sm">'홍길동'의 역할은 아래에서 바꿉니다.</p>
           <Button size="sm">역할 설정 열기</Button>
-          <p className="text-muted-foreground text-2xs">
+          <p className="text-muted-foreground text-11">
             새 탭으로 열 수도, 주소를 복사할 수도 없습니다.
           </p>
         </div>
@@ -132,8 +132,8 @@ function UserRow({ name, role, lastSeen }: { name: string; role: string; lastSee
   return (
     <div className="flex h-row-compact items-center gap-3 px-3">
       <span className="flex-1 truncate text-sm">{name}</span>
-      <span className="text-muted-foreground hidden text-xs sm:inline">{role}</span>
-      <span className="text-muted-foreground hidden text-xs md:inline">{lastSeen}</span>
+      <span className="text-muted-foreground hidden text-12 sm:inline">{role}</span>
+      <span className="text-muted-foreground hidden text-12 md:inline">{lastSeen}</span>
       <Button variant="ghost" size="sm" aria-label={`'${name}' 편집`}>
         <Settings2 aria-hidden />
       </Button>
@@ -151,7 +151,7 @@ function renderExample(exampleId: string): ReactNode {
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <h4 className="text-sm font-semibold">사용자</h4>
-            <p className="text-muted-foreground mt-1 text-xs">워크스페이스에 속한 사용자 24명</p>
+            <p className="text-muted-foreground mt-1 text-12">워크스페이스에 속한 사용자 24명</p>
           </div>
           <Button size="sm">
             <Plus aria-hidden />
@@ -173,7 +173,7 @@ function renderExample(exampleId: string): ReactNode {
         <div className="flex flex-col gap-3">
           <div>
             <p className="text-sm font-semibold">사용자 3명 삭제</p>
-            <p className="text-muted-foreground mt-1 text-xs">
+            <p className="text-muted-foreground mt-1 text-12">
               선택한 사용자 3명의 계정과 API 키가 지워집니다. 되돌릴 수 없습니다.
             </p>
           </div>
@@ -193,7 +193,7 @@ function renderExample(exampleId: string): ReactNode {
         <div className="flex flex-col items-center gap-3 text-center">
           <div>
             <p className="text-sm font-semibold">아직 초대한 사용자가 없습니다</p>
-            <p className="text-muted-foreground mt-1 text-xs">
+            <p className="text-muted-foreground mt-1 text-12">
               사용자를 초대하면 이 목록에 표시됩니다.
             </p>
           </div>
@@ -209,7 +209,7 @@ function renderExample(exampleId: string): ReactNode {
           <Bounds className="w-40">
             <Button size="sm">초대 메일 다시 보내기</Button>
           </Bounds>
-          <p className="text-muted-foreground text-2xs">
+          <p className="text-muted-foreground text-11">
             점선은 컨테이너 폭입니다. 라벨을 접지 않고 버튼이 넘어갑니다.
           </p>
         </div>
@@ -221,7 +221,7 @@ function renderExample(exampleId: string): ReactNode {
           <Button variant="outline" size="icon" aria-label="사용자 검색">
             <Search aria-hidden />
           </Button>
-          <code className="bg-muted rounded px-1.5 py-1 text-2xs">aria-label='사용자 검색'</code>
+          <code className="bg-muted rounded px-1.5 py-1 text-11">aria-label='사용자 검색'</code>
         </div>
       )
 
@@ -232,7 +232,7 @@ function renderExample(exampleId: string): ReactNode {
             <Plus aria-hidden />
             사용자 추가
           </Button>
-          <p className="text-muted-foreground text-xs">
+          <p className="text-muted-foreground text-12">
             사용자 추가는 워크스페이스 관리자만 할 수 있습니다.
           </p>
         </div>
@@ -245,7 +245,7 @@ function renderExample(exampleId: string): ReactNode {
             <Loader2 className="animate-spin" aria-hidden />
             저장 중
           </Button>
-          <p className="text-muted-foreground text-xs">
+          <p className="text-muted-foreground text-12">
             저장이 끝나면 라벨이 '저장'으로 돌아갑니다.
           </p>
         </div>
@@ -260,7 +260,7 @@ function renderExample(exampleId: string): ReactNode {
               사용자 추가
             </Button>
           </Bounds>
-          <p className="text-muted-foreground text-2xs">
+          <p className="text-muted-foreground text-11">
             폭이 좁으면 동작 하나를 가득 채웁니다.
           </p>
         </div>

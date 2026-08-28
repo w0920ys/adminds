@@ -226,7 +226,7 @@ function ControlledSortExample() {
 
   return (
     <div className="flex w-full flex-col gap-2">
-      <p className="text-muted-foreground text-2xs">부모가 쥔 page: {page}</p>
+      <p className="text-muted-foreground text-11">부모가 쥔 page: {page}</p>
       <DataTable
         label="정렬과 페이지를 부모가 함께 쥔 컴포넌트 목록"
         columns={axisColumns}
@@ -316,7 +316,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
               perPage={3}
             />
           </Bounds>
-          <p className="text-muted-foreground text-2xs">
+          <p className="text-muted-foreground text-11">
             점선은 화면 폭입니다. 가로로 굴러도 선택 칸과 이름 열이 왼쪽에 남습니다.
           </p>
         </div>
@@ -326,7 +326,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
          * 억지로 흉내 내는 대신 그 결과만 글로 짚는다 — ScrollAreaPage가
          * 크기 없는 ScrollArea를 그리지 않고 글로 짚은 것과 같은 자리다.
          */
-        <div className="text-muted-foreground w-full max-w-64 rounded-lg border border-dashed p-4 text-xs">
+        <div className="text-muted-foreground w-full max-w-64 rounded-lg border border-dashed p-4 text-12">
           선택 칸을 고정하지 않으면 가로로 구르는 즉시 선택 칸이 왼쪽 밖으로
           밀려납니다. 체크박스가 손에 닿지 않게 되어, 왼쪽 끝까지 되굴러야만
           선택을 풀 수 있습니다.
@@ -344,7 +344,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
           perPage={3}
         />
       ) : (
-        <div className="text-muted-foreground w-full max-w-64 rounded-lg border border-dashed p-4 text-xs">
+        <div className="text-muted-foreground w-full max-w-64 rounded-lg border border-dashed p-4 text-12">
           state를 쓰지 않고 뼈대만 손으로 깔면 화면에는 같아 보입니다. 그러나
           Skeleton은 스스로 aria-hidden이라, 화면 낭독기에는 아무 일도 일어나지
           않는 표로 들립니다.
@@ -378,7 +378,7 @@ function FilterExample() {
        * 길이 없다. 실제 입력을 두어 두 화면을 오갈 수 있게 한다. label로 감싸
        * 이 입력의 이름이 '조건'이 된다.
        */}
-      <label className="text-muted-foreground flex items-center gap-2 text-xs">
+      <label className="text-muted-foreground flex items-center gap-2 text-12">
         조건
         <Input
           size="sm"
@@ -494,7 +494,7 @@ function renderExample(exampleId: string): ReactNode {
               </>
             )}
           />
-          <p className="text-muted-foreground text-2xs">
+          <p className="text-muted-foreground text-11">
             몇 줄 고르고 다음 페이지로 넘어가 보세요. 위의 개수는 그대로 남습니다.
           </p>
         </div>
@@ -523,7 +523,7 @@ function renderExample(exampleId: string): ReactNode {
               perPage={3}
             />
           </Bounds>
-          <p className="text-muted-foreground text-2xs">
+          <p className="text-muted-foreground text-11">
             점선은 화면 폭입니다. 표 안에서 가로로 구르고, 선택 칸과 이름 열은
             왼쪽에 고정됩니다.
           </p>

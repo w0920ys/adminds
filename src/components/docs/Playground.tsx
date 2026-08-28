@@ -33,19 +33,19 @@ export function Playground({
 
       <div className="flex flex-col gap-5 rounded-lg border p-4 md:p-5">
         <div className="flex items-center justify-between">
-          <p className="text-muted-foreground text-2xs font-bold tracking-widest">Options</p>
+          <p className="text-muted-foreground text-11 font-bold tracking-widest">Options</p>
           <button
             type="button"
             onClick={() => setOptions(initialOptions(meta))}
             disabled={isInitial}
-            className="text-muted-foreground hover:bg-accent flex items-center gap-1 rounded-md px-2 py-1 text-2xs disabled:pointer-events-none disabled:opacity-50"
+            className="text-muted-foreground hover:bg-accent flex items-center gap-1 rounded-md px-2 py-1 text-11 disabled:pointer-events-none disabled:opacity-50"
           >
             <RotateCcw size={12} aria-hidden /> Reset
           </button>
         </div>
         {meta.properties.map((property) => (
           <fieldset key={property.name} className="flex flex-col gap-2">
-            <legend className="text-muted-foreground text-2xs font-bold tracking-widest">
+            <legend className="text-muted-foreground text-11 font-bold tracking-widest">
               {property.title.toUpperCase()}
             </legend>
             <div className="flex flex-wrap gap-1.5">
@@ -60,7 +60,7 @@ export function Playground({
                       setOptions((prev) => ({ ...prev, [property.name]: option.value }))
                     }
                     className={cn(
-                      'rounded-md border px-2 py-1 text-xs',
+                      'rounded-md border px-2 py-1 text-12',
                       selected
                         ? 'bg-primary text-primary-foreground border-transparent font-medium'
                         : 'hover:bg-accent/60',

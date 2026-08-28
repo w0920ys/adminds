@@ -30,7 +30,7 @@ export function InstallPage() {
           <CopyValue value="npm install" className="font-mono text-sm" />
         </div>
         <p className="text-muted-foreground text-sm">
-          그다음 아래 명령 중 필요한 것을 돌립니다. 이름은 <code className="text-xs">npm run</code>{' '}
+          그다음 아래 명령 중 필요한 것을 돌립니다. 이름은 <code className="text-12">npm run</code>{' '}
           뒤에 그대로 붙입니다.
         </p>
         <div className="divide-y rounded-lg border">
@@ -51,18 +51,18 @@ export function InstallPage() {
 
       <DocSection title="Use the tokens">
         <p className="text-muted-foreground text-sm">
-          <code className="text-xs">src/styles/tokens.css</code>가 색·간격·radius·shadow 같은
+          <code className="text-12">src/styles/tokens.css</code>가 색·간격·radius·shadow 같은
           디자인 토큰의 단일 출처입니다. Tailwind v4의{' '}
-          <code className="text-xs">@theme</code> 문법 위에 얹혀 있어서{' '}
-          <code className="text-xs">globals.css</code>에서{' '}
-          <code className="text-xs">@import &quot;tailwindcss&quot;</code> 뒤에 들여옵니다.
+          <code className="text-12">@theme</code> 문법 위에 얹혀 있어서{' '}
+          <code className="text-12">globals.css</code>에서{' '}
+          <code className="text-12">@import &quot;tailwindcss&quot;</code> 뒤에 들여옵니다.
         </p>
         <p className="text-muted-foreground text-sm">
           실제 순서는{' '}
-          <code className="text-xs">tailwindcss</code> →{' '}
-          <code className="text-xs">tw-animate-css</code> →{' '}
-          <code className="text-xs">tokens.css</code>입니다.{' '}
-          <code className="text-xs">tokens.css</code>가 먼저 오면 다크 변형과 색 토큰이
+          <code className="text-12">tailwindcss</code> →{' '}
+          <code className="text-12">tw-animate-css</code> →{' '}
+          <code className="text-12">tokens.css</code>입니다.{' '}
+          <code className="text-12">tokens.css</code>가 먼저 오면 다크 변형과 색 토큰이
           풀리지 않습니다.
         </p>
         <p className="text-muted-foreground text-sm">
@@ -79,17 +79,17 @@ export function InstallPage() {
         <div className="max-w-full rounded-lg border p-4">
           <CopyValue
             value="npx shadcn@latest add https://adminds.vercel.app/r/tokens.json"
-            className="w-full font-mono text-xs"
+            className="w-full font-mono text-12"
           />
         </div>
         <p className="text-muted-foreground text-sm">
           받는 쪽에는 Tailwind v4가 있어야 하고, 위 import 순서와 함께{' '}
-          <code className="text-xs">tsconfig.json</code>의{' '}
-          <code className="text-xs">paths</code>도 확인해야 합니다 — Vite 템플릿은{' '}
-          <code className="text-xs">"@/*": ["./src/*"]</code>를{' '}
-          <code className="text-xs">tsconfig.app.json</code>에만 두는데, 그러면 받은
-          파일이 <code className="text-xs">@/</code>라는 이름의 폴더로 통째로
-          떨어집니다. <code className="text-xs">baseUrl</code>은 넣지 않습니다 — TypeScript
+          <code className="text-12">tsconfig.json</code>의{' '}
+          <code className="text-12">paths</code>도 확인해야 합니다 — Vite 템플릿은{' '}
+          <code className="text-12">"@/*": ["./src/*"]</code>를{' '}
+          <code className="text-12">tsconfig.app.json</code>에만 두는데, 그러면 받은
+          파일이 <code className="text-12">@/</code>라는 이름의 폴더로 통째로
+          떨어집니다. <code className="text-12">baseUrl</code>은 넣지 않습니다 — TypeScript
           6에서 하드 에러입니다.
         </p>
       </DocSection>

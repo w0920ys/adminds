@@ -6,7 +6,7 @@ export function TokenTable({ rows }: { rows: TokenRow[] }) {
     <div className="overflow-x-auto rounded-lg border">
       <table className="w-full text-left text-sm">
         <thead>
-          <tr className="text-muted-foreground text-2xs tracking-widest">
+          <tr className="text-muted-foreground text-11 tracking-widest">
             <th scope="col" className="px-3 py-2 font-bold">TOKEN</th>
             <th scope="col" className="px-3 py-2 font-bold">CSS VARIABLE</th>
             <th scope="col" className="px-3 py-2 font-bold">VALUE</th>

@@ -34,7 +34,7 @@ function renderRadio(options: RenderOptions) {
           <span className="pt-0.5">{control}</span>
           <span className="flex flex-col">
             <span className="text-sm">{label}</span>
-            <span className="text-muted-foreground text-xs">{description}</span>
+            <span className="text-muted-foreground text-12">{description}</span>
           </span>
         </label>
       )
@@ -226,7 +226,7 @@ function renderExample(exampleId: string): ReactNode {
             </span>
             <span className="flex flex-col">
               <span className="text-sm">월간 결제</span>
-              <span className="text-muted-foreground text-xs">매달 1일에 결제합니다</span>
+              <span className="text-muted-foreground text-12">매달 1일에 결제합니다</span>
             </span>
           </label>
           <label className="flex items-start gap-2">
@@ -235,7 +235,7 @@ function renderExample(exampleId: string): ReactNode {
             </span>
             <span className="flex flex-col">
               <span className="text-sm">연간 결제</span>
-              <span className="text-muted-foreground text-xs">
+              <span className="text-muted-foreground text-12">
                 한 번에 결제하고 2개월치를 아낍니다
               </span>
             </span>
@@ -351,7 +351,7 @@ function AnatomyPreview() {
           <span data-anatomy="label" className="text-sm">
             전체 배포
           </span>
-          <span data-anatomy="description" className="text-muted-foreground text-xs">
+          <span data-anatomy="description" className="text-muted-foreground text-12">
             모든 사용자에게 한 번에 배포합니다
           </span>
         </span>

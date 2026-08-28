@@ -140,7 +140,7 @@ function LiveSaveToastDemo() {
       <Button size="sm" onClick={() => setOpen(true)}>
         저장
       </Button>
-      <p className="text-muted-foreground text-2xs">눌러보면 화면 오른쪽 아래에 실제로 나타났다 사라진다</p>
+      <p className="text-muted-foreground text-11">눌러보면 화면 오른쪽 아래에 실제로 나타났다 사라진다</p>
       <Toast variant="success" open={open} onOpenChange={setOpen} className="w-72">
         <ToastTitle>변경 사항이 저장되었습니다</ToastTitle>
         <ToastClose />

@@ -294,7 +294,7 @@ function NarrowScreenCase() {
           </div>
         </form>
       </div>
-      <p className="text-muted-foreground text-2xs">
+      <p className="text-muted-foreground text-11">
         점선은 화면 폭입니다. 컨트롤은 한 열로 쌓이고 저장·취소가 가로폭을 채웁니다.
       </p>
     </div>

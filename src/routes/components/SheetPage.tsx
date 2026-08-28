@@ -80,7 +80,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
     case 'distinguish-dialog':
       return kind === 'do' ? (
         <div className="flex w-full flex-col gap-2">
-          <h4 className="text-muted-foreground text-2xs font-bold tracking-widest">사용자 목록</h4>
+          <h4 className="text-muted-foreground text-11 font-bold tracking-widest">사용자 목록</h4>
           <ul className="rounded-md border text-sm">
             {['홍길동', '김서연'].map((name) => (
               <li key={name} className="flex items-center justify-between border-b px-3 py-2 last:border-b-0">
@@ -448,7 +448,7 @@ function renderExample(exampleId: string): ReactNode {
               {['상태가 활성으로 바뀜', '권한이 변경됨', '메모가 추가됨'].map((entry, i) => (
                 <li key={entry} className="border-b pb-2 last:border-0">
                   <p>{entry}</p>
-                  <p className="text-muted-foreground text-xs">2026-08-{String(24 - i).padStart(2, '0')}</p>
+                  <p className="text-muted-foreground text-12">2026-08-{String(24 - i).padStart(2, '0')}</p>
                 </li>
               ))}
             </ul>

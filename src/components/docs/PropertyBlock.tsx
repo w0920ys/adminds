@@ -57,7 +57,7 @@ export function PropertyBlock({
         <div className="overflow-x-auto rounded-lg border">
           <table className="w-full text-left">
             <thead>
-              <tr className="text-muted-foreground text-xs">
+              <tr className="text-muted-foreground text-12">
                 <th scope="col" className="bg-surface sticky left-0 px-3 py-2 font-bold">
                   {property.title}
                 </th>
@@ -77,7 +77,7 @@ export function PropertyBlock({
                   >
                     {option.value}
                     {option.note && (
-                      <span className="text-muted-foreground block text-xs font-normal">
+                      <span className="text-muted-foreground block text-12 font-normal">
                         {option.note}
                       </span>
                     )}
@@ -115,7 +115,7 @@ export function PropertyBlock({
              * 이유로 이미 쓰고 있는 것과 같은 처방이다.
              */
             <div key={option.value} className="flex min-w-0 flex-col gap-3">
-              <p className="text-muted-foreground text-xs font-bold">{option.value}</p>
+              <p className="text-muted-foreground text-12 font-bold">{option.value}</p>
               <div
                 className={cn(
                   'flex min-h-10 items-center',
@@ -128,7 +128,7 @@ export function PropertyBlock({
                 )}
               </div>
               {option.note && (
-                <p className="text-muted-foreground max-w-48 text-xs">{option.note}</p>
+                <p className="text-muted-foreground max-w-48 text-12">{option.note}</p>
               )}
             </div>
           ))}

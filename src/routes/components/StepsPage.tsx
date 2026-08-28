@@ -85,7 +85,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
 
     case 'clickable-visited-only':
       return kind === 'do' ? (
-        <div className="flex w-64 flex-col gap-2 text-xs">
+        <div className="flex w-64 flex-col gap-2 text-12">
           <Steps orientation="horizontal">
             <Step state="complete">
               <StepIndicator>1</StepIndicator>
@@ -103,7 +103,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
           <p className="text-muted-foreground">1단계만 눌러 되돌아갈 수 있습니다</p>
         </div>
       ) : (
-        <div className="flex w-64 flex-col gap-2 text-xs">
+        <div className="flex w-64 flex-col gap-2 text-12">
           <Steps orientation="horizontal">
             <Step state="complete">
               <StepIndicator>1</StepIndicator>
@@ -137,7 +137,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
           {['약관', '본인 확인', '정보 입력', '배송지', '결제', '검토', '완료'].map((title, index) => (
             <Step key={title} state={index === 1 ? 'current' : index < 1 ? 'complete' : 'pending'}>
               <StepIndicator>{index + 1}</StepIndicator>
-              <StepLabel className="text-2xs">{title}</StepLabel>
+              <StepLabel className="text-11">{title}</StepLabel>
             </Step>
           ))}
         </Steps>
@@ -266,11 +266,11 @@ function renderExample(exampleId: string): ReactNode {
             {['약관', '본인 확인', '정보 입력', '배송지', '결제', '검토', '완료'].map((title, index) => (
               <Step key={title} state={index === 2 ? 'current' : index < 2 ? 'complete' : 'pending'}>
                 <StepIndicator>{index + 1}</StepIndicator>
-                <StepLabel className="text-2xs">{title}</StepLabel>
+                <StepLabel className="text-11">{title}</StepLabel>
               </Step>
             ))}
           </Steps>
-          <p className="text-muted-foreground text-2xs">
+          <p className="text-muted-foreground text-11">
             일곱 단계다. 한 단계씩 좁아져 라벨을 읽기 어렵다.
           </p>
         </div>

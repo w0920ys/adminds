@@ -126,7 +126,7 @@ function TableHead({
       aria-sort={sortable ? ariaSort : undefined}
       onClick={sortable ? undefined : onClick}
       className={cn(
-        'text-muted-foreground h-full px-3 text-left align-middle text-xs font-bold whitespace-nowrap',
+        'text-muted-foreground h-full px-3 text-left align-middle text-12 font-bold whitespace-nowrap',
         numeric && 'text-right',
         sticky && 'bg-surface sticky left-0 z-sticky',
         className,

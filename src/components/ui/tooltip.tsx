@@ -32,7 +32,7 @@ function TooltipContent({
         data-slot="tooltip-content"
         sideOffset={sideOffset}
         className={cn(
-          'bg-popover text-popover-foreground z-popover w-fit max-w-64 text-balance rounded-md border px-3 py-1.5 text-xs shadow-md',
+          'bg-popover text-popover-foreground z-popover w-fit max-w-64 text-balance rounded-md border px-3 py-1.5 text-12 shadow-md',
           className,
         )}
         {...props}

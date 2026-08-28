@@ -70,7 +70,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
       return kind === 'do' ? (
         <div className="flex flex-col gap-1.5">
           <Input aria-invalid defaultValue="not-an-email" className="w-48" />
-          <p className="text-destructive text-xs">올바른 이메일 형식이 아닙니다</p>
+          <p className="text-destructive text-12">올바른 이메일 형식이 아닙니다</p>
         </div>
       ) : (
         <Input aria-invalid defaultValue="not-an-email" className="w-48" />
@@ -122,7 +122,7 @@ function renderExample(exampleId: string): ReactNode {
             이메일
           </label>
           <Input id="ex-email" placeholder="name@company.com" className="w-64" />
-          <p className="text-muted-foreground text-xs">초대 메일을 받을 주소</p>
+          <p className="text-muted-foreground text-12">초대 메일을 받을 주소</p>
         </div>
       )
 
@@ -143,7 +143,7 @@ function renderExample(exampleId: string): ReactNode {
       return (
         <div className="relative w-40">
           <Input defaultValue="50000" className="pr-9" />
-          <span className="text-muted-foreground pointer-events-none absolute top-1/2 right-3 -translate-y-1/2 text-xs">
+          <span className="text-muted-foreground pointer-events-none absolute top-1/2 right-3 -translate-y-1/2 text-12">
             원
           </span>
         </div>
@@ -155,7 +155,7 @@ function renderExample(exampleId: string): ReactNode {
           <Bounds className="w-40">
             <Input defaultValue="어드민-디자인시스템-워크스페이스-24" />
           </Bounds>
-          <p className="text-muted-foreground text-2xs">
+          <p className="text-muted-foreground text-11">
             점선은 컨테이너 폭입니다. 줄바꿈하지 않고 칸 안에서 스크롤됩니다.
           </p>
         </div>
@@ -175,7 +175,7 @@ function renderExample(exampleId: string): ReactNode {
             전화번호
           </label>
           <Input id="ex-phone" aria-invalid defaultValue="010-12-34" className="w-48" />
-          <p className="text-destructive text-xs">010-0000-0000 형식으로 입력하세요</p>
+          <p className="text-destructive text-12">010-0000-0000 형식으로 입력하세요</p>
         </div>
       )
 
@@ -188,7 +188,7 @@ function renderExample(exampleId: string): ReactNode {
           <Bounds className="w-48">
             <Input placeholder="이름을 입력하세요" />
           </Bounds>
-          <p className="text-muted-foreground text-2xs">
+          <p className="text-muted-foreground text-11">
             점선은 컨테이너 폭입니다. 너비를 지정하지 않으면 부모를 채웁니다.
           </p>
         </div>

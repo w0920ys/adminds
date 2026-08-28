@@ -272,7 +272,7 @@ function ColumnPickerExample() {
           })
         }
       />
-      <p className="text-muted-foreground text-xs">
+      <p className="text-muted-foreground text-12">
         {hidden.size === 0
           ? '모든 열이 보입니다'
           : `숨긴 열: ${COLUMN_ENTRIES.filter((c) => hidden.has(c.value))

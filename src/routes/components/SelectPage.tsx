@@ -188,7 +188,7 @@ function renderExample(exampleId: string): ReactNode {
     case 'table-filter':
       return (
         <div className="bg-surface flex items-center gap-2 rounded-md border p-2">
-          <span className="text-muted-foreground text-xs">상태</span>
+          <span className="text-muted-foreground text-12">상태</span>
           <Select defaultValue="all">
             <SelectTrigger size="sm" aria-label="상태로 필터" className="w-28">
               <SelectValue />
@@ -219,7 +219,7 @@ function renderExample(exampleId: string): ReactNode {
     case 'page-size':
       return (
         <div className="flex items-center gap-2">
-          <span className="text-muted-foreground text-xs">페이지당 행 수</span>
+          <span className="text-muted-foreground text-12">페이지당 행 수</span>
           <Select defaultValue="25">
             <SelectTrigger size="sm" aria-label="페이지당 행 수" className="w-20">
               <SelectValue />

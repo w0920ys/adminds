@@ -34,8 +34,8 @@ export function GetStartedOverview() {
                 className="hover:bg-accent/50 flex h-full flex-col rounded-lg border p-4"
               >
                 <strong className="text-sm">{section.label}</strong>
-                <p className="text-muted-foreground mt-1 text-xs">{sectionRole[section.id]}</p>
-                <span className="text-muted-foreground mt-2 block text-2xs">
+                <p className="text-muted-foreground mt-1 text-12">{sectionRole[section.id]}</p>
+                <span className="text-muted-foreground mt-2 block text-11">
                   문서 {flattenDocs(section.items).length}개
                 </span>
               </Link>
@@ -63,13 +63,13 @@ export function GetStartedOverview() {
         <ul className="grid gap-3 sm:grid-cols-3">
           <li className="rounded-lg border p-4">
             <strong className="text-2xl font-bold tracking-tight">{components.total}</strong>
-            <p className="text-muted-foreground mt-1 text-xs">
+            <p className="text-muted-foreground mt-1 text-12">
               컴포넌트 · 그중 {components.verified}개를 눈으로 확인했습니다
             </p>
           </li>
           <li className="rounded-lg border p-4">
             <strong className="text-2xl font-bold tracking-tight">{patterns.total}</strong>
-            <p className="text-muted-foreground mt-1 text-xs">
+            <p className="text-muted-foreground mt-1 text-12">
               패턴 · 그중 {patterns.verified}개를 눈으로 확인했습니다
             </p>
           </li>
@@ -77,7 +77,7 @@ export function GetStartedOverview() {
             <strong className="text-2xl font-bold tracking-tight">
               {sections.reduce((n, s) => n + flattenDocs(s.items).length, 0)}
             </strong>
-            <p className="text-muted-foreground mt-1 text-xs">문서</p>
+            <p className="text-muted-foreground mt-1 text-12">문서</p>
           </li>
         </ul>
       </DocSection>

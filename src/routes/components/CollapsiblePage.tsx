@@ -123,7 +123,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
       return kind === 'do' ? (
         <div className="w-full max-w-64 rounded-lg border p-4">
           <p className="text-sm font-medium">결제가 거부되었습니다</p>
-          <p className="text-muted-foreground mt-1 text-xs">
+          <p className="text-muted-foreground mt-1 text-12">
             카드 한도를 초과했습니다. 다른 카드를 사용해 주세요.
           </p>
         </div>
@@ -143,10 +143,10 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
               <TableCell>배송 중</TableCell>
               <TableCell>
                 <Collapsible>
-                  <CollapsibleTrigger className="justify-start gap-1 py-0 text-xs">
+                  <CollapsibleTrigger className="justify-start gap-1 py-0 text-12">
                     상세
                   </CollapsibleTrigger>
-                  <CollapsibleContent className="text-xs">결제 42,000원</CollapsibleContent>
+                  <CollapsibleContent className="text-12">결제 42,000원</CollapsibleContent>
                 </Collapsible>
               </TableCell>
             </TableRow>
@@ -156,7 +156,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
         <div className="w-full max-w-80 rounded-md border">
           <div className="text-muted-foreground flex items-center justify-between px-3 py-3 text-sm">
             <span>ORD-4821 · 배송 중</span>
-            <span className="text-2xs">행 전체가 눌린다</span>
+            <span className="text-11">행 전체가 눌린다</span>
           </div>
         </div>
       )
@@ -214,7 +214,7 @@ function renderExample(exampleId: string): ReactNode {
         <Collapsible className="w-full max-w-72">
           <CollapsibleTrigger>배포 로그 11줄</CollapsibleTrigger>
           <CollapsibleContent>
-            <pre className="bg-muted max-h-40 overflow-y-auto rounded-md p-3 font-mono text-xs whitespace-pre-wrap">
+            <pre className="bg-muted max-h-40 overflow-y-auto rounded-md p-3 font-mono text-12 whitespace-pre-wrap">
               {DEPLOY_LOG}
             </pre>
           </CollapsibleContent>
@@ -238,10 +238,10 @@ function renderExample(exampleId: string): ReactNode {
                 <TableCell>{order.status}</TableCell>
                 <TableCell>
                   <Collapsible>
-                    <CollapsibleTrigger className="justify-start gap-1 py-0 text-xs">
+                    <CollapsibleTrigger className="justify-start gap-1 py-0 text-12">
                       상세 보기
                     </CollapsibleTrigger>
-                    <CollapsibleContent className="text-xs">{order.detail}</CollapsibleContent>
+                    <CollapsibleContent className="text-12">{order.detail}</CollapsibleContent>
                   </Collapsible>
                 </TableCell>
               </TableRow>
@@ -255,7 +255,7 @@ function renderExample(exampleId: string): ReactNode {
         <Collapsible defaultOpen className="w-full max-w-72">
           <CollapsibleTrigger>배포 로그 11줄</CollapsibleTrigger>
           <CollapsibleContent>
-            <pre className="bg-muted max-h-40 overflow-y-auto rounded-md p-3 font-mono text-xs whitespace-pre-wrap">
+            <pre className="bg-muted max-h-40 overflow-y-auto rounded-md p-3 font-mono text-12 whitespace-pre-wrap">
               {DEPLOY_LOG}
             </pre>
           </CollapsibleContent>

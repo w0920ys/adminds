@@ -37,8 +37,8 @@ export function ComponentsIndex() {
                   className="hover:bg-accent/50 flex h-full flex-col rounded-lg border p-4"
                 >
                   <strong className="text-sm">{meta.name}</strong>
-                  <p className="text-muted-foreground mt-1 line-clamp-2 text-xs">{meta.purpose}</p>
-                  <span className="text-muted-foreground mt-2 block text-2xs">
+                  <p className="text-muted-foreground mt-1 line-clamp-2 text-12">{meta.purpose}</p>
+                  <span className="text-muted-foreground mt-2 block text-11">
                     {meta.status} · {meta.changedIn}
                   </span>
                 </Link>

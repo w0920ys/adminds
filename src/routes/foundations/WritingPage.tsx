@@ -149,7 +149,7 @@ export function WritingPage() {
         <p className="text-muted-foreground text-sm">
           구조를 가리키는 이름은 영문으로, 설명은 한국어로 씁니다.
         </p>
-        <ul className="text-muted-foreground flex list-disc flex-col gap-1.5 pl-5 text-xs">
+        <ul className="text-muted-foreground flex list-disc flex-col gap-1.5 pl-5 text-12">
           <li>
             영문으로 두는 것 — 섹션 제목, 페이지 이름, 버튼과 배지 같은 UI 라벨, 속성 이름,
             코드 식별자
@@ -173,7 +173,7 @@ export function WritingPage() {
           데이터가 다른 것처럼 보입니다.
         </p>
         <div className="divide-y rounded-lg border">
-          <div className="text-muted-foreground bg-surface-raised flex gap-4 px-4 py-2 text-2xs font-bold tracking-widest">
+          <div className="text-muted-foreground bg-surface-raised flex gap-4 px-4 py-2 text-11 font-bold tracking-widest">
             <span className="w-20 shrink-0">항목</span>
             <span className="flex-1">이 시스템의 표기</span>
             <span className="hidden w-56 shrink-0 md:block">쓰지 않는 표기</span>
@@ -182,7 +182,7 @@ export function WritingPage() {
             <div key={row.item} className="flex flex-wrap gap-x-4 gap-y-1 p-4 md:flex-nowrap">
               <span className="w-20 shrink-0 text-sm font-medium">{row.item}</span>
               <span className="flex-1 text-sm">{row.rule}</span>
-              <span className="text-muted-foreground w-full text-xs md:w-56 md:shrink-0">
+              <span className="text-muted-foreground w-full text-12 md:w-56 md:shrink-0">
                 {row.avoid}
               </span>
             </div>

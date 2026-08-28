@@ -110,7 +110,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
           <ComponentList className="px-3 text-sm" />
         </ScrollArea>
       ) : (
-        <div className="text-muted-foreground w-full max-w-64 rounded-lg border border-dashed p-4 text-xs">
+        <div className="text-muted-foreground w-full max-w-64 rounded-lg border border-dashed p-4 text-12">
           h-40처럼 높이를 주지 않으면 아무것도 굴러가지 않고, 안의 목록
           37개가 그대로 늘어나 이 카드 밖까지 밀려납니다.
         </div>
@@ -121,11 +121,11 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
         <div className="flex w-full max-w-64 flex-col gap-2 rounded-lg border p-3">
           <p className="text-sm font-semibold">최근 활동</p>
           <ScrollArea className="h-32 w-full">
-            <ComponentList className="pr-3 text-xs" />
+            <ComponentList className="pr-3 text-12" />
           </ScrollArea>
         </div>
       ) : (
-        <div className="text-muted-foreground w-full max-w-64 rounded-lg border border-dashed p-4 text-xs">
+        <div className="text-muted-foreground w-full max-w-64 rounded-lg border border-dashed p-4 text-12">
           main이나 페이지 전체를 ScrollArea로 감싸면, 브라우저가
           되돌려 주던 스크롤 위치가 사라집니다.
         </div>
@@ -155,7 +155,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
     case 'set-always-visible-when-it-matters':
       return (
         <ScrollArea type={kind === 'do' ? 'always' : 'hover'} className="h-32 w-full max-w-64 rounded-lg border">
-          <ComponentList className="px-3 text-xs" />
+          <ComponentList className="px-3 text-12" />
         </ScrollArea>
       )
 
@@ -216,7 +216,7 @@ function renderExample(exampleId: string): ReactNode {
     case 'log-viewer':
       return (
         <ScrollArea type="always" className="h-40 w-full max-w-96 rounded-lg border">
-          <pre className="p-3 font-mono text-xs whitespace-pre-wrap">
+          <pre className="p-3 font-mono text-12 whitespace-pre-wrap">
             {components
               .map((component) => `${component.addedIn}  ${component.id} 추가됨 (${component.status})`)
               .join('\n')}
@@ -249,7 +249,7 @@ function renderExample(exampleId: string): ReactNode {
       return (
         <Bounds className="w-40">
           <ScrollArea className="h-32 w-full max-w-sm rounded-lg border">
-            <ComponentList className="px-2 text-xs" />
+            <ComponentList className="px-2 text-12" />
           </ScrollArea>
         </Bounds>
       )

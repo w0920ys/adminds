@@ -82,11 +82,11 @@ export function VoiceAndTonePage() {
         <div className="grid gap-3 md:grid-cols-3">
           {PRINCIPLES.map((principle, index) => (
             <div key={principle.title} className="flex flex-col gap-2 rounded-lg border p-4">
-              <span className="bg-primary text-primary-foreground grid size-5 place-items-center rounded-full text-2xs font-bold">
+              <span className="bg-primary text-primary-foreground grid size-5 place-items-center rounded-full text-11 font-bold">
                 {index + 1}
               </span>
               <p className="text-sm font-semibold">{principle.title}</p>
-              <p className="text-muted-foreground text-xs">{principle.body}</p>
+              <p className="text-muted-foreground text-12">{principle.body}</p>
             </div>
           ))}
         </div>
@@ -97,7 +97,7 @@ export function VoiceAndTonePage() {
           {TONES.map((row) => (
             <div key={row.situation} className="flex flex-wrap items-baseline gap-x-4 gap-y-1 p-4">
               <span className="w-20 shrink-0 text-sm font-medium">{row.situation}</span>
-              <span className="text-muted-foreground w-24 shrink-0 text-xs">{row.tone}</span>
+              <span className="text-muted-foreground w-24 shrink-0 text-12">{row.tone}</span>
               <span className="text-sm">{row.must}</span>
             </div>
           ))}

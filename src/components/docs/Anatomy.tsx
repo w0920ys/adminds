@@ -198,8 +198,8 @@ export function Anatomy({ meta, preview }: { meta: ComponentMeta; preview: React
                   )}
                   style={{ top: item.labelY, [item.side]: GUTTER }}
                 >
-                  <strong className="block text-xs font-medium">{item.part.label}</strong>
-                  {item.part.optional && <span className="text-2xs">(Optional)</span>}
+                  <strong className="block text-12 font-medium">{item.part.label}</strong>
+                  {item.part.optional && <span className="text-11">(Optional)</span>}
                 </div>
               ))}
             </div>
@@ -212,7 +212,7 @@ export function Anatomy({ meta, preview }: { meta: ComponentMeta; preview: React
               <span
                 key={item.index}
                 className={cn(
-                  'absolute grid size-5 place-items-center rounded-full text-2xs font-bold',
+                  'absolute grid size-5 place-items-center rounded-full text-11 font-bold',
                   active === item.index
                     ? 'bg-annotation text-background'
                     : 'bg-annotation-muted text-background',
@@ -243,7 +243,7 @@ export function Anatomy({ meta, preview }: { meta: ComponentMeta; preview: React
               >
                 <span
                   className={cn(
-                    'mt-0.5 grid size-5 shrink-0 place-items-center rounded-full text-2xs font-bold',
+                    'mt-0.5 grid size-5 shrink-0 place-items-center rounded-full text-11 font-bold',
                     isActive
                       ? 'bg-annotation text-background'
                       : 'bg-muted text-neutral-on-tint',
@@ -258,7 +258,7 @@ export function Anatomy({ meta, preview }: { meta: ComponentMeta; preview: React
                       <span className="text-muted-foreground font-normal"> (Optional)</span>
                     )}
                   </strong>
-                  <span className="text-muted-foreground block text-xs">{part.note}</span>
+                  <span className="text-muted-foreground block text-12">{part.note}</span>
                 </span>
               </button>
             </li>

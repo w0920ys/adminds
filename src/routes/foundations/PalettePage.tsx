@@ -219,7 +219,7 @@ export function PalettePage() {
         <div ref={gridRef} className="overflow-x-auto rounded-lg border">
           <table className="w-full text-left text-sm">
             <thead>
-              <tr className="text-muted-foreground text-2xs tracking-widest">
+              <tr className="text-muted-foreground text-11 tracking-widest">
                 <th scope="col" className="px-3 py-2 font-bold">STEP</th>
                 {PALETTE.map((column) => (
                   <th key={column.hue} scope="col" className="px-3 py-2 font-bold">
@@ -251,7 +251,7 @@ export function PalettePage() {
                           {paletteHex[key] && (
                             <CopyValue
                               value={paletteHex[key]}
-                              className="text-muted-foreground text-2xs"
+                              className="text-muted-foreground text-11"
                             />
                           )}
                         </div>
@@ -281,7 +281,7 @@ export function PalettePage() {
         <div className="overflow-x-auto rounded-lg border">
           <table className="w-full text-left text-sm">
             <thead>
-              <tr className="text-muted-foreground text-2xs tracking-widest">
+              <tr className="text-muted-foreground text-11 tracking-widest">
                 <th scope="col" className="px-3 py-2 font-bold">TOKEN</th>
                 <th scope="col" className="px-3 py-2 font-bold">HEX</th>
                 <th scope="col" className="px-3 py-2 font-bold">Nearest raw</th>
@@ -306,15 +306,15 @@ export function PalettePage() {
                       </span>
                     </th>
                     <td className="text-muted-foreground border-t px-1.5 py-1">
-                      {hex && <CopyValue value={hex} className="text-2xs" />}
+                      {hex && <CopyValue value={hex} className="text-11" />}
                     </td>
-                    <td className="text-muted-foreground border-t px-3 py-2 text-xs">
+                    <td className="text-muted-foreground border-t px-3 py-2 text-12">
                       {match?.key}
                     </td>
                     <td className="text-muted-foreground border-t px-1.5 py-1">
-                      {match && <CopyValue value={match.hex} className="text-2xs" />}
+                      {match && <CopyValue value={match.hex} className="text-11" />}
                     </td>
-                    <td className="text-muted-foreground border-t px-3 py-2 text-xs">
+                    <td className="text-muted-foreground border-t px-3 py-2 text-12">
                       {match ? Math.round(match.gap) : null}
                     </td>
                   </tr>

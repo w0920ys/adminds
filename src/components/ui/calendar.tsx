@@ -21,7 +21,7 @@ export type CalendarSize = 'sm' | 'default' | 'lg'
  * DatePicker가 그대로 이어 준다.
  */
 const CELL_SIZE: Record<CalendarSize, string> = {
-  sm: 'size-7 text-xs',
+  sm: 'size-7 text-12',
   default: 'size-8 text-sm',
   lg: 'size-9 text-sm',
 }
@@ -31,7 +31,7 @@ const CELL_SIZE: Record<CalendarSize, string> = {
  * 정하므로, 여기만 고정 폭(w-9)으로 두면 sm·default에서 날짜 배지보다 넓은 열이
  * 되어 요일과 날짜의 세로줄이 어긋나고 격자 전체도 그만큼 넓어진다. CELL_SIZE의
  * size-*와 같은 눈금을 쓴다. 글자 크기는 따라가지 않는다 — 머리 글자는 날짜가
- * 아니라 요일 이름이라 세 크기 모두 text-2xs다.
+ * 아니라 요일 이름이라 세 크기 모두 text-11다.
  */
 const HEADER_CELL_WIDTH: Record<CalendarSize, string> = {
   sm: 'w-7',
@@ -255,7 +255,7 @@ function Calendar(props: CalendarProps) {
                 key={label}
                 scope="col"
                 className={cn(
-                  'text-muted-foreground pb-1 text-2xs font-normal',
+                  'text-muted-foreground pb-1 text-11 font-normal',
                   HEADER_CELL_WIDTH[size],
                 )}
               >

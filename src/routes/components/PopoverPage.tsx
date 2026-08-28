@@ -28,7 +28,7 @@ function renderPopover() {
       <PopoverContent aria-label="상태 필터">
         <div className="flex flex-col gap-1 pb-3">
           <p className="text-sm font-medium">상태로 거르기</p>
-          <p className="text-muted-foreground text-xs">조건에 맞는 항목만 남깁니다</p>
+          <p className="text-muted-foreground text-12">조건에 맞는 항목만 남깁니다</p>
         </div>
         <div className="flex flex-col gap-2 pb-3">
           {STATUS_OPTIONS.map((option) => (
@@ -234,7 +234,7 @@ function renderExample(exampleId: string): ReactNode {
     case 'filter-group':
       return (
         <div className="bg-surface flex items-center gap-2 rounded-md border p-2">
-          <span className="text-muted-foreground text-xs">상태</span>
+          <span className="text-muted-foreground text-12">상태</span>
           <Popover>
             <PopoverTrigger asChild>
               <Button variant="outline" size="sm">
@@ -360,7 +360,7 @@ function renderExample(exampleId: string): ReactNode {
               {Array.from({ length: 8 }, (_, i) => (
                 <li key={i} className="border-b pb-2 last:border-0">
                   <p>상태가 '활성'으로 바뀜</p>
-                  <p className="text-muted-foreground text-xs">2026-08-{String(20 - i).padStart(2, '0')}</p>
+                  <p className="text-muted-foreground text-12">2026-08-{String(20 - i).padStart(2, '0')}</p>
                 </li>
               ))}
             </ul>
@@ -435,7 +435,7 @@ function AnatomyPreview() {
       <PopoverContent aria-label="상태 필터">
         <div className="flex flex-col gap-1 pb-3">
           <p className="text-sm font-medium">상태로 거르기</p>
-          <p className="text-muted-foreground text-xs">조건에 맞는 항목만 남깁니다</p>
+          <p className="text-muted-foreground text-12">조건에 맞는 항목만 남깁니다</p>
         </div>
         <div className="flex flex-col gap-2 pb-3">
           {STATUS_OPTIONS.map((option) => (
