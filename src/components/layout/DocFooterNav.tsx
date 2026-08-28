@@ -14,7 +14,7 @@ export function DocFooterNav() {
   if (!doc && !prev && !next) return null
 
   return (
-    <footer className="mt-16 flex flex-col gap-4 border-t pt-6">
+    <footer className="mt-16 flex flex-col gap-4">
       {doc && (
         <time className="text-muted-foreground text-11" dateTime={doc.updatedAt}>
           Last updated {doc.updatedAt}
