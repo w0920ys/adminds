@@ -71,7 +71,7 @@ export function VoiceAndTonePage() {
       description="이 어드민은 운영 도구입니다. 사용자는 무언가를 하러 왔고, 문장은 그 일을 방해하지 않는 선에서 필요한 것만 말합니다. 목소리는 어느 화면에서나 같고, 톤만 상황에 따라 조절합니다."
     >
       <DocSection title="Overview">
-        <p className="text-muted-foreground text-sm">
+        <p className="text-muted-foreground text-16">
           이 시스템이 사용자에게 말하는 태도와 상황별 톤의 원칙을 정합니다. 문장 부호나 종결
           어미 같은 실제 표기 규칙은 Writing에서 다룹니다. 새 문구를 쓰기 전에 어떤 태도로
           말할지 정하고 싶을 때 이 문서를 봅니다.
@@ -85,7 +85,7 @@ export function VoiceAndTonePage() {
               <span className="bg-primary text-primary-foreground grid size-5 place-items-center rounded-full text-11 font-bold">
                 {index + 1}
               </span>
-              <p className="text-sm font-semibold">{principle.title}</p>
+              <p className="text-16 font-semibold">{principle.title}</p>
               <p className="text-muted-foreground text-12">{principle.body}</p>
             </div>
           ))}
@@ -96,13 +96,13 @@ export function VoiceAndTonePage() {
         <div className="divide-y rounded-lg border">
           {TONES.map((row) => (
             <div key={row.situation} className="flex flex-wrap items-baseline gap-x-4 gap-y-1 p-4">
-              <span className="w-20 shrink-0 text-sm font-medium">{row.situation}</span>
+              <span className="w-20 shrink-0 text-14 font-medium">{row.situation}</span>
               <span className="text-muted-foreground w-24 shrink-0 text-12">{row.tone}</span>
-              <span className="text-sm">{row.must}</span>
+              <span className="text-14">{row.must}</span>
             </div>
           ))}
         </div>
-        <p className="text-muted-foreground text-sm">
+        <p className="text-muted-foreground text-16">
           톤이 바뀌어도 문체는 바뀌지 않습니다. 경고라고 문장을 길게 늘이거나 오류라고 사과를 덧붙이지
           않습니다. 표기 규칙은 Writing에 정리해 두었습니다.
         </p>

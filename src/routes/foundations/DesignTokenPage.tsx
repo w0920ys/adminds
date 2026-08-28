@@ -128,7 +128,7 @@ export function DesignTokenPage() {
       description="토큰은 원시값에서 시작해 역할 이름을 거쳐 유틸리티 클래스로 내려옵니다. 이 문서는 그 층과 이름 규칙, 지금 정의된 토큰 전체를 담습니다."
     >
       <DocSection title="Overview">
-        <p className="text-muted-foreground text-sm">
+        <p className="text-muted-foreground text-16">
           토큰이 어떤 층으로 나뉘고 이름의 각 부분이 무엇을 뜻하는지 정합니다. 개별 색을 무엇으로
           할지는 Color와 Palette에서 다루고, 이 문서는 그 값이 어떤 이름으로 어디에 적히는지만
           다룹니다. 새 토큰을 만들거나 쓸 토큰을 찾을 때 이 문서를 먼저 봅니다.
@@ -139,22 +139,22 @@ export function DesignTokenPage() {
         <div className="divide-y rounded-lg border">
           {LAYERS.map((layer) => (
             <div key={layer.step} className="flex flex-wrap gap-x-4 gap-y-1 p-4 md:flex-nowrap">
-              <span className="text-muted-foreground w-6 shrink-0 text-sm">{layer.step}</span>
-              <span className="w-28 shrink-0 text-sm font-medium">{layer.name}</span>
-              <span className="flex-1 text-sm">{layer.body}</span>
+              <span className="text-muted-foreground w-6 shrink-0 text-16">{layer.step}</span>
+              <span className="w-28 shrink-0 text-16 font-medium">{layer.name}</span>
+              <span className="flex-1 text-16">{layer.body}</span>
               <span className="text-muted-foreground w-full text-12 md:w-32 md:shrink-0">
                 {layer.where}
               </span>
             </div>
           ))}
         </div>
-        <p className="text-muted-foreground text-sm">
+        <p className="text-muted-foreground text-16">
           컴포넌트가 1층 값이나 임의 수치를 직접 적으면 그 자리만 시스템에서 떨어져 나옵니다. 다크
           테마에서 그 색만 바뀌지 않고, 밀도를 조정할 때 그 높이만 남고, 무엇을 고쳐야 하는지
           찾으려면 파일을 전부 뒤져야 합니다. 컴포넌트가 2층 이름만 쓰면 바꿀 곳이 tokens.css 한
           곳으로 모입니다.
         </p>
-        <p className="text-muted-foreground text-sm">
+        <p className="text-muted-foreground text-16">
           새 토큰을 더할 때는 테마에 따라 값이 달라지는지를 먼저 봅니다. 달라지면{' '}
           <code className="text-12">:root</code>와 <code className="text-12">.dark</code> 양쪽에 값을
           적고 <code className="text-12">@theme inline</code>에서 접두사가 붙은 이름으로 이어줍니다.
@@ -165,12 +165,12 @@ export function DesignTokenPage() {
       </DocSection>
 
       <DocSection title="Naming">
-        <p className="text-muted-foreground text-sm">
+        <p className="text-muted-foreground text-16">
           이름은 접두사와 역할로 이루어집니다. 접두사가 그 값이 어떤 종류인지를, 뒤에 붙는 낱말이
           어디에 쓰이는지를 말합니다. 값을 가리키는 낱말은 이름에 넣지 않습니다.
         </p>
         <div className="overflow-x-auto rounded-lg border">
-          <table className="w-full text-left text-sm">
+          <table className="w-full text-left text-14">
             <thead>
               <tr className="text-muted-foreground text-11 tracking-widest">
                 <th scope="col" className="px-3 py-2 font-bold">형태</th>
@@ -193,7 +193,7 @@ export function DesignTokenPage() {
             </tbody>
           </table>
         </div>
-        <p className="text-muted-foreground text-sm">
+        <p className="text-muted-foreground text-16">
           짝 규칙이 하나 있습니다. 배경으로 쓰는 색 토큰에는 같은 이름에{' '}
           <code className="text-12">-foreground</code>를 붙인 짝이 있고, 그 배경을 쓰면 글자색은 반드시
           그 짝을 씁니다 — <code className="text-12">bg-primary</code> 위의 글자는{' '}
@@ -203,14 +203,14 @@ export function DesignTokenPage() {
       </DocSection>
 
       <DocSection title="All tokens">
-        <p className="text-muted-foreground text-sm">
+        <p className="text-muted-foreground text-16">
           아래 목록은 tokens.css를 읽어 만들고, 값은 지금 적용된 테마에서 실측한 것입니다. 테마를
           바꾸면 색 값도 함께 바뀝니다. 값이나 변수 이름에 마우스를 올린 뒤 누르면 복사됩니다.
         </p>
         {GROUPS.map((group, index) => (
           <div key={group.prefix} className="flex flex-col gap-2">
             <div className="flex items-baseline gap-2">
-              <h3 className="text-sm font-medium">
+              <h3 className="text-16 font-medium">
                 <code>{group.prefix}</code>
               </h3>
               <span className="text-muted-foreground text-11">{group.names.length}개</span>

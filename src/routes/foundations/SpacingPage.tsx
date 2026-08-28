@@ -25,7 +25,7 @@ export function SpacingPage() {
       description="간격은 4px 배수로만 씁니다. 어드민은 정보 밀도가 높아 임의 값이 하나 섞이면 정렬이 눈에 띄게 어긋납니다."
     >
       <DocSection title="Overview">
-        <p className="text-muted-foreground text-sm">
+        <p className="text-muted-foreground text-16">
           요소 사이 간격을 4px 배수 스케일로 정하고, 밀도에 따라 그 스케일을 어떻게 조절하는지
           정합니다. 간격이 아닌 값 — 색이나 글자 크기 — 은 Color와 Typography에서 다룹니다.
           컴포넌트나 레이아웃에 여백을 넣을 때 이 문서에서 값을 고릅니다.
@@ -45,7 +45,7 @@ export function SpacingPage() {
       </DocSection>
 
       <DocSection title="Density">
-        <p className="text-muted-foreground text-sm">
+        <p className="text-muted-foreground text-16">
           컨트롤과 테이블 행의 높이를 토큰으로 묶어 화면마다 흔들리지 않게 합니다.
         </p>
         <TokenTable rows={density} />

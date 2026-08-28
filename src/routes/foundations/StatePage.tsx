@@ -89,7 +89,7 @@ export function StatePage() {
       description="상태는 컴포넌트마다 다시 정하지 않고 시스템 전체에서 같은 뜻으로 씁니다. 어드민은 같은 버튼을 하루에 수십 번 누르는 화면이라, 상태가 화면마다 다르게 보이면 매번 다시 확인하게 됩니다."
     >
       <DocSection title="Overview">
-        <p className="text-muted-foreground text-sm">
+        <p className="text-muted-foreground text-16">
           hover·focus·disabled 같은 상호작용 상태의 종류와 표현 규칙을 정합니다. 상태를
           표현하는 색상값은 Color에서, 문장 부호나 종결 어미 같은 표기 형식은 Writing에서
           다루고, 상태에 따라 쓰는 문구 자체는 아래 Rules에서 이 문서가 정합니다. 컴포넌트에
@@ -102,14 +102,14 @@ export function StatePage() {
           {STATES.map((state) => (
             <div key={state.name} className="flex flex-wrap items-baseline gap-x-4 gap-y-1 p-4">
               <code className="w-20 shrink-0 text-12 font-medium">{state.name}</code>
-              <span className="text-muted-foreground text-sm">{state.line}</span>
+              <span className="text-muted-foreground text-16">{state.line}</span>
             </div>
           ))}
         </div>
       </DocSection>
 
       <DocSection title="Comparison">
-        <p className="text-muted-foreground text-sm">
+        <p className="text-muted-foreground text-16">
           hover와 focus는 실제 입력이 있어야 나타나므로 문서에서는 보이지 않습니다. tokens.css가 hover와
           focus-visible 변형을 .state-hover / .state-focus 컨테이너 안에서도 적용되도록 확장해 두었고, 아래
           카드가 그 클래스를 씁니다. 전시 도구를 시스템 안에 두면 문서에 그린 상태와 실제 스타일이 어긋날
@@ -126,12 +126,12 @@ export function StatePage() {
             </div>
           ))}
         </div>
-        <p className="text-muted-foreground text-sm">
+        <p className="text-muted-foreground text-16">
           active는 강제 클래스를 두지 않았습니다. 이 시스템은 누르는 순간에 별도 스타일을 주지 않기
           때문입니다 — 어드민은 같은 버튼을 연달아 누르는 화면이라 눌림 효과가 쌓이면 화면이 시끄러워집니다.
           누른 사실은 눌림 효과가 아니라 결과(토스트, 목록 갱신)로 알립니다.
         </p>
-        <p className="text-muted-foreground text-sm">
+        <p className="text-muted-foreground text-16">
           위 hover 데모는 Button처럼 면으로 채워진 컨트롤 기준입니다. 테두리로 정체성을 나타내는 컨트롤은
           배경을 이미 disabled(불투명도)와 readonly(Input의 읽기 전용 배경)가 쓰고 있어 hover까지 배경을
           두면 상태끼리 서로를 가립니다. 그래서 이런 컨트롤은 배경 대신 테두리를 한 단계 움직입니다 —
@@ -141,13 +141,13 @@ export function StatePage() {
       </DocSection>
 
       <DocSection title="Error">
-        <p className="text-muted-foreground text-sm">
+        <p className="text-muted-foreground text-16">
           error는 버튼이 아니라 입력과 요청에 붙습니다. 버튼을 빨갛게 만드는 대신 실패한 필드와 실패한
           요청에 표시합니다.
         </p>
         <div className="rounded-lg border p-4">
           <div className="flex max-w-sm flex-col gap-1.5">
-            <label htmlFor="state-error-demo" className="text-sm font-medium">
+            <label htmlFor="state-error-demo" className="text-16 font-medium">
               이메일
             </label>
             <input
@@ -156,7 +156,7 @@ export function StatePage() {
               value="hong@"
               aria-invalid
               aria-describedby="state-error-demo-message"
-              className="border-destructive bg-surface h-control rounded-md border px-3 text-sm"
+              className="border-destructive bg-surface h-control rounded-md border px-3 text-16"
             />
             <p
               id="state-error-demo-message"
@@ -173,8 +173,8 @@ export function StatePage() {
         <div className="flex flex-col gap-3">
           {RULES.map((rule) => (
             <div key={rule.title} className="rounded-lg border p-4">
-              <p className="text-sm font-semibold">{rule.title}</p>
-              <p className="text-muted-foreground mt-1.5 text-sm">{rule.body}</p>
+              <p className="text-16 font-semibold">{rule.title}</p>
+              <p className="text-muted-foreground mt-1.5 text-16">{rule.body}</p>
             </div>
           ))}
         </div>

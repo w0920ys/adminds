@@ -34,7 +34,7 @@ export function ColorPage() {
       description="색은 blue-500 같은 원시 이름이 아니라 primary·destructive 같은 역할 이름으로 씁니다. 역할로 쓰면 라이트·다크 전환과 브랜드 교체가 토큰 한 곳에서 끝납니다."
     >
       <DocSection title="Overview">
-        <p className="text-muted-foreground text-sm">
+        <p className="text-muted-foreground text-16">
           역할 이름으로 색을 쓰는 규칙을 정합니다. 개별 색상값의 원본은{' '}
           <Link to="/foundations/palette" className="underline underline-offset-2">
             Palette
@@ -52,7 +52,7 @@ export function ColorPage() {
       {BRANCHES.map((branch) =>
         branch.id === 'doc' ? (
           <DocSection key={branch.id} title={branch.title}>
-            <p className="text-muted-foreground text-sm">
+            <p className="text-muted-foreground text-16">
               annotation 계열은 이 문서 사이트에서 주석을 그릴 때만 쓰는 문서 전용 갈래라 제품
               UI 역할이 아닙니다. 여기서는 견본으로 다루지 않고,{' '}
               <Link to="/foundations/color-role" className="underline underline-offset-2">
@@ -75,7 +75,7 @@ export function ColorPage() {
       )}
 
       <DocSection title="All tokens">
-        <p className="text-muted-foreground text-sm">
+        <p className="text-muted-foreground text-16">
           아래 값은 지금 적용된 테마에서 실측한 것입니다. 테마를 바꾸면 값도 바뀝니다.
         </p>
         <TokenTable rows={rows} />

@@ -186,7 +186,7 @@ export function ColorRolePage() {
       description={`색 토큰을 ${BRANCHES.length}개 갈래로 나누고 갈래 사이의 위계를 정합니다. 어느 색을 쓸지 고민하기 전에, 그 색이 무슨 역할을 맡는지부터 정합니다.`}
     >
       <DocSection title="Overview">
-        <p className="text-muted-foreground text-sm">
+        <p className="text-muted-foreground text-16">
           역할 사이의 위계와 짝 규칙을 정합니다. 개별 색상값의 원본과 시맨틱 토큰이 어느 원시
           값을 가리키는지는{' '}
           <Link to="/foundations/palette" className="underline underline-offset-2">
@@ -203,19 +203,19 @@ export function ColorRolePage() {
       </DocSection>
 
       <DocSection title="Branches">
-        <p className="text-muted-foreground text-sm">
+        <p className="text-muted-foreground text-16">
           새 색을 어느 갈래에 넣을지는 아래 질문을 위에서부터 던져 답이 나오는 곳에서 멈추면
           정해집니다. 순서가 중요합니다 — 삭제 버튼의 글자색은 Status이기 전에 Foreground이고,
           그래서 새 이름을 만들지 않고 이미 있는 짝을 씁니다.
         </p>
         <ol className="flex list-decimal flex-col gap-1 rounded-lg border p-4 pl-8">
           {DECISION.map((line) => (
-            <li key={line} className="text-sm">
+            <li key={line} className="text-16">
               {line}
             </li>
           ))}
         </ol>
-        <p className="text-muted-foreground text-sm">
+        <p className="text-muted-foreground text-16">
           이 절차는 제품 UI에 쓰는 색만 가릅니다. 마지막 갈래인 Doc only는 절차에 걸리지 않는
           예외이고, 이 문서 사이트에서 주석을 그릴 때만 씁니다. 목록에 함께 두는 이유는 그
           토큰이 조용히 사라지지 않게 하기 위해서입니다.
@@ -225,8 +225,8 @@ export function ColorRolePage() {
             const members = rows.filter((row) => classify(row.name) === branch.id)
             return (
               <div key={branch.id} className="rounded-lg border p-4">
-                <p className="text-sm font-semibold">{branch.title}</p>
-                <p className="text-muted-foreground mt-1.5 text-sm">{branch.lead}</p>
+                <p className="text-16 font-semibold">{branch.title}</p>
+                <p className="text-muted-foreground mt-1.5 text-16">{branch.lead}</p>
                 <div className="mt-3 grid gap-2 sm:grid-cols-2">
                   {members.map((row) => (
                     <TokenChip
@@ -244,7 +244,7 @@ export function ColorRolePage() {
       </DocSection>
 
       <DocSection title="Hierarchy">
-        <p className="text-muted-foreground text-sm">
+        <p className="text-muted-foreground text-16">
           표면은 바닥에서 위로 네 층입니다. 층이 올라갈수록 바닥에서 멀어지고, 같은 높이에
           값이 둘이면 층이 무너집니다. 새 면을 만들 때는 새 토큰을 만들기 전에 이 순서에서
           자기 높이를 찾습니다. <code>card</code>는 <code>surface</code>와 같은 높이에 있으면서
@@ -253,7 +253,7 @@ export function ColorRolePage() {
         <div className="rounded-lg border p-3">
           <Layer index={0} hexes={hexes} />
         </div>
-        <p className="text-muted-foreground text-sm">
+        <p className="text-muted-foreground text-16">
           위 상자는 실제 토큰으로 칠한 것이라 지금 테마의 층 차이를 그대로 보여줍니다. 라이트에서는
           네 층의 hex가 같아 선으로만 갈리고, 다크로 바꾸면 밝기로 갈립니다. 라이트에서 층을 색으로
           구분해야 한다면 면을 더 밝히는 대신 선과 그림자로 나눕니다.
@@ -261,13 +261,13 @@ export function ColorRolePage() {
       </DocSection>
 
       <DocSection title="Pairing">
-        <p className="text-muted-foreground text-sm">
+        <p className="text-muted-foreground text-16">
           배경 토큰을 쓰면 글자색은 그 배경의 짝을 씁니다. 짝은 이름으로 찾습니다 —
           배경 이름 뒤에 <code>-foreground</code>를 붙인 토큰이 있으면 그것이 짝입니다.
           아래 목록은 지금 정의된 토큰 이름에서 그렇게 찾아낸 것입니다.
         </p>
         <div className="overflow-x-auto rounded-lg border">
-          <table className="w-full text-left text-sm">
+          <table className="w-full text-left text-14">
             <thead>
               <tr className="text-muted-foreground text-11 tracking-widest">
                 <th scope="col" className="px-3 py-2 font-bold">Background</th>
@@ -304,12 +304,12 @@ export function ColorRolePage() {
             </tbody>
           </table>
         </div>
-        <p className="text-muted-foreground text-sm">
+        <p className="text-muted-foreground text-16">
           짝을 어기면 대비가 무너집니다. 아래 두 예시의 배경은 같고 글자색만 다릅니다.
         </p>
         <div className="grid gap-3 md:grid-cols-2">
           <ExampleFrame kind="do">
-            <div className="bg-primary text-primary-foreground rounded-md px-3 py-2 text-sm">
+            <div className="bg-primary text-primary-foreground rounded-md px-3 py-2 text-16">
               변경 사항 저장
             </div>
             <p className="text-muted-foreground mt-2 text-12">
@@ -317,7 +317,7 @@ export function ColorRolePage() {
             </p>
           </ExampleFrame>
           <ExampleFrame kind="dont">
-            <div className="bg-primary text-muted-foreground rounded-md px-3 py-2 text-sm">
+            <div className="bg-primary text-muted-foreground rounded-md px-3 py-2 text-16">
               변경 사항 저장
             </div>
             <p className="text-muted-foreground mt-2 text-12">
@@ -325,7 +325,7 @@ export function ColorRolePage() {
             </p>
           </ExampleFrame>
         </div>
-        <p className="text-muted-foreground text-sm">
+        <p className="text-muted-foreground text-16">
           <code>muted-foreground</code>는 <code>background</code> 위에서 대비를 맞춘 색이라
           다른 배경 위로 옮기면 그 대비가 그대로 따라오지 않습니다. 배경을 바꾸면 글자색도
           함께 바꿉니다.
@@ -333,7 +333,7 @@ export function ColorRolePage() {
       </DocSection>
 
       <DocSection title="Status colors">
-        <p className="text-muted-foreground text-sm">
+        <p className="text-muted-foreground text-16">
           상태 색은 뜻이 정해져 있습니다. 뜻과 다르게 쓰면 그 색이 나올 때마다 사용자가 뜻을
           다시 확인해야 하고, 결국 색을 읽지 않게 됩니다.
         </p>
@@ -355,7 +355,7 @@ export function ColorRolePage() {
                   </div>
                   {meaning && (
                     <>
-                      <p className="text-muted-foreground mt-2.5 text-sm">{meaning.when}</p>
+                      <p className="text-muted-foreground mt-2.5 text-16">{meaning.when}</p>
                       <p className="text-muted-foreground mt-1.5 text-12">{meaning.not}</p>
                     </>
                   )}
@@ -363,7 +363,7 @@ export function ColorRolePage() {
               )
             })}
         </div>
-        <p className="text-muted-foreground text-sm">
+        <p className="text-muted-foreground text-16">
           상태 색을 장식으로 쓰지 않습니다. 숫자를 돋보이게 하려고 <code>success</code>를 얹으면
           그 숫자가 성공을 뜻하는 것으로 읽힙니다. 색이 뜻을 잃으면 진짜 성공을 알려야 할 때
           아무도 알아채지 못합니다. 상태는 색만으로 알리지 않고 문장이나 아이콘을 함께 둡니다.

@@ -47,7 +47,7 @@ export function IconographyPage() {
       description="아이콘은 글자를 대신하지 않습니다. 이미 읽은 라벨을 다음에 더 빨리 찾게 해주는 표시입니다. 그래서 같은 뜻에 화면마다 다른 아이콘을 쓰면 읽는 속도가 오히려 느려집니다."
     >
       <DocSection title="Overview">
-        <p className="text-muted-foreground text-sm">
+        <p className="text-muted-foreground text-16">
           아이콘의 크기와 스트로크, 뜻과 아이콘을 짝짓는 규칙을 정합니다. 아이콘 옆에 붙는
           문구의 표기는 Writing에서, 아이콘 주변 여백은 Spacing에서 다룹니다. 새 아이콘을
           고르거나 기존 아이콘의 뜻이 화면마다 다르게 읽힐 때 이 문서를 봅니다.
@@ -55,7 +55,7 @@ export function IconographyPage() {
       </DocSection>
 
       <DocSection title="Size">
-        <p className="text-muted-foreground text-sm">
+        <p className="text-muted-foreground text-16">
           크기는 아이콘이 아니라 옆에 붙는 글자가 정합니다. 아래 다섯 단계 밖의 값은 쓰지 않습니다.
         </p>
         <div className="divide-y rounded-lg border">
@@ -67,7 +67,7 @@ export function IconographyPage() {
                 <Search size={item.size} aria-hidden />
                 <Trash2 size={item.size} aria-hidden />
               </div>
-              <span className="text-sm font-medium">{item.where}</span>
+              <span className="text-14 font-medium">{item.where}</span>
               <span className="text-muted-foreground ml-auto text-11">{item.note}</span>
             </div>
           ))}
@@ -75,7 +75,7 @@ export function IconographyPage() {
       </DocSection>
 
       <DocSection title="Stroke">
-        <p className="text-muted-foreground text-sm">
+        <p className="text-muted-foreground text-16">
           기본은 2입니다. strokeWidth를 코드에 적었다면 왜 적었는지 한 줄로 말할 수 있어야 하고, 말할 수
           없으면 지웁니다.
         </p>
@@ -86,7 +86,7 @@ export function IconographyPage() {
                 <Settings2 size={24} strokeWidth={item.width} aria-hidden />
               </div>
               <div>
-                <p className="text-sm font-medium">
+                <p className="text-16 font-medium">
                   {item.width} · {item.role}
                 </p>
                 <p className="text-muted-foreground mt-1 text-12">{item.note}</p>
@@ -97,7 +97,7 @@ export function IconographyPage() {
       </DocSection>
 
       <DocSection title="Consistency">
-        <p className="text-muted-foreground text-sm">
+        <p className="text-muted-foreground text-16">
           아래 매핑은 고정입니다. 새 화면에서 뜻이 겹치면 새 아이콘을 고르지 말고 이 표에서 찾습니다. 표에
           없는 뜻이 생기면 아이콘부터 고르지 말고 이 표에 한 줄을 먼저 추가합니다.
         </p>
@@ -107,21 +107,21 @@ export function IconographyPage() {
             return (
               <div key={row.name} className="flex flex-wrap items-center gap-x-4 gap-y-1 p-4">
                 <Icon size={16} className="shrink-0" aria-hidden />
-                <span className="w-14 shrink-0 text-sm font-medium">{row.meaning}</span>
+                <span className="w-14 shrink-0 text-14 font-medium">{row.meaning}</span>
                 <code className="text-muted-foreground w-36 shrink-0 text-12">{row.name}</code>
                 <span className="text-muted-foreground text-12">{row.where}</span>
               </div>
             )
           })}
         </div>
-        <p className="text-muted-foreground text-sm">
+        <p className="text-muted-foreground text-16">
           반대 방향도 고정합니다. X는 닫기이지 삭제가 아니고, Check는 성공이지 '선택할 수 있음'이 아닙니다.
           한 아이콘에 뜻을 둘 이상 얹는 순간 둘 다 흐려집니다.
         </p>
       </DocSection>
 
       <DocSection title="Accessibility">
-        <p className="text-muted-foreground text-sm">
+        <p className="text-muted-foreground text-16">
           아이콘은 스크린리더에 아무 이름도 주지 않습니다. 둘 중 하나는 반드시 붙습니다 — 아이콘이 유일한
           라벨이면 <code className="text-12">aria-label</code>, 옆에 글자가 있으면{' '}
           <code className="text-12">aria-hidden</code>.
@@ -134,7 +134,7 @@ export function IconographyPage() {
               </Button>
             </div>
             <div>
-              <p className="text-sm font-medium">아이콘만 있는 버튼 · aria-label</p>
+              <p className="text-16 font-medium">아이콘만 있는 버튼 · aria-label</p>
               <p className="text-muted-foreground mt-1 text-12">
                 스크린리더가 '사용자 추가, 버튼'으로 읽습니다. 라벨이 없으면 '버튼'까지만 읽혀 무엇을 하는
                 버튼인지 알 수 없습니다. 문구는 툴팁에 쓰는 말과 같게 맞춥니다.
@@ -149,7 +149,7 @@ export function IconographyPage() {
               </Button>
             </div>
             <div>
-              <p className="text-sm font-medium">라벨 옆 아이콘 · aria-hidden</p>
+              <p className="text-16 font-medium">라벨 옆 아이콘 · aria-hidden</p>
               <p className="text-muted-foreground mt-1 text-12">
                 옆의 글자가 이미 라벨입니다. 아이콘을 숨기지 않으면 같은 말이 두 번 읽힙니다. 장식으로 붙인
                 아이콘은 예외 없이 숨깁니다.

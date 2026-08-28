@@ -187,7 +187,7 @@ export function PalettePage() {
       description="시맨틱 토큰이 가리키는 원시 색의 원본입니다. Tailwind v4의 기본 팔레트에서 이 시스템이 쓰는 색상만 골라 단계별로 늘어놓았습니다."
     >
       <DocSection title="Overview">
-        <p className="text-muted-foreground text-sm">
+        <p className="text-muted-foreground text-16">
           개별 색상값이 어디서 왔는지 확인하는 곳입니다. 여기 있는 색은 원시 값이고 역할이
           없습니다. 컴포넌트는 이 값을 직접 쓰지 않고 시맨틱 토큰을 거칩니다 — 원시 값을 화면에
           직접 적으면 라이트·다크 전환과 브랜드 교체가 그 자리에서 멈춥니다. 역할 이름으로 색을
@@ -201,7 +201,7 @@ export function PalettePage() {
           </Link>
           에서 다룹니다.
         </p>
-        <p className="text-muted-foreground text-sm">
+        <p className="text-muted-foreground text-16">
           색상은 다섯 갈래입니다. <code>neutral</code>은 면과 글자 전체를 맡고, 나머지 넷은 상태
           토큰이 뜻하는 것과 하나씩 짝을 이룹니다 — <code>red</code>는 위험, <code>amber</code>는
           경고, <code>emerald</code>는 성공, <code>blue</code>는 안내입니다. 갈래를 늘리면 늘어난
@@ -210,14 +210,14 @@ export function PalettePage() {
       </DocSection>
 
       <DocSection title="Scale">
-        <p className="text-muted-foreground text-sm">
+        <p className="text-muted-foreground text-16">
           세로는 단계, 가로는 색상입니다. 단계는 밝기 계층이고 숫자가 커질수록 어두워집니다.
           같은 단계끼리는 밝기가 비슷해 색상을 바꿔 놓아도 화면의 명암 구조가 흔들리지 않습니다.
           아래 hex는 팔레트 클래스로 칠한 칸을 실측해 변환한 값이라 Tailwind가 실제로 내보내는
           색과 어긋나지 않습니다.
         </p>
         <div ref={gridRef} className="overflow-x-auto rounded-lg border">
-          <table className="w-full text-left text-sm">
+          <table className="w-full text-left text-14">
             <thead>
               <tr className="text-muted-foreground text-11 tracking-widest">
                 <th scope="col" className="px-3 py-2 font-bold">STEP</th>
@@ -266,20 +266,20 @@ export function PalettePage() {
       </DocSection>
 
       <DocSection title="Semantic mapping">
-        <p className="text-muted-foreground text-sm">
+        <p className="text-muted-foreground text-16">
           지금 테마의 시맨틱 토큰을 hex로 바꿔 위 팔레트와 비교하고, 가장 가까운 원시 색을 찾은
           결과입니다. 손으로 적은 대응표가 아니라 볼 때마다 다시 계산하는 값이라 토큰을 고치면
           이 표도 따라 바뀝니다. 차이가 0이면 그 원시 값을 그대로 쓴 것이고, 차이가 크면 팔레트
           밖에서 온 색이라는 뜻입니다. 알파가 섞인 토큰은 알파를 뺀 색으로 비교합니다.
         </p>
-        <p className="text-muted-foreground text-sm">
+        <p className="text-muted-foreground text-16">
           차이는 RGB 좌표 사이의 거리입니다. 사람이 느끼는 색 차이와 정확히 비례하지 않으므로
           두 값의 크기를 견주는 잣대로 쓰지 않고, 가장 가까운 원시 값을 찾는 실마리로만 씁니다.
           같은 이유로 차이가 0이 아닌 대응은 그 색이 팔레트의 어느 근처에서 왔는지 알려줄 뿐,
           그 원시 값으로 바꿔도 된다는 뜻은 아닙니다.
         </p>
         <div className="overflow-x-auto rounded-lg border">
-          <table className="w-full text-left text-sm">
+          <table className="w-full text-left text-14">
             <thead>
               <tr className="text-muted-foreground text-11 tracking-widest">
                 <th scope="col" className="px-3 py-2 font-bold">TOKEN</th>
@@ -323,7 +323,7 @@ export function PalettePage() {
             </tbody>
           </table>
         </div>
-        <p className="text-muted-foreground text-sm">
+        <p className="text-muted-foreground text-16">
           이 표는 대응을 정하는 문서가 아니라 지금 상태를 비추는 거울입니다. 어떤 토큰의 차이가
           갑자기 커졌다면 팔레트 밖의 색이 들어온 것이므로, 그 색을 남길지 팔레트 단계로 되돌릴지
           정합니다.

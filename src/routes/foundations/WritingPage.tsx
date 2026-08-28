@@ -104,7 +104,7 @@ export function WritingPage() {
       description="화면에 들어가는 문구를 매번 새로 고민하지 않기 위한 규칙입니다. 판단이 갈릴 만한 자리에서는 이 시스템의 표기를 하나로 정해 두었으니, 고민이 생기면 아래 Notation을 먼저 봅니다."
     >
       <DocSection title="Overview">
-        <p className="text-muted-foreground text-sm">
+        <p className="text-muted-foreground text-16">
           버튼 라벨, 오류 메시지 같은 실제 문구의 표기 규칙을 정합니다. 어떤 태도와 톤으로
           말할지는 Voice and Tone에서 다루고, 이 문서는 그 톤을 구체적 문장으로 옮기는 표기만
           다룹니다. 화면에 넣을 문구의 정확한 표현이 궁금할 때 이 문서를 찾습니다.
@@ -112,7 +112,7 @@ export function WritingPage() {
       </DocSection>
 
       <DocSection title="Button labels">
-        <p className="text-muted-foreground text-sm">
+        <p className="text-muted-foreground text-16">
           동사로 시작하고 누른 뒤의 결과를 말합니다. 다이얼로그의 확인 버튼은 제목에 쓴 동사와 같은 낱말을
           씁니다. 길이는 두 자에서 여섯 자 사이로 두고, 아이콘 전용 버튼의 aria-label에는 같은 문구를
           넣습니다. 취소는 언제나 '취소'로 고정하되, 아무것도 하지 않고 창만 닫을 때는 '닫기'를 씁니다.
@@ -121,7 +121,7 @@ export function WritingPage() {
       </DocSection>
 
       <DocSection title="Form labels">
-        <p className="text-muted-foreground text-sm">
+        <p className="text-muted-foreground text-16">
           라벨은 조사 없는 명사입니다. 도움말은 입력 전에 필요한 정보만 담고, 한 줄을 넘기지 않습니다. 어드민
           폼은 대부분 필수이므로 별표를 다는 대신 선택 항목에만 (선택)을 붙입니다.
         </p>
@@ -129,7 +129,7 @@ export function WritingPage() {
       </DocSection>
 
       <DocSection title="Error messages">
-        <p className="text-muted-foreground text-sm">
+        <p className="text-muted-foreground text-16">
           무엇이 잘못됐는지와 어떻게 고치는지를 한 문장씩 씁니다. 필드 오류는 필드 바로 아래에, 요청 오류는
           토스트나 화면 상단 배너에 둡니다. 예외 이름과 스택은 화면에 노출하지 않습니다 — 지원 요청에 필요한
           요청 ID만 문장 뒤에 붙입니다.
@@ -138,7 +138,7 @@ export function WritingPage() {
       </DocSection>
 
       <DocSection title="Empty states">
-        <p className="text-muted-foreground text-sm">
+        <p className="text-muted-foreground text-16">
           제목은 없다는 사실, 설명은 채우는 방법, 버튼은 다음 행동 하나. 이 세 줄 구조를 모든 빈 상태에서
           지킵니다. 검색이나 필터로 비워진 목록에는 만들기 버튼 대신 조건을 되돌리는 버튼을 둡니다.
         </p>
@@ -146,7 +146,7 @@ export function WritingPage() {
       </DocSection>
 
       <DocSection title="Language">
-        <p className="text-muted-foreground text-sm">
+        <p className="text-muted-foreground text-16">
           구조를 가리키는 이름은 영문으로, 설명은 한국어로 씁니다.
         </p>
         <ul className="text-muted-foreground flex list-disc flex-col gap-1.5 pl-5 text-12">
@@ -168,7 +168,7 @@ export function WritingPage() {
       </DocSection>
 
       <DocSection title="Notation">
-        <p className="text-muted-foreground text-sm">
+        <p className="text-muted-foreground text-16">
           아래는 이 시스템에서 하나로 정한 표기입니다. 취향 문제로 보이더라도 화면마다 다르게 쓰면 같은
           데이터가 다른 것처럼 보입니다.
         </p>
@@ -180,8 +180,8 @@ export function WritingPage() {
           </div>
           {NOTATION.map((row) => (
             <div key={row.item} className="flex flex-wrap gap-x-4 gap-y-1 p-4 md:flex-nowrap">
-              <span className="w-20 shrink-0 text-sm font-medium">{row.item}</span>
-              <span className="flex-1 text-sm">{row.rule}</span>
+              <span className="w-20 shrink-0 text-14 font-medium">{row.item}</span>
+              <span className="flex-1 text-14">{row.rule}</span>
               <span className="text-muted-foreground w-full text-12 md:w-56 md:shrink-0">
                 {row.avoid}
               </span>
