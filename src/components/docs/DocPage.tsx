@@ -35,9 +35,9 @@ export function DocPage({
       <header className="flex flex-col gap-4">
         <h1 className="text-32 font-bold tracking-tight">{title}</h1>
         {/*
-          * 문서 설명은 이미 본문(text-16, 16px)보다 큰 text-18(18px)이라 좁은 화면에서
-          * 더 키울 이유가 없다 — docProse의 15px를 그대로 받으면 오히려 작아진다.
-          * 한 줄 길이만 본문과 같게 맞춘다.
+          * 문서 설명은 text-18(18px)이다. docProse의 좁은 화면 규칙(15px)을
+          * 그대로 받으면 오히려 작아지므로 크기 규칙은 받지 않고, 한 줄
+          * 길이(max-w-2xl)만 본문과 같게 맞춘다.
           */}
         {description && <p className="text-muted-foreground max-w-2xl text-18">{description}</p>}
         {meta}
