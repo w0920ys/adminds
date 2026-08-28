@@ -75,16 +75,22 @@ export type PageSelectionState = 'none' | 'some' | 'all'
  * page를 돌려주는 것은 부른 쪽이 자기가 넘긴 페이지가 당겨졌는지 알아야 하기
  * 때문이다 — 행이 줄어 페이지 수가 줄면 3페이지에 있던 사람은 갈 곳이 없다.
  * 행이 하나도 없어도 페이지 수는 1이다. 0페이지짜리 표는 없다.
+ *
+ * page가 유한한 수가 아니면(NaN, Infinity 포함) 1로 당긴다. perPage가 유한하고
+ * 양수가 아니면 1로 처리한다 — 모두 같은 방식으로 안전하게 처리해야 URL
+ * 파싱이나 상태 동기화에서 버그를 낳지 않는다.
  */
 export function paginate<T>(
   rows: readonly T[],
   page: number,
   perPage: number,
 ): { rows: T[]; page: number; pageCount: number } {
-  const pageCount = Math.max(1, Math.ceil(rows.length / perPage))
-  const safePage = Math.min(Math.max(1, page), pageCount)
-  const start = (safePage - 1) * perPage
-  return { rows: rows.slice(start, start + perPage), page: safePage, pageCount }
+  const safePage = Number.isFinite(page) && page > 0 ? page : 1
+  const safePerPage = Number.isFinite(perPage) && perPage > 0 ? perPage : 1
+  const pageCount = Math.max(1, Math.ceil(rows.length / safePerPage))
+  const clampedPage = Math.min(Math.max(1, safePage), pageCount)
+  const start = (clampedPage - 1) * safePerPage
+  return { rows: rows.slice(start, start + safePerPage), page: clampedPage, pageCount }
 }
 
 /** 행 하나를 넣거나 뺀 새 집합. 원래 집합을 바꾸지 않는다. */
@@ -121,7 +127,6 @@ export function pageSelectionState(
   selected: ReadonlySet<string>,
   pageIds: readonly string[],
 ): PageSelectionState {
-  if (pageIds.length === 0) return 'none'
   const picked = pageIds.filter((id) => selected.has(id)).length
   if (picked === 0) return 'none'
   return picked === pageIds.length ? 'all' : 'some'

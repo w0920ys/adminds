@@ -129,6 +129,46 @@ describe('paginate', () => {
     paginate(rows, 2, 2)
     expect(rows).toEqual(before)
   })
+
+  it('page가 NaN이면 첫 페이지로 당긴다', () => {
+    expect(paginate(rows, NaN, 2)).toEqual({ rows: ['a', 'b'], page: 1, pageCount: 3 })
+  })
+
+  it('page가 Infinity이면 첫 페이지로 당긴다', () => {
+    expect(paginate(rows, Infinity, 2)).toEqual({ rows: ['a', 'b'], page: 1, pageCount: 3 })
+  })
+
+  it('page가 -Infinity이면 첫 페이지로 당긴다', () => {
+    expect(paginate(rows, -Infinity, 2)).toEqual({ rows: ['a', 'b'], page: 1, pageCount: 3 })
+  })
+
+  it('perPage가 0이면 유한하고 양수인 값으로 처리하고 모든 행을 보인다', () => {
+    const result = paginate(rows, 1, 0)
+    expect(result.rows).toEqual(['a'])
+    expect(result.pageCount).toBe(5)
+    expect(result.page).toBe(1)
+  })
+
+  it('perPage가 음수이면 유한하고 양수인 값으로 처리하고 모든 행을 보인다', () => {
+    const result = paginate(rows, 1, -5)
+    expect(result.rows).toEqual(['a'])
+    expect(result.pageCount).toBe(5)
+    expect(result.page).toBe(1)
+  })
+
+  it('perPage가 Infinity이면 유한하고 양수인 값으로 처리한다', () => {
+    const result = paginate(rows, 1, Infinity)
+    expect(result.rows).toEqual(['a'])
+    expect(result.pageCount).toBe(5)
+    expect(result.page).toBe(1)
+  })
+
+  it('perPage가 NaN이면 유한하고 양수인 값으로 처리한다', () => {
+    const result = paginate(rows, 1, NaN)
+    expect(result.rows).toEqual(['a'])
+    expect(result.pageCount).toBe(5)
+    expect(result.page).toBe(1)
+  })
 })
 
 describe('toggleRow', () => {
