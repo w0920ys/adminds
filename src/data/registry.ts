@@ -2830,7 +2830,7 @@ export const components: ComponentMeta[] = [
     status: 'stable',
     addedIn: 'v0.8.0',
     changedIn: 'v0.8.0',
-    purpose: '어드민의 중심 화면이다. 여러 행의 데이터를 칸으로 나누어 보이고, 열 이름을 눌러 정렬하게 한다.',
+    purpose: '어드민의 중심 화면이다. 여러 행의 데이터를 칸으로 나누어 보이고, 정렬 가능한 열은 이름을 누르는 단추로, 지금 방향은 aria-sort로 드러낸다. 다음 방향을 고르는 일은 호출하는 쪽의 몫이다.',
     anatomy: [
       { part: 'header', label: 'Header', note: 'bg-surface. 열 이름을 담는 행. text-xs font-bold' },
       { part: 'row', label: 'Row', note: '높이는 density가 정한다 — --spacing-row 또는 --spacing-row-compact' },
@@ -2844,7 +2844,7 @@ export const components: ComponentMeta[] = [
       {
         part: 'sort-indicator',
         label: 'Sort indicator',
-        note: '정렬 가능한 열 이름 옆의 방향 아이콘. TableHead의 sortable을 켜면 열 이름이 단추가 되고, 누르면 정렬 방향이 바뀐다',
+        note: '정렬 가능한 열 이름 옆의 방향 아이콘. TableHead의 sortable을 켜면 이름이 단추가 되어 누를 수 있게 되고, aria-sort로 지금 방향을 알린다 — 다음 방향을 정해 sortDirection으로 넘기는 것은 호출하는 쪽이다',
         optional: true,
       },
     ],

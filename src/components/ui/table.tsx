@@ -107,12 +107,11 @@ function TableHead({
   onClick,
   children,
   ...props
-}: Omit<React.ComponentProps<'th'>, 'onClick'> & {
+}: React.ComponentProps<'th'> & {
   numeric?: boolean
   sticky?: boolean
   sortable?: boolean
   sortDirection?: 'asc' | 'desc' | false
-  onClick?: React.MouseEventHandler<HTMLElement>
 }) {
   const ariaSort = sortDirection === false ? 'none' : sortDirection === 'asc' ? 'ascending' : 'descending'
 
@@ -138,7 +137,14 @@ function TableHead({
         <button
           type="button"
           data-slot="table-sort-button"
-          onClick={onClick}
+          /*
+           * th의 onClick은 HTMLTableHeaderCellElement를 기준으로 좁혀져
+           * 있다 — 정렬 가능하지 않은 th가 currentTarget.scope 같은
+           * th 전용 멤버를 그대로 읽을 수 있어야 하기 때문에 props
+           * 전체의 타입을 넓히지 않는다. 여기서만 버튼 타입으로 좁혀
+           * 쓴다.
+           */
+          onClick={onClick as unknown as React.MouseEventHandler<HTMLButtonElement> | undefined}
           className={cn(
             'text-muted-foreground hover:text-foreground focus-visible:ring-ring/50 -mx-1 inline-flex items-center gap-1 rounded px-1 outline-none focus-visible:ring-2',
             numeric && 'flex-row-reverse',
