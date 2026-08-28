@@ -15,18 +15,19 @@ const SPECIMEN = '사용자 관리'
  * 스케일을 바꾸면 표의 순서까지 따라온다.
  */
 const SCALE = [
-  { className: 'text-2xl', role: '페이지 제목 — 한 화면에 하나' },
-  { className: 'text-2xs', role: '배지 · 표 머리 행' },
-  { className: 'text-base', role: '강조 본문 · 통계 숫자' },
-  { className: 'text-lg', role: '섹션 제목' },
+  { className: 'text-2xl', role: '통계 숫자 · 대시보드 지표' },
+  { className: 'text-xl', role: '페이지 제목 · 문서 섹션 제목' },
+  { className: 'text-lg', role: '다이얼로그 · 시트 제목' },
+  { className: 'text-base', role: '문서 소제목 · 문서 설명 문단' },
   { className: 'text-sm', role: '본문 · 컨트롤 라벨 — 기본값' },
   { className: 'text-xs', role: '설명 · 캡션 · 도움말' },
+  { className: 'text-2xs', role: '배지 · 메뉴 그룹 라벨 · 요일 머리' },
 ]
 
 /** 여기도 선언 순서는 무관하다. 실측한 font-weight 내림차순으로 늘어놓는다 */
 const WEIGHTS = [
-  { className: 'font-medium', role: '컨트롤 라벨 · 표 머리 행' },
-  { className: 'font-bold', role: '페이지 제목 · 섹션 라벨' },
+  { className: 'font-medium', role: '컨트롤 라벨' },
+  { className: 'font-bold', role: '페이지 제목 · 섹션 라벨 · 표 머리 행' },
   { className: 'font-normal', role: '본문 · 표 셀 값' },
   { className: 'font-semibold', role: '활성 항목 · 강조할 한 낱말' },
 ]
@@ -244,7 +245,7 @@ export function TypographyPage() {
 
       <DocSection title="Scale">
         <p className="text-muted-foreground text-sm">
-          여섯 단계로 끝냅니다. 크기·행간·자간은 화면 밖에 숨긴 요소에 각 클래스를 걸고 실측한
+          여덟 단계로 끝냅니다. 크기·행간·자간은 화면 밖에 숨긴 요소에 각 클래스를 걸고 실측한
           값이고, 표의 순서도 실측한 크기가 정합니다 — 스케일을 바꾸면 이 표의 순서까지
           따라옵니다. 자간은 단계마다 따로 정하지 않습니다. 자간 칸의 <code>normal</code>은 그 단계에 값을
           정하지 않아 글꼴이 잡은 자간을 그대로 쓴다는 뜻입니다.
@@ -285,6 +286,17 @@ export function TypographyPage() {
             </tbody>
           </table>
         </div>
+        <p className="text-muted-foreground text-sm">
+          <code>text-sm</code>은 두 역할을 겸합니다 — 읽는 문단이자 버튼·인풋·표 셀·메뉴 항목 같은
+          컨트롤 텍스트입니다. 표의 행간(24px)은 문단 기준으로 잡은 값이고, 컨트롤의 높이는{' '}
+          <code>--spacing-control-*</code> 토큰이 따로 잡으므로 행간이 컨트롤 쪽으로 새지 않습니다.
+        </p>
+        <p className="text-muted-foreground text-sm">
+          크기는 Tailwind 기본 스케일에 없는 <code>2xs</code> 하나만 새로 더했고, 나머지 일곱 단계는
+          Tailwind 기본값 그대로입니다. 그래서 이 표는 강제하는 장치가 아니라 지키기로 한 약속입니다 —
+          표에 없는 크기도 여전히 쓸 수 있는 유틸리티로 남아 있으니, 새 화면을 만들 때는 위 여덟 단계
+          안에서 고릅니다.
+        </p>
       </DocSection>
 
       <DocSection title="Weight">
@@ -421,7 +433,7 @@ export function TypographyPage() {
               {STATS.map((stat) => (
                 <div key={stat.label} className="flex flex-col gap-0.5">
                   <dt className="text-muted-foreground text-xs">{stat.label}</dt>
-                  <dd className="text-base font-semibold">{stat.value}</dd>
+                  <dd className="text-2xl font-semibold">{stat.value}</dd>
                 </div>
               ))}
             </dl>
@@ -446,7 +458,7 @@ export function TypographyPage() {
           ]}
           dont={[
             '강조를 위해 크기를 계속 키우지 않는다',
-            '스케일에 없는 임의 크기를 만들지 않는다',
+            '제품 화면에서는 스케일에 없는 임의 크기를 만들지 않는다',
             '본문 문단 전체에 font-bold를 걸지 않는다',
             '읽는 글에 word-break: keep-all을 되살리지 않는다',
           ]}
