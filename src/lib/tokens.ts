@@ -42,12 +42,12 @@ export function parseTokenValue(cssText: string, cssVar: string): string {
  * --z-index-sticky 처럼 접두사가 여러 세그먼트인 경우를 틀리게 자른다.
  *
  * fallbackCss를 주면 실측이 빈 문자열일 때 그 CSS 텍스트에 적힌 선언값을 대신
- * 읽는다. 선언돼 있는데도 실측이 비는 토큰이 실제로 있다 — Tailwind는
- * --text-<크기>--line-height를 .text-<크기> 규칙 안에 값째로 박아 넣고 :root에는
- * 내보내지 않는다. 그래서 getComputedStyle로는 잡히지 않는다. 지금 :root까지
- * 나오는 것은 --text-sm--line-height와 --text-2xs--line-height뿐인데, 그나마도
- * 그 이름이 소스 어딘가에 글자 그대로 적혀 있어서 Tailwind의 소스 스캔에
- * 걸린 덕이다. 그런 우연에 표의 정확성을 맡길 수 없어서 선언문을 직접 읽는다.
+ * 읽는다. 선언돼 있는데도 실측이 빌 수 있는 토큰이 있어서 두는 안전장치다 —
+ * Tailwind는 테마 기본값의 line-height를 .text-<크기> 규칙 안에 값째로 박아 넣고
+ * :root에는 내보내지 않을 때가 있다. 지금 --text-11~--text-48은 tokens.css의
+ * @theme inline 블록에 스물네 개(크기 열둘 + 줄 간격 열둘) 모두 커스텀 프로퍼티로
+ * 직접 선언돼 있어 getComputedStyle로 전부 잡힌다 — 이 폴백에 기댈 일이 없다.
+ * 그래도 다른 접두사의 토큰이 같은 틈에 빠질 수 있어 폴백은 남겨 둔다.
  */
 export function readTokens(names: string[], prefix?: string, fallbackCss?: string): TokenRow[] {
   const computed = getComputedStyle(document.documentElement)

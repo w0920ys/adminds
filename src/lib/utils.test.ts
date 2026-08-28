@@ -35,4 +35,23 @@ describe('cn', () => {
   it('inset이 앞의 left 토큰을 지운다', () => {
     expect(cn('left-control-lg', 'inset-0')).toBe('inset-0')
   })
+
+  /*
+   * text-11~text-48 같은 순수 숫자 이름은 tailwind-merge의 기본 text 테마
+   * 매처(T셔츠 이름만 인식)에 안 걸려 font-size 그룹 밖으로 밀려나면, 어떤
+   * 문자열이든 받는 text-color 그룹(color: [isAny])에 대신 떨어진다. 그
+   * 상태에서 Badge처럼 크기 클래스 뒤에 색 클래스가 오면 같은 그룹 소속으로
+   * 잡혀 충돌 처리되고 나중에 온 색 클래스가 이겨 크기가 통째로 지워진다.
+   *
+   * utils.ts의 theme.text 등록이 빠지면 아래 기대값은 크기 클래스가 사라진
+   * 문자열('text-success-on-tint', 'text-muted-foreground')이 되어 그
+   * 자리에서 깨진다.
+   */
+  it('font-size 토큰이 뒤따르는 색 유틸에 지워지지 않는다', () => {
+    expect(cn('text-11 font-bold', 'text-success-on-tint')).toBe(
+      'text-11 font-bold text-success-on-tint',
+    )
+    expect(cn('text-12', 'text-muted-foreground')).toBe('text-12 text-muted-foreground')
+    expect(cn('text-11', 'text-14')).toBe('text-14')
+  })
 })

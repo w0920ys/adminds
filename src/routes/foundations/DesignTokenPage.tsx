@@ -47,7 +47,7 @@ const GROUPS: TokenGroup[] = [
   },
   {
     prefix: '--text-',
-    note: '글자 크기와 줄 간격입니다. 크기는 Tailwind 기본 스케일에 없는 2xs 하나만 더했습니다. 줄 간격은 네 줄인데, 그중 읽는 글이 놓이는 셋(xs·sm·base)을 기본값에서 올려 다시 정했고 2xs의 줄 간격은 더한 크기에 딸려 오는 짝입니다.',
+    note: '글자 크기와 줄 간격입니다. Tailwind 기본 스케일 대신 픽셀 값을 이름으로 쓰는 열두 단계(text-11~text-48)를 전부 새로 정의했고, 크기마다 줄 간격을 하나씩 함께 선언해 아래 표에는 스물네 줄(크기 열둘 + 줄 간격 열둘)이 뜹니다.',
     names: parseTokenNames(tokensCss, '--text-'),
   },
 ]
@@ -99,7 +99,7 @@ const NAMING_RULES = [
     /* Tailwind가 정한 짝 이름이다. text-<크기> 유틸리티가 이 이름을 줄 간격으로 읽는다 */
     shape: '--text-<크기>--line-height',
     meaning: '그 크기의 줄 간격',
-    example: '--text-sm--line-height',
+    example: '--text-16--line-height',
   },
 ].filter((rule) => ALL_NAMES.includes(rule.example))
 
