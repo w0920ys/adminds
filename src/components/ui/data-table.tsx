@@ -37,11 +37,11 @@ export type DataTableProps<T> = {
   /*
    * Table의 label은 필수다 — 가로로 구르는 그릇이 role="region"이라 이름이
    * 있어야 하고, 그 이름은 표 안에 무엇이 들었는지 아는 쪽만 지을 수 있다.
-   * DataTable도 그것을 모르므로 호출하는 쪽에서 그대로 물려받는다. 기본값을
-   * 두는 것은 위의 목록이 이 컴포넌트의 약속이기 때문이다 — 빠뜨렸다고 표가
-   * 이름 없이 서지는 않게 하되, 제대로 된 이름은 넘겨받는다.
+   * DataTable도 그것을 모르므로 같은 이유로 여기서도 필수다. 기본값을 두면
+   * 한 화면의 표 둘이 같은 이름의 랜드마크가 되어, 이름을 요구한 목적이
+   * 오류 하나 없이 조용히 없어진다.
    */
-  label?: string
+  label: string
 }
 
 /** 한 번에 보일 페이지 번호 버튼의 최대 개수. 넘으면 지금 페이지를 가운데 두고 창을 민다 */
@@ -82,7 +82,7 @@ export function DataTable<T>({
   onPageChange,
   selected,
   onSelectedChange,
-  label = '데이터 표',
+  label,
 }: DataTableProps<T>): ReactNode {
   const [internalSort, setInternalSort] = React.useState<SortState>(null)
   const [internalPage, setInternalPage] = React.useState(1)
@@ -92,9 +92,17 @@ export function DataTable<T>({
   const currentPage = page !== undefined ? page : internalPage
   const currentSelected = selected !== undefined ? selected : internalSelected
 
+  /*
+   * 정렬을 바꾸면 페이지도 1로 돌린다. 3페이지에서 '이름 오름차순'을 누른
+   * 사람이 보는 것은 가나다순 맨 끝 두 줄이지 맨 앞이 아니다 — 정렬 머리를
+   * 누르는 행위의 뜻은 '이 기준으로 맨 위가 무엇인지'다. 마지막 페이지의
+   * 행이 정렬 전후로 우연히 같으면 aria-sort만 바뀌고 아무 일도 없어 보인다.
+   * 제어일 때도 onPageChange(1)이 함께 나가야 부모가 따라올 수 있다.
+   */
   function commitSort(next: SortState) {
     if (sort === undefined) setInternalSort(next)
     onSortChange?.(next)
+    commitPage(1)
   }
 
   function commitPage(next: number) {
@@ -117,8 +125,10 @@ export function DataTable<T>({
    * paginate가 돌려준 page를 그대로 쓴다. 행이 줄어 페이지 수가 줄면 넘긴
    * 페이지는 없는 페이지다 — 그때 화면이 비지 않고 마지막 페이지로 당겨진다.
    * 당겨진 값을 상태로 되쓰지는 않는다. 그리기 도중에 상태를 바꾸거나
-   * onPageChange를 부르는 일이 되기 때문이다. 다음 클릭은 여기 보인 페이지를
-   * 기준으로 셈하므로 이것만으로 충분하다.
+   * onPageChange를 부르는 일이 되기 때문이다. 이전·다음·번호·aria-current가
+   * 모두 shownPage를 기준으로 셈하므로 다음 클릭에는 이것으로 충분하다.
+   * 되쓰지 않은 내부 페이지는 그대로 살아 있다 — 행이 줄었다 다시 늘면
+   * 사용자가 누른 적 없는 그 페이지로 돌아간다.
    */
   const { rows: pageRows, page: shownPage, pageCount } = paginate(sorted, currentPage, perPage)
 
@@ -132,6 +142,31 @@ export function DataTable<T>({
   const selectedCount = currentSelected.size
 
   const rowLabelPrefix = React.useId()
+  const selectLabelId = React.useId()
+
+  /*
+   * 선택 칸과 sticky 열이 함께 있으면 선택 칸도 함께 고정한다.
+   *
+   * 고정하지 않으면 선택 칸은 static이라 가로로 구르는 즉시 왼쪽 밖으로
+   * 나가고(scrollLeft 200에서 left −199), sticky 열이 방금 비운 그 자리에
+   * 붙는다. 겹쳐 보이는 것이 아니라 체크박스가 화면에서 사라져 다시 닿을
+   * 수 없게 된다 — 왼쪽 끝까지 되굴러야 선택을 풀 수 있다. 그런데 sticky
+   * 첫 열은 table.tsx가 좁은 화면을 위해 둔 것이므로, 굴러갈 것을 전제한
+   * 자리에서 선택이 못 쓰게 되는 셈이다.
+   *
+   * 그래서 선택 칸은 left-0에, sticky 열은 선택 칸 폭만큼 오른쪽에 세운다.
+   * 두 값이 같은 토큰(--spacing-control-lg)에서 나오므로 서로 어긋날 수
+   * 없다. 선택 칸의 좌우 패딩을 지우고 폭을 그 토큰으로 못 박는 것도 같은
+   * 이유다 — 폭이 패딩과 체크박스 크기의 합으로 정해지면 토큰과 갈라진다.
+   * 폭은 w-0과 min-w를 함께 준다. table-layout이 auto라 둘의 역할이 다르다
+   * — min-w가 40px을 아래에서 받치고, w-0이 '남는 폭을 더 가져가지 않는다'는
+   * 뜻을 낸다. min-w만 두면 표가 그릇보다 좁을 때 이 칸이 남는 폭을 나눠
+   * 받아 210px까지 벌어진다(재어 보고 골랐다). 40px 안에서 16px 체크박스를
+   * 가운데 두므로 보이는 모습은 px-3일 때와 같다.
+   */
+  const stickySelect = selectable && columns.some((column) => column.sticky)
+  const selectCellClassName = 'w-0 min-w-control-lg px-0 text-center'
+  const stickyColumnOffset = selectable ? 'left-control-lg' : undefined
 
   function clearSelection() {
     commitSelected(new Set())
@@ -146,11 +181,33 @@ export function DataTable<T>({
         <div className="flex flex-wrap items-center gap-2">{toolbarContent}</div>
       ) : null}
 
+      {/*
+       * 불러오는 중이라는 사실을 소리로도 전한다. Skeleton은 스스로
+       * aria-hidden이라(skeleton.tsx) 접근성 트리에서는 아무 일도 일어나지
+       * 않는 표로 들린다 — 그 문구를 두는 것이 부르는 쪽의 일이라고 그
+       * 컴포넌트가 적어 두었고, 여기가 state를 쥐고 있는 자리다.
+       * SkeletonPage의 announce-via-text 예시와 같은 문구를 쓴다.
+       *
+       * 상자는 늘 두고 안의 글자만 바꾼다. 불러올 때 region 자체를 새로
+       * 끼우면 스크린 리더가 그 변화를 놓칠 수 있다. sr-only는 화면에서만
+       * 감추므로(position: absolute) flex의 gap도 벌리지 않는다.
+       */}
+      <div role="status" className="sr-only">
+        {isLoading ? '불러오는 중입니다' : ''}
+      </div>
+
+      {/* 행 체크박스의 이름 뒤에 이어 붙일 문구. 표 안에는 span을 둘 자리가 없다 */}
+      {selectable ? (
+        <span id={selectLabelId} className="sr-only">
+          행 선택
+        </span>
+      ) : null}
+
       <Table label={label} density={density}>
         <TableHeader>
           <TableRow>
             {selectable ? (
-              <TableHead className="w-0">
+              <TableHead sticky={stickySelect} className={selectCellClassName}>
                 {/*
                  * 이름이 '이 페이지'인 것은 실제로 이 페이지만 다루기 때문이다.
                  * 다른 페이지에서 고른 것은 건드리지 않으므로 '전체 선택'은
@@ -165,10 +222,15 @@ export function DataTable<T>({
               </TableHead>
             ) : null}
             {columns.map((column) => {
-              /* 정렬할 수 있는 열은 sortValue가 있는 열이다. 그 판단은 lib이 이미 내렸다 */
+              /* 정렬할 수 있는 열은 sortValue가 있는 열이다. 그 규칙은 lib이 정했다 */
               if (!column.sortValue) {
                 return (
-                  <TableHead key={column.id} numeric={column.numeric} sticky={column.sticky}>
+                  <TableHead
+                    key={column.id}
+                    numeric={column.numeric}
+                    sticky={column.sticky}
+                    className={column.sticky ? stickyColumnOffset : undefined}
+                  >
                     {column.header}
                   </TableHead>
                 )
@@ -178,6 +240,7 @@ export function DataTable<T>({
                   key={column.id}
                   numeric={column.numeric}
                   sticky={column.sticky}
+                  className={column.sticky ? stickyColumnOffset : undefined}
                   sortable
                   sortDirection={currentSort?.columnId === column.id ? currentSort.direction : false}
                   onClick={() => commitSort(nextSortState(currentSort, column.id))}
@@ -195,12 +258,16 @@ export function DataTable<T>({
             ? Array.from({ length: Math.max(1, Math.min(perPage, LOADING_ROWS)) }, (_, index) => (
                 <TableRow key={index} className="hover:bg-transparent">
                   {selectable ? (
-                    <TableCell className="w-0">
-                      <Skeleton className="size-4 rounded-sm" />
+                    <TableCell sticky={stickySelect} className={selectCellClassName}>
+                      <Skeleton className="mx-auto size-4 rounded-sm" />
                     </TableCell>
                   ) : null}
                   {columns.map((column) => (
-                    <TableCell key={column.id} sticky={column.sticky}>
+                    <TableCell
+                      key={column.id}
+                      sticky={column.sticky}
+                      className={column.sticky ? stickyColumnOffset : undefined}
+                    >
                       <Skeleton />
                     </TableCell>
                   ))}
@@ -226,19 +293,29 @@ export function DataTable<T>({
           {bodyRows.map((row) => {
             const id = getRowId(row)
             /*
-             * 행의 체크박스 이름은 첫 칸이 짓는다. DataTable은 행이 무엇인지
-             * 모르므로(cell은 ReactNode를 돌려줄 뿐이다) 스스로 '홍길동 선택'
-             * 같은 이름을 만들 수 없다. 첫 칸을 가리키면 화면에 보이는 그
-             * 글자가 그대로 이름이 된다 — 모든 행이 '행 선택'으로 같아지는
-             * 것보다 낫다.
+             * 행의 체크박스 이름은 첫 칸과 숨긴 '행 선택'이 함께 짓는다.
+             * DataTable은 행이 무엇인지 모르므로(cell은 ReactNode를 돌려줄
+             * 뿐이다) 스스로 '홍길동 선택' 같은 이름을 만들 수 없다. 첫 칸을
+             * 가리키면 화면에 보이는 그 글자가 이름에 들어와 행마다 달라진다.
+             *
+             * 다만 첫 칸이 글자를 돌려주지 않는 표가 흔하다 — 아바타·아이콘·
+             * Badge가 첫 칸인 어드민 표에서는 그 참조가 빈 이름이 되고, 그것은
+             * 모든 행이 '행 선택'으로 같은 것보다 나쁘다(이름 없는 컨트롤이
+             * 된다). 그래서 숨긴 문구의 id를 뒤에 잇는다 — 앞의 참조가 비면
+             * 그 조각만 빠져 '행 선택'이 남고, 글자가 있으면 '가나다 행 선택'이
+             * 된다. Slider가 aria-labelledby 뒤에 위치 이름을 잇는 것과 같다.
+             *
+             * id는 encodeURIComponent로 감싼다. aria-labelledby는 공백으로
+             * 토큰을 가르므로 getRowId가 공백을 담은 값을 돌려주면 참조가
+             * 쪼개진다. 인코딩은 서로 다른 id를 서로 다르게 남긴다.
              */
-            const labelId = `${rowLabelPrefix}-${id}`
+            const labelId = `${rowLabelPrefix}-${encodeURIComponent(id)}`
             return (
               <TableRow key={id} selected={currentSelected.has(id)}>
                 {selectable ? (
-                  <TableCell className="w-0">
+                  <TableCell sticky={stickySelect} className={selectCellClassName}>
                     <Checkbox
-                      aria-labelledby={labelId}
+                      aria-labelledby={`${labelId} ${selectLabelId}`}
                       checked={currentSelected.has(id)}
                       onCheckedChange={() => commitSelected(toggleRow(currentSelected, id))}
                     />
@@ -250,6 +327,7 @@ export function DataTable<T>({
                     id={index === 0 ? labelId : undefined}
                     numeric={column.numeric}
                     sticky={column.sticky}
+                    className={column.sticky ? stickyColumnOffset : undefined}
                   >
                     {column.cell(row)}
                   </TableCell>
@@ -261,10 +339,15 @@ export function DataTable<T>({
       </Table>
 
       {/*
-       * 불러오는 중에는 페이지 줄을 두지 않는다. 아직 몇 건인지 모르는데
-       * '전체 0건'이라고 적는 것은 자리표시가 아니라 틀린 말이다.
+       * 불러오는 중에는 페이지 줄의 내용을 그리지 않는다. 불러오는 중의
+       * rows.length는 최종 건수가 아니므로 '전체 0건'도 '전체 12건'도 곧
+       * 틀린 말이 된다. 대신 자리는 비워 둔다 — 뼈대 행이 표가 튀지 않게
+       * 잡아 두는데 footer가 통째로 사라지면 다 불러온 순간 그만큼 튄다.
+       * 높이는 그 자리에 설 sm 버튼과 같은 토큰이다.
        */}
-      {isLoading ? null : (
+      {isLoading ? (
+        <div className="h-control-sm" aria-hidden />
+      ) : (
         <Pagination>
           <PaginationInfo>
             전체 {rows.length}건 · {perPage}건씩
