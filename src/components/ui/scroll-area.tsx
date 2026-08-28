@@ -28,16 +28,23 @@ function ScrollArea({
       {...props}
     >
       {/*
-        Viewport에는 포커스 링을 두지 않는다. Radix가 여기에 tabIndex를 주지
-        않고 ScrollArea도 Viewport로 prop을 흘려보내지 않아, 이 요소는
-        :focus-visible이 될 길 자체가 없다 — 링을 그려 두면 절대 켜지지 않는
-        클래스가 남아 "포커스를 받는 자리"라고 잘못 말한다. 키보드로 들어오는
-        길은 안에 놓인 포커스 가능한 요소가 만들고, 그 사정은 지침
-        keyboard-focus-path가 적고 있다.
+        Viewport에 포커스 링을 둔다. Radix는 여기에 tabIndex를 주지 않지만,
+        그것이 이 요소가 포커스를 못 받는다는 뜻은 아니다 — 실제로 넘치는
+        스크롤 컨테이너는 브라우저가 스스로 포커스 가능한 자리로 다룬다
+        (Chrome 127+의 keyboard-focusable scrollers). 안에 포커스 가능한
+        요소가 없는 순수 텍스트 상자가 바로 그 대상이고, Chrome에서
+        el.focus()가 실제로 먹는 것을 이 저장소의 Viewport로 확인했다.
+        링을 걷어내면 그 자리에 브라우저 기본 outline이 대신 떠서, ui
+        컴포넌트가 스물한 자리에서 똑같이 쓰는 링과 여기서만 갈린다.
+
+        다만 늘 켜지는 링은 아니다. 넘치지 않는 상자는 포커스 대상이 아니고
+        이 동작을 아직 하지 않는 브라우저도 있다. 어느 브라우저에서나 통하는
+        키보드 통로는 안에 놓인 포커스 가능한 요소가 만들고, 그 사정은 지침
+        keyboard-focus-path가 적는다.
       */}
       <ScrollAreaPrimitive.Viewport
         data-slot="scroll-area-viewport"
-        className="size-full rounded-[inherit]"
+        className="size-full rounded-[inherit] outline-none focus-visible:ring-ring/50 focus-visible:ring-2"
       >
         {children}
       </ScrollAreaPrimitive.Viewport>
