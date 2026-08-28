@@ -11,7 +11,13 @@ export type PatternStructureStep = {
   slot: string
   /** 이 자리가 무엇을 맡는가 */
   note: string
-  /** 이 자리가 쓰는 컴포넌트의 registry id. 그 문서로 잇는다 */
+  /**
+   * 이 자리에 패턴이 직접 놓는 컴포넌트의 registry id. 그 문서로 잇는다.
+   *
+   * 자리는 있는데 패턴이 놓는 것이 없으면 비운다. 안에서 저절로 그려지는
+   * 것까지 세면(List의 선택 칸과 페이지 줄은 Data Table이 그린다) 독자가
+   * 그 자리에 같은 컴포넌트를 손으로 하나 더 놓게 된다.
+   */
   components?: string[]
   /** 없어도 화면이 성립하는 자리인지 */
   optional?: boolean
@@ -66,7 +72,7 @@ export const patterns: PatternMeta[] = [
       { slot: '필터 줄', note: '검색어와 좁히는 조건을 표 위에 둔다. 결과 수를 함께 보인다', components: ['input', 'select'] },
       { slot: 'Data Table', note: '표·정렬·선택·페이지를 한 컴포넌트가 맡는다. 칸 안의 상태는 Badge로 보인다', components: ['data-table', 'badge'] },
       { slot: '대량 작업 줄', note: '선택이 있을 때만 필터 줄 자리에 나타난다. 선택 개수와 그 선택에 걸리는 동작을 담는다', components: ['button'], optional: true },
-      { slot: '페이지 줄', note: '표 아래에 전체 개수와 페이지 이동이 온다. 따로 두지 않는다 — Data Table이 함께 그린다', components: ['pagination'] },
+      { slot: '페이지 줄', note: '표 아래에 전체 개수와 페이지 이동이 온다. 이 자리에 따로 놓을 것은 없다 — 선택 칸과 마찬가지로 Data Table이 안에서 그린다' },
     ],
     guidelines: [
       {

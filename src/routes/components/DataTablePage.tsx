@@ -14,6 +14,7 @@ import {
 } from '@/components/ui/empty-state'
 import { categoryLabel, components, getComponent } from '@/data/registry'
 import type { DataTableColumn, SortState } from '@/lib/data-table'
+import { versionOrder } from '@/lib/version'
 import { Placeholder } from '@/routes/Placeholder'
 
 /*
@@ -26,17 +27,11 @@ type Row = (typeof components)[number]
 
 const rowId = (row: Row) => row.id
 
-/**
- * 'v0.10.1'을 견줄 수 있는 수로 바꾼다.
- *
- * 버전을 글자로 견주면 v0.10.0이 v0.9.0보다 앞에 온다 — 화면에 보이는 값과
- * 정렬 기준이 갈라지는 자리다. cell과 sortValue를 따로 둔 이유가 이것이라,
- * 칸에는 'v0.10.1'을 그대로 보이고 견주기는 이 수로 한다.
+/*
+ * 버전을 견줄 수 있는 수로 바꾸는 일은 @/lib/version이 맡는다. 여기 있던
+ * 세 줄을 그리로 올린 것은 List 패턴 페이지의 '도입' 열도 같은 규칙을
+ * 써야 했기 때문이다 — 복제하면 한 규칙이 두 파일에서 따로 늙는다.
  */
-function versionOrder(version: string): number {
-  const [major = 0, minor = 0, patch = 0] = version.replace(/^v/, '').split('.').map(Number)
-  return major * 1_000_000 + minor * 1_000 + patch
-}
 
 const nameColumn: DataTableColumn<Row> = {
   id: 'name',

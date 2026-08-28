@@ -25,6 +25,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { getPattern } from '@/data/patterns'
 import { categoryLabel, categoryOrder, components, type ComponentStatus } from '@/data/registry'
 import type { DataTableColumn } from '@/lib/data-table'
+import { versionOrder } from '@/lib/version'
 import { Placeholder } from '@/routes/Placeholder'
 
 /*
@@ -55,13 +56,15 @@ const STATUS_VARIANT: Record<ComponentStatus, 'neutral' | 'warning' | 'success' 
 }
 
 /*
- * 정렬할 수 있는 열은 sortValue를 가진 열뿐이다. 이름과 구분에만 두었다.
+ * 정렬할 수 있는 열은 sortValue를 가진 열뿐이다. '상태'를 뺀 셋에 두었다.
  *
- * '상태'에 두지 않은 것은 지금 서른아홉 행이 모두 stable이라 견줄 것이
- * 없어서다 — 머리를 눌러도 순서가 그대로인 열은 고장으로 읽힌다. '도입'에
- * 두지 않은 것은 버전을 글자로 견주면 v0.10.0이 v0.9.0 앞에 서기 때문이고,
- * 그것을 수로 바꾸는 방법은 Data Table 문서가 자기 예시에서 이미 보인다.
- * 이 페이지가 보일 것은 어떤 열이 정렬되는가가 아니라 목록 화면의 짜임이다.
+ * '상태'에만 두지 않은 것은 지금 서른아홉 행이 모두 stable이라 견줄 것이
+ * 없어서다 — 머리를 눌러도 순서가 그대로인 열은 고장으로 읽힌다.
+ *
+ * '도입'은 versionOrder로 견준다. 버전을 글자로 견주면 v0.10.0이 v0.9.0
+ * 앞에 서므로, 칸에는 'v0.9.0'을 그대로 보이고 견주기는 수로 한다 — cell과
+ * sortValue가 나뉘어 있는 이유가 이 자리다. 도입 버전은 어드민 목록에서
+ * 독자가 가장 먼저 눌러 볼 머리 가운데 하나다.
  */
 const COLUMNS: DataTableColumn<Row>[] = [
   { id: 'name', header: '이름', cell: (row) => row.name, sortValue: (row) => row.name },
@@ -76,7 +79,12 @@ const COLUMNS: DataTableColumn<Row>[] = [
     header: '상태',
     cell: (row) => <Badge variant={STATUS_VARIANT[row.status]}>{STATUS_LABEL[row.status]}</Badge>,
   },
-  { id: 'added', header: '도입', cell: (row) => row.addedIn },
+  {
+    id: 'added',
+    header: '도입',
+    cell: (row) => row.addedIn,
+    sortValue: (row) => versionOrder(row.addedIn),
+  },
 ]
 
 /*
@@ -199,6 +207,33 @@ function FilterRow({ filter, showCount = true }: { filter: ListFilter; showCount
   )
 }
 
+/**
+ * 조건에 걸리는 것이 없을 때 표 몸에 서는 안내.
+ *
+ * 필터가 실제로 표를 좁히는 화면이라면 어디서든 이 자리에 닿을 수 있다 —
+ * no-filter-results 케이스만이 아니라 Example에서도 걸리지 않는 말을 치면
+ * 곧바로 여기다. DataTable의 기본 빈 상태('표시할 항목이 없습니다')를 그냥
+ * 두면 그 화면에서 조건을 지울 길이 없어, cases가 적은 '조건을 지우는 길을
+ * 함께 준다'가 그 자리에서 거짓이 된다. 그래서 필터를 쥔 화면은 모두 이것을
+ * 넘긴다.
+ */
+function FilterEmptyState({ onReset }: { onReset: () => void }) {
+  return (
+    <EmptyState variant="no-results" size="compact" className="mx-auto">
+      <EmptyStateIcon>
+        <SearchX aria-hidden />
+      </EmptyStateIcon>
+      <EmptyStateTitle>조건에 맞는 컴포넌트가 없습니다</EmptyStateTitle>
+      <EmptyStateDescription>다른 검색어를 넣거나 조건을 지우세요.</EmptyStateDescription>
+      <EmptyStateAction>
+        <Button size="sm" onClick={onReset}>
+          필터 초기화
+        </Button>
+      </EmptyStateAction>
+    </EmptyState>
+  )
+}
+
 /** 지침 예시용. 조건을 쳐 보면 결과 수가 따라 움직이는 쪽과 아무것도 없는 쪽이 갈린다 */
 function FilterRowExample({ showCount }: { showCount: boolean }) {
   const filter = useListFilter()
@@ -208,10 +243,16 @@ function FilterRowExample({ showCount }: { showCount: boolean }) {
 /**
  * 대량 작업 줄. 필터 줄이 서던 자리를 그대로 차지한다.
  *
- * DataTable에도 toolbar 자리가 있지만 이 줄을 거기 두지 않았다. toolbar는
- * 표 위에 줄을 하나 '더' 세우는 자리라, 패턴이 자기 필터 줄을 남긴 채로
- * 쓰면 bulk-bar-in-place가 하지 말라고 적은 그 화면이 그대로 나온다.
- * 이 줄은 필터 줄과 자리를 맞바꾸는 사이라 둘을 함께 쥔 쪽이 갈라야 한다.
+ * DataTable에도 toolbar 자리가 있지만 이 줄을 거기 두지 않았다. 화면이
+ * 달라져서가 아니다 — ListScreen은 선택이 있으면 필터 줄을 아예 그리지
+ * 않으므로 toolbar로 옮겨도 줄이 둘로 늘지 않고, ListScreen도 DataTable도
+ * flex flex-col gap-4라 표 위 한 줄이 서는 자리와 간격도 같다.
+ *
+ * 두지 않은 이유는 소유에 있다. 이 줄과 필터 줄은 자리를 맞바꾸는 사이라,
+ * 어느 쪽을 세울지 정하는 조건(선택 유무)을 쥔 쪽이 두 줄을 함께 쥐어야
+ * 한 규칙이 두 파일로 쪼개지지 않는다. 그리고 patterns.ts의 structure가
+ * '대량 작업 줄'을 패턴의 자리로 세고 있으니, 그 자리의 위치를 DataTable이
+ * 정하게 두면 문서가 자기 것이라 적은 자리의 소유가 갈린다.
  */
 function BulkBar({ count, onClear }: { count: number; onClear?: () => void }) {
   return (
@@ -317,6 +358,7 @@ function ListScreen({
         perPage={perPage}
         selected={selected}
         onSelectedChange={setSelected}
+        emptyContent={<FilterEmptyState onReset={filter.reset} />}
       />
     </div>
   )
@@ -369,20 +411,7 @@ function NoResultsScreen() {
         rows={filter.rows}
         getRowId={rowId}
         selectable
-        emptyContent={
-          <EmptyState variant="no-results" size="compact" className="mx-auto">
-            <EmptyStateIcon>
-              <SearchX aria-hidden />
-            </EmptyStateIcon>
-            <EmptyStateTitle>조건에 맞는 컴포넌트가 없습니다</EmptyStateTitle>
-            <EmptyStateDescription>다른 검색어를 넣거나 조건을 지우세요.</EmptyStateDescription>
-            <EmptyStateAction>
-              <Button size="sm" onClick={filter.reset}>
-                필터 초기화
-              </Button>
-            </EmptyStateAction>
-          </EmptyState>
-        }
+        emptyContent={<FilterEmptyState onReset={filter.reset} />}
       />
     </div>
   )
