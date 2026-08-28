@@ -36,6 +36,8 @@ export const releases: Release[] = [
       '목록 화면마다 다시 짜던 정렬·페이지 나눔·선택을 한 벌로 묶은 Data Table을 새로 실었고, Table은 정렬 머리와 aria-sort를 갖게 됐으며 List 패턴은 그 위로 옮겨 갔어요.',
     changes: [
       { target: 'Data Table', type: 'New', note: '정렬·페이지 나눔·선택 세 상태를 한 컴포넌트가 맡아요. 셋 다 비제어가 기본이고, 같은 이름의 prop을 주면 그때부터 부모가 쥐어요.' },
+      { target: 'Table', type: 'Updated', note: 'TableHead가 sortable·sortDirection을 받아 정렬 머리를 그리고, 정렬 가능한 열에만 aria-sort를 실어요. 다음 방향은 받은 값을 보여줄 뿐 스스로 계산하지 않아요.' },
+      { target: 'List', type: 'Updated', note: '표·정렬·선택·페이지를 손으로 조립하던 자리를 Data Table 하나로 바꿨어요. 예시 행은 이 저장소의 컴포넌트 서른아홉 개를 그대로 써서, 페이지를 넘겨도 선택이 남는 것을 눌러서 볼 수 있어요.' },
     ],
     requests: [],
     reviewItems: [],
