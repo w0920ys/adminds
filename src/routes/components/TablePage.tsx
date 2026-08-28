@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import { ChevronDown, ChevronRight } from 'lucide-react'
+import { ChevronRight } from 'lucide-react'
 import { Bounds } from '@/components/docs/Bounds'
 import { ComponentPage } from '@/components/docs/ComponentPage'
 import type { RenderOptions } from '@/components/docs/PropertyBlock'
@@ -431,11 +431,8 @@ function AnatomyPreview() {
           <TableHead className="w-10">
             <Checkbox aria-label="전체 선택" />
           </TableHead>
-          <TableHead>
-            <button type="button" className="inline-flex items-center gap-1">
-              이름
-              <ChevronDown data-anatomy="sort-indicator" size={12} aria-hidden />
-            </button>
+          <TableHead data-anatomy="sort-indicator" sortable sortDirection="asc">
+            이름
           </TableHead>
           <TableHead numeric>주문</TableHead>
         </TableRow>

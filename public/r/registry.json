@@ -707,6 +707,9 @@
       "name": "table",
       "type": "registry:ui",
       "title": "Table",
+      "dependencies": [
+        "lucide-react"
+      ],
       "registryDependencies": [
         "https://adminds.vercel.app/r/tokens.json",
         "https://adminds.vercel.app/r/utils.json"

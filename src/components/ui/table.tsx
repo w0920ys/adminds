@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { ChevronUp } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 type TableDensity = 'default' | 'compact'
@@ -101,12 +102,30 @@ function TableHead({
   className,
   numeric,
   sticky,
+  sortable,
+  sortDirection = false,
+  onClick,
+  children,
   ...props
-}: React.ComponentProps<'th'> & { numeric?: boolean; sticky?: boolean }) {
+}: Omit<React.ComponentProps<'th'>, 'onClick'> & {
+  numeric?: boolean
+  sticky?: boolean
+  sortable?: boolean
+  sortDirection?: 'asc' | 'desc' | false
+  onClick?: React.MouseEventHandler<HTMLElement>
+}) {
+  const ariaSort = sortDirection === false ? 'none' : sortDirection === 'asc' ? 'ascending' : 'descending'
+
   return (
     <th
       scope="col"
       data-slot="table-head"
+      /*
+       * aria-sort는 정렬 가능한 열에만 싣는다. 정렬 가능하지 않은 열에
+       * 'none'을 실으면 보조 기술에 정렬할 수 있다고 말하는 것이 된다.
+       */
+      aria-sort={sortable ? ariaSort : undefined}
+      onClick={sortable ? undefined : onClick}
       className={cn(
         'text-muted-foreground h-full px-3 text-left align-middle text-xs font-bold whitespace-nowrap',
         numeric && 'text-right',
@@ -114,7 +133,37 @@ function TableHead({
         className,
       )}
       {...props}
-    />
+    >
+      {sortable ? (
+        <button
+          type="button"
+          data-slot="table-sort-button"
+          onClick={onClick}
+          className={cn(
+            'text-muted-foreground hover:text-foreground focus-visible:ring-ring/50 -mx-1 inline-flex items-center gap-1 rounded px-1 outline-none focus-visible:ring-2',
+            numeric && 'flex-row-reverse',
+          )}
+        >
+          {children}
+          {/*
+           * 방향 아이콘 자리는 정렬되지 않은 열에도 남긴다. 나타났다 사라지면
+           * 누를 때마다 머리의 너비가 바뀌어 표가 튄다.
+           */}
+          <ChevronUp
+            data-slot="table-sort-indicator"
+            size={12}
+            aria-hidden
+            className={cn(
+              'shrink-0 transition-transform',
+              sortDirection === false && 'opacity-0',
+              sortDirection === 'desc' && 'rotate-180',
+            )}
+          />
+        </button>
+      ) : (
+        children
+      )}
+    </th>
   )
 }
 
