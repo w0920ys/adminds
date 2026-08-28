@@ -138,13 +138,13 @@ function TableHead({
           type="button"
           data-slot="table-sort-button"
           /*
-           * th의 onClick은 HTMLTableHeaderCellElement를 기준으로 좁혀져
-           * 있다 — 정렬 가능하지 않은 th가 currentTarget.scope 같은
-           * th 전용 멤버를 그대로 읽을 수 있어야 하기 때문에 props
-           * 전체의 타입을 넓히지 않는다. 여기서만 버튼 타입으로 좁혀
-           * 쓴다.
+           * TableHead의 공개 onClick은 보통 올라앉는 th를 기준으로
+           * 타입이 잡혀 있다(정렬 불가능한 열은 currentTarget.scope
+           * 같은 th 전용 멤버를 그대로 읽을 수 있어야 하므로 props
+           * 전체를 넓히지 않는다). 정렬 가능한 열은 같은 핸들러를
+           * 안쪽 button으로 그대로 넘길 뿐이라 여기서만 좁혀 쓴다.
            */
-          onClick={onClick as unknown as React.MouseEventHandler<HTMLButtonElement> | undefined}
+          onClick={onClick as React.MouseEventHandler<HTMLButtonElement> | undefined}
           className={cn(
             'text-muted-foreground hover:text-foreground focus-visible:ring-ring/50 -mx-1 inline-flex items-center gap-1 rounded px-1 outline-none focus-visible:ring-2',
             numeric && 'flex-row-reverse',
