@@ -57,16 +57,16 @@ export const patterns: PatternMeta[] = [
     aliases: ['목록', '리스트', '목록 화면', '테이블 화면'],
     status: 'draft',
     addedIn: 'v0.11.0',
-    changedIn: 'v0.11.0',
+    changedIn: 'v0.13.0',
     purpose:
       '여러 항목을 한 화면에서 훑고 걸러 하나를 고르는 화면이다. 어드민에서 가장 자주 열린다.',
     structure: [
       { slot: 'Breadcrumb', note: '지금 보는 목록이 어느 갈래에 있는지 보인다', components: ['breadcrumb'] },
       { slot: '제목과 주요 동작', note: '제목은 왼쪽, 주요 동작은 오른쪽 끝. 주요 동작은 하나만 둔다', components: ['button'] },
       { slot: '필터 줄', note: '검색어와 좁히는 조건을 표 위에 둔다. 결과 수를 함께 보인다', components: ['input', 'select'] },
-      { slot: 'Table', note: '선택은 Checkbox, 상태는 Badge, 담당자는 Avatar로 보인다', components: ['table', 'checkbox', 'badge', 'avatar'] },
+      { slot: 'Data Table', note: '표·정렬·선택·페이지를 한 컴포넌트가 맡는다. 칸 안의 상태는 Badge로 보인다', components: ['data-table', 'badge'] },
       { slot: '대량 작업 줄', note: '선택이 있을 때만 필터 줄 자리에 나타난다. 선택 개수와 그 선택에 걸리는 동작을 담는다', components: ['button'], optional: true },
-      { slot: 'Pagination', note: '표 아래에 전체 개수와 페이지 이동을 둔다', components: ['pagination'] },
+      { slot: '페이지 줄', note: '표 아래에 전체 개수와 페이지 이동이 온다. 따로 두지 않는다 — Data Table이 함께 그린다', components: ['pagination'] },
     ],
     guidelines: [
       {
@@ -92,15 +92,15 @@ export const patterns: PatternMeta[] = [
       },
     ],
     example: {
-      title: '사용자 목록',
-      note: 'Breadcrumb부터 Pagination까지, 목록 화면 하나를 실제 컴포넌트로 조립한 것이다.',
+      title: '컴포넌트 목록',
+      note: 'Breadcrumb·제목 줄·필터 줄은 패턴이 두고, 표와 선택과 페이지는 Data Table 하나가 맡는다. 행은 이 시스템의 컴포넌트 목록 그대로다.',
     },
     cases: [
       { id: 'empty', title: '결과 없음', note: '아직 아무것도 없는 목록. 표의 머리는 남기고 몸에 안내를 둔다.' },
       { id: 'no-filter-results', title: '필터 결과 없음', note: '조건이 너무 좁을 때. 조건을 지우는 길을 함께 준다.' },
       { id: 'loading', title: '불러오는 중', note: '행 자리를 Skeleton으로 잡아 표가 튀지 않게 한다.' },
       { id: 'selection-across-pages', title: '선택 상태에서 페이지 이동', note: '선택이 몇 건인지 페이지를 넘어가도 보인다.' },
-      { id: 'narrow-screen', title: '좁은 화면', note: '표는 가로로 구르고 제목 줄과 필터 줄은 세로로 쌓인다.' },
+      { id: 'narrow-screen', title: '좁은 화면', note: '표는 가로로 구르고, 자리가 모자란 필터 줄은 세로로 쌓인다.' },
     ],
     verified: false,
   },
