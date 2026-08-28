@@ -33,13 +33,13 @@ export function DocPage({
   return (
     <article className="flex flex-col gap-16 md:gap-20">
       <header className="flex flex-col gap-4">
-        <h1 className="text-3xl font-bold tracking-tight">{title}</h1>
+        <h1 className="text-32 font-bold tracking-tight">{title}</h1>
         {/*
-          * 문서 설명은 이미 본문(text-sm)보다 한 단계 큰 text-base라 좁은 화면에서
+          * 문서 설명은 이미 본문(text-16, 16px)보다 큰 text-18(18px)이라 좁은 화면에서
           * 더 키울 이유가 없다 — docProse의 15px를 그대로 받으면 오히려 작아진다.
           * 한 줄 길이만 본문과 같게 맞춘다.
           */}
-        {description && <p className="text-muted-foreground max-w-2xl text-base">{description}</p>}
+        {description && <p className="text-muted-foreground max-w-2xl text-18">{description}</p>}
         {meta}
       </header>
       {children}
@@ -64,7 +64,7 @@ export function DocSection({ title, children }: { title: string; children: React
   return (
     <section className="flex flex-col gap-6 [&>p]:max-w-2xl [&>p]:max-sm:text-[0.9375rem] [&>p]:max-sm:leading-[1.75]">
       <div className="group flex items-center">
-        <h2 className="text-xl font-semibold tracking-tight">{title}</h2>
+        <h2 className="text-22 font-semibold tracking-tight">{title}</h2>
         <HeadingAnchor />
       </div>
       {children}

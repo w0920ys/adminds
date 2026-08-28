@@ -10,7 +10,7 @@ function PrincipleCard({ principle }: { principle: Principle }) {
   const doc = findDoc(principle.source)
   return (
     <li className="flex flex-col gap-2 rounded-lg border p-4">
-      <strong className="text-base font-semibold">{principle.title}</strong>
+      <strong className="text-18 font-semibold">{principle.title}</strong>
       <p className="text-muted-foreground text-sm">{principle.body}</p>
       {doc && (
         <Link to={doc.to} className="text-primary text-12 underline-offset-4 hover:underline">

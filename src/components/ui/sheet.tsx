@@ -121,7 +121,7 @@ function SheetTitle({ className, ...props }: React.ComponentProps<typeof DialogP
   return (
     <DialogPrimitive.Title
       data-slot="sheet-title"
-      className={cn('text-lg font-semibold', className)}
+      className={cn('text-20 font-semibold', className)}
       {...props}
     />
   )

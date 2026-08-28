@@ -60,7 +60,7 @@ export function GuidelineBlock({
     <section className="flex flex-col gap-4 md:gap-5">
       <div>
         <div className="group flex items-center">
-          <h3 className="text-base font-semibold">{guideline.title}</h3>
+          <h3 className="text-18 font-semibold">{guideline.title}</h3>
           <HeadingAnchor />
         </div>
         <p className={cn('text-muted-foreground mt-2 text-sm', docProse)}>{guideline.body}</p>

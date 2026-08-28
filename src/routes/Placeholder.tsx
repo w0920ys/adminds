@@ -16,7 +16,7 @@ export function Placeholder({ title }: { title: string }) {
       <div className="bg-muted text-muted-foreground grid size-12 place-items-center rounded-full">
         <SearchX size={22} aria-hidden />
       </div>
-      <h1 className="text-lg font-semibold">{title}</h1>
+      <h1 className="text-18 font-semibold">{title}</h1>
       <p className="text-muted-foreground max-w-sm text-sm">
         주소를 다시 확인하거나, 문서 목록에서 다른 문서를 골라 주세요.
       </p>

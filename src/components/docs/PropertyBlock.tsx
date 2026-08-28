@@ -47,7 +47,7 @@ export function PropertyBlock({
     <section className="flex flex-col gap-4">
       <div>
         <div className="group flex items-center">
-          <h3 className="text-base font-semibold">{property.title}</h3>
+          <h3 className="text-18 font-semibold">{property.title}</h3>
           <HeadingAnchor />
         </div>
         <p className={cn('text-muted-foreground mt-2 text-sm', docProse)}>{property.description}</p>
