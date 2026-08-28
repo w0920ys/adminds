@@ -1,20 +1,21 @@
 import { X } from 'lucide-react'
 import { Link, NavLink, useLocation } from 'react-router'
 import type { DocLink } from '@/components/layout/nav-config'
-import { findSection, isGroup, sections } from '@/components/layout/nav-config'
-import { Badge } from '@/components/ui/badge'
-import { isFresh } from '@/lib/freshness'
+import { findSection, isGroup, sections, UPDATE_DOT_SECTION_IDS } from '@/components/layout/nav-config'
+import { UpdateDot } from '@/components/layout/UpdateDot'
+import { currentRelease } from '@/data/releases'
+import { isUpdatedInRelease } from '@/lib/freshness'
 import { cn } from '@/lib/utils'
 
 function LnbItem({
   doc,
   depth,
-  now,
+  showDots,
   onClose,
 }: {
   doc: DocLink
   depth: number
-  now: Date
+  showDots: boolean
   onClose: () => void
 }) {
   return (
@@ -34,14 +35,12 @@ function LnbItem({
         }
       >
         <span className="truncate">{doc.label}</span>
-        {isFresh(doc.updatedAt, now) && (
-          <Badge variant="info" className="ml-auto shrink-0 px-1.5">
-            New
-          </Badge>
+        {showDots && isUpdatedInRelease(doc.updatedAt, currentRelease.publishedAt) && (
+          <UpdateDot className="ml-auto" />
         )}
       </NavLink>
       {doc.children?.map((child) => (
-        <LnbItem key={child.to} doc={child} depth={depth + 1} now={now} onClose={onClose} />
+        <LnbItem key={child.to} doc={child} depth={depth + 1} showDots={showDots} onClose={onClose} />
       ))}
     </>
   )
@@ -51,12 +50,8 @@ export function Lnb({ open, onClose }: { open: boolean; onClose: () => void }) {
   const { pathname } = useLocation()
   const section = findSection(pathname)
 
-  /*
-   * 배지의 기준 시각. 문서를 옮길 때마다 다시 잡으므로 자정을 넘긴 뒤
-   * 다른 문서로 이동하면 그때 배지가 떨어진다. 화면을 켜둔 채 자정을
-   * 넘기는 경우까지 쫓지는 않는다 — 그 정확도를 위해 타이머를 두는 값은 없다.
-   */
-  const now = new Date()
+  /* 업데이트 점은 세 섹션(foundations·components·patterns)에서만 보인다 */
+  const showDots = UPDATE_DOT_SECTION_IDS.has(section.id)
 
   return (
     <>
@@ -124,11 +119,11 @@ export function Lnb({ open, onClose }: { open: boolean; onClose: () => void }) {
                   {item.label.toUpperCase()}
                 </h2>
                 {item.items.map((doc) => (
-                  <LnbItem key={doc.to} doc={doc} depth={0} now={now} onClose={onClose} />
+                  <LnbItem key={doc.to} doc={doc} depth={0} showDots={showDots} onClose={onClose} />
                 ))}
               </section>
             ) : (
-              <LnbItem key={item.to} doc={item} depth={0} now={now} onClose={onClose} />
+              <LnbItem key={item.to} doc={item} depth={0} showDots={showDots} onClose={onClose} />
             ),
           )}
         </nav>

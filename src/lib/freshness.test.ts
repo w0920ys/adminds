@@ -1,7 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { isFresh, parseDocDate } from '@/lib/freshness'
-
-const at = (iso: string) => new Date(iso)
+import { isUpdatedInRelease, parseDocDate } from '@/lib/freshness'
 
 describe('parseDocDate', () => {
   it('YYYY-MM-DD를 로컬 자정으로 읽는다', () => {
@@ -24,22 +22,24 @@ describe('parseDocDate', () => {
   })
 })
 
-describe('isFresh', () => {
-  it('같은 날 갱신은 새것이다', () => {
-    expect(isFresh('2026-08-26', at('2026-08-26T00:00:00'))).toBe(true)
-    expect(isFresh('2026-08-26', at('2026-08-26T23:59:59'))).toBe(true)
+describe('isUpdatedInRelease', () => {
+  it('릴리스가 나온 날 갱신된 문서는 이번 릴리스에서 바뀐 것이다', () => {
+    expect(isUpdatedInRelease('2026-08-27', '2026-08-27')).toBe(true)
   })
 
-  it('자정을 넘기면 떨어진다', () => {
-    expect(isFresh('2026-08-26', at('2026-08-27T00:00:00'))).toBe(false)
-    expect(isFresh('2026-08-25', at('2026-08-26T09:00:00'))).toBe(false)
+  it('릴리스 이후에 갱신된 문서(다음 릴리스를 준비하며 먼저 고친 문서)도 포함한다', () => {
+    expect(isUpdatedInRelease('2026-08-28', '2026-08-27')).toBe(true)
   })
 
-  it('앞선 날짜는 새것으로 치지 않는다', () => {
-    expect(isFresh('2026-08-27', at('2026-08-26T09:00:00'))).toBe(false)
+  it('릴리스보다 앞서 갱신된 문서는 이번 릴리스에서 바뀐 것이 아니다', () => {
+    expect(isUpdatedInRelease('2026-08-25', '2026-08-27')).toBe(false)
   })
 
-  it('읽을 수 없는 날짜는 새것으로 치지 않는다', () => {
-    expect(isFresh('언젠가', at('2026-08-26T09:00:00'))).toBe(false)
+  it('문서 날짜를 읽을 수 없으면 바뀐 것으로 치지 않는다', () => {
+    expect(isUpdatedInRelease('언젠가', '2026-08-27')).toBe(false)
+  })
+
+  it('릴리스 날짜를 읽을 수 없으면 바뀐 것으로 치지 않는다', () => {
+    expect(isUpdatedInRelease('2026-08-27', '언젠가')).toBe(false)
   })
 })

@@ -1,12 +1,21 @@
 import * as React from 'react'
 import { Component, FileText, Palette, Search } from 'lucide-react'
 import { useNavigate } from 'react-router'
+import { findSection, UPDATE_DOT_SECTION_IDS } from '@/components/layout/nav-config'
+import { UpdateDot } from '@/components/layout/UpdateDot'
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog'
-import { Badge } from '@/components/ui/badge'
+import { currentRelease } from '@/data/releases'
 import { recentDocs, searchIndex } from '@/data/search-index'
-import { isFresh } from '@/lib/freshness'
+import { isUpdatedInRelease } from '@/lib/freshness'
 import { search, tokenize, type SearchGroup, type SearchKind } from '@/lib/search'
 import { cn } from '@/lib/utils'
+
+/** 이 문서가 업데이트 점을 보일 자격이 있는가 — 세 섹션 소속이고, 이번 릴리스에서 바뀌었는가 */
+function showsUpdateDot(to: string, updatedAt: string | undefined): boolean {
+  if (!updatedAt) return false
+  if (!UPDATE_DOT_SECTION_IDS.has(findSection(to).id)) return false
+  return isUpdatedInRelease(updatedAt, currentRelease.publishedAt)
+}
 
 const KIND_ICON: Record<SearchKind, typeof Search> = {
   component: Component,
@@ -162,11 +171,7 @@ export function SearchDialog({
                         <span className="truncate text-sm font-medium">
                           <Mark text={hit.title} token={token} />
                         </span>
-                        {hit.updatedAt && isFresh(hit.updatedAt) && (
-                          <Badge variant="info" className="shrink-0 px-1.5">
-                            New
-                          </Badge>
-                        )}
+                        {showsUpdateDot(hit.to, hit.updatedAt) && <UpdateDot />}
                       </span>
                       {hit.snippet && (
                         <span className="text-muted-foreground mt-0.5 line-clamp-2 block text-xs">

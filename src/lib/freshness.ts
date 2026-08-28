@@ -1,14 +1,19 @@
 /**
- * 문서가 방금 바뀌었는지 판단한다.
+ * 문서가 이번 릴리스에서 바뀌었는지 판단한다.
  *
- * LNB의 New 배지가 이 판단 하나에 달려 있다. 배지는 "지금 들어오면 새로 볼 것이
- * 있다"는 신호이므로 오래 남으면 안 된다 — 하루가 지나면 사라진다.
+ * LNB와 검색 결과의 업데이트 점(dot)이 이 판단 하나에 달려 있다. 하루가
+ * 지나면 사라지는 방식 대신 릴리스 단위로 판단한다 — 문서의 updatedAt이
+ * 최신 릴리스가 나온 날짜이거나 그 이후면 이번 릴리스에서 바뀐 것으로 본다.
+ * 다음 릴리스를 준비하며 먼저 고쳐 둔 문서(최신 릴리스보다 늦은 날짜)도
+ * 아직 릴리스 기록에 적히지 않았을 뿐 이번 릴리스에서 바뀐 것이므로 포함한다.
  *
- * 날짜만 있고 시각은 없으므로 갱신 시점을 그날 자정으로 읽는다.
- * 오늘 고친 문서는 오늘 하루 배지를 달고, 자정을 넘기면 스스로 떨어진다.
+ * 기준이 되는 릴리스 날짜는 이 파일이 스스로 찾지 않는다. releases.ts를
+ * 직접 알게 하면 순수 함수 하나가 데이터 구조 하나를 통째로 끌고 다니게
+ * 되므로, 호출하는 쪽이 currentRelease.publishedAt을 읽어 넘긴다 — GNB
+ * 제목 옆 버전 배지가 이미 그 값을 읽는 자리와 같다.
+ *
+ * 날짜만 있고 시각은 없으므로 두 값 모두 로컬 자정으로 읽어 비교한다.
  */
-
-const DAY_MS = 24 * 60 * 60 * 1000
 
 /** YYYY-MM-DD를 로컬 자정으로 읽는다. 형식이 아니면 undefined. */
 export function parseDocDate(value: string): Date | undefined {
@@ -23,15 +28,13 @@ export function parseDocDate(value: string): Date | undefined {
 }
 
 /**
- * 갱신일에서 하루가 지나지 않았는가.
- * now를 인자로 받는 이유는 테스트 때문만이 아니다 — 자정을 넘긴 화면에서
- * 다시 계산할 수 있어야 배지가 제때 사라진다.
+ * updatedAt이 releaseDate와 같거나 그 이후인가 — "이번 릴리스에서 바뀌었는가".
+ * 둘 중 하나라도 형식을 읽을 수 없으면 바뀐 것으로 치지 않는다.
  */
-export function isFresh(updatedAt: string, now: Date = new Date()): boolean {
-  const date = parseDocDate(updatedAt)
-  if (!date) return false
+export function isUpdatedInRelease(updatedAt: string, releaseDate: string): boolean {
+  const docDate = parseDocDate(updatedAt)
+  const release = parseDocDate(releaseDate)
+  if (!docDate || !release) return false
 
-  const elapsed = now.getTime() - date.getTime()
-  // 앞선 날짜(elapsed < 0)는 아직 오지 않은 갱신이므로 배지를 달지 않는다
-  return elapsed >= 0 && elapsed < DAY_MS
+  return docDate.getTime() >= release.getTime()
 }

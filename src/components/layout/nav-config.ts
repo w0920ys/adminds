@@ -165,6 +165,18 @@ export const sections: NavSection[] = [
   },
 ]
 
+/**
+ * 업데이트 점(dot)을 보여주는 섹션. Get started는 안내문 자체가 자주 바뀌지 않는
+ * 고정 섹션이고, Updates는 "무엇이 바뀌었는가"를 이미 통째로 보여주는 섹션이라
+ * 그 자신이 다시 dot으로 스스로를 가리킬 필요가 없다 — 그래서 이 두 섹션은
+ * updatedAt과 무관하게 항상 뺀다.
+ */
+export const UPDATE_DOT_SECTION_IDS: ReadonlySet<string> = new Set([
+  'foundations',
+  'components',
+  'patterns',
+])
+
 /** 묶음을 풀고 부모 다음에 자식이 오도록 평탄화한다. 순서가 필요한 곳은 모두 이것을 쓴다. */
 export function flattenDocs(items: NavItem[]): DocLink[] {
   return items.flatMap((item) =>
