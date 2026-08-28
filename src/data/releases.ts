@@ -29,6 +29,22 @@ export type Release = {
 /** 최신 버전이 배열의 맨 앞이다. */
 export const releases: Release[] = [
   {
+    version: 'v0.15.0',
+    publishedAt: '2026-08-29',
+    title: '모바일 헤더·서랍 순서를 바꾸고 사이트 푸터를 다시 짰어요',
+    purpose:
+      '모바일 헤더의 메뉴 버튼이 테마 토글 뒤로 옮겨졌고, LNB 서랍이 오른쪽에서 열리며 섹션 목록·문서 목록 두 단계로 나뉘었어요. 사이트 푸터도 문서 하단 이동 영역과 전체 푸터 두 곳이 다시 짜였어요.',
+    changes: [
+      { target: 'Gnb', type: 'Updated', note: '모바일 헤더에서 메뉴 버튼을 테마 토글 뒤로 옮겼어요.' },
+      { target: 'Lnb', type: 'Updated', note: '모바일 서랍이 오른쪽에서 열리고, 섹션 목록과 문서 목록 두 단계로 나뉘었어요.' },
+      { target: 'DocFooterNav', type: 'Updated', note: '문서 하단 이동 영역 위 구분선을 없앴어요.' },
+      { target: 'SiteFooter', type: 'Updated', note: '로고+copyright와 메뉴 2컬럼으로 다시 짰어요.' },
+    ],
+    requests: [],
+    reviewItems: [],
+    impact: ['Foundations', 'Components', 'Patterns', 'Get started', 'Updates'],
+  },
+  {
     version: 'v0.14.0',
     publishedAt: '2026-08-28',
     title: '본문 기본값을 16px로 올리고 스케일 열두 단계를 다시 짰어요',
