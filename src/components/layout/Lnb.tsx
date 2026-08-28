@@ -64,16 +64,26 @@ export function Lnb({ open, onClose }: { open: boolean; onClose: () => void }) {
   const [view, setView] = useState<LnbView>({ kind: 'section', sectionId: routeSection.id })
 
   /*
-   * 서랍을 새로 열 때마다 현재 경로의 섹션 2depth부터 다시 시작한다 —
-   * 마지막으로 보던 화면(1depth였든 다른 섹션이었든)을 기억하지 않는다.
-   * useEffect로 "prop이 바뀌면 state를 리셋"하지 않는다 — 렌더 중에
-   * 이전 open 값과 비교해 바로 맞춘다(React가 권하는 패턴이고, 이
+   * view를 현재 경로 기준으로 다시 맞춰야 하는 순간이 둘이다 —
+   * (1) 서랍을 새로 열 때(마지막으로 보던 화면을 기억하지 않는다),
+   * (2) 경로 자체가 바뀔 때(데스크톱 정적 사이드바가 이 경우다 — open은
+   * 데스크톱에서 절대 안 바뀌므로, pathname 변화만이 유일한 신호다).
+   * 이 둘을 안 가르면 데스크톱에서 링크를 눌러 다른 섹션으로 가도
+   * 사이드바가 첫 마운트 때의 섹션에 멈춰 있는다.
+   * useEffect로 "prop/경로가 바뀌면 state를 리셋"하지 않는다 — 렌더 중에
+   * 이전 값과 비교해 바로 맞춘다(React가 권하는 패턴이고, 이
    * 프로젝트의 oxlint가 effect 안 setState를 이미 경고로 잡는다).
    */
-  const [wasOpen, setWasOpen] = useState(open)
-  if (open !== wasOpen) {
-    setWasOpen(open)
-    if (open) setView({ kind: 'section', sectionId: routeSection.id })
+  const [prevOpen, setPrevOpen] = useState(open)
+  const [prevPathname, setPrevPathname] = useState(pathname)
+  if (prevOpen !== open || prevPathname !== pathname) {
+    const openedJustNow = open && !prevOpen
+    const navigated = pathname !== prevPathname
+    setPrevOpen(open)
+    setPrevPathname(pathname)
+    if (openedJustNow || navigated) {
+      setView({ kind: 'section', sectionId: routeSection.id })
+    }
   }
 
   const browsedSection =
