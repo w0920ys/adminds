@@ -64,7 +64,7 @@ export const sections: NavSection[] = [
           { to: '/foundations/palette', label: 'Palette', summary: '원시 색 스케일과 시맨틱 연결', updatedAt: '2026-08-25' },
         ],
       },
-      { to: '/foundations/typography', label: 'Typography', summary: '크기 스케일과 굵기, 정보 위계', updatedAt: '2026-08-25' },
+      { to: '/foundations/typography', label: 'Typography', summary: '크기 스케일과 굵기, 정보 위계', updatedAt: '2026-08-28' },
       { to: '/foundations/spacing', label: 'Spacing', summary: '4px 기반 간격과 어드민 밀도 축', updatedAt: '2026-08-25' },
       { to: '/foundations/iconography', label: 'Iconography', summary: '아이콘 크기·스트로크·사용 규칙', updatedAt: '2026-08-25' },
       { to: '/foundations/state', label: 'State', summary: '상호작용 상태의 표현 규칙', updatedAt: '2026-08-25' },
@@ -124,7 +124,7 @@ export const sections: NavSection[] = [
           { to: '/components/description-list', label: 'Description List', updatedAt: '2026-08-26' },
           { to: '/components/scroll-area', label: 'Scroll Area', updatedAt: '2026-08-27' },
           { to: '/components/separator', label: 'Separator', updatedAt: '2026-08-26' },
-          { to: '/components/table', label: 'Table', updatedAt: '2026-08-26' },
+          { to: '/components/table', label: 'Table', updatedAt: '2026-08-28' },
         ],
       },
       {

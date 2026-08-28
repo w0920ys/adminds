@@ -29,6 +29,19 @@ export type Release = {
 /** 최신 버전이 배열의 맨 앞이다. */
 export const releases: Release[] = [
   {
+    version: 'v0.13.0',
+    publishedAt: '2026-08-28',
+    title: 'Data Table을 싣고 Table이 약속한 정렬을 코드로 지켰어요',
+    purpose:
+      '목록 화면마다 다시 짜던 정렬·페이지 나눔·선택을 한 벌로 묶은 Data Table을 새로 실었고, Table은 정렬 머리와 aria-sort를 갖게 됐으며 List 패턴은 그 위로 옮겨 갔어요.',
+    changes: [
+      { target: 'Data Table', type: 'New', note: '정렬·페이지 나눔·선택 세 상태를 한 컴포넌트가 맡아요. 셋 다 비제어가 기본이고, 같은 이름의 prop을 주면 그때부터 부모가 쥐어요.' },
+    ],
+    requests: [],
+    reviewItems: [],
+    impact: ['Components', 'Patterns', 'Updates'],
+  },
+  {
     version: 'v0.12.0',
     publishedAt: '2026-08-27',
     title: '덮는 것, 묻는 것, 접는 것 여섯을 더했어요',

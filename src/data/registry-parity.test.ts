@@ -232,7 +232,7 @@ const readmeGlob = import.meta.glob('../../README.md', {
 })
 const readme = Object.values(readmeGlob)[0] as string | undefined
 
-/** 토박이말 수사(1~99)를 숫자로 되돌린다. 묶음 설명이 '서른여덟'처럼 적기 때문이다 */
+/** 토박이말 수사(1~99)를 숫자로 되돌린다. 묶음 설명이 '서른아홉'처럼 적기 때문이다 */
 const TENS: Record<string, number> = { 열: 10, 스물: 20, 서른: 30, 마흔: 40, 쉰: 50, 예순: 60, 일흔: 70, 여든: 80, 아흔: 90 }
 const ONES: Record<string, number> = { 하나: 1, 한: 1, 둘: 2, 두: 2, 셋: 3, 세: 3, 넷: 4, 네: 4, 다섯: 5, 여섯: 6, 일곱: 7, 여덟: 8, 아홉: 9 }
 

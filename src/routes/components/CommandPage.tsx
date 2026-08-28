@@ -29,7 +29,7 @@ const NO_KEYWORD_ENTRIES: CommandEntry[] = COMPONENT_ENTRIES.map((entry) => ({
   keywords: undefined,
 }))
 
-/** 이 회차에 실린 컴포넌트만 골라낸다 — addedIn이 실제로 v0.12.0인 것만, 손으로 고르지 않는다 */
+/** v0.12.0에 실린 컴포넌트만 골라낸다 — addedIn이 실제로 v0.12.0인 것만, 손으로 고르지 않는다 */
 const RECENT_ENTRIES: CommandEntry[] = COMPONENT_ENTRIES.filter((entry) =>
   components.some((c) => `/components/${c.id}` === entry.value && c.addedIn === 'v0.12.0'),
 )
