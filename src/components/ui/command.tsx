@@ -153,7 +153,7 @@ function Command({
         className={cn('max-h-96 overflow-y-auto p-2', listProps?.className)}
       >
         {filtered.length === 0 ? (
-          <p className="text-muted-foreground px-2 py-6 text-center text-sm">{emptyMessage}</p>
+          <p className="text-muted-foreground px-2 py-6 text-center text-16">{emptyMessage}</p>
         ) : (
           sections.map((section) => {
             const headingId = section.label ? `${listId}-group-${section.label}` : undefined
@@ -199,7 +199,7 @@ function Command({
                       }}
                       onClick={() => select(entry)}
                       className={cn(
-                        'flex w-full cursor-default items-center gap-2 rounded-sm px-2 py-1.5 text-sm select-none',
+                        'flex w-full cursor-default items-center gap-2 rounded-sm px-2 py-1.5 text-16 select-none',
                         isActive && 'bg-accent text-accent-foreground',
                         entry.disabled && 'pointer-events-none opacity-50',
                         itemProps?.className,

@@ -34,7 +34,7 @@ function CollapsibleTrigger({
     <CollapsiblePrimitive.Trigger
       data-slot="collapsible-trigger"
       className={cn(
-        'group flex w-full items-center justify-between gap-2 rounded-md py-2 text-sm font-medium outline-none',
+        'group flex w-full items-center justify-between gap-2 rounded-md py-2 text-16 font-medium outline-none',
         'focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-2',
         'disabled:pointer-events-none disabled:opacity-50',
         className,
@@ -78,7 +78,7 @@ function CollapsibleContent({
   return (
     <CollapsiblePrimitive.Content
       data-slot="collapsible-content"
-      className="data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down overflow-hidden text-sm"
+      className="data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down overflow-hidden text-16"
       {...props}
     >
       <div className={cn('text-muted-foreground pt-0 pb-2', className)}>{children}</div>

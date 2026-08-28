@@ -30,7 +30,7 @@ export function DocFooterNav() {
               <span className="text-muted-foreground flex items-center gap-1 text-11">
                 <ChevronLeft size={12} aria-hidden /> 이전 문서
               </span>
-              <strong className="text-sm">{prev.label}</strong>
+              <strong className="text-16">{prev.label}</strong>
             </Link>
           ) : (
             <span />
@@ -43,7 +43,7 @@ export function DocFooterNav() {
               <span className="text-muted-foreground flex items-center gap-1 text-11">
                 다음 문서 <ChevronRight size={12} aria-hidden />
               </span>
-              <strong className="text-sm">{next.label}</strong>
+              <strong className="text-16">{next.label}</strong>
             </Link>
           )}
         </nav>

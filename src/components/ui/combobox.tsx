@@ -321,7 +321,7 @@ function Combobox(props: ComboboxProps) {
           className="max-h-64 overflow-y-auto p-1"
         >
           {filtered.length === 0 ? (
-            <p className="text-muted-foreground px-2 py-3 text-center text-sm">{emptyMessage}</p>
+            <p className="text-muted-foreground px-2 py-3 text-center text-16">{emptyMessage}</p>
           ) : (
             filtered.map((option, index) => {
               const isSelected = selectedValues.includes(option.value)
@@ -335,7 +335,7 @@ function Combobox(props: ComboboxProps) {
                   onMouseEnter={() => setActiveIndex(index)}
                   onClick={() => toggleOption(option)}
                   className={cn(
-                    'relative flex w-full cursor-default items-center gap-2 rounded-sm py-1.5 pr-8 pl-2 text-sm select-none',
+                    'relative flex w-full cursor-default items-center gap-2 rounded-sm py-1.5 pr-8 pl-2 text-16 select-none',
                     isActive && 'bg-accent text-accent-foreground',
                   )}
                 >

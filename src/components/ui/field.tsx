@@ -206,7 +206,7 @@ function FieldLabel({ className, onClick, ...props }: React.ComponentProps<'labe
         focusControl(document.getElementById(id))
       }}
       className={cn(
-        'text-sm font-medium',
+        'text-16 font-medium',
         state === 'disabled' && 'text-muted-foreground',
         layout === 'horizontal' && 'col-start-1 row-start-1',
         className,

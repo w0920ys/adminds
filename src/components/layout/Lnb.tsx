@@ -26,7 +26,7 @@ function LnbItem({
         onClick={onClose}
         className={({ isActive }) =>
           cn(
-            'flex h-control items-center gap-1.5 text-sm',
+            'flex h-control items-center gap-1.5 text-16',
             depth === 0 ? 'rounded-md px-2' : 'ml-2 border-l pl-3',
             isActive
               ? 'bg-accent text-accent-foreground font-semibold'
@@ -99,7 +99,7 @@ export function Lnb({ open, onClose }: { open: boolean; onClose: () => void }) {
               onClick={onClose}
               aria-current={item.id === section.id ? 'page' : undefined}
               className={cn(
-                'flex h-control items-center rounded-md px-2 text-sm',
+                'flex h-control items-center rounded-md px-2 text-16',
                 item.id === section.id
                   ? 'bg-accent text-accent-foreground font-semibold'
                   : 'text-muted-foreground',

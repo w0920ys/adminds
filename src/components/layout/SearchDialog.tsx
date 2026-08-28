@@ -124,7 +124,7 @@ export function SearchDialog({
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             placeholder="컴포넌트·문서·토큰 검색"
-            className="placeholder:text-muted-foreground h-full w-full bg-transparent text-sm outline-none"
+            className="placeholder:text-muted-foreground h-full w-full bg-transparent text-16 outline-none"
             role="combobox"
             aria-expanded={flat.length > 0}
             aria-controls="search-hits"
@@ -139,7 +139,7 @@ export function SearchDialog({
           </p>
 
           {flat.length === 0 && (
-            <p className="text-muted-foreground px-2 py-6 text-center text-sm">
+            <p className="text-muted-foreground px-2 py-6 text-center text-16">
               ‘{query.trim()}’에 맞는 문서가 없습니다
             </p>
           )}
@@ -168,7 +168,7 @@ export function SearchDialog({
                     <Icon size={15} className="text-muted-foreground mt-0.5 shrink-0" aria-hidden />
                     <span className="min-w-0 flex-1">
                       <span className="flex items-center gap-1.5">
-                        <span className="truncate text-sm font-medium">
+                        <span className="truncate text-16 font-medium">
                           <Mark text={hit.title} token={token} />
                         </span>
                         {showsUpdateDot(hit.to, hit.updatedAt) && <UpdateDot />}

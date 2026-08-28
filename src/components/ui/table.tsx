@@ -40,7 +40,7 @@ function Table({
           className,
         )}
       >
-        <table data-slot="table" className="w-full caption-bottom text-sm" {...props}>
+        <table data-slot="table" className="w-full caption-bottom text-14" {...props}>
           {children}
         </table>
       </div>
@@ -183,7 +183,7 @@ function TableCell({
     <td
       data-slot="table-cell"
       className={cn(
-        'px-3 align-middle text-sm whitespace-nowrap',
+        'px-3 align-middle text-14 whitespace-nowrap',
         numeric && 'text-right tabular-nums',
         sticky && 'bg-background sticky left-0 z-sticky group-hover:bg-muted/50 group-data-[state=selected]:bg-accent',
         className,

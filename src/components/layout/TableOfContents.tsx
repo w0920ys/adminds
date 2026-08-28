@@ -132,7 +132,7 @@ export function TableOfContents() {
       aria-label="이 문서의 목차"
       className="sticky top-8 hidden h-fit w-56 shrink-0 self-start xl:block"
     >
-      <p className="text-muted-foreground mb-3 text-sm font-semibold">Contents</p>
+      <p className="text-muted-foreground mb-3 text-16 font-semibold">Contents</p>
       <ul className="flex flex-col gap-1">
         {headings.map((heading) => (
           <li key={heading.id}>
@@ -146,7 +146,7 @@ export function TableOfContents() {
                 history.replaceState(history.state, '', `#${heading.id}`)
               }}
               className={cn(
-                'block border-l py-1.5 text-sm',
+                'block border-l py-1.5 text-16',
                 heading.level === 3 ? 'pl-6' : 'pl-3',
                 active === heading.id
                   ? 'border-foreground text-foreground font-medium'

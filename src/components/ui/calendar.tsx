@@ -22,8 +22,8 @@ export type CalendarSize = 'sm' | 'default' | 'lg'
  */
 const CELL_SIZE: Record<CalendarSize, string> = {
   sm: 'size-7 text-12',
-  default: 'size-8 text-sm',
-  lg: 'size-9 text-sm',
+  default: 'size-8 text-14',
+  lg: 'size-9 text-14',
 }
 
 /*
@@ -225,7 +225,7 @@ function Calendar(props: CalendarProps) {
         >
           <ChevronLeft className="size-4" aria-hidden />
         </button>
-        <p className="text-sm font-medium" aria-live="polite">
+        <p className="text-16 font-medium" aria-live="polite">
           {view.year}년 {view.month + 1}월
         </p>
         <button

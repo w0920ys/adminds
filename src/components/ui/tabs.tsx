@@ -62,7 +62,7 @@ function TabsTrigger({
          * 손댈 때마다 탭 높이가 따라 움직인다 — 실제로 줄 간격을 24px로
          * 올리자 36px가 됐다. 탭은 컨트롤이므로 다른 컨트롤과 같은 축에 둔다.
          */
-        'group text-muted-foreground relative inline-flex h-control-sm items-center justify-center gap-1.5 rounded-sm text-sm font-medium whitespace-nowrap outline-none transition',
+        'group text-muted-foreground relative inline-flex h-control-sm items-center justify-center gap-1.5 rounded-sm text-16 font-medium whitespace-nowrap outline-none transition',
         'hover:text-foreground',
         'data-[state=active]:text-foreground',
         'focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-2',
@@ -95,7 +95,7 @@ function TabsContent({ className, ...props }: React.ComponentProps<typeof TabsPr
     <TabsPrimitive.Content
       data-slot="tabs-content"
       className={cn(
-        'pt-3 text-sm outline-none',
+        'pt-3 text-16 outline-none',
         'focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-2 focus-visible:rounded-sm',
         className,
       )}

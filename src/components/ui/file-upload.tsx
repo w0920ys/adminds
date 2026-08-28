@@ -310,7 +310,7 @@ function FileUploadItem({
     >
       <div className="flex items-center gap-2">
         <div className="min-w-0 flex-1">
-          <p className="truncate text-sm font-medium">{name}</p>
+          <p className="truncate text-16 font-medium">{name}</p>
           {size != null && <p className="text-muted-foreground text-12">{formatFileSize(size)}</p>}
         </div>
         {onRemove && (

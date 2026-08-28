@@ -37,7 +37,7 @@ export function Gnb({ onMenuClick }: { onMenuClick: () => void }) {
           <span className="bg-primary text-primary-foreground grid size-6 place-items-center rounded-md">
             <Command size={14} strokeWidth={2.4} />
           </span>
-          <span className="text-sm font-bold tracking-tight">서비스 대시보드</span>
+          <span className="text-16 font-bold tracking-tight">서비스 대시보드</span>
           <span className="text-muted-foreground text-11 font-medium">{currentRelease.version}</span>
         </Link>
 
@@ -48,7 +48,7 @@ export function Gnb({ onMenuClick }: { onMenuClick: () => void }) {
               to={section.to}
               aria-current={section.id === active.id ? 'page' : undefined}
               className={cn(
-                'h-control flex items-center rounded-md px-3 text-sm',
+                'h-control flex items-center rounded-md px-3 text-16',
                 section.id === active.id
                   ? 'bg-accent text-accent-foreground font-semibold'
                   : 'text-muted-foreground hover:bg-accent/60',
