@@ -993,6 +993,8 @@ Dropdown Menu의 Item 규칙을 옮기고, CheckboxItem 하나를 새로
 
 ## Task 4: Resizable
 
+**⚠️ 이 Task는 Task 1이 실제로 받아 온 `react-resizable-panels` 버전에 맞춰 계획 작성 중 다시 검증됐다.** 애초에 흔히 알려진 구버전 API(`PanelGroup`/`Panel`/`PanelResizeHandle`, `direction` prop, 숫자=퍼센트)를 가정하고 썼으나, Task 1이 실제로 설치한 `react-resizable-panels@4.12.3`은 그 API가 아니다 — `node_modules/react-resizable-panels/dist/react-resizable-panels.d.ts`를 직접 읽어 확인한 실제 export는 `Group`·`Panel`·`Separator`이고, 방향 prop 이름은 `orientation`이며, `defaultSize`·`minSize`·`maxSize`는 **숫자를 픽셀로, 단위 없는 문자열을 퍼센트로** 해석한다(`defaultSize={50}`은 50px이지, 50%가 아니다). 아래 코드는 이 실제 API로 다시 썼다.
+
 **Files:**
 - Create: `src/components/ui/resizable.tsx`
 - Create: `src/routes/components/ResizablePage.tsx`
@@ -1005,50 +1007,67 @@ Dropdown Menu의 Item 규칙을 옮기고, CheckboxItem 하나를 새로
 - Consumes: Task 1의 `react-resizable-panels`
 - Produces: `ResizablePanelGroup`·`ResizablePanel`·`ResizableHandle`(모두 `src/components/ui/resizable.tsx`에서 export)
 
-- [ ] **Step 1: `src/components/ui/resizable.tsx`를 만든다**
+- [ ] **Step 1: `node_modules/react-resizable-panels/dist/react-resizable-panels.d.ts`를 읽어 실제 API를 확인한다**
+
+Step 2로 넘어가기 전에 이 파일을 직접 읽어라. `Group`(`orientation` prop, 기본 `"horizontal"`)·`Panel`(`defaultSize`·`minSize`·`maxSize` — 숫자=px, 단위 없는 문자열=%)·`Separator`(`data-separator` 속성을 스스로 심는다) 세 export를 확인한다. 아래 Step 2의 코드는 이미 이 API로 맞춰 썼지만, 설치된 버전이 다시 바뀌었을 수 있으니(이 계획 작성 시점 이후 `npm install`을 다시 돌렸다면) 직접 대조하고, 어긋나면 실제 `.d.ts`를 따른다 — 이 문서의 코드가 아니라 설치된 패키지가 진실이다.
+
+- [ ] **Step 2: `src/components/ui/resizable.tsx`를 만든다**
 
 ```tsx
 import * as React from 'react'
 import { GripVertical } from 'lucide-react'
-import * as ResizablePrimitive from 'react-resizable-panels'
+import { Group, Panel, Separator } from 'react-resizable-panels'
 import { cn } from '@/lib/utils'
+
+/*
+ * react-resizable-panels 4.x는 방향을 가리키는 data 속성을 DOM에 스스로
+ * 심어 주지 않는다(Group의 orientation prop으로만 있다). Handle의 CSS가
+ * 방향에 따라 갈리므로(가로 분할=세로선, 세로 분할=가로선), Group이 받은
+ * orientation을 Context로 내려 Handle이 다시 읽는다 — 호출부가 Group과
+ * Handle 양쪽에 orientation을 따로 넘기다 값이 어긋나는 실수를 막는다.
+ */
+const OrientationContext = React.createContext<'horizontal' | 'vertical'>('horizontal')
 
 function ResizablePanelGroup({
   className,
+  orientation = 'horizontal',
   ...props
-}: React.ComponentProps<typeof ResizablePrimitive.PanelGroup>) {
+}: React.ComponentProps<typeof Group>) {
   return (
-    <ResizablePrimitive.PanelGroup
-      data-slot="resizable-panel-group"
-      className={cn('flex h-full w-full data-[panel-group-direction=vertical]:flex-col', className)}
-      {...props}
-    />
+    <OrientationContext.Provider value={orientation}>
+      <Group
+        data-slot="resizable-panel-group"
+        orientation={orientation}
+        className={cn('flex h-full w-full', orientation === 'vertical' && 'flex-col', className)}
+        {...props}
+      />
+    </OrientationContext.Provider>
   )
 }
 
-const ResizablePanel = ResizablePrimitive.Panel
+const ResizablePanel = Panel
 
 /*
- * 핸들은 방향에 따라 90도 돈다 — 가로 분할이면 세로선(w-px), 세로
- * 분할이면 가로선(h-px)이다. Radix가 아니라 react-resizable-panels가
- * data-panel-group-direction을 핸들에 심어 주므로 그 값으로 CSS만
- * 바꾼다. withHandle이 켜지면 가운데 그립(점 여섯 개 아이콘)이 뜬다 —
- * 드래그할 수 있다는 것을 시각적으로 알려준다.
+ * withHandle이 켜지면 가운데 그립(점 여섯 개 아이콘)이 뜬다 — 드래그할
+ * 수 있다는 것을 시각적으로 알려준다. orientation은 부모 Group이
+ * Context로 내린 값을 읽는다(prop으로 따로 안 받는다).
  */
 function ResizableHandle({
   withHandle,
   className,
   ...props
-}: React.ComponentProps<typeof ResizablePrimitive.PanelResizeHandle> & { withHandle?: boolean }) {
+}: React.ComponentProps<typeof Separator> & { withHandle?: boolean }) {
+  const orientation = React.useContext(OrientationContext)
   return (
-    <ResizablePrimitive.PanelResizeHandle
+    <Separator
       data-slot="resizable-handle"
       className={cn(
-        'bg-border relative flex w-px items-center justify-center',
+        'bg-border relative flex items-center justify-center',
+        orientation === 'vertical' ? 'h-px w-full' : 'w-px',
         'after:absolute after:inset-y-0 after:left-1/2 after:w-1 after:-translate-x-1/2',
+        orientation === 'vertical' &&
+          'after:inset-x-0 after:left-0 after:h-1 after:w-full after:translate-x-0 after:-translate-y-1/2',
         'focus-visible:ring-ring/50 focus-visible:ring-2 focus-visible:outline-none',
-        'data-[panel-group-direction=vertical]:h-px data-[panel-group-direction=vertical]:w-full',
-        'data-[panel-group-direction=vertical]:after:left-0 data-[panel-group-direction=vertical]:after:h-1 data-[panel-group-direction=vertical]:after:w-full data-[panel-group-direction=vertical]:after:-translate-x-0 data-[panel-group-direction=vertical]:after:-translate-y-1/2',
         className,
       )}
       {...props}
@@ -1058,14 +1077,14 @@ function ResizableHandle({
           <GripVertical className="size-2.5" />
         </div>
       )}
-    </ResizablePrimitive.PanelResizeHandle>
+    </Separator>
   )
 }
 
 export { ResizablePanelGroup, ResizablePanel, ResizableHandle }
 ```
 
-- [ ] **Step 2: `src/data/registry.ts`에 항목을 더한다**
+- [ ] **Step 3: `src/data/registry.ts`에 항목을 더한다**
 
 `id: 'description-list'` 항목이 끝나는 자리와 `id: 'scroll-area'` 항목이 시작하는 자리 **사이**에 끼워 넣는다(Data Display 카테고리 블록 안, 알파벳 순서로 `description-list` 다음 `resizable` 다음 `scroll-area`다):
 
@@ -1084,13 +1103,13 @@ export { ResizablePanelGroup, ResizablePanel, ResizableHandle }
     {
       part: 'handle',
       label: 'Handle',
-      note: '패널 사이의 경계선. 가운데 그립 아이콘(선택)으로 드래그 가능함을 알린다. 세로 분할(direction=vertical)에서는 가로선으로, 가로 분할에서는 세로선으로 90도 돈다. 포커스되면 ring이 뜬다 — 키보드(방향키)로도 크기를 조절할 수 있다.',
+      note: '패널 사이의 경계선. 가운데 그립 아이콘(선택)으로 드래그 가능함을 알린다. 세로 분할(orientation=vertical)에서는 가로선으로, 가로 분할에서는 세로선으로 90도 돈다. 포커스되면 ring이 뜬다 — 키보드(방향키)로도 크기를 조절할 수 있다.',
     },
   ],
   properties: [
     {
-      name: 'direction',
-      title: 'Direction',
+      name: 'orientation',
+      title: 'Orientation',
       description: '패널이 가로로 나뉘는지 세로로 나뉘는지 정한다.',
       display: 'row',
       options: [
@@ -1118,7 +1137,7 @@ export { ResizablePanelGroup, ResizablePanel, ResizableHandle }
 },
 ```
 
-- [ ] **Step 3: `registry.json`에 항목을 더한다**
+- [ ] **Step 4: `registry.json`에 항목을 더한다**
 
 `scroll-area` 항목(`"name": "scroll-area"`) 앞에 끼워 넣는다:
 
@@ -1143,7 +1162,7 @@ export { ResizablePanelGroup, ResizablePanel, ResizableHandle }
 },
 ```
 
-- [ ] **Step 4: `src/routes/routes.tsx`에 라우트를 더한다**
+- [ ] **Step 5: `src/routes/routes.tsx`에 라우트를 더한다**
 
 import 목록에 `import { ResizablePage } from '@/routes/components/ResizablePage'`를 더한다. `children` 배열 맨 끝(Task 3이 추가한 `menubar` 다음)에 더한다:
 
@@ -1151,7 +1170,7 @@ import 목록에 `import { ResizablePage } from '@/routes/components/ResizablePa
 { path: 'resizable', element: <ResizablePage /> },
 ```
 
-- [ ] **Step 5: `src/components/layout/nav-config.ts`에 링크를 더한다**
+- [ ] **Step 6: `src/components/layout/nav-config.ts`에 링크를 더한다**
 
 `Data Display` 묶음에서 `Description List`와 `Scroll Area` 사이(알파벳 순서)에 끼워 넣는다:
 
@@ -1159,7 +1178,7 @@ import 목록에 `import { ResizablePage } from '@/routes/components/ResizablePa
 { to: '/components/resizable', label: 'Resizable', updatedAt: '<오늘 실제 날짜>' },
 ```
 
-- [ ] **Step 6: `src/routes/components/ResizablePage.tsx`를 만든다**
+- [ ] **Step 7: `src/routes/components/ResizablePage.tsx`를 만든다**
 
 ```tsx
 import type { ReactNode } from 'react'
@@ -1171,15 +1190,15 @@ import { getComponent } from '@/data/registry'
 import { Placeholder } from '@/routes/Placeholder'
 
 function renderResizable(options: RenderOptions) {
-  const direction = options.direction === 'vertical' ? 'vertical' : 'horizontal'
+  const orientation = options.orientation === 'vertical' ? 'vertical' : 'horizontal'
   return (
-    <Bounds className={direction === 'vertical' ? 'h-56 w-72' : 'h-40 w-72'}>
-      <ResizablePanelGroup direction={direction} className="rounded-md border">
-        <ResizablePanel defaultSize={50} minSize={20}>
+    <Bounds className={orientation === 'vertical' ? 'h-56 w-72' : 'h-40 w-72'}>
+      <ResizablePanelGroup orientation={orientation} className="rounded-md border">
+        <ResizablePanel defaultSize="50" minSize="20">
           <div className="text-muted-foreground flex h-full items-center justify-center text-16">A</div>
         </ResizablePanel>
         <ResizableHandle withHandle />
-        <ResizablePanel defaultSize={50} minSize={20}>
+        <ResizablePanel defaultSize="50" minSize="20">
           <div className="text-muted-foreground flex h-full items-center justify-center text-16">B</div>
         </ResizablePanel>
       </ResizablePanelGroup>
@@ -1192,24 +1211,24 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
     case 'min-size':
       return kind === 'do' ? (
         <Bounds className="h-32 w-64">
-          <ResizablePanelGroup direction="horizontal" className="rounded-md border">
-            <ResizablePanel defaultSize={50} minSize={25}>
+          <ResizablePanelGroup orientation="horizontal" className="rounded-md border">
+            <ResizablePanel defaultSize="50" minSize="25">
               <div className="text-muted-foreground flex h-full items-center justify-center text-14">최소 25%</div>
             </ResizablePanel>
             <ResizableHandle withHandle />
-            <ResizablePanel defaultSize={50} minSize={25}>
+            <ResizablePanel defaultSize="50" minSize="25">
               <div className="text-muted-foreground flex h-full items-center justify-center text-14">최소 25%</div>
             </ResizablePanel>
           </ResizablePanelGroup>
         </Bounds>
       ) : (
         <Bounds className="h-32 w-64">
-          <ResizablePanelGroup direction="horizontal" className="rounded-md border">
-            <ResizablePanel defaultSize={50}>
+          <ResizablePanelGroup orientation="horizontal" className="rounded-md border">
+            <ResizablePanel defaultSize="50">
               <div className="text-muted-foreground flex h-full items-center justify-center text-14">최소 크기 없음</div>
             </ResizablePanel>
             <ResizableHandle withHandle />
-            <ResizablePanel defaultSize={50}>
+            <ResizablePanel defaultSize="50">
               <div className="text-muted-foreground flex h-full items-center justify-center text-14">최소 크기 없음</div>
             </ResizablePanel>
           </ResizablePanelGroup>
@@ -1225,8 +1244,8 @@ function renderExample(exampleId: string): ReactNode {
     case 'master-detail':
       return (
         <Bounds className="h-56 w-full max-w-lg">
-          <ResizablePanelGroup direction="horizontal" className="rounded-md border">
-            <ResizablePanel defaultSize={35} minSize={20}>
+          <ResizablePanelGroup orientation="horizontal" className="rounded-md border">
+            <ResizablePanel defaultSize="35" minSize="20">
               <div className="flex h-full flex-col gap-1 p-3">
                 <span className="text-16">홍길동</span>
                 <span className="text-16">김철수</span>
@@ -1234,7 +1253,7 @@ function renderExample(exampleId: string): ReactNode {
               </div>
             </ResizablePanel>
             <ResizableHandle withHandle />
-            <ResizablePanel defaultSize={65} minSize={30}>
+            <ResizablePanel defaultSize="65" minSize="30">
               <div className="flex h-full flex-col gap-2 p-4">
                 <strong className="text-18">홍길동</strong>
                 <p className="text-muted-foreground text-16">가입일 2026-01-15</p>
@@ -1247,12 +1266,12 @@ function renderExample(exampleId: string): ReactNode {
     case 'vertical-split':
       return (
         <Bounds className="h-64 w-full max-w-lg">
-          <ResizablePanelGroup direction="vertical" className="rounded-md border">
-            <ResizablePanel defaultSize={60} minSize={30}>
+          <ResizablePanelGroup orientation="vertical" className="rounded-md border">
+            <ResizablePanel defaultSize="60" minSize="30">
               <div className="text-muted-foreground flex h-full items-center justify-center text-16">미리보기</div>
             </ResizablePanel>
             <ResizableHandle withHandle />
-            <ResizablePanel defaultSize={40} minSize={20}>
+            <ResizablePanel defaultSize="40" minSize="20">
               <div className="text-muted-foreground flex h-full flex-col gap-1 overflow-y-auto p-3 text-12">
                 <span>12:00:01 요청 시작</span>
                 <span>12:00:02 응답 완료</span>
@@ -1270,12 +1289,12 @@ function renderExample(exampleId: string): ReactNode {
 function AnatomyPreview() {
   return (
     <Bounds className="h-40 w-72">
-      <ResizablePanelGroup direction="horizontal" className="rounded-md border">
-        <ResizablePanel defaultSize={50} minSize={20}>
+      <ResizablePanelGroup orientation="horizontal" className="rounded-md border">
+        <ResizablePanel defaultSize="50" minSize="20">
           <div className="text-muted-foreground flex h-full items-center justify-center text-16">A</div>
         </ResizablePanel>
         <ResizableHandle withHandle data-anatomy="handle" />
-        <ResizablePanel defaultSize={50} minSize={20}>
+        <ResizablePanel defaultSize="50" minSize="20">
           <div className="text-muted-foreground flex h-full items-center justify-center text-16">B</div>
         </ResizablePanel>
       </ResizablePanelGroup>
@@ -1299,26 +1318,27 @@ export function ResizablePage() {
 }
 ```
 
-- [ ] **Step 7: registry를 굽는다**
+- [ ] **Step 8: registry를 굽는다**
 
 Run: `npm run registry`
 
-- [ ] **Step 8: 검사**
+- [ ] **Step 9: 검사**
 
 Run: `npm test && npx tsc -b && npm run build && npx oxlint src`
 
-- [ ] **Step 9: 브라우저로 확인**
+- [ ] **Step 10: 브라우저로 확인**
 
-개발 서버(5206)에서 `/components/resizable`을 연다. Playground/Properties에서 `direction`을 `vertical`로 바꾸면 실제로 위아래 분할로 바뀌는지 확인한다. 핸들을 실제로 드래그해 두 패널의 너비(또는 높이)가 바뀌는지, `minSize`(20%) 아래로는 안 줄어드는지 확인한다. 키보드로 핸들에 포커스를 두고 방향키로 크기가 바뀌는지 확인한다. Usage의 마스터-디테일·세로 분할 두 예시가 각각 보이는지 확인한다.
+개발 서버(5206)에서 `/components/resizable`을 연다. Playground/Properties에서 `orientation`을 `vertical`로 바꾸면 실제로 위아래 분할로 바뀌는지 확인한다. 핸들을 실제로 드래그해 두 패널의 너비(또는 높이)가 바뀌는지, `minSize`(20%) 아래로는 안 줄어드는지 확인한다. 키보드로 핸들에 포커스를 두고 방향키로 크기가 바뀌는지 확인한다(왼쪽/오른쪽은 가로 분할, 위/아래는 세로 분할에서 동작한다 — 라이브러리 소스가 그렇게 갈라 처리한다). Usage의 마스터-디테일·세로 분할 두 예시가 각각 보이는지 확인한다.
 
-- [ ] **Step 10: 커밋**
+- [ ] **Step 11: 커밋**
 
 ```bash
 git add src/components/ui/resizable.tsx src/routes/components/ResizablePage.tsx src/data/registry.ts registry.json public/r/resizable.json src/routes/routes.tsx src/components/layout/nav-config.ts
 git commit -m "feat(resizable): 크기 조절 가능한 패널을 새로 짓는다
 
-react-resizable-panels를 감싼다. Radix 계열이 아닌 이 회차의
-유일한 컴포넌트다."
+react-resizable-panels 4.x(Group/Panel/Separator)를 감싼다. 흔히
+알려진 구버전 API(PanelGroup/PanelResizeHandle, direction prop)와
+달라 계획 작성 중 실제 설치된 패키지의 타입 선언을 직접 읽고 다시 썼다."
 ```
 
 ---
