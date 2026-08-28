@@ -10,7 +10,7 @@ export function DoDont({ do: dos, dont: donts }: { do: string[]; dont: string[] 
         </p>
         <ul className="flex flex-col gap-2">
           {dos.map((line) => (
-            <li key={line} className="text-sm">
+            <li key={line} className="text-16">
               {line}
             </li>
           ))}
@@ -22,7 +22,7 @@ export function DoDont({ do: dos, dont: donts }: { do: string[]; dont: string[] 
         </p>
         <ul className="flex flex-col gap-2">
           {donts.map((line) => (
-            <li key={line} className="text-sm">
+            <li key={line} className="text-16">
               {line}
             </li>
           ))}

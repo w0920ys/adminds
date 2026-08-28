@@ -39,7 +39,7 @@ function Side({
       {rules.length > 0 && (
         <ul className="flex flex-col gap-3">
           {rules.map((line) => (
-            <li key={line} className="text-sm">
+            <li key={line} className="text-16">
               {line}
             </li>
           ))}
@@ -63,7 +63,7 @@ export function GuidelineBlock({
           <h3 className="text-18 font-semibold">{guideline.title}</h3>
           <HeadingAnchor />
         </div>
-        <p className={cn('text-muted-foreground mt-2 text-sm', docProse)}>{guideline.body}</p>
+        <p className={cn('text-muted-foreground mt-2 text-16', docProse)}>{guideline.body}</p>
       </div>
 
       <div className="grid items-stretch gap-3 md:grid-cols-2 md:gap-4">

@@ -20,7 +20,7 @@ export function Swatch({ row }: { row: TokenRow }) {
         aria-hidden
       />
       <div className="flex flex-col gap-1">
-        <CopyValue value={row.name} className="text-sm font-semibold" />
+        <CopyValue value={row.name} className="text-16 font-semibold" />
         <CopyValue value={row.cssVar} className="text-muted-foreground text-11" />
         {row.value ? (
           <CopyValue value={row.value} className="text-muted-foreground text-11" />

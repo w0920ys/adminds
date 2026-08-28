@@ -22,7 +22,7 @@ function StructureList({ steps }: { steps: PatternStructureStep[] }) {
             {index + 1}
           </span>
           <span className="min-w-0">
-            <strong className="text-sm">
+            <strong className="text-16">
               {step.slot}
               {step.optional && (
                 <span className="text-muted-foreground font-normal"> (Optional)</span>
@@ -106,7 +106,7 @@ export function PatternPage({
       <DocSection title="Example">
         <div className="flex flex-col gap-2">
           <div>
-            <strong className="text-sm">{meta.example.title}</strong>
+            <strong className="text-16">{meta.example.title}</strong>
             <p className="text-muted-foreground mt-1 text-12">{meta.example.note}</p>
           </div>
           <ExampleFrame>{example}</ExampleFrame>

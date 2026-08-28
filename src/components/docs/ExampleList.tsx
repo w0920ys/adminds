@@ -23,9 +23,9 @@ export function ExampleList({
         return (
           <li key={example.id} className="flex min-w-0 flex-col gap-3">
             <div>
-              <strong className="text-sm">{example.title}</strong>
+              <strong className="text-16">{example.title}</strong>
               {/* 예시의 설명은 한 문장짜리 읽는 글이라 캡션(text-12)이 아니라 본문 크기로 둔다 */}
-              <p className="text-muted-foreground mt-2 text-sm">{example.note}</p>
+              <p className="text-muted-foreground mt-2 text-16">{example.note}</p>
             </div>
             {node && <ExampleFrame>{node}</ExampleFrame>}
           </li>

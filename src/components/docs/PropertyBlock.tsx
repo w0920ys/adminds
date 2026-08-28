@@ -50,7 +50,7 @@ export function PropertyBlock({
           <h3 className="text-18 font-semibold">{property.title}</h3>
           <HeadingAnchor />
         </div>
-        <p className={cn('text-muted-foreground mt-2 text-sm', docProse)}>{property.description}</p>
+        <p className={cn('text-muted-foreground mt-2 text-16', docProse)}>{property.description}</p>
       </div>
 
       {property.display === 'matrix' && cross ? (
@@ -73,7 +73,7 @@ export function PropertyBlock({
                 <tr key={option.value}>
                   <th
                     scope="row"
-                    className="bg-surface sticky left-0 border-t px-3 py-3 text-sm font-medium"
+                    className="bg-surface sticky left-0 border-t px-3 py-3 text-14 font-medium"
                   >
                     {option.value}
                     {option.note && (

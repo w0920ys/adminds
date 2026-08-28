@@ -252,7 +252,7 @@ export function Anatomy({ meta, preview }: { meta: ComponentMeta; preview: React
                   {index + 1}
                 </span>
                 <span>
-                  <strong className="text-sm">
+                  <strong className="text-16">
                     {part.label}
                     {part.optional && (
                       <span className="text-muted-foreground font-normal"> (Optional)</span>

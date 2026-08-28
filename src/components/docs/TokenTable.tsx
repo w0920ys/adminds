@@ -4,7 +4,7 @@ import type { TokenRow } from '@/lib/tokens'
 export function TokenTable({ rows }: { rows: TokenRow[] }) {
   return (
     <div className="overflow-x-auto rounded-lg border">
-      <table className="w-full text-left text-sm">
+      <table className="w-full text-left text-14">
         <thead>
           <tr className="text-muted-foreground text-11 tracking-widest">
             <th scope="col" className="px-3 py-2 font-bold">TOKEN</th>
