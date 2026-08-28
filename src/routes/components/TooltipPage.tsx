@@ -129,7 +129,7 @@ function renderExample(exampleId: string): ReactNode {
       return (
         <Tooltip>
           <TooltipTrigger asChild>
-            <span className="block w-32 truncate text-sm">워크스페이스 전체 관리 권한을 가진 최고 관리자</span>
+            <span className="block w-32 truncate text-16">워크스페이스 전체 관리 권한을 가진 최고 관리자</span>
           </TooltipTrigger>
           <TooltipContent>워크스페이스 전체 관리 권한을 가진 최고 관리자</TooltipContent>
         </Tooltip>

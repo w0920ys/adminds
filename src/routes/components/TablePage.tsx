@@ -230,7 +230,7 @@ function renderExample(exampleId: string): ReactNode {
       return (
         <div className="flex flex-col gap-3">
           <div className="bg-surface flex items-center gap-3 rounded-md border px-3 py-2">
-            <span className="text-sm">2건 선택됨</span>
+            <span className="text-16">2건 선택됨</span>
             <Button variant="outline" size="sm">
               선택 삭제
             </Button>

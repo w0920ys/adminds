@@ -89,7 +89,7 @@ function MiniList({ rows }: { rows: string[] }) {
   return (
     <div className="bg-surface w-72 divide-y overflow-hidden rounded-md border">
       {rows.map((row) => (
-        <div key={row} className="flex h-row-compact items-center px-3 text-sm">
+        <div key={row} className="flex h-row-compact items-center px-3 text-14">
           {row}
         </div>
       ))}
@@ -197,7 +197,7 @@ function renderExample(exampleId: string): ReactNode {
         <div className="flex w-72 flex-col gap-3">
           <div className="grid grid-cols-2 gap-2">
             {['프로젝트 A', '프로젝트 B'].map((name) => (
-              <div key={name} className="bg-surface rounded-md border p-3 text-sm">
+              <div key={name} className="bg-surface rounded-md border p-3 text-16">
                 {name}
               </div>
             ))}
@@ -278,7 +278,7 @@ function renderExample(exampleId: string): ReactNode {
             <PaginationContent>
               <PageButton page={1} current={12} />
               <PageButton page={2} current={12} />
-              <li aria-hidden className="text-muted-foreground px-1 text-sm">
+              <li aria-hidden className="text-muted-foreground px-1 text-16">
                 …
               </li>
               <PageButton page={24} current={12} />
@@ -294,7 +294,7 @@ function renderExample(exampleId: string): ReactNode {
     case 'no-results':
       return (
         <div className="flex w-72 flex-col items-center gap-1 rounded-md border border-dashed py-8">
-          <p className="text-muted-foreground text-sm">표시할 항목이 없습니다</p>
+          <p className="text-muted-foreground text-16">표시할 항목이 없습니다</p>
         </div>
       )
 

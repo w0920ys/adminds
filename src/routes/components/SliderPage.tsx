@@ -120,15 +120,15 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
     case 'five-or-fewer-use-radio':
       return kind === 'do' ? (
         <RadioGroup defaultValue="normal" className="gap-1.5">
-          <label className="flex items-center gap-2 text-sm">
+          <label className="flex items-center gap-2 text-16">
             <RadioGroupItem value="low" />
             낮음
           </label>
-          <label className="flex items-center gap-2 text-sm">
+          <label className="flex items-center gap-2 text-16">
             <RadioGroupItem value="normal" />
             보통
           </label>
-          <label className="flex items-center gap-2 text-sm">
+          <label className="flex items-center gap-2 text-16">
             <RadioGroupItem value="high" />
             높음
           </label>

@@ -27,7 +27,7 @@ function LabeledProgress({
 }) {
   return (
     <div className={className ?? 'flex w-64 flex-col gap-1.5'}>
-      <div className="flex items-center justify-between text-sm">
+      <div className="flex items-center justify-between text-16">
         <span>{label}</span>
         {value != null && <span className="text-muted-foreground text-12">{value}%</span>}
       </div>
@@ -59,7 +59,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
         <LabeledProgress label="파일 업로드" value={72} size="sm" />
       ) : (
         <div className="flex w-64 flex-col gap-1.5">
-          <span className="text-sm">파일 업로드</span>
+          <span className="text-16">파일 업로드</span>
           <Progress size="sm" />
         </div>
       )
@@ -69,7 +69,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
         <LabeledProgress label="업로드 중" value={58} size="sm" />
       ) : (
         <div className="flex w-64 flex-col gap-1.5">
-          <span className="text-sm">업로드 중</span>
+          <span className="text-16">업로드 중</span>
           <Progress value={58} size="sm" />
         </div>
       )
@@ -107,7 +107,7 @@ function renderExample(exampleId: string): ReactNode {
     case 'file-upload':
       return (
         <div className="flex w-72 flex-col gap-2 rounded-lg border p-4">
-          <div className="flex items-center justify-between text-sm font-medium">
+          <div className="flex items-center justify-between text-16 font-medium">
             <span>보고서.xlsx</span>
             <span className="text-muted-foreground text-12">72%</span>
           </div>
@@ -119,7 +119,7 @@ function renderExample(exampleId: string): ReactNode {
     case 'bulk-job-progress':
       return (
         <div className="flex w-72 flex-col gap-2 rounded-lg border p-4">
-          <div className="flex items-center justify-between text-sm font-medium">
+          <div className="flex items-center justify-between text-16 font-medium">
             <span>상품 일괄 등록</span>
             <span className="text-muted-foreground text-12">340 / 500건</span>
           </div>
@@ -130,7 +130,7 @@ function renderExample(exampleId: string): ReactNode {
     case 'usage-against-limit':
       return (
         <div className="flex w-72 flex-col gap-2 rounded-lg border p-4">
-          <div className="flex items-center justify-between text-sm font-medium">
+          <div className="flex items-center justify-between text-16 font-medium">
             <span>이번 달 API 호출</span>
             <span className="text-muted-foreground text-12">8,200 / 10,000회</span>
           </div>
@@ -141,7 +141,7 @@ function renderExample(exampleId: string): ReactNode {
     case 'multi-step-progress':
       return (
         <div className="flex w-72 flex-col gap-2 rounded-lg border p-4">
-          <div className="flex items-center justify-between text-sm font-medium">
+          <div className="flex items-center justify-between text-16 font-medium">
             <span>가입 절차</span>
             <span className="text-muted-foreground text-12">3 / 4단계</span>
           </div>
@@ -160,7 +160,7 @@ function renderExample(exampleId: string): ReactNode {
     case 'unknown-value':
       return (
         <div className="flex w-64 flex-col gap-1.5">
-          <span className="text-sm">데이터 불러오는 중</span>
+          <span className="text-16">데이터 불러오는 중</span>
           <Progress size="sm" />
         </div>
       )
@@ -199,7 +199,7 @@ function renderExample(exampleId: string): ReactNode {
 function AnatomyPreview() {
   return (
     <div className="flex w-72 flex-col gap-1.5">
-      <div className="flex items-center justify-between text-sm">
+      <div className="flex items-center justify-between text-16">
         <span data-anatomy="label">파일 업로드</span>
         <span data-anatomy="value" className="text-muted-foreground text-12">
           64%

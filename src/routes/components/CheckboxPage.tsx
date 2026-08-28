@@ -26,7 +26,7 @@ function renderCheckbox(options: RenderOptions) {
       <label className="flex items-start gap-2">
         <span className="pt-0.5">{box}</span>
         <span className="flex flex-col">
-          <span className="text-sm">자동 백업</span>
+          <span className="text-16">자동 백업</span>
           <span className="text-muted-foreground text-12">매일 오전 3시에 백업을 실행합니다</span>
         </span>
       </label>
@@ -35,7 +35,7 @@ function renderCheckbox(options: RenderOptions) {
 
   if (layout === 'with-label') {
     return (
-      <label className="flex items-center gap-2 text-sm">
+      <label className="flex items-center gap-2 text-16">
         {box}
         마케팅 이메일 수신 동의
       </label>
@@ -57,12 +57,12 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
   switch (guidelineId) {
     case 'label-click-target':
       return kind === 'do' ? (
-        <label className="flex items-center gap-2 text-sm">
+        <label className="flex items-center gap-2 text-16">
           <Checkbox defaultChecked />
           마케팅 이메일 수신 동의
         </label>
       ) : (
-        <div className="flex items-center gap-2 text-sm">
+        <div className="flex items-center gap-2 text-16">
           <Checkbox defaultChecked />
           <span>마케팅 이메일 수신 동의</span>
         </div>
@@ -71,7 +71,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
     case 'indeterminate-meaning':
       return kind === 'do' ? (
         <div className="flex flex-col gap-1.5">
-          <label className="flex items-center gap-2 text-sm">
+          <label className="flex items-center gap-2 text-16">
             <Checkbox checked="indeterminate" />
             전체 선택
           </label>
@@ -79,7 +79,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
         </div>
       ) : (
         <div className="flex flex-col gap-1.5">
-          <label className="flex items-center gap-2 text-sm">
+          <label className="flex items-center gap-2 text-16">
             <Checkbox checked="indeterminate" />
             국적 선택 안 함
           </label>
@@ -92,24 +92,24 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
     case 'checkbox-vs-radio':
       return kind === 'do' ? (
         <fieldset className="flex flex-col gap-1.5">
-          <legend className="text-sm font-medium">관심 분야</legend>
-          <label className="flex items-center gap-2 text-sm">
+          <legend className="text-16 font-medium">관심 분야</legend>
+          <label className="flex items-center gap-2 text-16">
             <Checkbox defaultChecked />
             결제
           </label>
-          <label className="flex items-center gap-2 text-sm">
+          <label className="flex items-center gap-2 text-16">
             <Checkbox defaultChecked />
             정산
           </label>
         </fieldset>
       ) : (
         <fieldset className="flex flex-col gap-1.5">
-          <legend className="text-sm font-medium">결제 수단</legend>
-          <label className="flex items-center gap-2 text-sm">
+          <legend className="text-16 font-medium">결제 수단</legend>
+          <label className="flex items-center gap-2 text-16">
             <Checkbox defaultChecked />
             카드
           </label>
-          <label className="flex items-center gap-2 text-sm">
+          <label className="flex items-center gap-2 text-16">
             <Checkbox defaultChecked />
             계좌 이체
           </label>
@@ -119,7 +119,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
     case 'checkbox-vs-switch':
       return kind === 'do' ? (
         <form className="flex flex-col items-start gap-3">
-          <label className="flex items-center gap-2 text-sm">
+          <label className="flex items-center gap-2 text-16">
             <Checkbox defaultChecked />
             마케팅 이메일 수신 동의
           </label>
@@ -128,7 +128,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
           </Button>
         </form>
       ) : (
-        <label className="flex items-center gap-2 text-sm">
+        <label className="flex items-center gap-2 text-16">
           <Checkbox defaultChecked />
           지금 바로 공개
         </label>
@@ -136,12 +136,12 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
 
     case 'single-size':
       return kind === 'do' ? (
-        <label className="flex items-center gap-2 text-sm">
+        <label className="flex items-center gap-2 text-16">
           <Checkbox defaultChecked />
           알림 받기
         </label>
       ) : (
-        <label className="flex items-center gap-2 text-sm">
+        <label className="flex items-center gap-2 text-16">
           <Checkbox defaultChecked className="scale-125" />
           알림 받기
         </label>
@@ -164,12 +164,12 @@ function renderExample(exampleId: string): ReactNode {
         <div className="bg-surface divide-y overflow-hidden rounded-md border">
           <div className="flex h-row-compact items-center gap-3 px-3">
             <Checkbox aria-label="'홍길동' 선택" defaultChecked />
-            <span className="flex-1 truncate text-sm">홍길동</span>
+            <span className="flex-1 truncate text-14">홍길동</span>
             <span className="text-muted-foreground text-12">관리자</span>
           </div>
           <div className="flex h-row-compact items-center gap-3 px-3">
             <Checkbox aria-label="'김서연' 선택" />
-            <span className="flex-1 truncate text-sm">김서연</span>
+            <span className="flex-1 truncate text-14">김서연</span>
             <span className="text-muted-foreground text-12">편집자</span>
           </div>
         </div>
@@ -184,11 +184,11 @@ function renderExample(exampleId: string): ReactNode {
           </div>
           <div className="flex h-row-compact items-center gap-3 px-3">
             <Checkbox aria-label="'홍길동' 선택" defaultChecked />
-            <span className="flex-1 truncate text-sm">홍길동</span>
+            <span className="flex-1 truncate text-14">홍길동</span>
           </div>
           <div className="flex h-row-compact items-center gap-3 px-3">
             <Checkbox aria-label="'김서연' 선택" />
-            <span className="flex-1 truncate text-sm">김서연</span>
+            <span className="flex-1 truncate text-14">김서연</span>
           </div>
         </div>
       )
@@ -196,7 +196,7 @@ function renderExample(exampleId: string): ReactNode {
     case 'terms-agreement':
       return (
         <div className="flex flex-col gap-2">
-          <label className="flex items-center gap-2 text-sm">
+          <label className="flex items-center gap-2 text-16">
             <Checkbox />
             이용약관과 개인정보 처리방침에 동의합니다
           </label>
@@ -210,7 +210,7 @@ function renderExample(exampleId: string): ReactNode {
             <Checkbox defaultChecked />
           </span>
           <span className="flex flex-col">
-            <span className="text-sm">2단계 인증</span>
+            <span className="text-16">2단계 인증</span>
             <span className="text-muted-foreground text-12">
               로그인할 때마다 인증 코드를 요구합니다
             </span>
@@ -221,7 +221,7 @@ function renderExample(exampleId: string): ReactNode {
     case 'multiline-label':
       return (
         <Bounds className="w-56">
-          <label className="flex items-start gap-2 text-sm">
+          <label className="flex items-start gap-2 text-16">
             <span className="pt-0.5">
               <Checkbox />
             </span>
@@ -232,7 +232,7 @@ function renderExample(exampleId: string): ReactNode {
 
     case 'disabled-checked':
       return (
-        <label className="flex items-center gap-2 text-sm">
+        <label className="flex items-center gap-2 text-16">
           <Checkbox checked disabled />
           워크스페이스 소유자 권한
         </label>
@@ -241,18 +241,18 @@ function renderExample(exampleId: string): ReactNode {
     case 'nested-selection':
       return (
         <div className="flex flex-col gap-2">
-          <label className="flex items-center gap-2 text-sm font-medium">
+          <label className="flex items-center gap-2 text-16 font-medium">
             <Checkbox checked="indeterminate" />
             알림 전체
           </label>
           <IndentedRow>
-            <label className="flex items-center gap-2 text-sm">
+            <label className="flex items-center gap-2 text-16">
               <Checkbox defaultChecked />
               이메일 알림
             </label>
           </IndentedRow>
           <IndentedRow>
-            <label className="flex items-center gap-2 text-sm">
+            <label className="flex items-center gap-2 text-16">
               <Checkbox />
               SMS 알림
             </label>
@@ -263,7 +263,7 @@ function renderExample(exampleId: string): ReactNode {
     case 'narrow-screen':
       return (
         <Bounds className="w-40">
-          <label className="flex items-start gap-2 text-sm">
+          <label className="flex items-start gap-2 text-16">
             <span className="pt-0.5">
               <Checkbox />
             </span>
@@ -291,7 +291,7 @@ export function CheckboxPage() {
             <Checkbox data-anatomy="box" defaultChecked />
           </span>
           <span className="flex flex-col">
-            <span data-anatomy="label" className="text-sm">
+            <span data-anatomy="label" className="text-16">
               자동 백업
             </span>
             <span data-anatomy="description" className="text-muted-foreground text-12">

@@ -51,7 +51,7 @@ function renderSheet() {
         </SheetHeader>
         <div className="flex flex-col gap-3">
           {NOTIFICATION_OPTIONS.map((option) => (
-            <label key={option.id} className="flex items-center gap-2 text-sm">
+            <label key={option.id} className="flex items-center gap-2 text-16">
               <Checkbox defaultChecked={option.id !== 'notice'} />
               {option.label}
             </label>
@@ -81,7 +81,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
       return kind === 'do' ? (
         <div className="flex w-full flex-col gap-2">
           <h4 className="text-muted-foreground text-11 font-bold tracking-widest">사용자 목록</h4>
-          <ul className="rounded-md border text-sm">
+          <ul className="rounded-md border text-16">
             {['홍길동', '김서연'].map((name) => (
               <li key={name} className="flex items-center justify-between border-b px-3 py-2 last:border-b-0">
                 {name}
@@ -290,7 +290,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
             <SheetHeader>
               <SheetTitle>이용 약관</SheetTitle>
             </SheetHeader>
-            <div className="max-h-48 overflow-y-auto text-sm">
+            <div className="max-h-48 overflow-y-auto text-16">
               {Array.from({ length: 8 }).map((_, i) => (
                 <p key={i} className="text-muted-foreground py-1">
                   제{i + 1}조. 본문만 스크롤되고 머리와 발은 고정됩니다.
@@ -312,9 +312,9 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
             </Button>
           </SheetTrigger>
           <SheetContent size="sm">
-            <p className="text-sm font-semibold">이용 약관</p>
+            <p className="text-16 font-semibold">이용 약관</p>
             {Array.from({ length: 8 }).map((_, i) => (
-              <p key={i} className="text-muted-foreground text-sm">
+              <p key={i} className="text-muted-foreground text-16">
                 제{i + 1}조. Header·Footer 없이 본문과 한 덩어리로 두면 전체가 함께 밀려난다.
               </p>
             ))}
@@ -347,7 +347,7 @@ function renderExample(exampleId: string): ReactNode {
             </SheetHeader>
             <div className="flex flex-col gap-2">
               {['활성', '정지', '탈퇴'].map((label, i) => (
-                <label key={label} className="flex items-center gap-2 text-sm">
+                <label key={label} className="flex items-center gap-2 text-16">
                   <Checkbox defaultChecked={i === 0} />
                   {label}
                 </label>
@@ -378,19 +378,19 @@ function renderExample(exampleId: string): ReactNode {
             </SheetHeader>
             <div className="flex flex-col gap-3">
               <div className="flex flex-col gap-1.5">
-                <label htmlFor="sheet-detail-name" className="text-sm font-medium">
+                <label htmlFor="sheet-detail-name" className="text-16 font-medium">
                   이름
                 </label>
                 <Input id="sheet-detail-name" defaultValue="홍길동" />
               </div>
               <div className="flex flex-col gap-1.5">
-                <label htmlFor="sheet-detail-email" className="text-sm font-medium">
+                <label htmlFor="sheet-detail-email" className="text-16 font-medium">
                   이메일
                 </label>
                 <Input id="sheet-detail-email" defaultValue="hong@example.com" />
               </div>
               <div className="flex flex-col gap-1.5">
-                <label htmlFor="sheet-detail-role" className="text-sm font-medium">
+                <label htmlFor="sheet-detail-role" className="text-16 font-medium">
                   역할
                 </label>
                 <Input id="sheet-detail-role" defaultValue="운영자" />
@@ -444,7 +444,7 @@ function renderExample(exampleId: string): ReactNode {
             <SheetHeader>
               <SheetTitle>최근 활동</SheetTitle>
             </SheetHeader>
-            <ul className="flex flex-col gap-2 overflow-y-auto text-sm">
+            <ul className="flex flex-col gap-2 overflow-y-auto text-16">
               {['상태가 활성으로 바뀜', '권한이 변경됨', '메모가 추가됨'].map((entry, i) => (
                 <li key={entry} className="border-b pb-2 last:border-0">
                   <p>{entry}</p>
@@ -472,7 +472,7 @@ function renderExample(exampleId: string): ReactNode {
               role="region"
               aria-label="이용 약관 본문"
               tabIndex={0}
-              className="max-h-48 overflow-y-auto rounded-md text-sm outline-none focus-visible:ring-ring/50 focus-visible:ring-2"
+              className="max-h-48 overflow-y-auto rounded-md text-16 outline-none focus-visible:ring-ring/50 focus-visible:ring-2"
             >
               {Array.from({ length: 12 }).map((_, i) => (
                 <p key={i} className="text-muted-foreground py-1">
@@ -603,7 +603,7 @@ function AnatomyPreview() {
         </SheetHeader>
         <div className="flex flex-col gap-3">
           {NOTIFICATION_OPTIONS.map((option) => (
-            <label key={option.id} className="flex items-center gap-2 text-sm">
+            <label key={option.id} className="flex items-center gap-2 text-16">
               <Checkbox defaultChecked={option.id !== 'notice'} />
               {option.label}
             </label>

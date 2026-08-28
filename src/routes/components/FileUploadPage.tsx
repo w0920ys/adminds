@@ -98,7 +98,7 @@ function DemoFileUpload({
       {variant === 'dropzone' ? (
         <>
           <UploadCloud className="text-muted-foreground size-6" aria-hidden />
-          <p className="text-sm font-medium">{instruction}</p>
+          <p className="text-16 font-medium">{instruction}</p>
           <p className="text-muted-foreground text-12">{constraint}</p>
         </>
       ) : (
@@ -196,7 +196,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
         <FileUpload multiple={false} onFilesSelected={() => {}} className="w-64">
           <FileUploadDropzone variant="dropzone">
             <UploadCloud className="text-muted-foreground size-6" aria-hidden />
-            <p className="text-sm font-medium">파일을 끌어다 놓거나 눌러서 올리세요</p>
+            <p className="text-16 font-medium">파일을 끌어다 놓거나 눌러서 올리세요</p>
           </FileUploadDropzone>
         </FileUpload>
       )
@@ -366,7 +366,7 @@ function AnatomyPreview() {
       <FileUpload multiple onFilesSelected={() => {}}>
         <FileUploadDropzone data-anatomy="dropzone">
           <UploadCloud data-anatomy="icon" className="text-muted-foreground size-6" aria-hidden />
-          <p data-anatomy="instruction" className="text-sm font-medium">
+          <p data-anatomy="instruction" className="text-16 font-medium">
             파일을 끌어다 놓거나 눌러서 올리세요
           </p>
           <p data-anatomy="constraint" className="text-muted-foreground text-12">

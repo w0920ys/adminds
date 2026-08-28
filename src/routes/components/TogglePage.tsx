@@ -97,7 +97,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
           </ToggleGroup>
         </div>
       ) : (
-        <div className="flex items-center justify-between gap-3 text-sm">
+        <div className="flex items-center justify-between gap-3 text-16">
           이메일 알림 받기
           <Toggle aria-label="이메일 알림 받기" defaultPressed />
         </div>

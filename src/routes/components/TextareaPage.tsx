@@ -47,7 +47,7 @@ function Field({
 }) {
   return (
     <div className={cn('flex flex-col gap-1.5', className)}>
-      <label htmlFor={htmlFor} className="text-sm font-medium">
+      <label htmlFor={htmlFor} className="text-16 font-medium">
         {label}
       </label>
       {children}
@@ -88,7 +88,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
     case 'character-limit':
       return (
         <div className="flex w-64 flex-col gap-1.5">
-          <label htmlFor={`pg-charlimit-${kind}`} className="text-sm font-medium">
+          <label htmlFor={`pg-charlimit-${kind}`} className="text-16 font-medium">
             소개
           </label>
           <Textarea id={`pg-charlimit-${kind}`} defaultValue="워크스페이스 관리자입니다" />
@@ -115,7 +115,7 @@ function renderExample(exampleId: string): ReactNode {
     case 'rejection-reason':
       return (
         <div className="flex w-64 flex-col gap-1.5">
-          <label htmlFor="ex-rejection" className="text-sm font-medium">
+          <label htmlFor="ex-rejection" className="text-16 font-medium">
             반려 사유
           </label>
           <Textarea id="ex-rejection" placeholder="반려 사유를 구체적으로 적어주세요" />
@@ -165,7 +165,7 @@ function renderExample(exampleId: string): ReactNode {
     case 'over-limit':
       return (
         <div className="flex w-64 flex-col gap-1.5">
-          <label htmlFor="ex-overlimit" className="text-sm font-medium">
+          <label htmlFor="ex-overlimit" className="text-16 font-medium">
             소개
           </label>
           <Textarea id="ex-overlimit" aria-invalid defaultValue="아주 긴 자기소개 문구가 여기 들어갑니다" />

@@ -97,7 +97,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
           <Avatar size="sm">
             <AvatarFallback>{getInitials('홍길동')}</AvatarFallback>
           </Avatar>
-          <span className="text-sm">홍길동</span>
+          <span className="text-16">홍길동</span>
         </div>
       ) : (
         <Avatar size="sm">
@@ -133,7 +133,7 @@ function renderExample(exampleId: string): ReactNode {
               <Avatar size="sm">
                 <AvatarFallback>{getInitials(name)}</AvatarFallback>
               </Avatar>
-              <span className="text-sm">{name}</span>
+              <span className="text-16">{name}</span>
             </div>
           ))}
         </div>
@@ -147,7 +147,7 @@ function renderExample(exampleId: string): ReactNode {
             <AvatarFallback>홍</AvatarFallback>
           </Avatar>
           <div>
-            <p className="text-sm font-medium">홍길동</p>
+            <p className="text-16 font-medium">홍길동</p>
             <p className="text-muted-foreground text-12">이 항목 확인했습니다</p>
           </div>
         </div>
@@ -156,7 +156,7 @@ function renderExample(exampleId: string): ReactNode {
     case 'assignee':
       return (
         <div className="bg-surface flex h-row-compact items-center gap-3 rounded-md border px-3">
-          <span className="flex-1 truncate text-sm">주문 20260824-001</span>
+          <span className="flex-1 truncate text-14">주문 20260824-001</span>
           <Avatar size="sm">
             <AvatarFallback>{getInitials('김철수')}</AvatarFallback>
           </Avatar>
@@ -196,7 +196,7 @@ function renderExample(exampleId: string): ReactNode {
           <Avatar size="sm">
             <AvatarFallback>{getInitials('워크스페이스 전체 관리 권한을 가진 최고 관리자')}</AvatarFallback>
           </Avatar>
-          <span className="text-sm">워크스페이스 전체 관리 권한을 가진 최고 관리자</span>
+          <span className="text-16">워크스페이스 전체 관리 권한을 가진 최고 관리자</span>
         </Bounds>
       )
 

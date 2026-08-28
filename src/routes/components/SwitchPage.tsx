@@ -28,7 +28,7 @@ function renderSwitch(options: RenderOptions) {
       <label className="flex items-start gap-2">
         <span className="pt-0.5">{control}</span>
         <span className="flex flex-col">
-          <span className="text-sm">자동 갱신</span>
+          <span className="text-16">자동 갱신</span>
           <span className="text-muted-foreground text-12">만료일에 자동으로 결제하고 연장합니다</span>
         </span>
       </label>
@@ -37,7 +37,7 @@ function renderSwitch(options: RenderOptions) {
 
   if (layout === 'with-label') {
     return (
-      <label className="flex items-center gap-2 text-sm">
+      <label className="flex items-center gap-2 text-16">
         {control}
         알림 받기
       </label>
@@ -59,7 +59,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
     case 'form-with-save':
       return kind === 'do' ? (
         <form className="flex flex-col items-start gap-3">
-          <label className="flex items-center gap-2 text-sm">
+          <label className="flex items-center gap-2 text-16">
             <Checkbox defaultChecked />
             마케팅 이메일 수신 동의
           </label>
@@ -69,7 +69,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
         </form>
       ) : (
         <form className="flex flex-col items-start gap-3">
-          <label className="flex items-center gap-2 text-sm">
+          <label className="flex items-center gap-2 text-16">
             <Switch defaultChecked />
             마케팅 이메일 수신 동의
           </label>
@@ -81,12 +81,12 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
 
     case 'irreversible':
       return kind === 'do' ? (
-        <label className="flex items-center gap-2 text-sm">
+        <label className="flex items-center gap-2 text-16">
           <Switch defaultChecked />
           검색 결과에 노출
         </label>
       ) : (
-        <label className="flex items-center gap-2 text-sm">
+        <label className="flex items-center gap-2 text-16">
           <Switch />
           워크스페이스 영구 삭제
         </label>
@@ -94,12 +94,12 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
 
     case 'label-wording':
       return kind === 'do' ? (
-        <label className="flex items-center gap-2 text-sm">
+        <label className="flex items-center gap-2 text-16">
           <Switch defaultChecked />
           알림 받기
         </label>
       ) : (
-        <label className="flex items-center gap-2 text-sm">
+        <label className="flex items-center gap-2 text-16">
           <Switch defaultChecked />
           알림 끄기
         </label>
@@ -123,7 +123,7 @@ function renderExample(exampleId: string): ReactNode {
   switch (exampleId) {
     case 'notification-toggle':
       return (
-        <label className="flex items-center gap-2 text-sm">
+        <label className="flex items-center gap-2 text-16">
           <Switch defaultChecked />
           알림 받기
         </label>
@@ -136,7 +136,7 @@ function renderExample(exampleId: string): ReactNode {
             <Switch />
           </span>
           <span className="flex flex-col">
-            <span className="text-sm">프로필 공개</span>
+            <span className="text-16">프로필 공개</span>
             <span className="text-muted-foreground text-12">
               다른 사용자가 내 프로필을 볼 수 있습니다
             </span>
@@ -151,7 +151,7 @@ function renderExample(exampleId: string): ReactNode {
             <Switch defaultChecked />
           </span>
           <span className="flex flex-col">
-            <span className="text-sm">자동 갱신</span>
+            <span className="text-16">자동 갱신</span>
             <span className="text-muted-foreground text-12">
               만료일에 자동으로 결제하고 연장합니다
             </span>
@@ -162,7 +162,7 @@ function renderExample(exampleId: string): ReactNode {
     case 'row-toggle':
       return (
         <div className="bg-surface flex h-row-compact items-center gap-3 rounded-md border px-3">
-          <span className="flex-1 truncate text-sm">홍길동</span>
+          <span className="flex-1 truncate text-14">홍길동</span>
           <span className="text-muted-foreground text-12">활성</span>
           <Switch defaultChecked aria-label="'홍길동' 활성 여부" />
         </div>
@@ -171,7 +171,7 @@ function renderExample(exampleId: string): ReactNode {
     case 'update-failed':
       return (
         <div className="flex flex-col gap-1.5">
-          <label className="flex items-center gap-2 text-sm">
+          <label className="flex items-center gap-2 text-16">
             <Switch />
             자동 갱신
           </label>
@@ -182,7 +182,7 @@ function renderExample(exampleId: string): ReactNode {
     case 'locked':
       return (
         <div className="flex flex-col gap-1.5">
-          <label className="flex items-center gap-2 text-sm">
+          <label className="flex items-center gap-2 text-16">
             <Switch disabled />
             <span className="text-muted-foreground">2단계 인증 강제</span>
           </label>
@@ -193,7 +193,7 @@ function renderExample(exampleId: string): ReactNode {
     case 'long-label':
       return (
         <Bounds className="w-56">
-          <label className="flex items-start gap-2 text-sm">
+          <label className="flex items-start gap-2 text-16">
             <span className="pt-0.5">
               <Switch defaultChecked />
             </span>
@@ -205,7 +205,7 @@ function renderExample(exampleId: string): ReactNode {
     case 'narrow-screen':
       return (
         <Bounds className="w-40">
-          <label className="flex items-start gap-2 text-sm">
+          <label className="flex items-start gap-2 text-16">
             <span className="pt-0.5">
               <Switch />
             </span>
@@ -233,7 +233,7 @@ export function SwitchPage() {
             <Switch data-anatomy="track" defaultChecked thumbProps={{ 'data-anatomy': 'thumb' }} />
           </span>
           <span className="flex flex-col">
-            <span data-anatomy="label" className="text-sm">
+            <span data-anatomy="label" className="text-16">
               자동 갱신
             </span>
             <span data-anatomy="description" className="text-muted-foreground text-12">

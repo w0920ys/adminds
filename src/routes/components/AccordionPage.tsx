@@ -63,7 +63,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
     case 'dont-hide-important-content':
       return kind === 'do' ? (
         <div className="w-64 rounded-lg border p-4">
-          <p className="text-sm font-medium">결제가 거부되었습니다</p>
+          <p className="text-16 font-medium">결제가 거부되었습니다</p>
           <p className="text-muted-foreground mt-1 text-12">
             카드 한도를 초과했습니다. 다른 카드를 사용해 주세요.
           </p>
@@ -118,10 +118,10 @@ function renderExample(exampleId: string): ReactNode {
             <AccordionTrigger>상태</AccordionTrigger>
             <AccordionContent>
               <div className="flex flex-col gap-2">
-                <label className="flex items-center gap-2 text-sm">
+                <label className="flex items-center gap-2 text-16">
                   <Checkbox defaultChecked /> 진행 중
                 </label>
-                <label className="flex items-center gap-2 text-sm">
+                <label className="flex items-center gap-2 text-16">
                   <Checkbox /> 완료
                 </label>
               </div>

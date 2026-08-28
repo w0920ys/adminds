@@ -260,8 +260,8 @@ function renderExample(exampleId: string): ReactNode {
             </div>
           </Alert>
           <div className="bg-surface divide-y overflow-hidden rounded-md border">
-            <div className="flex h-row-compact items-center px-3 text-sm">플랜 A</div>
-            <div className="flex h-row-compact items-center px-3 text-sm">플랜 B</div>
+            <div className="flex h-row-compact items-center px-3 text-14">플랜 A</div>
+            <div className="flex h-row-compact items-center px-3 text-14">플랜 B</div>
           </div>
         </div>
       )

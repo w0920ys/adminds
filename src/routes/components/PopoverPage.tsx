@@ -27,12 +27,12 @@ function renderPopover() {
       </PopoverTrigger>
       <PopoverContent aria-label="상태 필터">
         <div className="flex flex-col gap-1 pb-3">
-          <p className="text-sm font-medium">상태로 거르기</p>
+          <p className="text-16 font-medium">상태로 거르기</p>
           <p className="text-muted-foreground text-12">조건에 맞는 항목만 남깁니다</p>
         </div>
         <div className="flex flex-col gap-2 pb-3">
           {STATUS_OPTIONS.map((option) => (
-            <label key={option.id} className="flex items-center gap-2 text-sm">
+            <label key={option.id} className="flex items-center gap-2 text-16">
               <Checkbox defaultChecked={option.id === 'active'} />
               {option.label}
             </label>
@@ -60,7 +60,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
             </Button>
           </PopoverTrigger>
           <PopoverContent aria-label="사용자 필터" className="w-56">
-            <label className="flex items-center gap-2 text-sm">
+            <label className="flex items-center gap-2 text-16">
               <Checkbox defaultChecked />
               활성 사용자만
             </label>
@@ -75,7 +75,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
           </PopoverTrigger>
           <PopoverContent aria-label="사용자 삭제 확인" className="w-64">
             <div className="flex flex-col gap-3">
-              <p className="text-sm font-medium">'홍길동'을 삭제하시겠습니까</p>
+              <p className="text-16 font-medium">'홍길동'을 삭제하시겠습니까</p>
               <div className="flex justify-end gap-2">
                 <Button variant="outline" size="sm">
                   취소
@@ -99,7 +99,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
           </PopoverTrigger>
           <PopoverContent aria-label="전환율 설명" className="w-56">
             <div className="flex flex-col gap-2">
-              <p className="text-sm">전환율은 방문자 중 결제까지 이어진 비율입니다</p>
+              <p className="text-16">전환율은 방문자 중 결제까지 이어진 비율입니다</p>
               <Button variant="link" size="sm" className="h-auto justify-start px-0">
                 자세히 보기
               </Button>
@@ -114,7 +114,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
             </Button>
           </PopoverTrigger>
           <PopoverContent aria-label="전환율 설명" className="w-56">
-            <p className="text-sm">전환율은 방문자 중 결제까지 이어진 비율입니다</p>
+            <p className="text-16">전환율은 방문자 중 결제까지 이어진 비율입니다</p>
           </PopoverContent>
         </Popover>
       )
@@ -129,7 +129,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
           </PopoverTrigger>
           <PopoverContent aria-label="링크로 공유" className="w-64">
             <div className="flex flex-col gap-2">
-              <p className="text-sm font-medium">링크로 공유</p>
+              <p className="text-16 font-medium">링크로 공유</p>
               <Input readOnly value="https://admin.example.com/s/8f2c" />
             </div>
           </PopoverContent>
@@ -143,7 +143,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
           </PopoverTrigger>
           <PopoverContent aria-label="링크로 공유" className="w-64">
             <div className="flex flex-col gap-2">
-              <p className="text-sm font-medium">링크로 공유</p>
+              <p className="text-16 font-medium">링크로 공유</p>
               <Popover>
                 <PopoverTrigger asChild>
                   <Button variant="outline" size="sm">
@@ -151,7 +151,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent aria-label="권한 설정" className="w-48">
-                  <p className="text-sm">읽기 전용</p>
+                  <p className="text-16">읽기 전용</p>
                 </PopoverContent>
               </Popover>
             </div>
@@ -198,10 +198,10 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
           </PopoverTrigger>
           <PopoverContent aria-labelledby="popover-name-the-surface-title" className="w-56">
             <div className="flex flex-col gap-3">
-              <p id="popover-name-the-surface-title" className="text-sm font-medium">
+              <p id="popover-name-the-surface-title" className="text-16 font-medium">
                 알림 설정
               </p>
-              <label className="flex items-center gap-2 text-sm">
+              <label className="flex items-center gap-2 text-16">
                 <Checkbox defaultChecked />
                 댓글 알림 받기
               </label>
@@ -216,7 +216,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
             </Button>
           </PopoverTrigger>
           <PopoverContent className="w-56">
-            <label className="flex items-center gap-2 text-sm">
+            <label className="flex items-center gap-2 text-16">
               <Checkbox defaultChecked />
               댓글 알림 받기
             </label>
@@ -244,7 +244,7 @@ function renderExample(exampleId: string): ReactNode {
             <PopoverContent aria-label="상태 필터">
               <div className="flex flex-col gap-2 pb-3">
                 {STATUS_OPTIONS.map((option) => (
-                  <label key={option.id} className="flex items-center gap-2 text-sm">
+                  <label key={option.id} className="flex items-center gap-2 text-16">
                     <Checkbox defaultChecked={option.id === 'active'} />
                     {option.label}
                   </label>
@@ -322,7 +322,7 @@ function renderExample(exampleId: string): ReactNode {
           </PopoverTrigger>
           <PopoverContent aria-label="전환율 설명" className="w-56">
             <div className="flex flex-col gap-2">
-              <p className="text-sm">전환율은 방문자 중 결제까지 이어진 비율입니다</p>
+              <p className="text-16">전환율은 방문자 중 결제까지 이어진 비율입니다</p>
               <Button variant="link" size="sm" className="h-auto justify-start px-0">
                 도움말 문서 보기
               </Button>
@@ -356,7 +356,7 @@ function renderExample(exampleId: string): ReactNode {
             </Button>
           </PopoverTrigger>
           <PopoverContent aria-label="변경 이력" className="max-h-48 w-56 overflow-y-auto">
-            <ul className="flex flex-col gap-2 text-sm">
+            <ul className="flex flex-col gap-2 text-16">
               {Array.from({ length: 8 }, (_, i) => (
                 <li key={i} className="border-b pb-2 last:border-0">
                   <p>상태가 '활성'으로 바뀜</p>
@@ -379,7 +379,7 @@ function renderExample(exampleId: string): ReactNode {
           <PopoverContent aria-label="메모 추가" className="w-64">
             <div className="flex flex-col gap-3">
               <div className="flex flex-col gap-1.5">
-                <label htmlFor="pop-memo" className="text-sm font-medium">
+                <label htmlFor="pop-memo" className="text-16 font-medium">
                   메모
                 </label>
                 <Input id="pop-memo" placeholder="내용을 입력하세요" />
@@ -434,12 +434,12 @@ function AnatomyPreview() {
       </PopoverTrigger>
       <PopoverContent aria-label="상태 필터">
         <div className="flex flex-col gap-1 pb-3">
-          <p className="text-sm font-medium">상태로 거르기</p>
+          <p className="text-16 font-medium">상태로 거르기</p>
           <p className="text-muted-foreground text-12">조건에 맞는 항목만 남깁니다</p>
         </div>
         <div className="flex flex-col gap-2 pb-3">
           {STATUS_OPTIONS.map((option) => (
-            <label key={option.id} className="flex items-center gap-2 text-sm">
+            <label key={option.id} className="flex items-center gap-2 text-16">
               <Checkbox defaultChecked={option.id === 'active'} />
               {option.label}
             </label>

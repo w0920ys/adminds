@@ -161,7 +161,7 @@ function renderExample(exampleId: string): ReactNode {
     case 'row-actions':
       return (
         <div className="bg-surface flex h-row-compact items-center justify-between gap-3 rounded-md border px-3">
-          <span className="flex-1 truncate text-sm">홍길동</span>
+          <span className="flex-1 truncate text-14">홍길동</span>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" size="icon" aria-label="'홍길동' 더보기">
@@ -190,7 +190,7 @@ function renderExample(exampleId: string): ReactNode {
     case 'page-header-actions':
       return (
         <div className="bg-surface flex items-center justify-between gap-3 rounded-md border p-2">
-          <span className="text-sm font-medium">사용자 목록</span>
+          <span className="text-16 font-medium">사용자 목록</span>
           <div className="flex items-center gap-1.5">
             <Button size="sm">사용자 추가</Button>
             <DropdownMenu>
@@ -217,7 +217,7 @@ function renderExample(exampleId: string): ReactNode {
     case 'bulk-actions':
       return (
         <div className="bg-surface flex items-center gap-3 rounded-md border px-3 py-2">
-          <span className="text-sm">12건 선택됨</span>
+          <span className="text-16">12건 선택됨</span>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" size="sm">

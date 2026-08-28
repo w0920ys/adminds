@@ -33,7 +33,7 @@ function renderRadio(options: RenderOptions) {
         <label key={value} className="flex items-start gap-2">
           <span className="pt-0.5">{control}</span>
           <span className="flex flex-col">
-            <span className="text-sm">{label}</span>
+            <span className="text-16">{label}</span>
             <span className="text-muted-foreground text-12">{description}</span>
           </span>
         </label>
@@ -41,7 +41,7 @@ function renderRadio(options: RenderOptions) {
     }
 
     return (
-      <label key={value} className="flex items-center gap-2 text-sm">
+      <label key={value} className="flex items-center gap-2 text-16">
         {control}
         {label}
       </label>
@@ -73,15 +73,15 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
     case 'option-count':
       return kind === 'do' ? (
         <RadioGroup defaultValue="recent" className="gap-1.5">
-          <label className="flex items-center gap-2 text-sm">
+          <label className="flex items-center gap-2 text-16">
             <RadioGroupItem value="recent" />
             최신순
           </label>
-          <label className="flex items-center gap-2 text-sm">
+          <label className="flex items-center gap-2 text-16">
             <RadioGroupItem value="popular" />
             인기순
           </label>
-          <label className="flex items-center gap-2 text-sm">
+          <label className="flex items-center gap-2 text-16">
             <RadioGroupItem value="name" />
             이름순
           </label>
@@ -89,7 +89,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
       ) : (
         <RadioGroup defaultValue="kr" className="gap-1.5">
           {['대한민국', '일본', '중국', '미국', '캐나다', '영국', '프랑스'].map((label, i) => (
-            <label key={label} className="flex items-center gap-2 text-sm">
+            <label key={label} className="flex items-center gap-2 text-16">
               <RadioGroupItem value={i === 0 ? 'kr' : label} />
               {label}
             </label>
@@ -100,22 +100,22 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
     case 'default-selection':
       return kind === 'do' ? (
         <RadioGroup defaultValue="viewer" className="gap-1.5">
-          <label className="flex items-center gap-2 text-sm">
+          <label className="flex items-center gap-2 text-16">
             <RadioGroupItem value="viewer" />
             뷰어
           </label>
-          <label className="flex items-center gap-2 text-sm">
+          <label className="flex items-center gap-2 text-16">
             <RadioGroupItem value="editor" />
             편집자
           </label>
         </RadioGroup>
       ) : (
         <RadioGroup className="gap-1.5">
-          <label className="flex items-center gap-2 text-sm">
+          <label className="flex items-center gap-2 text-16">
             <RadioGroupItem value="viewer" />
             뷰어
           </label>
-          <label className="flex items-center gap-2 text-sm">
+          <label className="flex items-center gap-2 text-16">
             <RadioGroupItem value="editor" />
             편집자
           </label>
@@ -125,26 +125,26 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
     case 'no-deselect':
       return kind === 'do' ? (
         <RadioGroup defaultValue="none" className="gap-1.5">
-          <label className="flex items-center gap-2 text-sm">
+          <label className="flex items-center gap-2 text-16">
             <RadioGroupItem value="none" />
             선택 안 함
           </label>
-          <label className="flex items-center gap-2 text-sm">
+          <label className="flex items-center gap-2 text-16">
             <RadioGroupItem value="male" />
             남성
           </label>
-          <label className="flex items-center gap-2 text-sm">
+          <label className="flex items-center gap-2 text-16">
             <RadioGroupItem value="female" />
             여성
           </label>
         </RadioGroup>
       ) : (
         <RadioGroup defaultValue="male" className="gap-1.5">
-          <label className="flex items-center gap-2 text-sm">
+          <label className="flex items-center gap-2 text-16">
             <RadioGroupItem value="male" />
             남성
           </label>
-          <label className="flex items-center gap-2 text-sm">
+          <label className="flex items-center gap-2 text-16">
             <RadioGroupItem value="female" />
             여성
           </label>
@@ -154,14 +154,14 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
     case 'no-size-axis':
       return kind === 'do' ? (
         <RadioGroup defaultValue="a" className="contents">
-          <label className="flex items-center gap-2 text-sm">
+          <label className="flex items-center gap-2 text-16">
             <RadioGroupItem value="a" />
             공지 즉시 발송
           </label>
         </RadioGroup>
       ) : (
         <RadioGroup defaultValue="a" className="contents">
-          <label className="flex items-center gap-2 text-sm">
+          <label className="flex items-center gap-2 text-16">
             <RadioGroupItem value="a" className="scale-125" />
             공지 즉시 발송
           </label>
@@ -178,17 +178,17 @@ function renderExample(exampleId: string): ReactNode {
     case 'sort-order':
       return (
         <fieldset className="flex flex-col gap-1.5">
-          <legend className="text-sm font-medium">정렬 기준</legend>
+          <legend className="text-16 font-medium">정렬 기준</legend>
           <RadioGroup defaultValue="recent" className="gap-1.5">
-            <label className="flex items-center gap-2 text-sm">
+            <label className="flex items-center gap-2 text-16">
               <RadioGroupItem value="recent" />
               최신순
             </label>
-            <label className="flex items-center gap-2 text-sm">
+            <label className="flex items-center gap-2 text-16">
               <RadioGroupItem value="popular" />
               인기순
             </label>
-            <label className="flex items-center gap-2 text-sm">
+            <label className="flex items-center gap-2 text-16">
               <RadioGroupItem value="name" />
               이름순
             </label>
@@ -199,17 +199,17 @@ function renderExample(exampleId: string): ReactNode {
     case 'deploy-scope':
       return (
         <fieldset className="flex flex-col gap-1.5">
-          <legend className="text-sm font-medium">배포 범위</legend>
+          <legend className="text-16 font-medium">배포 범위</legend>
           <RadioGroup defaultValue="all" className="gap-1.5">
-            <label className="flex items-center gap-2 text-sm">
+            <label className="flex items-center gap-2 text-16">
               <RadioGroupItem value="all" />
               전체 배포
             </label>
-            <label className="flex items-center gap-2 text-sm">
+            <label className="flex items-center gap-2 text-16">
               <RadioGroupItem value="canary" />
               단계적 배포
             </label>
-            <label className="flex items-center gap-2 text-sm">
+            <label className="flex items-center gap-2 text-16">
               <RadioGroupItem value="group" />
               그룹별 배포
             </label>
@@ -225,7 +225,7 @@ function renderExample(exampleId: string): ReactNode {
               <RadioGroupItem value="monthly" />
             </span>
             <span className="flex flex-col">
-              <span className="text-sm">월간 결제</span>
+              <span className="text-16">월간 결제</span>
               <span className="text-muted-foreground text-12">매달 1일에 결제합니다</span>
             </span>
           </label>
@@ -234,7 +234,7 @@ function renderExample(exampleId: string): ReactNode {
               <RadioGroupItem value="yearly" />
             </span>
             <span className="flex flex-col">
-              <span className="text-sm">연간 결제</span>
+              <span className="text-16">연간 결제</span>
               <span className="text-muted-foreground text-12">
                 한 번에 결제하고 2개월치를 아낍니다
               </span>
@@ -246,17 +246,17 @@ function renderExample(exampleId: string): ReactNode {
     case 'permission-level':
       return (
         <fieldset className="flex flex-col gap-1.5">
-          <legend className="text-sm font-medium">권한 등급</legend>
+          <legend className="text-16 font-medium">권한 등급</legend>
           <RadioGroup defaultValue="editor" className="gap-1.5">
-            <label className="flex items-center gap-2 text-sm">
+            <label className="flex items-center gap-2 text-16">
               <RadioGroupItem value="viewer" />
               뷰어
             </label>
-            <label className="flex items-center gap-2 text-sm">
+            <label className="flex items-center gap-2 text-16">
               <RadioGroupItem value="editor" />
               편집자
             </label>
-            <label className="flex items-center gap-2 text-sm">
+            <label className="flex items-center gap-2 text-16">
               <RadioGroupItem value="admin" />
               관리자
             </label>
@@ -268,13 +268,13 @@ function renderExample(exampleId: string): ReactNode {
       return (
         <Bounds className="w-56">
           <RadioGroup defaultValue="a" className="gap-2">
-            <label className="flex items-start gap-2 text-sm">
+            <label className="flex items-start gap-2 text-16">
               <span className="pt-0.5">
                 <RadioGroupItem value="a" />
               </span>
               워크스페이스의 모든 청구서와 결제 수단을 볼 수 있는 권한
             </label>
-            <label className="flex items-center gap-2 text-sm">
+            <label className="flex items-center gap-2 text-16">
               <RadioGroupItem value="b" />
               읽기 전용 권한
             </label>
@@ -285,11 +285,11 @@ function renderExample(exampleId: string): ReactNode {
     case 'disabled-selected':
       return (
         <RadioGroup defaultValue="admin" disabled className="gap-1.5">
-          <label className="flex items-center gap-2 text-sm">
+          <label className="flex items-center gap-2 text-16">
             <RadioGroupItem value="viewer" />
             뷰어
           </label>
-          <label className="flex items-center gap-2 text-sm">
+          <label className="flex items-center gap-2 text-16">
             <RadioGroupItem value="admin" />
             관리자
           </label>
@@ -299,13 +299,13 @@ function renderExample(exampleId: string): ReactNode {
     case 'two-options':
       return (
         <fieldset className="flex flex-col gap-1.5">
-          <legend className="text-sm font-medium">공개 범위</legend>
+          <legend className="text-16 font-medium">공개 범위</legend>
           <RadioGroup defaultValue="public" className="gap-1.5">
-            <label className="flex items-center gap-2 text-sm">
+            <label className="flex items-center gap-2 text-16">
               <RadioGroupItem value="public" />
               공개
             </label>
-            <label className="flex items-center gap-2 text-sm">
+            <label className="flex items-center gap-2 text-16">
               <RadioGroupItem value="private" />
               비공개
             </label>
@@ -317,11 +317,11 @@ function renderExample(exampleId: string): ReactNode {
       return (
         <Bounds className="w-40">
           <RadioGroup defaultValue="a" className="gap-2">
-            <label className="flex items-center gap-2 text-sm">
+            <label className="flex items-center gap-2 text-16">
               <RadioGroupItem value="a" />
               마케팅 이메일 수신 동의
             </label>
-            <label className="flex items-center gap-2 text-sm">
+            <label className="flex items-center gap-2 text-16">
               <RadioGroupItem value="b" />
               수신 거부
             </label>
@@ -348,7 +348,7 @@ function AnatomyPreview() {
           <RadioGroupItem data-anatomy="item" value="all" />
         </span>
         <span className="flex flex-col">
-          <span data-anatomy="label" className="text-sm">
+          <span data-anatomy="label" className="text-16">
             전체 배포
           </span>
           <span data-anatomy="description" className="text-muted-foreground text-12">
@@ -356,7 +356,7 @@ function AnatomyPreview() {
           </span>
         </span>
       </label>
-      <label className="flex items-center gap-2 text-sm">
+      <label className="flex items-center gap-2 text-16">
         <RadioGroupItem value="canary" />
         단계적 배포
       </label>

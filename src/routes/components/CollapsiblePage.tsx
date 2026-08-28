@@ -122,7 +122,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
     case 'dont-hide-important-content':
       return kind === 'do' ? (
         <div className="w-full max-w-64 rounded-lg border p-4">
-          <p className="text-sm font-medium">결제가 거부되었습니다</p>
+          <p className="text-16 font-medium">결제가 거부되었습니다</p>
           <p className="text-muted-foreground mt-1 text-12">
             카드 한도를 초과했습니다. 다른 카드를 사용해 주세요.
           </p>
@@ -154,7 +154,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
         </Table>
       ) : (
         <div className="w-full max-w-80 rounded-md border">
-          <div className="text-muted-foreground flex items-center justify-between px-3 py-3 text-sm">
+          <div className="text-muted-foreground flex items-center justify-between px-3 py-3 text-14">
             <span>ORD-4821 · 배송 중</span>
             <span className="text-11">행 전체가 눌린다</span>
           </div>

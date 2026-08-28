@@ -258,7 +258,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
           initialCount={2}
           toolbar={({ selectedCount, clearSelection }) => (
             <>
-              <span className="text-sm">{selectedCount}건 선택됨</span>
+              <span className="text-16">{selectedCount}건 선택됨</span>
               <Button variant="outline" size="sm" onClick={clearSelection}>
                 선택 해제
               </Button>
@@ -270,7 +270,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
           label="선택을 전체 선택이라고 잘못 적은 컴포넌트 목록"
           perPage={3}
           initialCount={2}
-          toolbar={() => <span className="text-sm">전체 선택됨</span>}
+          toolbar={() => <span className="text-16">전체 선택됨</span>}
         />
       )
 
@@ -440,7 +440,7 @@ function renderExample(exampleId: string): ReactNode {
           initialCount={2}
           toolbar={({ selectedCount, clearSelection }) => (
             <>
-              <span className="text-sm">{selectedCount}건 선택됨</span>
+              <span className="text-16">{selectedCount}건 선택됨</span>
               <Button variant="outline" size="sm">
                 내보내기
               </Button>
@@ -487,7 +487,7 @@ function renderExample(exampleId: string): ReactNode {
             perPage={3}
             toolbar={({ selectedCount, clearSelection }) => (
               <>
-                <span className="text-sm">{selectedCount}건 선택됨</span>
+                <span className="text-16">{selectedCount}건 선택됨</span>
                 <Button variant="outline" size="sm" onClick={clearSelection}>
                   선택 해제
                 </Button>
@@ -567,7 +567,7 @@ function AnatomyPreview() {
       onSelectedChange={setSelected}
       toolbar={({ selectedCount, clearSelection }) => (
         <div data-anatomy="toolbar" className="flex items-center gap-2">
-          <span className="text-sm">{selectedCount}건 선택됨</span>
+          <span className="text-16">{selectedCount}건 선택됨</span>
           <Button variant="outline" size="sm" onClick={clearSelection}>
             선택 해제
           </Button>

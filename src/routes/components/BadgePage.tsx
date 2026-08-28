@@ -80,11 +80,11 @@ function renderExample(exampleId: string): ReactNode {
       return (
         <div className="bg-surface divide-y overflow-hidden rounded-md border">
           <div className="flex h-row-compact items-center gap-3 px-3">
-            <span className="flex-1 truncate text-sm">홍길동</span>
+            <span className="flex-1 truncate text-14">홍길동</span>
             <Badge variant="success">활성</Badge>
           </div>
           <div className="flex h-row-compact items-center gap-3 px-3">
-            <span className="flex-1 truncate text-sm">김서연</span>
+            <span className="flex-1 truncate text-14">김서연</span>
             <Badge variant="warning">정지 예정</Badge>
           </div>
         </div>
@@ -93,14 +93,14 @@ function renderExample(exampleId: string): ReactNode {
     case 'list-category':
       return (
         <div className="flex items-center gap-2">
-          <span className="text-sm font-medium">1월 정기 점검 안내</span>
+          <span className="text-16 font-medium">1월 정기 점검 안내</span>
           <Badge variant="info">공지</Badge>
         </div>
       )
 
     case 'count':
       return (
-        <div className="flex items-center gap-2 text-sm">
+        <div className="flex items-center gap-2 text-16">
           <span>승인 대기</span>
           <Badge variant="warning">12</Badge>
         </div>
@@ -109,7 +109,7 @@ function renderExample(exampleId: string): ReactNode {
     case 'new-indicator':
       return (
         <div className="flex items-center gap-2">
-          <span className="text-sm font-medium">대량 내보내기</span>
+          <span className="text-16 font-medium">대량 내보내기</span>
           <Badge variant="info">NEW</Badge>
         </div>
       )
@@ -130,7 +130,7 @@ function renderExample(exampleId: string): ReactNode {
 
     case 'no-value':
       return (
-        <div className="flex items-center gap-2 text-sm">
+        <div className="flex items-center gap-2 text-16">
           <span>등급</span>
           <span className="text-muted-foreground" aria-label="값 없음">
             —

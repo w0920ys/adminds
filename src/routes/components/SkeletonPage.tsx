@@ -50,7 +50,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
 
     case 'not-for-brief-loads':
       return kind === 'do' ? (
-        <div className="flex items-center gap-2 text-sm">
+        <div className="flex items-center gap-2 text-16">
           <Avatar size="sm">
             <AvatarFallback>홍</AvatarFallback>
           </Avatar>
@@ -168,7 +168,7 @@ function renderExample(exampleId: string): ReactNode {
 
     case 'shorter-or-longer-content':
       return (
-        <div className="flex flex-col gap-4 text-sm">
+        <div className="flex flex-col gap-4 text-16">
           <div className="flex flex-col gap-1">
             <p className="text-muted-foreground text-11">짧은 경우</p>
             <div className="flex items-center gap-2">

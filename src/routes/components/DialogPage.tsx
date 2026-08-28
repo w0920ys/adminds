@@ -248,7 +248,7 @@ function renderExample(exampleId: string): ReactNode {
               <DialogTitle>'선택한 12건'을 삭제하시겠습니까</DialogTitle>
               <DialogDescription>삭제하면 되돌릴 수 없습니다. 아래 목록이 함께 지워집니다.</DialogDescription>
             </DialogHeader>
-            <ul className="rounded-md border text-sm">
+            <ul className="rounded-md border text-16">
               {['홍길동', '김서연', '이서준'].map((name) => (
                 <li key={name} className="border-b px-3 py-2 last:border-b-0">
                   {name}
@@ -281,7 +281,7 @@ function renderExample(exampleId: string): ReactNode {
               role="region"
               aria-label="이용 약관 본문"
               tabIndex={0}
-              className="max-h-48 overflow-y-auto rounded-md text-sm outline-none focus-visible:ring-ring/50 focus-visible:ring-2"
+              className="max-h-48 overflow-y-auto rounded-md text-16 outline-none focus-visible:ring-ring/50 focus-visible:ring-2"
             >
               {Array.from({ length: 12 }).map((_, i) => (
                 <p key={i} className="text-muted-foreground py-1">

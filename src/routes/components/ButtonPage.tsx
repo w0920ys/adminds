@@ -47,7 +47,7 @@ function renderButton(options: RenderOptions) {
 function EditHeader({ children }: { children: ReactNode }) {
   return (
     <div className="flex flex-wrap items-center justify-between gap-3">
-      <h4 className="text-sm font-semibold">사용자 편집</h4>
+      <h4 className="text-16 font-semibold">사용자 편집</h4>
       <div className="flex flex-wrap items-center gap-2">{children}</div>
     </div>
   )
@@ -57,7 +57,7 @@ function EditHeader({ children }: { children: ReactNode }) {
 function DeleteDialogFooter({ children }: { children: ReactNode }) {
   return (
     <div className="flex flex-col gap-3">
-      <p className="text-sm font-semibold">사용자 3명 삭제</p>
+      <p className="text-16 font-semibold">사용자 3명 삭제</p>
       <div className="flex flex-wrap items-center justify-end gap-2">{children}</div>
     </div>
   )
@@ -103,7 +103,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
     case 'buttons-vs-links':
       return kind === 'do' ? (
         <div className="flex flex-col items-start gap-3">
-          <p className="text-sm">
+          <p className="text-16">
             '홍길동'의 역할은{' '}
             <Button asChild variant="link" className="h-auto p-0 align-baseline">
               <a href="#role-settings">역할 설정</a>
@@ -114,7 +114,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
         </div>
       ) : (
         <div className="flex flex-col items-start gap-3">
-          <p className="text-sm">'홍길동'의 역할은 아래에서 바꿉니다.</p>
+          <p className="text-16">'홍길동'의 역할은 아래에서 바꿉니다.</p>
           <Button size="sm">역할 설정 열기</Button>
           <p className="text-muted-foreground text-11">
             새 탭으로 열 수도, 주소를 복사할 수도 없습니다.
@@ -131,7 +131,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
 function UserRow({ name, role, lastSeen }: { name: string; role: string; lastSeen: string }) {
   return (
     <div className="flex h-row-compact items-center gap-3 px-3">
-      <span className="flex-1 truncate text-sm">{name}</span>
+      <span className="flex-1 truncate text-14">{name}</span>
       <span className="text-muted-foreground hidden text-12 sm:inline">{role}</span>
       <span className="text-muted-foreground hidden text-12 md:inline">{lastSeen}</span>
       <Button variant="ghost" size="sm" aria-label={`'${name}' 편집`}>
@@ -150,7 +150,7 @@ function renderExample(exampleId: string): ReactNode {
       return (
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
-            <h4 className="text-sm font-semibold">사용자</h4>
+            <h4 className="text-16 font-semibold">사용자</h4>
             <p className="text-muted-foreground mt-1 text-12">워크스페이스에 속한 사용자 24명</p>
           </div>
           <Button size="sm">
@@ -172,7 +172,7 @@ function renderExample(exampleId: string): ReactNode {
       return (
         <div className="flex flex-col gap-3">
           <div>
-            <p className="text-sm font-semibold">사용자 3명 삭제</p>
+            <p className="text-16 font-semibold">사용자 3명 삭제</p>
             <p className="text-muted-foreground mt-1 text-12">
               선택한 사용자 3명의 계정과 API 키가 지워집니다. 되돌릴 수 없습니다.
             </p>
@@ -192,7 +192,7 @@ function renderExample(exampleId: string): ReactNode {
       return (
         <div className="flex flex-col items-center gap-3 text-center">
           <div>
-            <p className="text-sm font-semibold">아직 초대한 사용자가 없습니다</p>
+            <p className="text-16 font-semibold">아직 초대한 사용자가 없습니다</p>
             <p className="text-muted-foreground mt-1 text-12">
               사용자를 초대하면 이 목록에 표시됩니다.
             </p>

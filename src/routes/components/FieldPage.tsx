@@ -246,13 +246,13 @@ function renderExample(exampleId: string): ReactNode {
       return (
         <Field>
           <fieldset className="contents">
-            <legend className="text-sm font-medium">배포 범위</legend>
+            <legend className="text-16 font-medium">배포 범위</legend>
             <RadioGroup defaultValue="canary" className="gap-1.5 pt-1.5">
-              <label className="flex items-center gap-2 text-sm">
+              <label className="flex items-center gap-2 text-16">
                 <RadioGroupItem value="all" />
                 전체 배포
               </label>
-              <label className="flex items-center gap-2 text-sm">
+              <label className="flex items-center gap-2 text-16">
                 <RadioGroupItem value="canary" />
                 단계적 배포
               </label>

@@ -30,7 +30,7 @@ function ComponentList({ className }: { className?: string }) {
 
 function WideTable({ rows = components }: { rows?: typeof components }) {
   return (
-    <table className="text-sm">
+    <table className="text-14">
       <TableHeader>
         <TableRow>
           <TableHead>이름</TableHead>
@@ -91,7 +91,7 @@ function renderScrollArea(options: RenderOptions) {
 
   return (
     <ScrollArea type={type} orientation="vertical" className="h-40 w-full max-w-sm rounded-lg border">
-      <ComponentList className="px-4 text-sm" />
+      <ComponentList className="px-4 text-16" />
     </ScrollArea>
   )
 }
@@ -107,7 +107,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
     case 'fixed-size-only':
       return kind === 'do' ? (
         <ScrollArea className="h-40 w-full max-w-64 rounded-lg border">
-          <ComponentList className="px-3 text-sm" />
+          <ComponentList className="px-3 text-16" />
         </ScrollArea>
       ) : (
         <div className="text-muted-foreground w-full max-w-64 rounded-lg border border-dashed p-4 text-12">
@@ -119,7 +119,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
     case 'dont-wrap-whole-page':
       return kind === 'do' ? (
         <div className="flex w-full max-w-64 flex-col gap-2 rounded-lg border p-3">
-          <p className="text-sm font-semibold">최근 활동</p>
+          <p className="text-16 font-semibold">최근 활동</p>
           <ScrollArea className="h-32 w-full">
             <ComponentList className="pr-3 text-12" />
           </ScrollArea>
@@ -179,7 +179,7 @@ function renderExample(exampleId: string): ReactNode {
               <SheetTitle>컴포넌트 {components.length}개</SheetTitle>
             </SheetHeader>
             <ScrollArea className="min-h-0 w-full flex-1">
-              <ComponentList className="pr-3 text-sm" />
+              <ComponentList className="pr-3 text-16" />
             </ScrollArea>
             <SheetFooter>
               <SheetClose asChild>
@@ -200,7 +200,7 @@ function renderExample(exampleId: string): ReactNode {
           </PopoverTrigger>
           <PopoverContent aria-label="컴포넌트 목록" className="w-56">
             <ScrollArea className="h-48 w-full">
-              <ComponentList className="pr-3 text-sm" />
+              <ComponentList className="pr-3 text-16" />
             </ScrollArea>
           </PopoverContent>
         </Popover>
@@ -227,7 +227,7 @@ function renderExample(exampleId: string): ReactNode {
     case 'short-content':
       return (
         <ScrollArea className="h-40 w-full max-w-64 rounded-lg border">
-          <ComponentList className="px-3 text-sm" />
+          <ComponentList className="px-3 text-16" />
         </ScrollArea>
       )
 
@@ -241,7 +241,7 @@ function renderExample(exampleId: string): ReactNode {
     case 'always-visible':
       return (
         <ScrollArea type="always" className="h-40 w-full max-w-64 rounded-lg border">
-          <ComponentList className="px-3 text-sm" />
+          <ComponentList className="px-3 text-16" />
         </ScrollArea>
       )
 
@@ -275,7 +275,7 @@ function renderExample(exampleId: string): ReactNode {
 function AnatomyPreview() {
   return (
     <ScrollArea data-anatomy="viewport" className="h-40 w-72 rounded-lg border">
-      <ul data-anatomy="content" className="px-4 text-sm">
+      <ul data-anatomy="content" className="px-4 text-16">
         {components.map((component) => (
           <li key={component.id} className="border-b py-2 last:border-b-0">
             {component.name}

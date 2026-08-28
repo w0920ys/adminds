@@ -47,7 +47,7 @@ function Field({
 }) {
   return (
     <div className={cn('flex flex-col gap-1.5', className)}>
-      <label htmlFor={htmlFor} className="text-sm font-medium">
+      <label htmlFor={htmlFor} className="text-16 font-medium">
         {label}
       </label>
       {children}
@@ -118,7 +118,7 @@ function renderExample(exampleId: string): ReactNode {
     case 'form-row':
       return (
         <div className="flex flex-col gap-1.5">
-          <label htmlFor="ex-email" className="text-sm font-medium">
+          <label htmlFor="ex-email" className="text-16 font-medium">
             이메일
           </label>
           <Input id="ex-email" placeholder="name@company.com" className="w-64" />
@@ -171,7 +171,7 @@ function renderExample(exampleId: string): ReactNode {
     case 'error-with-help':
       return (
         <div className="flex flex-col gap-1.5">
-          <label htmlFor="ex-phone" className="text-sm font-medium">
+          <label htmlFor="ex-phone" className="text-16 font-medium">
             전화번호
           </label>
           <Input id="ex-phone" aria-invalid defaultValue="010-12-34" className="w-48" />

@@ -80,12 +80,12 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
         <Card variant="outlined" className="w-64">
           <CardContent className="flex flex-col gap-3">
             <div>
-              <p className="text-sm font-medium">일반</p>
+              <p className="text-16 font-medium">일반</p>
               <p className="text-muted-foreground text-12">계정 정보를 관리합니다</p>
             </div>
             <Separator />
             <div>
-              <p className="text-sm font-medium">보안</p>
+              <p className="text-16 font-medium">보안</p>
               <p className="text-muted-foreground text-12">비밀번호와 인증을 관리합니다</p>
             </div>
           </CardContent>
@@ -110,12 +110,12 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
         <Card variant="outlined" className="w-64">
           <CardHeader>
             <CardTitle>
-              <Button asChild variant="link" className="h-auto p-0 text-sm font-semibold">
+              <Button asChild variant="link" className="h-auto p-0 text-16 font-semibold">
                 <a href="#payment-method">결제 수단</a>
               </Button>
             </CardTitle>
           </CardHeader>
-          <CardContent className="flex items-center justify-between text-sm">
+          <CardContent className="flex items-center justify-between text-16">
             <span>비자 ****1234</span>
             <Button size="sm" variant="outline">
               삭제
@@ -127,7 +127,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
           <CardHeader>
             <CardTitle>결제 수단</CardTitle>
           </CardHeader>
-          <CardContent className="flex items-center justify-between text-sm">
+          <CardContent className="flex items-center justify-between text-16">
             <span>비자 ****1234</span>
             <Button size="sm" variant="outline">
               삭제
@@ -184,7 +184,7 @@ function renderExample(exampleId: string): ReactNode {
             <CardTitle>홍길동</CardTitle>
             <CardDescription>고객 상세</CardDescription>
           </CardHeader>
-          <CardContent className="flex flex-col gap-3 text-sm">
+          <CardContent className="flex flex-col gap-3 text-16">
             <div className="flex justify-between">
               <span className="text-muted-foreground">이메일</span>
               <span>hong@example.com</span>
@@ -206,12 +206,12 @@ function renderExample(exampleId: string): ReactNode {
             <CardDescription>이메일과 문자로 알림을 받습니다</CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col gap-3">
-            <div className="flex items-center justify-between text-sm">
+            <div className="flex items-center justify-between text-16">
               <span>이메일 알림</span>
               <Switch defaultChecked />
             </div>
             <Separator />
-            <div className="flex items-center justify-between text-sm">
+            <div className="flex items-center justify-between text-16">
               <span>문자 알림</span>
               <Switch />
             </div>
@@ -246,7 +246,7 @@ function renderExample(exampleId: string): ReactNode {
           <CardHeader>
             <CardTitle>변경 이력</CardTitle>
           </CardHeader>
-          <CardContent className="text-muted-foreground flex flex-col gap-2 text-sm">
+          <CardContent className="text-muted-foreground flex flex-col gap-2 text-16">
             <p>2026-08-24 워크스페이스 이름을 바꿨습니다.</p>
             <p>2026-08-20 결제 수단을 등록했습니다.</p>
             <p>2026-08-15 팀원 3명을 초대했습니다.</p>
@@ -264,14 +264,14 @@ function renderExample(exampleId: string): ReactNode {
               <CardTitle>간단 요약</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-sm">활성 사용자 128명</p>
+              <p className="text-16">활성 사용자 128명</p>
             </CardContent>
           </Card>
           <Card variant="outlined" className="flex-1">
             <CardHeader>
               <CardTitle>상세 요약</CardTitle>
             </CardHeader>
-            <CardContent className="flex flex-col gap-2 text-sm">
+            <CardContent className="flex flex-col gap-2 text-16">
               <p>활성 사용자 128명</p>
               <p>이번 주 신규 12명</p>
               <p>이탈 2명</p>

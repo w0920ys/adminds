@@ -297,7 +297,7 @@ const GRID_KEYS: { keys: string; effect: string }[] = [
 function KeyTable({ caption, rows }: { caption: string; rows: { keys: string; effect: string }[] }) {
   return (
     <div className="overflow-x-auto rounded-lg border">
-      <table className="w-full text-left text-sm">
+      <table className="w-full text-left text-14">
         <caption className="text-muted-foreground px-3 py-2 text-left text-11 font-bold tracking-widest">
           {caption}
         </caption>
@@ -319,7 +319,7 @@ function KeyTable({ caption, rows }: { caption: string; rows: { keys: string; ef
 function KeyboardSection() {
   return (
     <div className="flex flex-col gap-4">
-      <p className={cn('text-muted-foreground text-sm', docProse)}>
+      <p className={cn('text-muted-foreground text-16', docProse)}>
         트리거는 button이 아니라 role=&quot;button&quot;을 단 div라 키를 스스로 다룬다. 열린 달력의
         날짜 격자는 마흔두 칸을 모두 탭 순서에 두지 않는다 — 지금 짚은 날 하나만 탭 정지점이고,
         나머지 칸으로는 아래 키로 옮긴다. 달력 안의 탭 정지점은 이전 달 · 다음 달 버튼과 그 한 칸,
@@ -327,7 +327,7 @@ function KeyboardSection() {
       </p>
       <KeyTable caption="트리거" rows={TRIGGER_KEYS} />
       <KeyTable caption="열린 달력의 날짜 격자" rows={GRID_KEYS} />
-      <p className={cn('text-muted-foreground text-sm', docProse)}>
+      <p className={cn('text-muted-foreground text-16', docProse)}>
         옮긴 날짜가 지금 보이는 달을 벗어나면 달이 함께 넘어간다 — 8월 1일에서 왼쪽 화살표를 누르면
         7월 31일로 옮겨 가면서 달력도 7월을 보인다. 고를 수 없는 날은 격자에서 건너뛰지 않는다.
         네이티브 disabled 대신 aria-disabled로 알리기 때문에 화살표로 지나갈 수 있고, 고르는 것만

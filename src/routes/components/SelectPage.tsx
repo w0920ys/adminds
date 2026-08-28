@@ -69,7 +69,7 @@ function Field({
 }) {
   return (
     <div className={cn('flex flex-col gap-1.5', className)}>
-      <label htmlFor={htmlFor} className="text-sm font-medium">
+      <label htmlFor={htmlFor} className="text-16 font-medium">
         {label}
       </label>
       {children}
@@ -237,7 +237,7 @@ function renderExample(exampleId: string): ReactNode {
     case 'status-change':
       return (
         <div className="bg-surface flex h-row-compact items-center gap-3 rounded-md border px-3">
-          <span className="flex-1 truncate text-sm">홍길동</span>
+          <span className="flex-1 truncate text-14">홍길동</span>
           <Select defaultValue="active">
             <SelectTrigger size="sm" aria-label="'홍길동' 상태 변경" className="w-24">
               <SelectValue />
@@ -324,7 +324,7 @@ function renderExample(exampleId: string): ReactNode {
             <SelectValue placeholder="담당자 선택" />
           </SelectTrigger>
           <SelectContent>
-            <p className="text-muted-foreground px-2 py-1.5 text-sm">담당자가 없습니다</p>
+            <p className="text-muted-foreground px-2 py-1.5 text-16">담당자가 없습니다</p>
           </SelectContent>
         </Select>
       )

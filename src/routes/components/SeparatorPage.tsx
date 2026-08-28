@@ -13,7 +13,7 @@ function renderSeparator(options: RenderOptions) {
 
   if (orientation === 'vertical') {
     return (
-      <div className="flex h-24 items-center gap-4 text-sm">
+      <div className="flex h-24 items-center gap-4 text-16">
         <span>메뉴 A</span>
         <Separator orientation="vertical" />
         <span>메뉴 B</span>
@@ -22,7 +22,7 @@ function renderSeparator(options: RenderOptions) {
   }
 
   return (
-    <div className="flex w-64 flex-col gap-4 text-sm">
+    <div className="flex w-64 flex-col gap-4 text-16">
       <span>위 구획</span>
       <Separator orientation="horizontal" />
       <span>아래 구획</span>
@@ -42,14 +42,14 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
   switch (guidelineId) {
     case 'meaningful-vs-decorative':
       return kind === 'do' ? (
-        <div className="bg-surface flex items-center gap-3 rounded-md border p-3 text-sm">
+        <div className="bg-surface flex items-center gap-3 rounded-md border p-3 text-16">
           <span>복사</span>
           <span>붙여넣기</span>
           <Separator orientation="vertical" decorative={false} className="h-4" />
           <span className="text-destructive">삭제</span>
         </div>
       ) : (
-        <div className="bg-surface flex flex-col gap-3 rounded-md border p-4 text-sm">
+        <div className="bg-surface flex flex-col gap-3 rounded-md border p-4 text-16">
           <p>기본 정보</p>
           <Separator decorative={false} />
           <p>결제 정보</p>
@@ -58,7 +58,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
 
     case 'no-line-when-spacing-suffices':
       return kind === 'do' ? (
-        <div className="flex w-56 flex-col gap-6 text-sm">
+        <div className="flex w-56 flex-col gap-6 text-16">
           <div className="flex flex-col gap-1">
             <p className="font-medium">일반</p>
             <p className="text-muted-foreground text-12">계정 정보를 관리합니다</p>
@@ -69,7 +69,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
           </div>
         </div>
       ) : (
-        <div className="flex w-56 flex-col gap-6 text-sm">
+        <div className="flex w-56 flex-col gap-6 text-16">
           <div className="flex flex-col gap-1">
             <p className="font-medium">일반</p>
             <p className="text-muted-foreground text-12">계정 정보를 관리합니다</p>
@@ -84,14 +84,14 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
 
     case 'not-between-every-item':
       return kind === 'do' ? (
-        <div className="bg-surface flex w-48 flex-col rounded-md border p-1 text-sm">
+        <div className="bg-surface flex w-48 flex-col rounded-md border p-1 text-16">
           <span className="rounded px-2 py-1.5">복사</span>
           <span className="rounded px-2 py-1.5">붙여넣기</span>
           <Separator className="my-1" />
           <span className="rounded px-2 py-1.5 text-destructive">삭제</span>
         </div>
       ) : (
-        <div className="bg-surface flex w-48 flex-col rounded-md border p-1 text-sm">
+        <div className="bg-surface flex w-48 flex-col rounded-md border p-1 text-16">
           <span className="rounded px-2 py-1.5">복사</span>
           <Separator className="my-1" />
           <span className="rounded px-2 py-1.5">붙여넣기</span>
@@ -109,7 +109,7 @@ function renderExample(exampleId: string): ReactNode {
   switch (exampleId) {
     case 'card-section':
       return (
-        <div className="bg-surface flex w-64 flex-col gap-3 rounded-md border p-4 text-sm">
+        <div className="bg-surface flex w-64 flex-col gap-3 rounded-md border p-4 text-16">
           <div>
             <p className="font-medium">일반</p>
             <p className="text-muted-foreground text-12">계정 정보를 관리합니다</p>
@@ -124,7 +124,7 @@ function renderExample(exampleId: string): ReactNode {
 
     case 'menu-group':
       return (
-        <div className="bg-surface flex w-48 flex-col rounded-md border p-1 text-sm">
+        <div className="bg-surface flex w-48 flex-col rounded-md border p-1 text-16">
           <span className="rounded px-2 py-1.5">복사</span>
           <span className="rounded px-2 py-1.5">붙여넣기</span>
           <Separator className="my-1" />
@@ -134,7 +134,7 @@ function renderExample(exampleId: string): ReactNode {
 
     case 'toolbar-group':
       return (
-        <div className="bg-surface flex items-center gap-2 rounded-md border p-2 text-sm">
+        <div className="bg-surface flex items-center gap-2 rounded-md border p-2 text-16">
           <span>실행 취소</span>
           <span>다시 실행</span>
           <Separator orientation="vertical" className="h-4" />
@@ -146,16 +146,16 @@ function renderExample(exampleId: string): ReactNode {
 
     case 'form-section':
       return (
-        <div className="flex w-64 flex-col gap-4 text-sm">
+        <div className="flex w-64 flex-col gap-4 text-16">
           <div className="flex flex-col gap-1.5">
-            <label htmlFor="sep-ex-name" className="text-sm font-medium">
+            <label htmlFor="sep-ex-name" className="text-16 font-medium">
               이름
             </label>
             <Input id="sep-ex-name" />
           </div>
           <Separator />
           <div className="flex flex-col gap-1.5">
-            <label htmlFor="sep-ex-email" className="text-sm font-medium">
+            <label htmlFor="sep-ex-email" className="text-16 font-medium">
               이메일
             </label>
             <Input id="sep-ex-email" type="email" />
@@ -165,7 +165,7 @@ function renderExample(exampleId: string): ReactNode {
 
     case 'vertical-height':
       return (
-        <div className="flex h-16 items-center gap-4 text-sm">
+        <div className="flex h-16 items-center gap-4 text-16">
           <span>메뉴 A</span>
           <Separator orientation="vertical" />
           <span>메뉴 B</span>
@@ -174,7 +174,7 @@ function renderExample(exampleId: string): ReactNode {
 
     case 'spacing-sufficient':
       return (
-        <div className="flex w-56 flex-col gap-6 text-sm">
+        <div className="flex w-56 flex-col gap-6 text-16">
           <p>주문 20260824-001</p>
           <p>주문 20260823-014</p>
         </div>
@@ -182,7 +182,7 @@ function renderExample(exampleId: string): ReactNode {
 
     case 'asymmetric-margin':
       return (
-        <div className="bg-surface flex items-center gap-3 rounded-md border py-2 pr-4 pl-2 text-sm">
+        <div className="bg-surface flex items-center gap-3 rounded-md border py-2 pr-4 pl-2 text-16">
           <span>실행 취소</span>
           <Separator orientation="vertical" className="h-4" />
           <span>다시 실행</span>
