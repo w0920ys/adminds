@@ -2578,6 +2578,178 @@ export const components: ComponentMeta[] = [
     verified: false,
   },
   {
+    id: 'data-table',
+    name: 'Data Table',
+    aliases: ['데이터 테이블', '데이터 표', '정렬 가능한 표', '체크박스 표', 'sortable table', 'selectable table'],
+    category: 'data-display',
+    status: 'review',
+    addedIn: 'v0.13.0',
+    changedIn: 'v0.13.0',
+    purpose:
+      'src/lib/data-table.ts의 정렬·페이지 나눔·선택 순수 함수를 Table·Checkbox·Pagination·Button 위에 조립한 표다. 정렬·페이지·선택 세 상태 모두 비제어가 기본이고, 이름이 같은 prop을 주면 그때부터 부모가 쥔다.',
+    anatomy: [
+      {
+        part: 'toolbar',
+        label: 'Toolbar',
+        note: 'toolbar prop이 있고 선택된 행이 하나 이상일 때만 나타난다. 선택 개수와 선택을 비우는 함수를 건네받아 대량 작업 버튼을 조립하는 자리다',
+        optional: true,
+      },
+      {
+        part: 'select-all-cell',
+        label: 'Select-all cell',
+        note: '머리 행 첫 칸의 Checkbox. 이름은 "이 페이지 전부 선택"이다 — 실제로 지금 페이지의 행만 선택하거나 해제하고 다른 페이지에서 고른 것은 건드리지 않는다. 지금 페이지에 행이 없으면 disabled된다',
+        optional: true,
+      },
+      {
+        part: 'sortable-header',
+        label: 'Sortable header',
+        note: 'sortValue를 준 열의 머리. 이름 전체가 button이 되어 누르면 없음 → 오름차순 → 내림차순 → 없음 순으로 돈다. 정렬 기준을 바꾸면 페이지도 1로 돌아간다',
+      },
+      {
+        part: 'sort-indicator',
+        label: 'Sort indicator',
+        note: 'sortable-header 끝의 방향 아이콘(ChevronUp, 12px, aria-hidden). 내림차순이면 180도 돌고, 정렬되지 않은 열에서도 자리는 남아 opacity만 0이 된다 — 누를 때마다 머리 너비가 바뀌어 표가 튀는 것을 막는다',
+      },
+      {
+        part: 'row',
+        label: 'Row',
+        note: '데이터 한 줄. 선택된 행은 Table의 selected 상태를 그대로 물려받아 bg-accent로 칠해진다',
+      },
+      {
+        part: 'select-cell',
+        label: 'Select cell',
+        note: '행마다의 첫 칸. 이름은 첫 열의 글자와 숨긴 "행 선택" 문구를 이어 짓는다 — 첫 열이 아바타나 아이콘처럼 글자를 담지 않는 표에서도 이름 없는 컨트롤이 되지 않는다',
+        optional: true,
+      },
+      {
+        part: 'footer',
+        label: 'Footer',
+        note: 'Pagination을 담는 자리. 전체 건수·페이지당 건수와 이전·번호·다음 버튼을 보인다. 불러오는 중에는 내용을 비우고 버튼 하나 높이(h-control-sm)만큼 자리만 예약해 둔다',
+      },
+    ],
+    properties: [
+      {
+        name: 'density',
+        title: 'Density',
+        description: 'Table의 density를 그대로 물려받는다. 여기서 새로 정하지 않는다.',
+        display: 'row',
+        options: [
+          { value: 'compact', note: '행이 많은 목록·로그' },
+          { value: 'default', note: '기본' },
+        ],
+      },
+      {
+        name: 'selection',
+        title: 'Selection',
+        description: '행마다 Checkbox를 두어 고를 수 있게 할지 정한다. selectable prop 하나가 이 축을 결정한다.',
+        display: 'row',
+        options: [
+          { value: 'none', note: '기본. 선택 칸이 없다' },
+          {
+            value: 'multiple',
+            note: '선택 칸이 생긴다. 머리의 체크박스는 이 페이지 전부를 뜻하고, 선택 자체는 getRowId로 매겨 두어 페이지를 넘어가도 남는다',
+          },
+        ],
+      },
+      {
+        name: 'state',
+        title: 'State',
+        description:
+          '표 전체가 무엇을 보이는지 정한다. Table의 state(행 하나의 상호작용 상태)와는 다른 축이다 — DataTable은 표 전체를 그리므로 불러오는 중·빈 목록이 한 축의 값으로 나란히 놓인다.',
+        display: 'grid',
+        options: [
+          { value: 'default' },
+          { value: 'loading', note: '행 자리에 Skeleton을 두고, 화면에 보이지 않는 문구로 불러오는 중임을 소리로도 알린다' },
+          { value: 'empty', note: '머리는 남기고 몸에 EmptyState를 둔다. rows가 비어 있으면 state를 따로 주지 않아도 같은 화면이 된다' },
+        ],
+      },
+    ],
+    guidelines: [
+      {
+        id: 'header-checkbox-means-this-page',
+        title: '머리 체크박스는 이 페이지만 뜻한다',
+        body: '머리의 체크박스는 지금 페이지의 행만 선택하거나 해제한다. pageSelectionState가 지금 페이지의 id만 보기 때문이다 — 다른 페이지에서 고른 것은 건드리지 않는다. 선택한 개수는 selected 전체 집합의 크기이므로 페이지를 넘어가도 남는다.',
+        do: ['선택 개수는 toolbar나 그 옆에서 전체 기준으로 보여준다'],
+        dont: ["머리 체크박스를 눌러 '전체 선택'이 된다고 문구를 달지 않는다 — 이 페이지만이다"],
+      },
+      {
+        id: 'sort-resets-to-first-page',
+        title: '정렬을 바꾸면 페이지도 1로 돌아간다',
+        body: '3페이지에서 정렬 머리를 누르면 페이지가 1로 돌아간다. 페이지에 머물면 방금 고른 기준의 맨 위가 아니라 이전 목록의 중간이 보인다.',
+        do: ['제어 모드에서는 onSortChange와 함께 오는 onPageChange(1)을 그대로 받아 표시 페이지를 따라간다'],
+        dont: ['정렬만 제어하고 페이지는 그대로 두어, 정렬 기준이 바뀌었는데 화면은 이전 페이지에 머물게 두지 않는다'],
+      },
+      {
+        id: 'missing-value-sorts-last',
+        title: '값이 없는 칸은 정렬 방향과 무관하게 끝으로 간다',
+        body: 'sortValue가 null이나 undefined를 돌려준 행은 오름차순이든 내림차순이든 항상 끝에 놓인다. 없는 값은 작은 값이 아니라 값이 아니기 때문이다.',
+        do: ['셀에 보일 값이 없으면 —로 밝혀 정렬에서 끝에 몰리는 이유를 짐작할 수 있게 한다'],
+        dont: ['정렬 결과에서 빈 값을 맨 앞으로 보내려고 sortValue를 0이나 빈 문자열로 채우지 않는다'],
+      },
+      {
+        id: 'sticky-select-cell-pins-with-columns',
+        title: '선택 칸은 sticky 열과 함께 고정된다',
+        body: '선택 칸과 sticky 열이 함께 있으면 선택 칸도 left-0에 고정되고, sticky 열은 그만큼(--spacing-control-lg) 오른쪽으로 밀린다. 고정하지 않으면 가로로 구르는 즉시 선택 칸이 화면 왼쪽 밖으로 밀려나 체크박스가 손에 닿지 않는다 — 왼쪽 끝까지 되굴러야만 다시 닿을 수 있다.',
+        do: ['selectable과 sticky 열을 함께 쓴다 — 선택 칸 고정은 DataTable이 이미 하고 있다'],
+        dont: ['sticky 열이 있는 표에서 선택 칸이 화면 밖으로 사라지는 문제를 겹침으로 잘못 적지 않는다 — 겹치는 것이 아니라 밀려나 손이 닿지 않게 되는 문제다'],
+      },
+      {
+        id: 'loading-is-announced',
+        title: '불러오는 중임을 소리로도 알린다',
+        body: 'Skeleton은 스스로 aria-hidden이라 접근성 트리에 아무것도 남기지 않는다. DataTable은 role="status"의 sr-only 문구로 "불러오는 중입니다"를 함께 전한다.',
+        do: ['state를 loading으로 둘 때는 이 문구가 그대로 나가게 두고 따로 감추지 않는다'],
+        dont: ['Skeleton만 두고 불러오는 중이라는 사실을 어디에도 소리로 남기지 않은 채 두지 않는다'],
+      },
+    ],
+    usage: [
+      {
+        id: 'user-list',
+        title: '사용자 목록',
+        note: '이름 옆에 Avatar, 상태 칸에 Badge를 쓴다. 이름 열에 sortValue를 주면 가나다순으로 정렬할 수 있다',
+      },
+      { id: 'order-history', title: '주문 내역', note: '금액 열은 numeric으로 오른쪽 정렬하고, 상태는 Badge로 보인다' },
+      { id: 'log', title: '로그', note: '시간순으로 쌓이는 단순한 표. perPage를 크게 두어 스크롤보다 페이지 이동을 줄인다' },
+      {
+        id: 'bulk-selection',
+        title: '선택과 대량 작업',
+        note: 'selectable을 켜고, toolbar에 선택한 개수에 따라 나타날 대량 작업 버튼을 준다',
+      },
+    ],
+    cases: [
+      {
+        id: 'empty-list',
+        title: '빈 목록',
+        note: '머리는 남기고 몸에 EmptyState를 둔다. rows가 비어 있으면 state를 따로 주지 않아도 이 화면이 된다',
+      },
+      {
+        id: 'no-filter-results',
+        title: '필터 결과 없음',
+        note: 'emptyContent로 기본 문구 대신 조건을 지우는 안내와 버튼을 넣을 수 있다',
+      },
+      {
+        id: 'loading',
+        title: '불러오는 중',
+        note: '행 자리에 Skeleton을 최대 다섯 줄 두고, 화면에 보이지 않는 문구로 불러오는 중임을 함께 알린다',
+      },
+      {
+        id: 'selection-across-pages',
+        title: '선택 상태에서 페이지 이동',
+        note: '선택은 getRowId로 매겨 두므로 페이지를 옮겨도 선택한 개수가 그대로 남는다',
+      },
+      {
+        id: 'missing-value',
+        title: '값이 없는 칸',
+        note: '—로 밝히는 것은 cell을 쓰는 쪽의 몫이다. sortValue가 없는 값을 돌려주면 정렬 방향과 무관하게 그 행은 끝으로 간다',
+      },
+      {
+        id: 'narrow-screen',
+        title: '좁은 화면',
+        note: '표가 가로로 구르고, sticky를 켠 열은 고정된 채 남는다. selectable까지 함께 켜면 선택 칸도 왼쪽에 고정되어 스크롤해도 손이 닿는다',
+      },
+    ],
+    verified: false,
+  },
+  {
     id: 'description-list',
     name: 'Description List',
     aliases: ['정의 목록', '키값', '상세 정보', 'dl', 'definition list', '속성 목록'],

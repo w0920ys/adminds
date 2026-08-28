@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "adminds",
   "title": "Admin Design System",
-  "description": "토큰과 컴포넌트 서른여덟 개를 한 번에 가져온다.",
+  "description": "토큰과 컴포넌트 서른아홉 개를 한 번에 가져온다.",
   "registryDependencies": [
     "https://adminds.vercel.app/r/accordion.json",
     "https://adminds.vercel.app/r/alert.json",
@@ -16,6 +16,7 @@
     "https://adminds.vercel.app/r/collapsible.json",
     "https://adminds.vercel.app/r/combobox.json",
     "https://adminds.vercel.app/r/command.json",
+    "https://adminds.vercel.app/r/data-table.json",
     "https://adminds.vercel.app/r/date-picker.json",
     "https://adminds.vercel.app/r/description-list.json",
     "https://adminds.vercel.app/r/dialog.json",
