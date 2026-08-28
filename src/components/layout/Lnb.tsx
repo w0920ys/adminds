@@ -119,8 +119,8 @@ export function Lnb({ open, onClose }: { open: boolean; onClose: () => void }) {
           {section.items.map((item) =>
             isGroup(item) ? (
               /* 묶음은 이동하지 않으므로 링크가 아니라 목록의 머리글이다 */
-              <section key={item.label} className="mt-4 flex flex-col first:mt-0">
-                <h2 className="text-muted-foreground mb-1 px-2 text-2xs font-bold tracking-widest">
+              <section key={item.label} className="mt-8 flex flex-col first:mt-0">
+                <h2 className="text-muted-foreground mb-2 px-2 text-2xs font-bold tracking-widest">
                   {item.label.toUpperCase()}
                 </h2>
                 {item.items.map((doc) => (
