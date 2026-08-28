@@ -3,8 +3,60 @@ import * as TooltipPrimitive from '@radix-ui/react-tooltip'
 import { cn } from '@/lib/utils'
 
 const TooltipProvider = TooltipPrimitive.Provider
-const Tooltip = TooltipPrimitive.Root
-const TooltipTrigger = TooltipPrimitive.Trigger
+
+/*
+ * Radix 기본값은 트리거를 클릭하면 오히려 닫힌다 — pointerdown을
+ * '상호작용 시작'으로 보고 열려 있던 말풍선을 지운다. 이 프로젝트는
+ * 반대를 원한다: 트리거를 클릭하면 열리고, 바깥을 클릭해야 닫힌다.
+ * 그래서 open을 이 컴포넌트가 직접 들고 있다가(Radix가 보내는 모든
+ * onOpenChange 신호는 그대로 반영한다 — 호버·포커스·Escape·바깥 클릭은
+ * 손대지 않는다) 트리거의 click에서만 강제로 연다. pointerdown이
+ * click보다 먼저 오므로, Radix의 닫힘 처리가 지나간 뒤에 이 click이
+ * 다시 연다 — 실제로 열려 있던 걸 지웠다가 같은 클릭 안에서 다시 켜는
+ * 셈이라 화면엔 깜빡임 없이 그대로 열린 채로 보인다.
+ */
+type TooltipContextValue = { forceOpen: () => void }
+const TooltipContext = React.createContext<TooltipContextValue | null>(null)
+
+function Tooltip({
+  open: openProp,
+  defaultOpen = false,
+  onOpenChange,
+  ...props
+}: React.ComponentProps<typeof TooltipPrimitive.Root>) {
+  const [uncontrolledOpen, setUncontrolledOpen] = React.useState(defaultOpen)
+  const isControlled = openProp !== undefined
+  const open = isControlled ? openProp : uncontrolledOpen
+
+  const setOpen = React.useCallback(
+    (next: boolean) => {
+      if (!isControlled) setUncontrolledOpen(next)
+      onOpenChange?.(next)
+    },
+    [isControlled, onOpenChange],
+  )
+
+  const context = React.useMemo<TooltipContextValue>(() => ({ forceOpen: () => setOpen(true) }), [setOpen])
+
+  return (
+    <TooltipContext.Provider value={context}>
+      <TooltipPrimitive.Root open={open} onOpenChange={setOpen} {...props} />
+    </TooltipContext.Provider>
+  )
+}
+
+function TooltipTrigger({ onClick, ...props }: React.ComponentProps<typeof TooltipPrimitive.Trigger>) {
+  const context = React.useContext(TooltipContext)
+  return (
+    <TooltipPrimitive.Trigger
+      onClick={(event) => {
+        onClick?.(event)
+        context?.forceOpen()
+      }}
+      {...props}
+    />
+  )
+}
 
 /*
  * Radix Tooltip은 DismissableLayer를 쓰지만 disableOutsidePointerEvents를
