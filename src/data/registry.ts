@@ -2582,7 +2582,7 @@ export const components: ComponentMeta[] = [
     name: 'Data Table',
     aliases: ['데이터 테이블', '데이터 표', '정렬 가능한 표', '체크박스 표', 'sortable table', 'selectable table'],
     category: 'data-display',
-    status: 'review',
+    status: 'stable',
     addedIn: 'v0.13.0',
     changedIn: 'v0.13.0',
     purpose:

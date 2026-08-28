@@ -16,6 +16,7 @@ import { CollapsiblePage } from '@/routes/components/CollapsiblePage'
 import { ComboboxPage } from '@/routes/components/ComboboxPage'
 import { CommandPage } from '@/routes/components/CommandPage'
 import { ComponentsIndex } from '@/routes/components/ComponentsIndex'
+import { DataTablePage } from '@/routes/components/DataTablePage'
 import { DatePickerPage } from '@/routes/components/DatePickerPage'
 import { DescriptionListPage } from '@/routes/components/DescriptionListPage'
 import { DialogPage } from '@/routes/components/DialogPage'
@@ -118,6 +119,7 @@ export const routes: RouteObject[] = [
           { path: 'progress', element: <ProgressPage /> },
           { path: 'empty-state', element: <EmptyStatePage /> },
           { path: 'table', element: <TablePage /> },
+          { path: 'data-table', element: <DataTablePage /> },
           { path: 'badge', element: <BadgePage /> },
           { path: 'avatar', element: <AvatarPage /> },
           { path: 'card', element: <CardPage /> },
