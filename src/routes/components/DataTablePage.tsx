@@ -5,6 +5,7 @@ import { ComponentPage } from '@/components/docs/ComponentPage'
 import type { RenderOptions } from '@/components/docs/PropertyBlock'
 import { Button } from '@/components/ui/button'
 import { DataTable } from '@/components/ui/data-table'
+import { Input } from '@/components/ui/input'
 import {
   EmptyState,
   EmptyStateAction,
@@ -133,24 +134,34 @@ function renderDataTable(options: RenderOptions) {
 /**
  * 선택을 상태로 들고 있는 표. 여러 예시가 이것을 함께 쓴다.
  *
- * 선택을 제어로 올린 것은 toolbar를 처음부터 보이기 위해서가 아니라(고른 것이
- * 없으면 toolbar는 그리지 않는다) 예시마다 다른 toolbar를 끼우기 위해서다.
- * 고르고 페이지를 넘겨 보면 개수가 그대로 남는 것이 눈으로 확인된다.
+ * 선택을 제어로 올린 것은 예시마다 다른 toolbar를 끼우고, 처음 몇 줄을 골라
+ * 둔 채로 그릴 수 있게 하기 위해서다. 고르고 페이지를 넘겨 보면 개수가 그대로
+ * 남는 것이 눈으로 확인된다.
+ *
+ * initialCount는 처음부터 골라 둘 행의 수다. DataTable은 고른 것이 없으면
+ * toolbar를 아예 부르지 않으므로(toolbar && selectedCount > 0), 0으로 두면
+ * 독자가 체크박스를 누르기 전까지 toolbar가 서지 않는다 — toolbar 자체를
+ * 보여야 하는 예시는 여기에 수를 준다. AnatomyPreview가 같은 이유로 한 줄을
+ * 골라 두고 시작한다.
  */
 function SelectableExample({
   label,
   rows = components,
   perPage = 4,
   columns = axisColumns,
+  initialCount = 0,
   toolbar,
 }: {
   label: string
   rows?: readonly Row[]
   perPage?: number
   columns?: readonly DataTableColumn<Row>[]
+  initialCount?: number
   toolbar: (context: { selectedCount: number; clearSelection: () => void }) => ReactNode
 }) {
-  const [selected, setSelected] = useState<ReadonlySet<string>>(() => new Set())
+  const [selected, setSelected] = useState<ReadonlySet<string>>(
+    () => new Set(rows.slice(0, initialCount).map(rowId)),
+  )
 
   return (
     <DataTable
@@ -200,6 +211,36 @@ function SortedExample({
   )
 }
 
+/**
+ * 정렬과 페이지를 둘 다 부모가 쥔 표. sort-resets-to-first-page 지침의 DO다.
+ *
+ * DataTable은 정렬을 바꿀 때 onSortChange와 onPageChange(1)을 함께 내보낸다.
+ * 이 예시는 둘 다 그대로 받아 자기 상태에 쓰므로, 뒷장에서 머리를 눌러도 위에
+ * 적힌 페이지가 1로 따라간다 — 그 숫자는 부모가 들고 있는 page 상태를 그대로
+ * 읽은 것이다.
+ */
+function ControlledSortExample() {
+  const [sort, setSort] = useState<SortState>(null)
+  const [page, setPage] = useState(1)
+
+  return (
+    <div className="flex w-full flex-col gap-2">
+      <p className="text-muted-foreground text-2xs">부모가 쥔 page: {page}</p>
+      <DataTable
+        label="정렬과 페이지를 부모가 함께 쥔 컴포넌트 목록"
+        columns={axisColumns}
+        rows={components}
+        getRowId={rowId}
+        perPage={4}
+        sort={sort}
+        onSortChange={setSort}
+        page={page}
+        onPageChange={setPage}
+      />
+    </div>
+  )
+}
+
 function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): ReactNode {
   switch (guidelineId) {
     /*
@@ -213,6 +254,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
         <SelectableExample
           label="선택한 개수를 전체 기준으로 보이는 컴포넌트 목록"
           perPage={3}
+          initialCount={2}
           toolbar={({ selectedCount, clearSelection }) => (
             <>
               <span className="text-sm">{selectedCount}건 선택됨</span>
@@ -226,9 +268,19 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
         <SelectableExample
           label="선택을 전체 선택이라고 잘못 적은 컴포넌트 목록"
           perPage={3}
+          initialCount={2}
           toolbar={() => <span className="text-sm">전체 선택됨</span>}
         />
       )
+
+    /*
+     * DO만 그린다. 뒷장에서 정렬 머리를 눌러 위의 page가 1로 따라가는 것이
+     * 이 지침이 말하는 모습이다. DON'T는 그리지 않는다 — 부모가 정렬과 함께
+     * 오는 onPageChange(1)만 골라 무시하도록 짜야 나오는 화면이라, 문서에
+     * 고장 난 표를 심는 일이 된다. 규칙은 옆의 문장이 그대로 말한다.
+     */
+    case 'sort-resets-to-first-page':
+      return kind === 'do' ? <ControlledSortExample /> : null
 
     /*
      * 둘 다 '마지막 변경'으로 오름차순 정렬해 둔 표다. 값이 없는 행을 어떻게
@@ -320,9 +372,20 @@ function FilterExample() {
 
   return (
     <div className="flex w-full flex-col gap-3">
-      <p className="text-muted-foreground text-xs">
-        조건: <code className="bg-muted rounded px-1.5 py-1 text-2xs">{query || '(없음)'}</code>
-      </p>
+      {/*
+       * 조건을 글로만 적어 두면 '조건 지우기'를 한 번 누른 뒤 빈 결과로 돌아갈
+       * 길이 없다. 실제 입력을 두어 두 화면을 오갈 수 있게 한다. label로 감싸
+       * 이 입력의 이름이 '조건'이 된다.
+       */}
+      <label className="text-muted-foreground flex items-center gap-2 text-xs">
+        조건
+        <Input
+          size="sm"
+          value={query}
+          onChange={(event) => setQuery(event.target.value)}
+          className="max-w-40"
+        />
+      </label>
       <DataTable
         label="조건으로 거른 컴포넌트 목록"
         columns={axisColumns}
@@ -373,6 +436,7 @@ function renderExample(exampleId: string): ReactNode {
           label="대량 작업을 걸 컴포넌트 목록"
           rows={components.slice(0, 10)}
           perPage={4}
+          initialCount={2}
           toolbar={({ selectedCount, clearSelection }) => (
             <>
               <span className="text-sm">{selectedCount}건 선택됨</span>

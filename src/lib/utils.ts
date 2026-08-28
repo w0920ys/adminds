@@ -4,7 +4,7 @@ import { extendTailwindMerge } from 'tailwind-merge'
 /*
  * tailwind-merge는 이 프로젝트가 tokens.css에 심은 --spacing-control·
  * --spacing-control-sm·--spacing-control-lg를 모른다 — h·min-h·size
- * 그룹의 기본 테마 매처는 표준 스페이싱 스케일(숫자·px·fraction 등)만
+ * 같은 그룹의 기본 테마 매처는 표준 스페이싱 스케일(숫자·px·fraction 등)만
  * 인식하므로 h-control 같은 클래스는 어느 그룹에도 잡히지 않고
  * "알 수 없는 클래스"로 그냥 통과한다. 그 상태에서 뒤에 h-auto를
  * 덧붙이면 h-auto는 h 그룹의 정식 멤버라 인식되지만 h-control은
@@ -36,11 +36,21 @@ import { extendTailwindMerge } from 'tailwind-merge'
  * 를 쓰는 곳이 없다(control 쪽은 size-control·size-control-sm·
  * size-control-lg를 Button·Avatar·Breadcrumb가 실제로 쓴다).
  *
+ * 가로 쪽 토큰 유틸도 같은 틈에 있었다. min-w-control 계열(Toggle의
+ * 세 크기와 DataTable의 선택 칸)과 left-control-lg(DataTable이 sticky
+ * 열을 선택 칸 폭만큼 미는 자리)가 그것이다. left 쪽은 실제로 한
+ * 요소에서 만난다 — table.tsx의 sticky 칸이 left-0을 먼저 내보내고
+ * DataTable이 그 뒤에 left-control-lg를 얹는데, 등록하기 전에는 둘 다
+ * 살아남아 이기는 쪽을 최종 스타일시트의 정의 순서가 정하고 있었다.
+ * 지금은 뒤에 온 left-control-lg만 남는다. 이 두 그룹에도 다섯 토큰을
+ * 모두 등록한다 — left-row·min-w-row를 쓰는 자리는 아직 없지만, 위와
+ * 같은 이유로 그룹 안을 비워 두면 나중에 그 하나가 틈이 된다.
+ *
  * theme.spacing 쪽의 일반 매처를 넓히는 대신 classGroups를 직접
  * 확장한 것은 의도적이다 — theme.spacing을 건드리면 p-·m-·gap-·w-
  * 등 스페이싱 스케일을 쓰는 모든 그룹이 영향을 받아 파급 범위를
- * 가늠하기 어렵다. h·min-h·size 세 그룹만 정확히 넓히면 다른
- * 유틸리티의 병합 규칙은 그대로다.
+ * 가늠하기 어렵다. 실제로 토큰 유틸이 쓰이는 그룹만 정확히 넓히면
+ * 다른 유틸리티의 병합 규칙은 그대로다.
  */
 const twMerge = extendTailwindMerge({
   extend: {
@@ -48,6 +58,8 @@ const twMerge = extendTailwindMerge({
       h: [{ h: ['control', 'control-sm', 'control-lg', 'row', 'row-compact'] }],
       'min-h': [{ 'min-h': ['control', 'control-sm', 'control-lg', 'row', 'row-compact'] }],
       size: [{ size: ['control', 'control-sm', 'control-lg'] }],
+      'min-w': [{ 'min-w': ['control', 'control-sm', 'control-lg', 'row', 'row-compact'] }],
+      left: [{ left: ['control', 'control-sm', 'control-lg', 'row', 'row-compact'] }],
     },
   },
 })

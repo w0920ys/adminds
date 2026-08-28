@@ -2586,7 +2586,7 @@ export const components: ComponentMeta[] = [
     addedIn: 'v0.13.0',
     changedIn: 'v0.13.0',
     purpose:
-      'src/lib/data-table.ts의 정렬·페이지 나눔·선택 순수 함수를 Table·Checkbox·Pagination·Button 위에 조립한 표다. 정렬·페이지·선택 세 상태 모두 비제어가 기본이고, 이름이 같은 prop을 주면 그때부터 부모가 쥔다.',
+      '여러 행을 훑어보고 골라 한꺼번에 다루는 어드민 표다. 정렬·페이지 나눔·선택을 한 벌로 갖춰 목록 화면마다 그 셋을 다시 짜지 않게 한다. 세 상태 모두 비제어가 기본이고, 이름이 같은 prop을 주면 그때부터 부모가 쥔다.',
     anatomy: [
       {
         part: 'toolbar',
@@ -2666,6 +2666,13 @@ export const components: ComponentMeta[] = [
     ],
     guidelines: [
       {
+        id: 'label-names-the-region',
+        title: '표마다 다른 이름을 준다',
+        body: 'label은 필수 prop이다. 가로로 구르는 그릇이 role="region"이라 이름이 있어야 하는데, 그 표에 무엇이 들었는지는 부르는 쪽만 안다. 기본값을 두지 않은 것도 그래서다 — 한 화면의 표 둘이 같은 이름의 랜드마크가 되면 이름을 요구한 목적이 오류 하나 없이 사라진다.',
+        do: ['"주문 내역"처럼 그 표가 무엇을 담는지, 같은 화면의 다른 표와 갈리는 이름을 준다'],
+        dont: ["'표'나 '목록'처럼 어느 표에나 맞는 이름을 여러 표에 돌려쓰지 않는다"],
+      },
+      {
         id: 'header-checkbox-means-this-page',
         title: '머리 체크박스는 이 페이지만 뜻한다',
         body: '머리의 체크박스는 지금 페이지의 행만 선택하거나 해제한다. pageSelectionState가 지금 페이지의 id만 보기 때문이다 — 다른 페이지에서 고른 것은 건드리지 않는다. 선택한 개수는 selected 전체 집합의 크기이므로 페이지를 넘어가도 남는다.',
@@ -2689,9 +2696,9 @@ export const components: ComponentMeta[] = [
       {
         id: 'sticky-select-cell-pins-with-columns',
         title: '선택 칸은 sticky 열과 함께 고정된다',
-        body: '선택 칸과 sticky 열이 함께 있으면 선택 칸도 left-0에 고정되고, sticky 열은 그만큼(--spacing-control-lg) 오른쪽으로 밀린다. 고정하지 않으면 가로로 구르는 즉시 선택 칸이 화면 왼쪽 밖으로 밀려나 체크박스가 손에 닿지 않는다 — 왼쪽 끝까지 되굴러야만 다시 닿을 수 있다.',
-        do: ['selectable과 sticky 열을 함께 쓴다 — 선택 칸 고정은 DataTable이 이미 하고 있다'],
-        dont: ['sticky 열이 있는 표에서 선택 칸이 화면 밖으로 사라지는 문제를 겹침으로 잘못 적지 않는다 — 겹치는 것이 아니라 밀려나 손이 닿지 않게 되는 문제다'],
+        body: 'selectable을 켜고 열 하나에 sticky를 주면 선택 칸도 함께 left-0에 고정되고, sticky 열은 그만큼(--spacing-control-lg) 오른쪽으로 밀린다. sticky 열이 하나도 없으면 선택 칸도 고정되지 않는다 — 그러면 가로로 구르는 즉시 선택 칸이 화면 왼쪽 밖으로 밀려나 체크박스에 손이 닿지 않고, 왼쪽 끝까지 되굴러야만 다시 닿는다.',
+        do: ['가로로 구르는 넓은 표에 selectable을 켤 때는 첫 열에도 sticky를 준다 — 선택 칸은 DataTable이 함께 고정한다'],
+        dont: ['넓은 표에 selectable만 켜고 sticky 열을 하나도 두지 않는다 — 선택 칸이 왼쪽 밖으로 밀려나 손이 닿지 않는다'],
       },
       {
         id: 'loading-is-announced',

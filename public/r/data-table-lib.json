@@ -1,7 +1,7 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "data-table-lib",
-  "title": "Data Table",
+  "title": "Data Table Rules",
   "description": "정렬·페이지 나눔·선택 규칙을 담은 순수 함수들. Data Table이 쓴다.",
   "files": [
     {

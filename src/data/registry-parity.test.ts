@@ -267,3 +267,84 @@ describe('손으로 적은 컴포넌트 개수', () => {
     expect(counted, 'README가 적는 개수').toBe(components.length)
   })
 })
+
+/**
+ * `registryDependencies`가 실제 import와 맞는지 본다.
+ *
+ * 위의 검사들은 항목이 있는지, payload가 소스와 같은지만 본다. 항목의 의존
+ * 목록이 그 파일이 진짜 필요로 하는 것과 갈라지는 일은 그 어느 것에도 걸리지
+ * 않는다 — 빠지면 shadcn add로 받은 쪽에서 없는 모듈을 import하는 파일이
+ * 떨어지고, 남으면 쓰지도 않는 컴포넌트가 함께 설치된다.
+ *
+ * data-table이 utils.json을 싣지 않는 유일한 항목인 것도 이 검사가 지킨다 —
+ * 그 파일은 cn을 쓰지 않아서 뺀 것이지 빠뜨린 것이 아니고, 관례에 맞추려고
+ * 되돌려 놓으면 여기서 걸린다.
+ *
+ * tokens는 양쪽 셈에서 뺀다. 토큰은 import가 아니라 클래스 이름(h-control 같은
+ * 것)으로 쓰이므로 소스의 import 문에 나타나지 않는다.
+ */
+describe('registry.json의 registryDependencies', () => {
+  const TOKENS = 'tokens'
+
+  /** 소스 경로 → 그 파일을 싣는 항목 이름 */
+  const ownerOf = new Map<string, string>()
+  for (const item of registryItems) {
+    for (const file of item.files ?? []) ownerOf.set(file.path, item.name)
+  }
+
+  const uiItems = registryItems.filter((item) => item.type === 'registry:ui')
+
+  /** 항목이 선언한 의존 이름들(URL의 마지막 조각) */
+  function declaredOf(item: (typeof registryItems)[number]): Set<string> {
+    return new Set(
+      (item.registryDependencies ?? []).map((url) => url.split('/').pop()!.replace('.json', '')),
+    )
+  }
+
+  /**
+   * 항목의 파일들이 실제로 import하는 다른 항목들.
+   * 자기 자신은 뺀다 — date-picker·toggle처럼 한 항목이 두 파일을 실으면 그
+   * 둘이 서로를 import한다.
+   */
+  function importedOf(item: (typeof registryItems)[number]): Set<string> {
+    const found = new Set<string>()
+    for (const file of item.files ?? []) {
+      const source = sourceFiles.get(file.path)
+      if (source === undefined) continue
+      for (const [, alias] of source.matchAll(/from '(@\/[^']+)'/g)) {
+        const base = alias.replace('@/', 'src/')
+        const owner = ownerOf.get(`${base}.tsx`) ?? ownerOf.get(`${base}.ts`)
+        if (owner && owner !== item.name) found.add(owner)
+      }
+    }
+    return found
+  }
+
+  it('import한 것이 모두 선언돼 있다', () => {
+    const missing: string[] = []
+    for (const item of uiItems) {
+      const declared = declaredOf(item)
+      for (const name of importedOf(item)) {
+        if (!declared.has(name)) missing.push(`${item.name} → ${name}`)
+      }
+    }
+    expect(missing, 'import하는데 registryDependencies에 없다').toEqual([])
+  })
+
+  it('선언한 것이 모두 실제로 import된다', () => {
+    const unused: string[] = []
+    for (const item of uiItems) {
+      const imported = importedOf(item)
+      for (const name of declaredOf(item)) {
+        if (name === TOKENS) continue
+        if (!imported.has(name)) unused.push(`${item.name} → ${name}`)
+      }
+    }
+    expect(unused, 'registryDependencies에 있는데 import하지 않는다').toEqual([])
+  })
+
+  it('견줄 항목이 실제로 있다', () => {
+    // uiItems가 비면 위 둘은 아무것도 하지 않고 통과한다.
+    expect(uiItems.length).toBe(components.length)
+  })
+})
