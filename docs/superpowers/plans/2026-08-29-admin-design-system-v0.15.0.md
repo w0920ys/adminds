@@ -491,6 +491,61 @@ git commit -m "feat(layout): 사이트 푸터를 로고+copyright와 메뉴 2컬
 
 ---
 
+## Task 5: 회차 기록 — releases.ts와 package.json
+
+**Files:**
+- Modify: `src/data/releases.ts`
+- Modify: `package.json`(버전)
+
+**Interfaces:**
+- Consumes: Task 1~4의 커밋 전부
+- Produces: 없음
+
+- [ ] **Step 1: 이 브랜치가 실제로 무엇을 했는지 센다**
+
+Run:
+```bash
+git log --oneline main..HEAD
+git diff --stat main..HEAD
+```
+
+**본 것만 적는다.** 커밋 메시지가 아니라 실제 diff를 봐라.
+
+- [ ] **Step 2: `releases.ts`에 v0.15.0을 더한다**
+
+**한 줄 요약 규칙**(사용자 지시)을 따른다 — 핵심만, 나머지는 안 적는다. `src/data/releases.ts` 맨 위(`releases` 배열의 첫 항목, 지금은 `v0.14.0`) 앞에 새 항목을 추가한다:
+
+- `version`: `'v0.15.0'`
+- `publishedAt`: 오늘 실제 날짜(시스템 날짜를 확인해서 적는다 — 손으로 지어내지 않는다)
+- `title`: 한 줄, 이번 회차의 핵심(모바일 헤더·서랍 순서와 사이트 푸터 재구성)
+- `purpose`: 한두 문장 — 모바일 헤더의 메뉴 버튼 위치와 LNB 서랍이 오른쪽에서 열리는 것으로 바뀌었고, 서랍이 섹션 목록과 문서 목록 두 단계로 나뉘었으며, 사이트 푸터 두 곳(문서 하단 이동 영역·전체 푸터)이 다시 짜였다는 것
+- `changes`: `UpdatesPage.tsx:32`("그 버전에서 바뀐 항목을 대상과 종류로 나눠 보여줍니다")가 지키는 약속대로, 대상별로 나눠 넣는다(하나로 뭉뚱그리지 않는다) — Task 1~4가 각각 건드린 파일이 대상이다:
+  ```ts
+  { target: 'Gnb', type: 'Updated', note: '모바일 헤더에서 메뉴 버튼을 테마 토글 뒤로 옮겼어요.' },
+  { target: 'Lnb', type: 'Updated', note: '모바일 서랍이 오른쪽에서 열리고, 섹션 목록과 문서 목록 두 단계로 나뉘었어요.' },
+  { target: 'DocFooterNav', type: 'Updated', note: '문서 하단 이동 영역 위 구분선을 없앴어요.' },
+  { target: 'SiteFooter', type: 'Updated', note: '로고+copyright와 메뉴 2컬럼으로 다시 짰어요.' },
+  ```
+  (내용은 실제 diff와 커밋 메시지를 보고 정확히 맞춰 써라 — 위는 뼈대다.)
+- `requests`: `[]`(v0.14.0 항목과 같은 관례)
+- `reviewItems`: `[]`(v0.14.0 항목과 같은 관례)
+- `impact`: 넷 다 모든 페이지에 공통으로 걸리는 전역 레이아웃 변경이므로, v0.14.0 항목과 같은 다섯 섹션 전부: `['Foundations', 'Components', 'Patterns', 'Get started', 'Updates']`
+
+- [ ] **Step 3: `package.json`의 버전을 올린다**
+
+`"version": "0.14.0"`을 `"version": "0.15.0"`으로 바꾼다.
+
+- [ ] **Step 4: 검사와 커밋**
+
+Run: `npm test && npx tsc -b && npm run build && npx oxlint src`
+
+```bash
+git add src/data/releases.ts package.json
+git commit -m "chore: v0.15.0 기록을 남긴다"
+```
+
+---
+
 ## 자체 검토 기록
 
 **스펙 커버리지 확인:**
@@ -498,9 +553,10 @@ git commit -m "feat(layout): 사이트 푸터를 로고+copyright와 메뉴 2컬
 - 2절(LNB 위치 + 상태 기계) — Task 2
 - 3절(DocFooterNav 구분선) — Task 3
 - 4절(SiteFooter 재구성) — Task 4
+- 회차 기록(v0.12~v0.14가 매번 지킨 관례, 스펙 자체엔 없었으나 Task 1 완료 후 사용자 확인을 거쳐 추가) — Task 5
 - 범위 밖 항목(데스크톱 LNB 위치·TableOfContents·AppShell 골격) — 이 계획 어디서도 건드리지 않음, Global Constraints에 명시
 
-**타입 일관성:** `LnbView`는 Task 2에서 처음 정의되고 같은 파일(`Lnb.tsx`) 안에서만 쓰인다. 다른 Task와 이름 충돌 없음. `browsedSection`(`NavSection` 타입, `nav-config.ts`가 이미 export)도 마찬가지.
+**타입 일관성:** `LnbView`는 Task 2에서 처음 정의되고 같은 파일(`Lnb.tsx`) 안에서만 쓰인다. 다른 Task와 이름 충돌 없음. `browsedSection`(`NavSection` 타입, `nav-config.ts`가 이미 export)도 마찬가지. Task 5의 `ReleaseChange`·`Release` 타입은 `src/data/releases.ts`가 이미 정의해 둔 것을 그대로 쓴다 — 새 타입 없음.
 
 **플레이스홀더 스캔:** 없음.
 
