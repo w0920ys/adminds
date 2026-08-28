@@ -107,7 +107,7 @@ export const components: ComponentMeta[] = [
     category: 'actions',
     status: 'stable',
     addedIn: 'v0.2.0',
-    changedIn: 'v0.4.0',
+    changedIn: 'v0.14.0',
     purpose: '사용자가 즉시 실행할 수 있는 동작을 나타낸다. 페이지 이동은 링크를 쓴다.',
     anatomy: [
       { part: 'container', label: 'Container', note: '높이는 size 토큰, 모서리는 radius-md' },
@@ -240,7 +240,7 @@ export const components: ComponentMeta[] = [
     category: 'actions',
     status: 'stable',
     addedIn: 'v0.8.0',
-    changedIn: 'v0.8.0',
+    changedIn: 'v0.14.0',
     purpose: '한 자리에서 여러 동작을 고르게 한다. 값을 고르는 자리에는 Select를 쓴다.',
     anatomy: [
       {
@@ -307,7 +307,7 @@ export const components: ComponentMeta[] = [
     category: 'actions',
     status: 'stable',
     addedIn: 'v0.12.0',
-    changedIn: 'v0.12.0',
+    changedIn: 'v0.14.0',
     purpose:
       '지금 보고 있는 것에 서식이나 필터를 켠다. 설정을 켜고 그 자리에서 저장하는 Switch와 다르다.',
     anatomy: [
@@ -423,7 +423,7 @@ export const components: ComponentMeta[] = [
     category: 'inputs',
     status: 'stable',
     addedIn: 'v0.7.0',
-    changedIn: 'v0.8.0',
+    changedIn: 'v0.14.0',
     purpose: '여러 값 중 하나 이상을 켜고 끄도록 한다. 하나만 고를 수 있으면 Radio를 쓴다.',
     anatomy: [
       {
@@ -532,7 +532,7 @@ export const components: ComponentMeta[] = [
     category: 'inputs',
     status: 'stable',
     addedIn: 'v0.10.0',
-    changedIn: 'v0.10.0',
+    changedIn: 'v0.14.0',
     purpose: '많은 항목 중에서 검색해 하나 이상을 고르게 한다. Popover 위에 세우고 트리거는 Select와 같은 모양이다. 항목이 열 개 이하면 Select로 충분하다.',
     /*
      * Search·List·Item·Empty message는 열린 표면 안에서만 존재하고
@@ -638,7 +638,7 @@ export const components: ComponentMeta[] = [
     category: 'inputs',
     status: 'stable',
     addedIn: 'v0.10.0',
-    changedIn: 'v0.10.0',
+    changedIn: 'v0.14.0',
     purpose:
       '달력에서 날짜 하나 또는 기간을 고르게 한다. Popover 위에 Calendar를 놓고, 트리거는 Select와 같은 모양이다.',
     /*
@@ -743,7 +743,7 @@ export const components: ComponentMeta[] = [
     category: 'inputs',
     status: 'stable',
     addedIn: 'v0.10.0',
-    changedIn: 'v0.10.0',
+    changedIn: 'v0.14.0',
     purpose:
       '라벨·도움말·오류를 입력 하나에 묶습니다. id를 잇는 일이 이 컴포넌트의 존재 이유입니다 — Field가 useId로 만든 id를 컨텍스트에 담아 FieldLabel의 htmlFor와 FieldControl의 aria-describedby·aria-invalid로 손 대지 않고 이어 줍니다.',
     anatomy: [
@@ -878,7 +878,7 @@ export const components: ComponentMeta[] = [
     category: 'inputs',
     status: 'stable',
     addedIn: 'v0.10.0',
-    changedIn: 'v0.10.1',
+    changedIn: 'v0.14.0',
     purpose:
       '파일을 고르거나 끌어다 놓아 올릴 준비를 하게 합니다. 네이티브 input을 감추고 그 위에 dropzone이나 버튼을 그립니다. 이 컴포넌트는 파일을 실제로 올리지 않습니다 — 올리는 일은 이 화면을 쓰는 서비스의 몫이고, 여기서는 그 화면만 정합니다.',
     anatomy: [
@@ -986,7 +986,7 @@ export const components: ComponentMeta[] = [
     category: 'inputs',
     status: 'stable',
     addedIn: 'v0.7.0',
-    changedIn: 'v0.8.0',
+    changedIn: 'v0.14.0',
     purpose: '사용자가 한 줄짜리 값을 직접 입력하도록 한다. 여러 값 중 고르게 할 때는 Select를, 여러 줄이 필요하면 Textarea를 쓴다.',
     anatomy: [
       { part: 'container', label: 'Container', note: '테두리는 border-input, 높이는 size 토큰, 모서리는 radius-md' },
@@ -1094,7 +1094,7 @@ export const components: ComponentMeta[] = [
     category: 'inputs',
     status: 'stable',
     addedIn: 'v0.8.0',
-    changedIn: 'v0.8.0',
+    changedIn: 'v0.14.0',
     purpose: '여럿 중 하나만 고르도록 한다. 여럿을 고를 수 있으면 Checkbox를 쓴다.',
     anatomy: [
       {
@@ -1197,7 +1197,7 @@ export const components: ComponentMeta[] = [
     category: 'inputs',
     status: 'stable',
     addedIn: 'v0.7.0',
-    changedIn: 'v0.8.0',
+    changedIn: 'v0.14.0',
     purpose: '여러 값 중 하나를 고르게 한다. 선택지가 둘셋뿐이면 Radio를, 동작을 실행하는 자리에는 Dropdown Menu를 쓴다.',
     anatomy: [
       {
@@ -1405,7 +1405,7 @@ export const components: ComponentMeta[] = [
     category: 'inputs',
     status: 'stable',
     addedIn: 'v0.8.0',
-    changedIn: 'v0.8.0',
+    changedIn: 'v0.14.0',
     purpose:
       '즉시 반영되는 켜고 끄기를 나타낸다. Checkbox와 다르다 — 체크박스는 저장을 눌러야 반영되고 스위치는 누르는 즉시 반영된다.',
     anatomy: [
@@ -1513,7 +1513,7 @@ export const components: ComponentMeta[] = [
     category: 'inputs',
     status: 'stable',
     addedIn: 'v0.8.0',
-    changedIn: 'v0.8.0',
+    changedIn: 'v0.14.0',
     purpose: '여러 줄짜리 값을 직접 입력하도록 한다. 한 줄이면 Input을 쓴다.',
     anatomy: [
       {
@@ -1626,7 +1626,7 @@ export const components: ComponentMeta[] = [
     category: 'navigation',
     status: 'stable',
     addedIn: 'v0.8.0',
-    changedIn: 'v0.8.0',
+    changedIn: 'v0.14.0',
     purpose: '지금 어디에 있는지와 어떻게 왔는지를 보인다. 뒤로 가기의 대체물로 쓰지 않는다.',
     anatomy: [
       {
@@ -1712,7 +1712,7 @@ export const components: ComponentMeta[] = [
     category: 'navigation',
     status: 'stable',
     addedIn: 'v0.12.0',
-    changedIn: 'v0.12.0',
+    changedIn: 'v0.14.0',
     purpose:
       '검색해서 곧장 실행한다. 값을 골라 폼에 담으면 Combobox고, 어딘가로 가거나 동작을 실행하면 Command다. cmdk 없이 Dialog와 이 저장소의 순수 함수만으로 세웠다.',
     anatomy: [
@@ -1808,7 +1808,7 @@ export const components: ComponentMeta[] = [
     category: 'navigation',
     status: 'stable',
     addedIn: 'v0.8.0',
-    changedIn: 'v0.8.0',
+    changedIn: 'v0.14.0',
     purpose: '긴 목록을 나눠 보인다. 스크롤로 계속 불러오게 하려면 무한 스크롤을 쓴다.',
     anatomy: [
       { part: 'previous', label: 'Previous', note: 'Button variant="outline" size="sm". 첫 페이지에서 비활성' },
@@ -1889,7 +1889,7 @@ export const components: ComponentMeta[] = [
     category: 'navigation',
     status: 'stable',
     addedIn: 'v0.9.0',
-    changedIn: 'v0.9.0',
+    changedIn: 'v0.14.0',
     purpose:
       '여러 단계로 이루어진 흐름에서 지금 단계와 전체 진행 상태를 보인다. state는 단계 하나의 상태이므로 Steps가 현재 단계 번호로 계산하지 않고 각 Step이 직접 받는다.',
     anatomy: [
@@ -2030,7 +2030,7 @@ export const components: ComponentMeta[] = [
     category: 'navigation',
     status: 'stable',
     addedIn: 'v0.8.0',
-    changedIn: 'v0.8.0',
+    changedIn: 'v0.14.0',
     purpose: '같은 자리에서 내용을 바꿔 보인다.',
     anatomy: [
       {
@@ -2124,7 +2124,7 @@ export const components: ComponentMeta[] = [
     category: 'data-display',
     status: 'stable',
     addedIn: 'v0.9.0',
-    changedIn: 'v0.9.0',
+    changedIn: 'v0.14.0',
     purpose:
       '여러 항목 중 필요한 것만 펼쳐 한 번에 필요한 만큼만 보인다. 포털을 쓰지 않고 페이지를 잠그지 않아 expanded를 defaultValue로 그대로 보일 수 있다.',
     anatomy: [
@@ -2240,7 +2240,7 @@ export const components: ComponentMeta[] = [
     category: 'data-display',
     status: 'stable',
     addedIn: 'v0.8.0',
-    changedIn: 'v0.8.0',
+    changedIn: 'v0.14.0',
     purpose: '사람이나 조직을 나타낸다.',
     anatomy: [
       {
@@ -2322,7 +2322,7 @@ export const components: ComponentMeta[] = [
     category: 'data-display',
     status: 'stable',
     addedIn: 'v0.8.0',
-    changedIn: 'v0.8.0',
+    changedIn: 'v0.14.0',
     purpose: '짧은 상태나 분류를 보인다. 누를 수 있는 동작에는 쓰지 않는다.',
     anatomy: [
       { part: 'container', label: 'Container', note: 'radius-sm, variant에 따른 배경·글자색' },
@@ -2403,7 +2403,7 @@ export const components: ComponentMeta[] = [
     category: 'data-display',
     status: 'stable',
     addedIn: 'v0.9.0',
-    changedIn: 'v0.9.0',
+    changedIn: 'v0.14.0',
     purpose: '관련된 내용을 하나의 틀로 묶어 보인다. 안쪽 구획은 Separator로 나눈다.',
     anatomy: [
       { part: 'container', label: 'Container', note: 'rounded-lg. variant에 따른 테두리·배경·그림자' },
@@ -2503,7 +2503,7 @@ export const components: ComponentMeta[] = [
     category: 'data-display',
     status: 'stable',
     addedIn: 'v0.12.0',
-    changedIn: 'v0.12.0',
+    changedIn: 'v0.14.0',
     purpose:
       '접히는 자리 하나를 감싼다. Accordion과 달리 트리거를 헤딩으로 감싸지 않아, 카드 안이든 표 행 안이든 제목 층위를 새로 만들지 않고 놓을 수 있다.',
     anatomy: [
@@ -2763,7 +2763,7 @@ export const components: ComponentMeta[] = [
     category: 'data-display',
     status: 'stable',
     addedIn: 'v0.9.0',
-    changedIn: 'v0.9.0',
+    changedIn: 'v0.14.0',
     purpose:
       '라벨과 값의 쌍을 나열해 상세 정보를 보인다. <dl>·<dt>·<dd>를 써 키와 값이라는 뜻을 마크업에 그대로 담는다.',
     anatomy: [
@@ -3008,7 +3008,7 @@ export const components: ComponentMeta[] = [
     category: 'data-display',
     status: 'stable',
     addedIn: 'v0.8.0',
-    changedIn: 'v0.13.0',
+    changedIn: 'v0.14.0',
     purpose: '어드민의 중심 화면이다. 여러 행의 데이터를 칸으로 나누어 보이고, 정렬 가능한 열은 이름을 누르는 단추로, 지금 방향은 aria-sort로 드러낸다. 다음 방향을 고르는 일은 호출하는 쪽의 몫이다.',
     anatomy: [
       { part: 'header', label: 'Header', note: 'bg-surface. 열 이름을 담는 행. text-12 font-bold' },
@@ -3113,7 +3113,7 @@ export const components: ComponentMeta[] = [
     category: 'feedback',
     status: 'stable',
     addedIn: 'v0.8.0',
-    changedIn: 'v0.8.0',
+    changedIn: 'v0.14.0',
     purpose: '화면에 머무르는 알림을 보인다. 잠깐 나타났다 사라져도 되면 Toast를 쓴다.',
     anatomy: [
       { part: 'icon', label: 'Icon', note: '16×16, variant가 정하는 색을 그대로 물려받는다' },
@@ -3209,7 +3209,7 @@ export const components: ComponentMeta[] = [
     category: 'feedback',
     status: 'stable',
     addedIn: 'v0.12.0',
-    changedIn: 'v0.12.0',
+    changedIn: 'v0.14.0',
     purpose: '되돌릴 수 없는 동작을 실행하기 전에 취소와 실행 중 하나를 고르게 한다.',
     anatomy: [
       {
@@ -3285,7 +3285,7 @@ export const components: ComponentMeta[] = [
     category: 'feedback',
     status: 'stable',
     addedIn: 'v0.8.0',
-    changedIn: 'v0.8.0',
+    changedIn: 'v0.14.0',
     purpose: '흐름을 멈추고 확인이나 입력을 받는다.',
     anatomy: [
       {
@@ -3359,7 +3359,7 @@ export const components: ComponentMeta[] = [
     category: 'feedback',
     status: 'stable',
     addedIn: 'v0.9.0',
-    changedIn: 'v0.9.0',
+    changedIn: 'v0.14.0',
     purpose:
       '표나 목록에 보일 내용이 없을 때 무엇이 없는지, 왜 없는지, 무엇을 할 수 있는지 안내한다. 아직 만든 것이 없는 것과 불러오지 못한 것을 variant로 구별한다.',
     anatomy: [
@@ -3670,7 +3670,7 @@ export const components: ComponentMeta[] = [
     category: 'feedback',
     status: 'stable',
     addedIn: 'v0.12.0',
-    changedIn: 'v0.12.0',
+    changedIn: 'v0.14.0',
     purpose: 'Radix의 Dialog를 감싸 가장자리에 붙인다. 목록이나 작업 맥락을 곁에 둔 채 이어서 일할 때 쓴다.',
     anatomy: [
       {
@@ -3826,7 +3826,7 @@ export const components: ComponentMeta[] = [
     category: 'feedback',
     status: 'stable',
     addedIn: 'v0.8.0',
-    changedIn: 'v0.8.0',
+    changedIn: 'v0.14.0',
     purpose: '잠깐 나타났다 사라지는 알림을 보인다. 화면에 계속 남아야 하면 Alert를 쓴다.',
     anatomy: [
       {
@@ -3910,7 +3910,7 @@ export const components: ComponentMeta[] = [
     category: 'feedback',
     status: 'stable',
     addedIn: 'v0.8.0',
-    changedIn: 'v0.8.0',
+    changedIn: 'v0.14.0',
     purpose: '가리키는 것의 이름이나 짧은 설명을 보인다.',
     anatomy: [
       {
