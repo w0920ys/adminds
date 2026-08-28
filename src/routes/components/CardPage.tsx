@@ -62,7 +62,7 @@ function renderCard(options: RenderOptions) {
         <CardDescription>이번 달 기준</CardDescription>
       </CardHeader>
       <CardContent>
-        <p className="text-2xl font-semibold">128 / 200</p>
+        <p className="text-32 font-bold">128 / 200</p>
       </CardContent>
     </Card>
   )
@@ -166,12 +166,12 @@ function renderExample(exampleId: string): ReactNode {
   switch (exampleId) {
     case 'dashboard-metric':
       return (
-        <Card variant="elevated" className="w-56">
+        <Card variant="elevated" className="w-72">
           <CardHeader>
             <CardTitle>이번 달 매출</CardTitle>
           </CardHeader>
           <CardContent className="flex flex-col gap-1">
-            <p className="text-2xl font-semibold">₩12,480,000</p>
+            <p className="text-32 font-bold">₩12,480,000</p>
             <p className="text-success-on-tint text-12">전월 대비 +8.2%</p>
           </CardContent>
         </Card>
@@ -320,7 +320,7 @@ function AnatomyPreview() {
         </CardAction>
       </CardHeader>
       <CardContent data-anatomy="content">
-        <p className="text-2xl font-semibold">128 / 200</p>
+        <p className="text-32 font-bold">128 / 200</p>
       </CardContent>
       <CardFooter data-anatomy="footer">
         <Button size="sm">한도 늘리기</Button>

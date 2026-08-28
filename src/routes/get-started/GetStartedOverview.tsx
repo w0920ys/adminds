@@ -62,19 +62,19 @@ export function GetStartedOverview() {
       <DocSection title="Status">
         <ul className="grid gap-3 sm:grid-cols-3">
           <li className="rounded-lg border p-4">
-            <strong className="text-2xl font-bold tracking-tight">{components.total}</strong>
+            <strong className="text-40 font-bold tracking-tight">{components.total}</strong>
             <p className="text-muted-foreground mt-1 text-12">
               컴포넌트 · 그중 {components.verified}개를 눈으로 확인했습니다
             </p>
           </li>
           <li className="rounded-lg border p-4">
-            <strong className="text-2xl font-bold tracking-tight">{patterns.total}</strong>
+            <strong className="text-40 font-bold tracking-tight">{patterns.total}</strong>
             <p className="text-muted-foreground mt-1 text-12">
               패턴 · 그중 {patterns.verified}개를 눈으로 확인했습니다
             </p>
           </li>
           <li className="rounded-lg border p-4">
-            <strong className="text-2xl font-bold tracking-tight">
+            <strong className="text-40 font-bold tracking-tight">
               {sections.reduce((n, s) => n + flattenDocs(s.items).length, 0)}
             </strong>
             <p className="text-muted-foreground mt-1 text-12">문서</p>
