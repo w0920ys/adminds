@@ -196,7 +196,11 @@ export function DataTable<T>({
         {isLoading ? '불러오는 중입니다' : ''}
       </div>
 
-      {/* 행 체크박스의 이름 뒤에 이어 붙일 문구. 표 안에는 span을 둘 자리가 없다 */}
+      {/*
+       * 행 체크박스의 이름 뒤에 이어 붙일 문구. 행 전부가 이 하나를 함께
+       * 가리키므로 어느 행에도 속하지 않는 표 바깥에 둔다 — 칸 안에 넣으면
+       * 그 행의 내용이 되고, 행마다 하나씩 두면 같은 문구가 행 수만큼 는다.
+       */}
       {selectable ? (
         <span id={selectLabelId} className="sr-only">
           행 선택
