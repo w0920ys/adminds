@@ -769,6 +769,15 @@ export function ChartBar({
       <CardContent>
         <ChartContainer config={config}>
           <BarChart
+            /*
+             * key를 orientation·stacked에 묶어 리마운트를 강제한다 — recharts
+             * 3.10.1은 이미 마운트된 BarChart의 layout·stackId만 바뀌면 축·막대
+             * 스케일을 다시 계산하지 않는다(Task 3 구현 중 실제로 겪음 — Playground
+             * 토글이 화면상 안 바뀌는 것으로 드러났다. SVG의 실제 x/y/width/height
+             * 속성을 읽어 원인을 확인했다). 단일 조합 안에서는 렌더링 결과에 영향
+             * 없다 — 토글할 때만 새로 마운트되게 한다.
+             */
+            key={`${orientation}-${stacked}`}
             accessibilityLayer
             data={data}
             layout={isBars ? 'vertical' : 'horizontal'}
@@ -1566,6 +1575,8 @@ shadcn 공식 chart-pie-simple·donut·legend를 참고해 계열 하나로
 **Interfaces:**
 - Consumes: Task 1의 `ChartContainer`/`ChartTooltip`/`ChartTooltipContent`/`ChartLegend`/`ChartLegendContent`/`ChartConfig`
 - Produces: `ChartRadar`, `ChartTrend`(독립 선언)
+
+**⚠️ Task 3(Chart Bar)에서 발견한 recharts 리마운트 버그를 여기서도 확인한다.** recharts 3.10.1은 이미 마운트된 차트의 구조적 prop(Bar의 `layout`)이 바뀌어도 축·도형 스케일을 다시 계산하지 않는 경우가 있었다(SVG의 실제 좌표를 읽어야 드러난다 — 눈으로만 보면 값이 살짝 다른 도형이 겹쳐 보여 착각하기 쉽다). `gridType`(`PolarGrid`의 구조적 prop)도 같은 위험군이다 — Step 9에서 `gridType`을 "circle"로 바꿨을 때 배경 격자가 실제로 다각형→동심원으로 바뀌는지, DOM에서 `.recharts-polar-grid` 요소의 실제 모양(원이면 `circle`/`path`가 원호를, 다각형이면 직선 다각형을 그린다)까지 확인한다. 안 바뀌면 Chart Bar와 같은 방식(`key`를 `gridType`에 묶어 리마운트 강제)으로 고친다 — Chart Area의 `stacked`(값만 바뀌는 축, 구조는 안 바뀜)는 이 버그가 없었다는 것도 참고한다(구조적 prop과 값 prop을 가르는 기준으로 삼는다).
 
 - [ ] **Step 1: `src/components/ui/chart-radar.tsx`를 만든다**
 
