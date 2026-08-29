@@ -132,6 +132,12 @@ export const sections: NavSection[] = [
         ],
       },
       {
+        label: 'Chart',
+        items: [
+          { to: '/components/chart-area', label: 'Chart Area', updatedAt: '2026-08-29' },
+        ],
+      },
+      {
         label: 'Feedback',
         items: [
           { to: '/components/alert', label: 'Alert', updatedAt: '2026-08-29' },

@@ -1,6 +1,6 @@
 # adminds
 
-> Tailwind v4 + shadcn/ui 기반 어드민 디자인 시스템. 검증된 컴포넌트 42개와 디자인 토큰을 shadcn CLI로 설치한다.
+> Tailwind v4 + shadcn/ui 기반 어드민 디자인 시스템. 검증된 컴포넌트 43개와 디자인 토큰을 shadcn CLI로 설치한다.
 
 React 19 + TypeScript 프로젝트에서 반복적으로 쓰는 어드민 컴포넌트(버튼, 폼, 데이터 테이블, 내비게이션 등)를 미리 만들고 검증해 둔 shadcn 레지스트리 겸 문서 사이트다. 컴포넌트 하나만 받거나, 토큰만 받거나, 전부를 한 번에 받을 수 있다.
 
@@ -8,10 +8,10 @@ React 19 + TypeScript 프로젝트에서 반복적으로 쓰는 어드민 컴포
 
 - 컴포넌트 하나: `npx shadcn@latest add https://adminds.vercel.app/r/<name>.json` — `<name>`은 아래 Components 목록의 괄호 안 값
 - 토큰만: `npx shadcn@latest add https://adminds.vercel.app/r/tokens.json`
-- 토큰 + 컴포넌트 42개 전부: `npx shadcn@latest add https://adminds.vercel.app/r/adminds.json`
+- 토큰 + 컴포넌트 43개 전부: `npx shadcn@latest add https://adminds.vercel.app/r/adminds.json`
 - 받는 프로젝트 요건: Tailwind v4 / globals.css의 import 순서(tailwindcss → tw-animate-css → tokens.css) / tsconfig.json에 직접 넣는 `"paths": { "@/*": ["./src/*"] }`(baseUrl 금지 — TypeScript 6에서 하드 에러)
 
-## Components (42)
+## Components (43)
 
 ### Actions
 
@@ -56,6 +56,10 @@ React 19 + TypeScript 프로젝트에서 반복적으로 쓰는 어드민 컴포
 - [Scroll Area](https://adminds.vercel.app/components/scroll-area) (`scroll-area`) — 브라우저의 기본 스크롤바는 운영체제마다 다르게 생기고 다크 모드에서 색이 따라오지 않는다. Radix가 그 자리에 자기 스크롤바를 그려 토큰으로 칠할 수 있게 한다. 굴리는 일 자체는 브라우저가 그대로 한다.
 - [Separator](https://adminds.vercel.app/components/separator) (`separator`) — 가로 또는 세로로 선을 그어 화면의 영역을 나눈다. 기본은 장식이므로 뜻이 있는 경계에서만 decorative를 거짓으로 둔다.
 - [Table](https://adminds.vercel.app/components/table) (`table`) — 어드민의 중심 화면이다. 여러 행의 데이터를 칸으로 나누어 보이고, 정렬 가능한 열은 이름을 누르는 단추로, 지금 방향은 aria-sort로 드러낸다. 다음 방향을 고르는 일은 호출하는 쪽의 몫이다.
+
+### Chart
+
+- [Chart Area](https://adminds.vercel.app/components/chart-area) (`chart-area`) — 시간에 따른 값의 흐름을 채워진 영역으로 보인다. 값 자체보다 크기·비중의 인상을 강조할 때 막대·선보다 낫다.
 
 ### Feedback
 

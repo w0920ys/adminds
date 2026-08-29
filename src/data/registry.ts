@@ -4,17 +4,19 @@ export type ComponentCategory =
   | 'navigation'
   | 'feedback'
   | 'data-display'
+  | 'chart'
 
 /**
  * 카테고리를 늘어놓는 순서. 읽는 순서이자 LNB의 묶음 순서다.
  * 무엇을 누르는가(actions) → 무엇을 채우는가(inputs) → 어디로 가는가(navigation) →
- * 무엇을 보는가(data-display) → 무엇을 듣는가(feedback) 순으로 좁혀 읽는다.
+ * 무엇을 보는가(data-display) → 무엇을 그림으로 보는가(chart) → 무엇을 듣는가(feedback) 순으로 좁혀 읽는다.
  */
 export const categoryOrder: ComponentCategory[] = [
   'actions',
   'inputs',
   'navigation',
   'data-display',
+  'chart',
   'feedback',
 ]
 
@@ -23,6 +25,7 @@ export const categoryLabel: Record<ComponentCategory, string> = {
   inputs: 'Inputs',
   navigation: 'Navigation',
   'data-display': 'Data Display',
+  chart: 'Chart',
   feedback: 'Feedback',
 }
 
@@ -3242,6 +3245,56 @@ export const components: ComponentMeta[] = [
       { id: 'loading', title: '불러오는 중', note: '행 자리에 스켈레톤을 두어 곧 채워질 것을 알린다' },
       { id: 'missing-value', title: '값이 없는 칸', note: '빈칸으로 두지 않고 —로 값이 없음을 밝힌다' },
       { id: 'narrow-screen', title: '좁은 화면', note: '표 안에서 가로로 스크롤되고 첫 열은 고정된 채 남는다' },
+    ],
+    verified: true,
+  },
+  {
+    id: 'chart-area',
+    name: 'Chart Area',
+    aliases: ['영역 차트', '에어리어 차트', 'area chart'],
+    category: 'chart',
+    status: 'stable',
+    addedIn: 'v0.18.0',
+    changedIn: 'v0.18.0',
+    purpose: '시간에 따른 값의 흐름을 채워진 영역으로 보인다. 값 자체보다 크기·비중의 인상을 강조할 때 막대·선보다 낫다.',
+    anatomy: [],
+    properties: [
+      {
+        name: 'stacked',
+        title: 'Stacked',
+        description: '계열이 둘 이상일 때 겹쳐 쌓을지 정한다.',
+        display: 'row',
+        options: [
+          { value: 'off', note: '기본. 계열이 겹쳐 보인다' },
+          { value: 'on', note: '계열이 쌓여 합계를 보인다' },
+        ],
+      },
+      {
+        name: 'gradient',
+        title: 'Gradient',
+        description: '채움을 단색으로 할지 그라데이션으로 할지 정한다.',
+        display: 'row',
+        options: [
+          { value: 'off', note: '기본. 단색 채움' },
+          { value: 'on', note: '위에서 아래로 옅어지는 채움' },
+        ],
+      },
+    ],
+    guidelines: [
+      {
+        id: 'stacked-needs-multiple-series',
+        title: 'stacked는 계열이 둘 이상일 때만 뜻이 있다',
+        body: '계열이 하나면 stacked를 켜도 화면이 달라지지 않는다. 여러 항목의 합과 구성비를 함께 보일 때만 켠다.',
+        do: ['계열이 둘 이상일 때 stacked로 합계와 구성비를 함께 보인다'],
+        dont: ['계열이 하나뿐인데 stacked를 켜지 않는다'],
+      },
+    ],
+    usage: [
+      { id: 'visitor-trend', title: '방문자 추이', note: '단일 계열로 시간에 따른 값의 흐름을 보인다' },
+      { id: 'channel-stacked', title: '유입경로별 누적', note: '여러 계열을 stacked로 쌓아 합계와 구성비를 함께 보인다' },
+    ],
+    cases: [
+      { id: 'gradient-fill', title: '그라데이션 채움', note: '단색보다 부드러운 인상이 필요할 때' },
     ],
     verified: true,
   },

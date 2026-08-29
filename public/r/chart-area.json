@@ -1,0 +1,22 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chart-area",
+  "title": "Chart Area",
+  "dependencies": [
+    "recharts",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://adminds.vercel.app/r/card.json",
+    "https://adminds.vercel.app/r/chart.json",
+    "https://adminds.vercel.app/r/tokens.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/chart-area.tsx",
+      "content": "import { Area, AreaChart, CartesianGrid, XAxis } from 'recharts'\nimport { TrendingDown, TrendingUp } from 'lucide-react'\nimport { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'\nimport { ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip, ChartTooltipContent, type ChartConfig } from '@/components/ui/chart'\n\n/*\n * shadcn 공식 chart-area-default·chart-area-gradient를 옮긴 계열 컴포넌트.\n * config 키가 하나면 chart-area-default, 둘 이상이면 chart-area-legend(범례\n * 자동으로 붙음)와 같은 모양이 된다. stacked를 켜면 chart-area-stacked,\n * gradient를 켜면 chart-area-gradient와 같다.\n */\nexport interface ChartTrend {\n  value: number\n  note: string\n}\n\nexport function ChartArea({\n  title,\n  description,\n  data,\n  config,\n  categoryKey,\n  stacked = false,\n  gradient = false,\n  trend,\n  footerNote,\n}: {\n  title: string\n  description: string\n  data: Array<Record<string, string | number>>\n  config: ChartConfig\n  categoryKey: string\n  stacked?: boolean\n  gradient?: boolean\n  trend?: ChartTrend\n  footerNote?: string\n}) {\n  const seriesKeys = Object.keys(config).filter((key) => key !== categoryKey)\n\n  return (\n    <Card>\n      <CardHeader>\n        <CardTitle>{title}</CardTitle>\n        <CardDescription>{description}</CardDescription>\n      </CardHeader>\n      <CardContent>\n        <ChartContainer config={config}>\n          <AreaChart accessibilityLayer data={data} margin={{ left: 12, right: 12 }}>\n            <CartesianGrid vertical={false} />\n            <XAxis dataKey={categoryKey} tickLine={false} axisLine={false} tickMargin={8} />\n            <ChartTooltip cursor={false} content={<ChartTooltipContent indicator={seriesKeys.length > 1 ? 'dot' : 'line'} />} />\n            {seriesKeys.length > 1 && <ChartLegend content={<ChartLegendContent />} />}\n            {gradient && (\n              <defs>\n                {seriesKeys.map((key) => (\n                  <linearGradient key={key} id={`chart-area-fill-${key}`} x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n                    <stop offset=\"5%\" stopColor={`var(--color-${key})`} stopOpacity={0.8} />\n                    <stop offset=\"95%\" stopColor={`var(--color-${key})`} stopOpacity={0.1} />\n                  </linearGradient>\n                ))}\n              </defs>\n            )}\n            {seriesKeys.map((key) => (\n              <Area\n                key={key}\n                dataKey={key}\n                type=\"natural\"\n                fill={gradient ? `url(#chart-area-fill-${key})` : `var(--color-${key})`}\n                fillOpacity={0.4}\n                stroke={`var(--color-${key})`}\n                stackId={stacked ? 'a' : undefined}\n              />\n            ))}\n          </AreaChart>\n        </ChartContainer>\n      </CardContent>\n      {(trend || footerNote) && (\n        <CardFooter>\n          <div className=\"flex w-full items-start gap-2 text-14\">\n            <div className=\"grid gap-2\">\n              {trend && (\n                <div className=\"flex items-center gap-2 leading-none font-medium\">\n                  {trend.note} {trend.value >= 0 ? <TrendingUp className=\"h-4 w-4\" /> : <TrendingDown className=\"h-4 w-4\" />}\n                </div>\n              )}\n              {footerNote && <div className=\"text-muted-foreground flex items-center gap-2 leading-none\">{footerNote}</div>}\n            </div>\n          </div>\n        </CardFooter>\n      )}\n    </Card>\n  )\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}
