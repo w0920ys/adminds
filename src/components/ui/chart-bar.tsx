@@ -50,6 +50,13 @@ export function ChartBar({
       <CardContent>
         <ChartContainer config={config}>
           <BarChart
+            /*
+             * key를 orientation·stacked에 묶어 리마운트를 강제한다 — recharts
+             * 3.10.1은 이미 마운트된 BarChart의 layout·stackId만 바뀌면 축·막대
+             * 스케일을 다시 계산하지 않는다(Playground 토글이 화면상 안 바뀌는 것으로
+             * 드러났다. SVG의 실제 x/y/width/height 속성을 읽어 확인했다). 단일 조합
+             * 안에서는 렌더링 결과에 영향 없다 — 토글할 때만 새로 마운트되게 한다.
+             */
             key={`${orientation}-${stacked}`}
             accessibilityLayer
             data={data}
