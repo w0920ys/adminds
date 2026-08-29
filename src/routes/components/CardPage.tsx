@@ -258,7 +258,15 @@ function renderExample(exampleId: string): ReactNode {
 
     case 'uneven-height':
       return (
-        <div className="flex w-96 items-start gap-4">
+        /*
+         * items-start를 주지 않는다 — flex 행의 align-items 기본값이
+         * stretch라 손대지 않으면 두 카드가 이미 같은 높이로 늘어난다.
+         * Card 자신은 높이를 정하지 않으니(registry의 note 그대로), 이
+         * 예시가 실제로 "나란히 두는 화면의 flex가 높이를 맞춘다"는
+         * 문장을 증명하려면 그 flex가 stretch를 유지해야 한다 —
+         * items-start를 얹으면 문장과 반대로 두 카드 높이가 갈린다.
+         */
+        <div className="flex w-96 gap-4">
           <Card variant="outlined" className="flex-1">
             <CardHeader>
               <CardTitle>간단 요약</CardTitle>
