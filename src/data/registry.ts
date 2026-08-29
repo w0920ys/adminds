@@ -3349,6 +3349,46 @@ export const components: ComponentMeta[] = [
     verified: true,
   },
   {
+    id: 'chart-line',
+    name: 'Chart Line',
+    aliases: ['선 차트', '꺾은선 그래프', '추세선', 'line chart'],
+    category: 'chart',
+    status: 'stable',
+    addedIn: 'v0.18.0',
+    changedIn: 'v0.18.0',
+    purpose: '시간에 따라 값이 어떻게 늘고 주는지 보인다. 여러 계열을 겹쳐 비교할 때도 쓴다.',
+    anatomy: [],
+    properties: [
+      {
+        name: 'curveType',
+        title: 'Curve type',
+        description: '점 사이를 부드러운 곡선으로 이을지, 계단식으로 이을지 정한다.',
+        display: 'row',
+        options: [
+          { value: 'monotone', note: '기본. 부드러운 곡선' },
+          { value: 'step', note: '값이 유지되다 갑자기 바뀌는 데이터(재고·상태 등)' },
+        ],
+      },
+    ],
+    guidelines: [
+      {
+        id: 'legend-for-multi-series',
+        title: '계열이 둘 이상이면 범례가 자동으로 붙는다',
+        body: '색만으로 계열을 구별하게 두지 않는다. 계열이 하나면 범례를 생략한다 — 구별할 게 없기 때문이다.',
+        do: ['config에 시리즈를 둘 이상 넣으면 범례가 저절로 붙는다'],
+        dont: ['계열이 하나뿐인데 범례를 억지로 붙이지 않는다'],
+      },
+    ],
+    usage: [
+      { id: 'signup-trend', title: '가입 추세', note: '단일 계열로 시간에 따른 변화를 보인다' },
+      { id: 'plan-comparison', title: '유료·무료 비교', note: '두 계열을 겹쳐 시간에 따른 변화를 비교한다' },
+    ],
+    cases: [
+      { id: 'with-dots', title: '포인트 표시', note: '데이터 포인트가 적어 각 지점을 눈에 띄게 해야 할 때' },
+    ],
+    verified: true,
+  },
+  {
     id: 'alert',
     name: 'Alert',
     aliases: ['경고', '배너', 'banner', 'notice', '안내'],

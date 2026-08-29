@@ -13,6 +13,7 @@ import { ButtonPage } from '@/routes/components/ButtonPage'
 import { CardPage } from '@/routes/components/CardPage'
 import { ChartAreaPage } from '@/routes/components/ChartAreaPage'
 import { ChartBarPage } from '@/routes/components/ChartBarPage'
+import { ChartLinePage } from '@/routes/components/ChartLinePage'
 import { ContextMenuPage } from '@/routes/components/ContextMenuPage'
 import { CheckboxPage } from '@/routes/components/CheckboxPage'
 import { CollapsiblePage } from '@/routes/components/CollapsiblePage'
@@ -140,6 +141,7 @@ export const routes: RouteObject[] = [
           { path: 'resizable', element: <ResizablePage /> },
           { path: 'chart-area', element: <ChartAreaPage /> },
           { path: 'chart-bar', element: <ChartBarPage /> },
+          { path: 'chart-line', element: <ChartLinePage /> },
         ],
       },
 
