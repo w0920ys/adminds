@@ -57,8 +57,17 @@ export function ChartRadial({
         <ChartContainer config={config} className="mx-auto aspect-square w-full max-h-64">
           <RadialBarChart
             data={data}
-            innerRadius={isMultiSeries ? 80 : 30}
-            outerRadius={110}
+            /*
+             * shadcn 원본은 innerRadius·outerRadius를 고정 px로 준다(80/30, 110).
+             * 이 문서 사이트의 Playground 카드는 shadcn 원본 데모보다 좁아서(Options
+             * 패널과 나란히 놓여 실제 너비가 150px 안팎까지 줄어든다), 고정 px 반지름을
+             * 그대로 옮기면 원의 절반 너비를 넘어서 링이 꽉 찬 사각형처럼 잘려 보인다
+             * (실제로 확인함). Pie·Radar가 이미 쓰는 방식대로 퍼센트로 바꿔 어떤
+             * 컨테이너 크기에서도 같은 비율로 맞게 했다 — 원본 비율(80/110·30/110)을
+             * 그대로 유지한 값이다.
+             */
+            innerRadius={isMultiSeries ? '58%' : '22%'}
+            outerRadius="80%"
             endAngle={isMultiSeries ? 180 : undefined}
           >
             <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel nameKey={categoryKey} />} />
