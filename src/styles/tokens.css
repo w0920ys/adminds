@@ -89,6 +89,24 @@
    * 곳에 번지지 않는다.
    */
   --annotation: oklch(0.55 0.22 285);
+  /*
+   * 범주형(categorical) 시리즈 색 6개. dataviz 스킬의 validate_palette.js로
+   * 라이트/다크 각각 전 항목(명도대·채도하한·CVD 분리·정상시각 하한·대비)
+   * 통과를 확인한 값이다(adminds-starter의 momeokji-admin 대시보드에서
+   * 검증). 상태색(info/success/warning/destructive)은 상태 표현에 예약돼
+   * 있어 시리즈 색으로 재사용하지 않는다 — 그래서 별도 6색을 둔다. 순서는
+   * 고정이고 절대 순환하지 않는다(9번째 시리즈부터는 호출부가 "기타"로
+   * 접는다). 1 indigo(주 계열) 2 teal 3 orange(브랜드계) 4 pink 5 lime
+   * 6 violet.
+   */
+  --chart-1: #4f46e5;
+  --chart-2: #0d9488;
+  --chart-3: #ea580c;
+  --chart-4: #db2777;
+  --chart-5: #65a30d;
+  --chart-6: #7c3aed;
+  --chart-grid: var(--border);
+  --chart-axis: var(--muted-foreground);
   --annotation-muted: oklch(0.573 0.14 285);
 }
 
@@ -142,6 +160,13 @@
 
   --annotation: oklch(0.75 0.16 285);
   --annotation-muted: oklch(0.62 0.12 285);
+
+  --chart-1: #6366f1;
+  --chart-2: #0d9488;
+  --chart-3: #ea580c;
+  --chart-4: #db2777;
+  --chart-5: #65a30d;
+  --chart-6: #8b5cf6;
 }
 
 @theme inline {
@@ -272,6 +297,27 @@
       transform: translateX(400%);
     }
   }
+}
+
+/*
+ * 위 --chart-N을 별도의 @theme inline 블록에 둔다 — 기존 블록에 합치지
+ * 않는다. Tailwind v4는 @theme inline 토큰을, 그 이름으로 된 유틸리티
+ * 클래스(예: bg-chart-2)를 코드 어딘가에서 실제로 써야만 최종 CSS로
+ * 방출한다. 아래 차트 컴포넌트들은 색을 recharts SVG에 var(--chart-N)로
+ * 직접 물리고 bg-chart-N 같은 유틸리티 클래스로는 쓰지 않으므로, 합쳤을
+ * 경우 안 쓰인 --color-chart-2~5가 트리셰이킹으로 통째로 빠지고 1·6만
+ * 우연히 다른 경로로 살아남아 시리즈 절반이 무색으로 렌더되는 사고를
+ * momeokji-admin에서 이미 겪었다(원본 chart-tokens.css 주석 참고). 이
+ * 블록은 나중에 누군가 bg-chart-N 유틸리티를 직접 쓰고 싶을 때를 위한
+ * 자리만 남겨 둔다 — 지금 코드 경로는 위 원시 --chart-N을 직접 참조한다.
+ */
+@theme inline {
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-chart-6: var(--chart-6);
 }
 
 @layer base {

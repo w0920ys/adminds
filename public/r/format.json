@@ -1,0 +1,13 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "format",
+  "title": "Format",
+  "files": [
+    {
+      "path": "src/lib/format.ts",
+      "content": "const nf = new Intl.NumberFormat('ko-KR')\n\nexport function formatNumber(n: number): string {\n  return nf.format(Math.round(n))\n}\n\nexport function formatPercent(n: number, digits = 1): string {\n  return `${n.toFixed(digits)}%`\n}\n",
+      "type": "registry:lib"
+    }
+  ],
+  "type": "registry:lib"
+}

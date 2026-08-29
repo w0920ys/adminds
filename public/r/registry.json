@@ -37,6 +37,35 @@
       ]
     },
     {
+      "name": "chart",
+      "type": "registry:lib",
+      "title": "Chart",
+      "dependencies": [
+        "recharts"
+      ],
+      "registryDependencies": [
+        "https://adminds.vercel.app/r/tokens.json",
+        "https://adminds.vercel.app/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/chart.tsx",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "format",
+      "type": "registry:lib",
+      "title": "Format",
+      "files": [
+        {
+          "path": "src/lib/format.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
       "name": "theme",
       "type": "registry:lib",
       "title": "Theme",
