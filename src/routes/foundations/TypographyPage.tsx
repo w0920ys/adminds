@@ -241,7 +241,7 @@ export function TypographyPage() {
         </p>
         <div className="flex flex-col gap-2 rounded-lg border p-4">
           <div className="flex items-center justify-between gap-3">
-            <span className="text-11 text-muted-foreground font-bold tracking-widest">
+            <span className="text-12 text-muted-foreground font-bold tracking-widest">
               FONT STACK
             </span>
             <CopyStackButton value={declaration} />
@@ -283,7 +283,7 @@ export function TypographyPage() {
         <div className="overflow-x-auto rounded-lg border">
           <table className="w-full text-left text-14">
             <thead>
-              <tr className="text-muted-foreground text-11 tracking-widest">
+              <tr className="text-muted-foreground text-12 tracking-widest">
                 <th scope="col" className="px-3 py-2 font-bold">스타일</th>
                 <th scope="col" className="px-3 py-2 font-bold">예시</th>
                 <th scope="col" className="px-3 py-2 font-bold">크기</th>
@@ -350,7 +350,7 @@ export function TypographyPage() {
         <div className="overflow-x-auto rounded-lg border">
           <table className="w-full text-left text-14">
             <thead>
-              <tr className="text-muted-foreground text-11 tracking-widest">
+              <tr className="text-muted-foreground text-12 tracking-widest">
                 <th scope="col" className="px-3 py-2 font-bold">스타일</th>
                 <th scope="col" className="px-3 py-2 font-bold">예시</th>
                 <th scope="col" className="px-3 py-2 font-bold">값</th>
@@ -398,7 +398,7 @@ export function TypographyPage() {
           {WRAP_DEMOS.map((demo) => (
             <ExampleFrame key={demo.key} kind={demo.kind}>
               <div className="flex flex-col gap-2">
-                <p className="text-11 text-muted-foreground font-bold tracking-widest">
+                <p className="text-12 text-muted-foreground font-bold tracking-widest">
                   {demo.title}
                 </p>
                 <p data-wrap={demo.key} className={`max-w-40 text-16 ${demo.className}`}>

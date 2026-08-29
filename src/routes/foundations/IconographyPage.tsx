@@ -68,7 +68,7 @@ export function IconographyPage() {
                 <Trash2 size={item.size} aria-hidden />
               </div>
               <span className="text-14 font-medium">{item.where}</span>
-              <span className="text-muted-foreground ml-auto text-11">{item.note}</span>
+              <span className="text-muted-foreground ml-auto text-12">{item.note}</span>
             </div>
           ))}
         </div>

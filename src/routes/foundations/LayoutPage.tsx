@@ -60,7 +60,7 @@ export function LayoutPage() {
         <div className="overflow-x-auto rounded-lg border">
           <table className="w-full text-left text-14">
             <thead>
-              <tr className="text-muted-foreground text-11 tracking-widest">
+              <tr className="text-muted-foreground text-12 tracking-widest">
                 <th scope="col" className="px-3 py-2 font-bold">PREFIX</th>
                 <th scope="col" className="px-3 py-2 font-bold">MIN-WIDTH</th>
               </tr>
@@ -113,7 +113,7 @@ export function LayoutPage() {
             <div key={row.pattern} className="flex flex-col gap-1 p-4">
               <code className="text-12">{row.pattern}</code>
               <span className="text-muted-foreground text-14">{row.usage}</span>
-              <span className="text-muted-foreground text-11">{row.example}</span>
+              <span className="text-muted-foreground text-12">{row.example}</span>
             </div>
           ))}
         </div>

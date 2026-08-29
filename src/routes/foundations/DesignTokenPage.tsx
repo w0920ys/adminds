@@ -172,7 +172,7 @@ export function DesignTokenPage() {
         <div className="overflow-x-auto rounded-lg border">
           <table className="w-full text-left text-14">
             <thead>
-              <tr className="text-muted-foreground text-11 tracking-widest">
+              <tr className="text-muted-foreground text-12 tracking-widest">
                 <th scope="col" className="px-3 py-2 font-bold">형태</th>
                 <th scope="col" className="px-3 py-2 font-bold">뜻</th>
                 <th scope="col" className="px-3 py-2 font-bold">예</th>
@@ -213,7 +213,7 @@ export function DesignTokenPage() {
               <h3 className="text-16 font-medium">
                 <code>{group.prefix}</code>
               </h3>
-              <span className="text-muted-foreground text-11">{group.names.length}개</span>
+              <span className="text-muted-foreground text-12">{group.names.length}개</span>
             </div>
             <p className="text-muted-foreground text-12">{group.note}</p>
             {group.caution && <p className="text-annotation text-12">{group.caution}</p>}

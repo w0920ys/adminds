@@ -173,7 +173,7 @@ export function WritingPage() {
           데이터가 다른 것처럼 보입니다.
         </p>
         <div className="divide-y rounded-lg border">
-          <div className="text-muted-foreground bg-surface-raised flex gap-4 px-4 py-2 text-11 font-bold tracking-widest">
+          <div className="text-muted-foreground bg-surface-raised flex gap-4 px-4 py-2 text-12 font-bold tracking-widest">
             <span className="w-20 shrink-0">항목</span>
             <span className="flex-1">이 시스템의 표기</span>
             <span className="hidden w-56 shrink-0 md:block">쓰지 않는 표기</span>

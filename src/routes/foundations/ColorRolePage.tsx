@@ -137,9 +137,9 @@ function TokenChip({ row, hex, partner }: { row: TokenRow; hex: string; partner?
       />
       <div className="min-w-0 flex-1">
         <CopyValue value={row.name} className="text-12 font-medium" />
-        {hex && <CopyValue value={hex} className="text-muted-foreground text-11" />}
+        {hex && <CopyValue value={hex} className="text-muted-foreground text-12" />}
         {partner && (
-          <p className="text-muted-foreground truncate px-1.5 text-11">짝 {partner}</p>
+          <p className="text-muted-foreground truncate px-1.5 text-12">짝 {partner}</p>
         )}
       </div>
     </div>
@@ -154,8 +154,8 @@ function Layer({ index, hexes }: { index: number; hexes: Record<string, string> 
     <div className={cn('rounded-lg border p-3', layer.className)}>
       <div className="mb-2 flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
         <code className="text-12 font-medium">{layer.name}</code>
-        <span className="text-muted-foreground text-11">{hexes[layer.name]}</span>
-        <span className="text-muted-foreground text-11">{layer.note}</span>
+        <span className="text-muted-foreground text-12">{hexes[layer.name]}</span>
+        <span className="text-muted-foreground text-12">{layer.note}</span>
       </div>
       <Layer index={index + 1} hexes={hexes} />
     </div>
@@ -269,7 +269,7 @@ export function ColorRolePage() {
         <div className="overflow-x-auto rounded-lg border">
           <table className="w-full text-left text-14">
             <thead>
-              <tr className="text-muted-foreground text-11 tracking-widest">
+              <tr className="text-muted-foreground text-12 tracking-widest">
                 <th scope="col" className="px-3 py-2 font-bold">Background</th>
                 <th scope="col" className="px-3 py-2 font-bold">Foreground</th>
                 <th scope="col" className="px-3 py-2 font-bold">Background HEX</th>
@@ -293,10 +293,10 @@ export function ColorRolePage() {
                     </th>
                     <td className="text-muted-foreground border-t px-3 py-2">{pair}</td>
                     <td className="text-muted-foreground border-t px-1.5 py-1">
-                      {hexes[row.name] && <CopyValue value={hexes[row.name]} className="text-11" />}
+                      {hexes[row.name] && <CopyValue value={hexes[row.name]} className="text-12" />}
                     </td>
                     <td className="text-muted-foreground border-t px-1.5 py-1">
-                      {hexes[pair] && <CopyValue value={hexes[pair]} className="text-11" />}
+                      {hexes[pair] && <CopyValue value={hexes[pair]} className="text-12" />}
                     </td>
                   </tr>
                 )
@@ -351,7 +351,7 @@ export function ColorRolePage() {
                       aria-hidden
                     />
                     <code className="text-12 font-medium">{row.name}</code>
-                    <span className="text-muted-foreground text-11">{hexes[row.name]}</span>
+                    <span className="text-muted-foreground text-12">{hexes[row.name]}</span>
                   </div>
                   {meaning && (
                     <>

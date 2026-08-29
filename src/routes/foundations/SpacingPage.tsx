@@ -38,7 +38,7 @@ export function SpacingPage() {
             <div key={step} className="flex items-center gap-3">
               <code className="text-muted-foreground w-12 shrink-0 text-12">{step}</code>
               <div className="bg-primary h-3 rounded-sm" style={{ width: `calc(var(--spacing) * ${step})` }} />
-              <span className="text-muted-foreground text-11">{step * 4}px</span>
+              <span className="text-muted-foreground text-12">{step * 4}px</span>
             </div>
           ))}
         </div>

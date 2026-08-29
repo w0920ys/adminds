@@ -82,7 +82,7 @@ export function VoiceAndTonePage() {
         <div className="grid gap-3 md:grid-cols-3">
           {PRINCIPLES.map((principle, index) => (
             <div key={principle.title} className="flex flex-col gap-2 rounded-lg border p-4">
-              <span className="bg-primary text-primary-foreground grid size-5 place-items-center rounded-full text-11 font-bold">
+              <span className="bg-primary text-primary-foreground grid size-5 place-items-center rounded-full text-12 font-bold">
                 {index + 1}
               </span>
               <p className="text-16 font-semibold">{principle.title}</p>

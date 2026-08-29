@@ -41,14 +41,19 @@ const MENTIONS: Record<string, number> = {
   'src/components/ui/calendar.tsx': 1,
   'src/components/ui/tooltip.tsx': 1,
   /*
-   * TypographyPage는 규칙 설명과 미처리 사용처가 섞여 있다 — SCALE 정의와
-   * 새로 쓴 설명 문단은 규칙을 설명하는 자리, 나머지 넷(FONT STACK 라벨·
-   * 표 머리 둘·wrap 데모 제목)은 아직 못 옮긴 실제 사용처다. Task 3이 그
-   * 넷을 옮기면 이 수는 2로 줄어든다.
+   * TypographyPage는 규칙 설명과 미처리 사용처가 섞여 있었다 — Task 3이 남은
+   * 넷(FONT STACK 라벨·표 머리 둘·wrap 데모 제목)을 옮겨, 이제 SCALE 정의와
+   * 설명 문단만 남았다.
    */
-  'src/routes/foundations/TypographyPage.tsx': 6,
+  'src/routes/foundations/TypographyPage.tsx': 2,
+  /*
+   * DesignTokenPage도 마찬가지다 — 50행의 note 문구('text-11~text-48')와
+   * 97행의 Naming 예시('--text-11')는 토큰 이름 자체를 가리키는 문서이지
+   * 적용된 클래스가 아니다. Task 3이 남은 둘(표 머리·개수 표시)을 옮겼다.
+   */
+  'src/routes/foundations/DesignTokenPage.tsx': 2,
 
-  /* 아직 text-12로 못 옮긴 실제 사용처(pending) — Task 3~5가 하나씩 줄인다 */
+  /* 아직 text-12로 못 옮긴 실제 사용처(pending) — Task 4~5가 하나씩 줄인다 */
   'src/routes/UpdatesPage.tsx': 1,
   'src/routes/components/BreadcrumbPage.tsx': 2,
   'src/routes/components/ButtonPage.tsx': 4,
@@ -65,15 +70,6 @@ const MENTIONS: Record<string, number> = {
   'src/routes/components/TextareaPage.tsx': 5,
   'src/routes/components/ToastPage.tsx': 1,
   'src/routes/components/TogglePage.tsx': 5,
-  'src/routes/foundations/ColorRolePage.tsx': 8,
-  'src/routes/foundations/DesignTokenPage.tsx': 4,
-  'src/routes/foundations/IconographyPage.tsx': 1,
-  'src/routes/foundations/LayoutPage.tsx': 2,
-  'src/routes/foundations/PalettePage.tsx': 5,
-  'src/routes/foundations/SpacingPage.tsx': 1,
-  'src/routes/foundations/StatePage.tsx': 1,
-  'src/routes/foundations/VoiceAndTonePage.tsx': 1,
-  'src/routes/foundations/WritingPage.tsx': 1,
   'src/routes/get-started/GetStartedOverview.tsx': 1,
   'src/routes/patterns/DetailPatternPage.tsx': 1,
   'src/routes/patterns/EmptyAndErrorPatternPage.tsx': 1,

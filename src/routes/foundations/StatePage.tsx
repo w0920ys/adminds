@@ -118,7 +118,7 @@ export function StatePage() {
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {DEMOS.map((demo) => (
             <div key={demo.name} className="rounded-lg border p-4">
-              <p className="text-muted-foreground mb-3 text-11 font-bold tracking-widest">
+              <p className="text-muted-foreground mb-3 text-12 font-bold tracking-widest">
                 {demo.name.toUpperCase()}
               </p>
               <div className={cn('flex min-h-10 items-center', demo.force)}>{demo.node}</div>
