@@ -56,7 +56,13 @@ export function Gnb({ onMenuClick }: { onMenuClick: () => void }) {
         </nav>
 
         <button
-          className="text-muted-foreground hover:bg-accent hover:text-foreground ml-auto flex h-8 items-center gap-2 rounded-md border px-2.5"
+          /*
+           * h-11(44px)을 모바일 기본값으로 둔다 — Apple HIG·Material 모두
+           * 최소 터치 영역을 44px 안팎으로 잡는데, 예전 h-8(32px)은 그
+           * 기준에 못 미쳤다. md 이상(마우스 입력이 흔한 화면)에서는
+           * md:h-8로 되돌려 헤더가 다시 조밀해지게 한다.
+           */
+          className="text-muted-foreground hover:bg-accent hover:text-foreground ml-auto flex h-11 items-center gap-2 rounded-md border px-2.5 md:h-8"
           onClick={() => setSearchOpen(true)}
           aria-label="문서 검색"
         >
@@ -69,14 +75,23 @@ export function Gnb({ onMenuClick }: { onMenuClick: () => void }) {
         </button>
 
         <button
-          className="hover:bg-accent ml-1 grid size-8 place-items-center rounded-md"
+          className="hover:bg-accent ml-1 grid size-11 place-items-center rounded-md md:size-8"
           onClick={toggle}
           aria-label={theme === 'dark' ? '라이트 모드로 전환' : '다크 모드로 전환'}
         >
           {theme === 'dark' ? <Sun size={17} /> : <Moon size={17} />}
         </button>
 
-        <button className="ml-1 md:hidden" onClick={onMenuClick} aria-label="메뉴 열기">
+        {/*
+         * md:hidden이라 데스크톱 축소가 필요 없다 — 모바일에서만 보이는
+         * 버튼이라 터치 영역(44px)을 그대로 둔다. 예전에는 크기 클래스가
+         * 아예 없어 클릭 영역이 Menu 아이콘 자체의 20px뿐이었다.
+         */}
+        <button
+          className="ml-1 grid size-11 place-items-center rounded-md md:hidden"
+          onClick={onMenuClick}
+          aria-label="메뉴 열기"
+        >
           <Menu size={20} />
         </button>
       </div>
