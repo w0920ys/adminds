@@ -14,7 +14,7 @@ const TOTAL_CONFIG: ChartConfig = {
 }
 const TOTAL_DATA = [{ month: '1월', desktop: 1260, mobile: 570 }]
 
-function render(options: { showLabel?: string }) {
+function render(options: { showLabel?: string; showLegend?: string }) {
   return (
     <ChartRadial
       title="목표 달성률"
@@ -24,6 +24,7 @@ function render(options: { showLabel?: string }) {
       categoryKey="goal"
       valueKey="progress"
       showLabel={options.showLabel === 'on'}
+      showLegend={options.showLegend === 'on'}
       totalLabel="퍼센트"
     />
   )

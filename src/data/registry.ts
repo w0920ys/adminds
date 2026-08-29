@@ -3263,7 +3263,7 @@ export const components: ComponentMeta[] = [
         name: 'stacked',
         title: 'Stacked',
         description: '계열이 둘 이상일 때 겹쳐 쌓을지 정한다.',
-        display: 'row',
+        display: 'grid',
         options: [
           { value: 'off', note: '기본. 계열이 겹쳐 보인다' },
           { value: 'on', note: '계열이 쌓여 합계를 보인다' },
@@ -3273,10 +3273,20 @@ export const components: ComponentMeta[] = [
         name: 'gradient',
         title: 'Gradient',
         description: '채움을 단색으로 할지 그라데이션으로 할지 정한다.',
-        display: 'row',
+        display: 'grid',
         options: [
           { value: 'off', note: '기본. 단색 채움' },
           { value: 'on', note: '위에서 아래로 옅어지는 채움' },
+        ],
+      },
+      {
+        name: 'showLegend',
+        title: 'Show legend',
+        description: '계열 이름을 범례로 보일지 정한다. 정하지 않으면 계열이 둘 이상일 때 자동으로 켜진다.',
+        display: 'grid',
+        options: [
+          { value: 'off', note: '기본. 범례를 끈다' },
+          { value: 'on', note: '계열 이름을 범례로 보인다' },
         ],
       },
     ],
@@ -3291,7 +3301,7 @@ export const components: ComponentMeta[] = [
     ],
     usage: [
       { id: 'visitor-trend', title: '방문자 추이', note: '단일 계열로 시간에 따른 값의 흐름을 보인다' },
-      { id: 'channel-stacked', title: '유입경로별 누적', note: '여러 계열을 stacked로 쌓아 합계와 구성비를 함께 보인다' },
+      { id: 'channel-stacked', title: '플랫폼별 누적', note: '여러 계열을 stacked로 쌓아 합계와 구성비를 함께 보인다' },
     ],
     cases: [
       { id: 'gradient-fill', title: '그라데이션 채움', note: '단색보다 부드러운 인상이 필요할 때' },
@@ -3313,7 +3323,7 @@ export const components: ComponentMeta[] = [
         name: 'orientation',
         title: 'Orientation',
         description: '막대를 세로로 세울지 가로로 눕힐지 정한다.',
-        display: 'row',
+        display: 'grid',
         options: [
           { value: 'columns', note: '기본. 세로 막대' },
           { value: 'bars', note: '이름이 길거나 항목이 적어 순위 비교가 목적일 때' },
@@ -3323,10 +3333,20 @@ export const components: ComponentMeta[] = [
         name: 'stacked',
         title: 'Stacked',
         description: '계열이 둘 이상일 때 쌓아 보일지 정한다.',
-        display: 'row',
+        display: 'grid',
         options: [
           { value: 'off', note: '기본. 계열이 나란히 놓인다' },
           { value: 'on', note: '계열이 쌓여 합계를 보인다' },
+        ],
+      },
+      {
+        name: 'showLegend',
+        title: 'Show legend',
+        description: '계열 이름을 범례로 보일지 정한다. 정하지 않으면 계열이 둘 이상일 때 자동으로 켜진다.',
+        display: 'grid',
+        options: [
+          { value: 'off', note: '기본. 범례를 끈다' },
+          { value: 'on', note: '계열 이름을 범례로 보인다' },
         ],
       },
     ],
@@ -3363,10 +3383,20 @@ export const components: ComponentMeta[] = [
         name: 'curveType',
         title: 'Curve type',
         description: '점 사이를 부드러운 곡선으로 이을지, 계단식으로 이을지 정한다.',
-        display: 'row',
+        display: 'grid',
         options: [
           { value: 'monotone', note: '기본. 부드러운 곡선' },
           { value: 'step', note: '값이 유지되다 갑자기 바뀌는 데이터(재고·상태 등)' },
+        ],
+      },
+      {
+        name: 'showLegend',
+        title: 'Show legend',
+        description: '계열 이름을 범례로 보일지 정한다. 정하지 않으면 계열이 둘 이상일 때 자동으로 켜진다.',
+        display: 'grid',
+        options: [
+          { value: 'off', note: '기본. 범례를 끈다' },
+          { value: 'on', note: '계열 이름을 범례로 보인다' },
         ],
       },
     ],
@@ -3380,8 +3410,8 @@ export const components: ComponentMeta[] = [
       },
     ],
     usage: [
-      { id: 'signup-trend', title: '가입 추세', note: '단일 계열로 시간에 따른 변화를 보인다' },
-      { id: 'plan-comparison', title: '유료·무료 비교', note: '두 계열을 겹쳐 시간에 따른 변화를 비교한다' },
+      { id: 'signup-trend', title: '방문자 추이', note: '단일 계열로 시간에 따른 변화를 보인다' },
+      { id: 'plan-comparison', title: '플랫폼별 비교', note: '두 계열을 겹쳐 시간에 따른 변화를 비교한다' },
     ],
     cases: [
       { id: 'with-dots', title: '포인트 표시', note: '데이터 포인트가 적어 각 지점을 눈에 띄게 해야 할 때' },
@@ -3403,7 +3433,7 @@ export const components: ComponentMeta[] = [
         name: 'variant',
         title: 'Variant',
         description: '가운데를 비울지(도넛) 채울지(파이) 정한다.',
-        display: 'row',
+        display: 'grid',
         options: [
           { value: 'pie', note: '기본' },
           { value: 'donut', note: '가운데가 비어 다른 정보를 겹쳐 보일 여지가 생긴다' },
@@ -3413,7 +3443,7 @@ export const components: ComponentMeta[] = [
         name: 'showLegend',
         title: 'Show legend',
         description: '조각 옆에 범례를 보일지 정한다. 범례를 켜면 툴팁은 대신 생략된다.',
-        display: 'row',
+        display: 'grid',
         options: [
           { value: 'off', note: '기본. 조각에 마우스를 올리면 툴팁으로 이름·값을 본다' },
           { value: 'on', note: '정적인 화면(인쇄·캡처)에도 이름이 항상 보여야 할 때' },
@@ -3452,10 +3482,20 @@ export const components: ComponentMeta[] = [
         name: 'gridType',
         title: 'Grid type',
         description: '배경 격자를 다각형으로 그릴지 원으로 그릴지 정한다.',
-        display: 'row',
+        display: 'grid',
         options: [
           { value: 'polygon', note: '기본. 축 개수만큼 각진 격자' },
           { value: 'circle', note: '동심원 격자 — 값의 크기 비교가 더 직관적일 때' },
+        ],
+      },
+      {
+        name: 'showLegend',
+        title: 'Show legend',
+        description: '계열 이름을 범례로 보일지 정한다.',
+        display: 'grid',
+        options: [
+          { value: 'off', note: '기본' },
+          { value: 'on', note: '계열 이름을 범례로 보인다' },
         ],
       },
     ],
@@ -3470,7 +3510,7 @@ export const components: ComponentMeta[] = [
     ],
     usage: [
       { id: 'skill-profile', title: '역량 비교', note: '단일 계열로 여러 항목의 점수를 한 도형으로 보인다' },
-      { id: 'team-comparison', title: '두 팀 비교', note: '두 계열을 겹쳐 같은 기준으로 비교한다' },
+      { id: 'team-comparison', title: '플랫폼별 비교', note: '두 계열을 겹쳐 같은 기준으로 비교한다' },
     ],
     cases: [],
     verified: true,
@@ -3490,10 +3530,20 @@ export const components: ComponentMeta[] = [
         name: 'showLabel',
         title: 'Show label',
         description: '가운데에 합계 숫자를 보일지 정한다.',
-        display: 'row',
+        display: 'grid',
         options: [
           { value: 'off', note: '기본' },
           { value: 'on', note: '단일 계열일 때 가운데에 총합을 숫자로 보인다' },
+        ],
+      },
+      {
+        name: 'showLegend',
+        title: 'Show legend',
+        description: '계열 이름을 범례로 보일지 정한다.',
+        display: 'grid',
+        options: [
+          { value: 'off', note: '기본' },
+          { value: 'on', note: '계열 이름을 범례로 보인다' },
         ],
       },
     ],

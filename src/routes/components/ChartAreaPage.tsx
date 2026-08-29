@@ -15,29 +15,30 @@ const VISITOR_DATA = [
 ]
 const VISITOR_CONFIG: ChartConfig = { visitors: { label: '방문자', color: 'var(--chart-1)' } }
 
-const CHANNEL_DATA = [
-  { date: '1월', direct: 80, search: 186 },
-  { date: '2월', direct: 200, search: 305 },
-  { date: '3월', direct: 120, search: 237 },
-  { date: '4월', direct: 190, search: 273 },
-  { date: '5월', direct: 130, search: 209 },
-  { date: '6월', direct: 140, search: 314 },
+const PLATFORM_DATA = [
+  { date: '1월', desktop: 186, mobile: 80 },
+  { date: '2월', desktop: 305, mobile: 200 },
+  { date: '3월', desktop: 237, mobile: 120 },
+  { date: '4월', desktop: 273, mobile: 190 },
+  { date: '5월', desktop: 209, mobile: 130 },
+  { date: '6월', desktop: 314, mobile: 140 },
 ]
-const CHANNEL_CONFIG: ChartConfig = {
-  direct: { label: '다이렉트', color: 'var(--chart-2)' },
-  search: { label: '검색', color: 'var(--chart-1)' },
+const PLATFORM_CONFIG: ChartConfig = {
+  desktop: { label: '데스크톱', color: 'var(--chart-1)' },
+  mobile: { label: '모바일', color: 'var(--chart-2)' },
 }
 
-function render(options: { stacked?: string; gradient?: string }) {
+function render(options: { stacked?: string; gradient?: string; showLegend?: string }) {
   return (
     <ChartArea
-      title="방문자 추이"
+      title="플랫폼별 방문자"
       description="1월 - 6월"
-      data={CHANNEL_DATA}
-      config={CHANNEL_CONFIG}
+      data={PLATFORM_DATA}
+      config={PLATFORM_CONFIG}
       categoryKey="date"
       stacked={options.stacked === 'on'}
       gradient={options.gradient === 'on'}
+      showLegend={options.showLegend === 'on'}
     />
   )
 }
@@ -48,7 +49,7 @@ function renderExample(exampleId: string): ReactNode {
       return <ChartArea title="방문자 추이" description="1월 - 6월" data={VISITOR_DATA} config={VISITOR_CONFIG} categoryKey="date" />
     case 'channel-stacked':
       return (
-        <ChartArea title="유입경로별 방문자" description="1월 - 6월" data={CHANNEL_DATA} config={CHANNEL_CONFIG} categoryKey="date" stacked />
+        <ChartArea title="플랫폼별 방문자" description="1월 - 6월" data={PLATFORM_DATA} config={PLATFORM_CONFIG} categoryKey="date" stacked />
       )
     case 'gradient-fill':
       return (

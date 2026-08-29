@@ -14,19 +14,19 @@ const SKILL_DATA = [
 ]
 const SKILL_CONFIG: ChartConfig = { score: { label: '점수', color: 'var(--chart-1)' } }
 
-const TEAM_DATA = [
-  { skill: '소통', a: 186, b: 160 },
-  { skill: '실행력', a: 305, b: 220 },
-  { skill: '문제해결', a: 237, b: 250 },
-  { skill: '협업', a: 273, b: 210 },
-  { skill: '기획', a: 209, b: 190 },
+const PLATFORM_DATA = [
+  { skill: '소통', desktop: 186, mobile: 160 },
+  { skill: '실행력', desktop: 305, mobile: 220 },
+  { skill: '문제해결', desktop: 237, mobile: 250 },
+  { skill: '협업', desktop: 273, mobile: 210 },
+  { skill: '기획', desktop: 209, mobile: 190 },
 ]
-const TEAM_CONFIG: ChartConfig = {
-  a: { label: 'A팀', color: 'var(--chart-1)' },
-  b: { label: 'B팀', color: 'var(--chart-2)' },
+const PLATFORM_CONFIG: ChartConfig = {
+  desktop: { label: '데스크톱', color: 'var(--chart-1)' },
+  mobile: { label: '모바일', color: 'var(--chart-2)' },
 }
 
-function render(options: { gridType?: string }) {
+function render(options: { gridType?: string; showLegend?: string }) {
   return (
     <ChartRadar
       title="역량 비교"
@@ -35,6 +35,7 @@ function render(options: { gridType?: string }) {
       config={SKILL_CONFIG}
       categoryKey="skill"
       gridType={options.gridType === 'circle' ? 'circle' : 'polygon'}
+      showLegend={options.showLegend === 'on'}
     />
   )
 }
@@ -44,7 +45,9 @@ function renderExample(exampleId: string): ReactNode {
     case 'skill-profile':
       return <ChartRadar title="역량 비교" description="분기 평가" data={SKILL_DATA} config={SKILL_CONFIG} categoryKey="skill" />
     case 'team-comparison':
-      return <ChartRadar title="팀별 역량 비교" description="분기 평가" data={TEAM_DATA} config={TEAM_CONFIG} categoryKey="skill" showLegend />
+      return (
+        <ChartRadar title="플랫폼별 역량 비교" description="분기 평가" data={PLATFORM_DATA} config={PLATFORM_CONFIG} categoryKey="skill" showLegend />
+      )
     default:
       return null
   }

@@ -36,7 +36,7 @@ const RANKING_DATA = [
 ]
 const RANKING_CONFIG: ChartConfig = { visitors: { label: '방문자', color: 'var(--chart-1)' } }
 
-function render(options: { orientation?: string; stacked?: string }) {
+function render(options: { orientation?: string; stacked?: string; showLegend?: string }) {
   return (
     <ChartBar
       title="플랫폼별 방문자"
@@ -46,6 +46,7 @@ function render(options: { orientation?: string; stacked?: string }) {
       categoryKey="month"
       orientation={options.orientation === 'bars' ? 'bars' : 'columns'}
       stacked={options.stacked === 'on'}
+      showLegend={options.showLegend === 'on'}
     />
   )
 }
