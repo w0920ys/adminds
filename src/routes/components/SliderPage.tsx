@@ -1,4 +1,4 @@
-import type { ComponentProps, ReactNode } from 'react'
+import { useState, type ComponentProps, type ReactNode } from 'react'
 import { Bounds } from '@/components/docs/Bounds'
 import { ComponentPage } from '@/components/docs/ComponentPage'
 import type { RenderOptions } from '@/components/docs/PropertyBlock'
@@ -74,6 +74,54 @@ function renderSlider(options: RenderOptions) {
  * Input · Radio만으로 만든 어드민 화면의 한 조각이다.
  * ------------------------------------------------------------------ */
 
+/*
+ * Slider 옆에 곁들이는 Input은 보여주기용 defaultValue 두 개를 나란히
+ * 두는 것으로는 완성되지 않는다 — 그러면 서로 무관한 두 컨트롤이라
+ * 슬라이더를 끌어도 입력칸이, 입력칸에 숫자를 쳐도 슬라이더가 그대로다.
+ * "정확한 값이 필요하면 입력을 곁들인다"는 안내가 실제로 보여주는
+ * 예시에서까지 거짓이 되지 않도록 값 하나를 함께 들고 양쪽을 미러링한다.
+ * 입력칸은 타이핑 중간 상태("", "-")까지 그대로 반영하고, blur에서만
+ * min·max로 정규화한다 — 매 keystroke마다 부모 값을 되돌리면 "3" 다음
+ * "7"을 치기도 전에 커서가 튀거나 자리수가 씹힌다.
+ */
+function DiscountSlider() {
+  const min = 0
+  const max = 100
+  const [value, setValue] = useState(37)
+  const [inputText, setInputText] = useState('37')
+
+  return (
+    <Field className="w-64">
+      <FieldLabel>할인율</FieldLabel>
+      <div className="flex items-center gap-3">
+        <FieldControl>
+          <Slider
+            value={[value]}
+            onValueChange={([next]) => {
+              setValue(next)
+              setInputText(String(next))
+            }}
+            className="flex-1"
+          />
+        </FieldControl>
+        <Input
+          value={inputText}
+          onChange={(event) => setInputText(event.target.value)}
+          onBlur={() => {
+            const parsed = Number(inputText)
+            const clamped = Number.isFinite(parsed) ? Math.min(max, Math.max(min, parsed)) : value
+            setValue(clamped)
+            setInputText(String(clamped))
+          }}
+          inputMode="numeric"
+          className="w-16 text-right"
+          aria-label="할인율 직접 입력"
+        />
+      </div>
+    </Field>
+  )
+}
+
 function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): ReactNode {
   switch (guidelineId) {
     case 'show-value-as-number':
@@ -90,15 +138,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
 
     case 'exact-value-needs-input':
       return kind === 'do' ? (
-        <Field className="w-64">
-          <FieldLabel>할인율</FieldLabel>
-          <div className="flex items-center gap-3">
-            <FieldControl>
-              <Slider defaultValue={[37]} className="flex-1" />
-            </FieldControl>
-            <Input defaultValue="37" className="w-16 text-right" aria-label="할인율 직접 입력" />
-          </div>
-        </Field>
+        <DiscountSlider />
       ) : (
         <SliderField label="할인율" valueLabel="37% 부근" defaultValue={[37]} />
       )

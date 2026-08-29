@@ -240,8 +240,15 @@ function renderExample(exampleId: string): ReactNode {
               <TableCell numeric>32,000원</TableCell>
             </TableRow>
             <TableRow className="h-auto hover:bg-transparent">
+              {/*
+               * columns="one"이다 — 펼친 행이 차지하는 실제 폭(이 표에서는
+               * 300px 안팎)은 고정 폭 dt(w-32) 둘을 columns="two"로
+               * 나란히 놓기엔 좁다. 그 조합은 칸 하나가 dt의 고정 폭보다도
+               * 좁아져 dd가 밀려나는 자리라 여기 쓰면 안 된다 — 같은
+               * 문제를 '좁은 화면' Case가 이미 보여준다.
+               */}
               <TableCell colSpan={2} className="h-auto py-4 whitespace-normal">
-                <DescriptionList layout="horizontal" columns="two">
+                <DescriptionList layout="horizontal" columns="one">
                   <DescriptionItem>
                     <DescriptionTerm>주문자</DescriptionTerm>
                     <DescriptionDetail>홍길동</DescriptionDetail>

@@ -291,7 +291,7 @@ function renderExample(exampleId: string): ReactNode {
         <Bounds className="w-40">
           <Select defaultValue="b">
             <SelectTrigger id="ex-long-item" className="w-full">
-              <SelectValue className="truncate" />
+              <SelectValue />
             </SelectTrigger>
             <SelectContent className="w-40">
               <SelectItem value="a" className="truncate">
