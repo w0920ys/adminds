@@ -126,7 +126,12 @@ function TableHead({
       aria-sort={sortable ? ariaSort : undefined}
       onClick={sortable ? undefined : onClick}
       className={cn(
-        'text-muted-foreground h-full px-3 text-left align-middle text-12 font-bold whitespace-nowrap',
+        /*
+         * relative는 sortable일 때만 뜻이 있다 — 아래 button이 absolute로
+         * 이 th를 기준 삼는 자리다(비정렬 열도 relative 자체는 부작용이
+         * 없어 조건 없이 둔다).
+         */
+        'text-muted-foreground relative h-full px-3 text-left align-middle text-12 font-bold whitespace-nowrap',
         numeric && 'text-right',
         sticky && 'bg-surface sticky left-0 z-sticky',
         className,
@@ -145,9 +150,21 @@ function TableHead({
            * 안쪽 button으로 그대로 넘길 뿐이라 여기서만 좁혀 쓴다.
            */
           onClick={onClick as React.MouseEventHandler<HTMLButtonElement> | undefined}
+          /*
+           * h-full/w-full(퍼센트 높이)은 th 안에서 먹지 않는다 — 표 칸의
+           * 안쪽 높이는 "명시적으로 지정된 높이"로 안 쳐서, 자식의
+           * height:100%가 CSS 표 레이아웃에서는 풀리지 않는다(실제로
+           * 재본 값도 20px였다, th는 48px인데도). absolute inset-0으로
+           * 대신 th 테두리 안쪽 전체를 덮는다 — top/bottom:0은 퍼센트
+           * 계산이 아니라 위치 지정 요소의 포함 블록 가장자리에 바로
+           * 붙는 값이라 이 제약을 받지 않는다. th의 px-3 padding은 이제
+           * button 바깥에서 무의미해지므로(absolute 자식은 padding
+           * box를 기준으로 놓인다) 같은 값을 button 자신의 padding으로
+           * 옮겨 글자 위치를 그대로 지킨다.
+           */
           className={cn(
-            'text-muted-foreground hover:text-foreground focus-visible:ring-ring/50 -mx-1 inline-flex items-center gap-1 rounded px-1 outline-none focus-visible:ring-2',
-            numeric && 'flex-row-reverse',
+            'text-muted-foreground hover:text-foreground focus-visible:ring-ring/50 absolute inset-0 flex items-center gap-1 rounded px-3 outline-none focus-visible:ring-2',
+            numeric ? 'flex-row-reverse justify-end' : 'justify-start',
           )}
         >
           {children}

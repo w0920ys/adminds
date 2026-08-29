@@ -114,8 +114,17 @@ export function Lnb({ open, onClose }: { open: boolean; onClose: () => void }) {
        */}
       <aside
         className={cn(
-          'bg-surface fixed inset-y-0 right-0 z-drawer flex w-60 flex-col overflow-y-auto border-l p-3 transition-transform',
-          'md:static md:h-full md:shrink-0 md:translate-x-0',
+          /*
+           * 모바일 서랍은 w-full로 화면을 그대로 채운다 — w-60(240px)
+           * 고정폭이었을 때는 375px 화면에서 135px(36%)이 그대로 남아
+           * 어두운 오버레이 뒤로 밑에 있는 페이지가 계속 비쳤다("lnb가
+           * 화면을 채우지 않는다"는 지적, 실제로 스크린샷으로 재현·확인
+           * 했다). sm(640px) 이상부터는 w-80(320px)으로 눌러 커진
+           * 화면에서 서랍이 과하게 넓어지지 않게 하고, md 이상은 정적
+           * 사이드바라 원래 값(w-60)으로 되돌린다.
+           */
+          'bg-surface fixed inset-y-0 right-0 z-drawer flex w-full flex-col overflow-y-auto border-l p-3 transition-transform',
+          'sm:w-80 md:static md:h-full md:w-60 md:shrink-0 md:translate-x-0',
           open ? 'translate-x-0' : 'translate-x-full',
         )}
       >

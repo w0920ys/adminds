@@ -55,8 +55,13 @@ export function Gnb({ onMenuClick }: { onMenuClick: () => void }) {
           ))}
         </nav>
 
+        {/*
+         * 모바일에서는 control-lg(40px)로 터치 영역을 넉넉히 준다 — 데스크톱은
+         * 마우스로 정확히 짚을 수 있어 지금 크기(32px)를 그대로 둔다. 이
+         * 저장소가 이미 Button 등에서 쓰는 control 높이 스케일과 같은 값이다.
+         */}
         <button
-          className="text-muted-foreground hover:bg-accent hover:text-foreground ml-auto flex h-8 items-center gap-2 rounded-md border px-2.5"
+          className="text-muted-foreground hover:bg-accent hover:text-foreground h-control-lg ml-auto flex items-center gap-2 rounded-md border px-2.5 md:h-8"
           onClick={() => setSearchOpen(true)}
           aria-label="문서 검색"
         >
@@ -69,14 +74,19 @@ export function Gnb({ onMenuClick }: { onMenuClick: () => void }) {
         </button>
 
         <button
-          className="hover:bg-accent ml-1 grid size-8 place-items-center rounded-md"
+          className="hover:bg-accent size-control-lg ml-1 grid place-items-center rounded-md md:size-8"
           onClick={toggle}
           aria-label={theme === 'dark' ? '라이트 모드로 전환' : '다크 모드로 전환'}
         >
           {theme === 'dark' ? <Sun size={17} /> : <Moon size={17} />}
         </button>
 
-        <button className="ml-1 md:hidden" onClick={onMenuClick} aria-label="메뉴 열기">
+        {/* 데스크톱에는 아예 없는 버튼이라 md:hidden 쪽 크기는 필요 없다 */}
+        <button
+          className="hover:bg-accent size-control-lg ml-1 grid place-items-center rounded-md md:hidden"
+          onClick={onMenuClick}
+          aria-label="메뉴 열기"
+        >
           <Menu size={20} />
         </button>
       </div>

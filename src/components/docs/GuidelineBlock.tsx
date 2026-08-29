@@ -18,7 +18,17 @@ function Side({
   if (!example && rules.length === 0) return null
 
   return (
-    <div className="flex h-full flex-col gap-4 rounded-lg border p-4 md:p-5">
+    /*
+     * min-w-0이 필요하다 — 이 div는 부모 grid의 칸이다. 칸은 기본이
+     * min-width:auto라, 안에 든 내용(Tabs의 TabsList처럼 폭이 정해지지
+     * 않은 부모 안에서 overflow-x-auto가 무력해지는 inline-flex 등)이
+     * 자기 min-content 폭만큼 칸을 벌린다 - Tabs 문서의 "tab-count-limit"
+     * DON'T 예시(폭 제한 없이 탭 8개)가 모바일 한 칸짜리 grid에서 이
+     * div를 벌려 main 전체가 가로로 스크롤됐다(실제로 재현·확인함).
+     * ExampleList.tsx·PropertyBlock.tsx가 같은 이유로 이미 쓰는 처방과
+     * 같다.
+     */
+    <div className="flex h-full min-w-0 flex-col gap-4 rounded-lg border p-4 md:p-5">
       {/*
        * DO 글자는 success-on-tint를 쓴다 — 원래 success 색은 흰 바탕
        * 위에서도 3.67:1로 4.5:1에 못 미친다. destructive는 4.76:1로
