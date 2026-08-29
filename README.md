@@ -60,7 +60,7 @@ src/
 
 ```bash
 npx shadcn@latest add https://adminds.vercel.app/r/table.json   # 하나만
-npx shadcn@latest add https://adminds.vercel.app/r/adminds.json # 토큰과 40개 전부
+npx shadcn@latest add https://adminds.vercel.app/r/adminds.json # 토큰과 41개 전부
 ```
 
 소스가 그쪽 `src/components/ui/`에 들어가므로 받은 쪽이 고쳐 씁니다. 나중에 같은 명령을 다시 돌리면 갱신되지만, 고쳐 둔 것은 덮어써집니다.

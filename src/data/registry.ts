@@ -348,6 +348,52 @@ export const components: ComponentMeta[] = [
     verified: true,
   },
   {
+    id: 'menubar',
+    name: 'Menubar',
+    aliases: ['메뉴바', '상단 메뉴', 'menu bar'],
+    category: 'actions',
+    status: 'stable',
+    addedIn: 'v0.16.0',
+    changedIn: 'v0.16.0',
+    purpose: '가로로 늘어선 메뉴 묶음을 제공한다. 데스크톱 앱의 File/Edit/View 같은 자리다.',
+    verified: true,
+    anatomy: [
+      {
+        part: 'trigger',
+        label: 'Trigger',
+        note: '가로로 늘어선 트리거 각각이 하나의 메뉴를 연다. 열리면 트리거 아래에 목록이 뜬다. bg-popover, 테두리, radius-md, 쌓임 순서는 z-popover. 항목은 Dropdown Menu와 같은 규칙(text-16, 포커스 bg-accent, 위험 항목 text-destructive)이다. 값을 켜고 끄는 항목은 CheckboxItem으로 왼쪽에 체크 표시를 둔다.',
+      },
+    ],
+    properties: [
+      {
+        name: 'state',
+        title: 'State',
+        description: '트리거의 상호작용 상태를 나타낸다. 열림은 눌러야만 보이는 값이라 이 격자에는 없다 — Usage에서 실제로 눌러서 본다.',
+        display: 'grid',
+        options: [
+          { value: 'default' },
+          { value: 'hover', note: '포인터가 올라간 동안' },
+          { value: 'disabled', note: '지금 열 수 없음' },
+        ],
+      },
+    ],
+    guidelines: [
+      {
+        id: 'few-top-level-menus',
+        title: 'Few top-level menus',
+        body: '가로로 늘어선 메뉴가 많아지면 한 화면에서 훑어보기 어렵습니다. 최상위 메뉴는 서너 개 안으로 둡니다 — 더 필요하면 하위 메뉴가 아니라 화면 구조 자체를 다시 생각합니다.',
+        do: ['최상위 메뉴를 서너 개 안으로 둔다'],
+        dont: ['최상위 메뉴를 여러 줄로 늘어놓지 않는다'],
+      },
+    ],
+    usage: [
+      { id: 'app-shell', title: '앱 셸 메뉴바', note: 'File · Edit · View 세 메뉴로 데스크톱 앱 스타일의 상단 메뉴바를 구성한다.' },
+    ],
+    cases: [
+      { id: 'disabled-menu', title: '지금 쓸 수 없는 항목', note: '문서가 없어 저장할 게 없을 때는 File 메뉴 자체가 아니라 그 안의 저장 항목만 비활성화한다.' },
+    ],
+  },
+  {
     id: 'toggle',
     name: 'Toggle',
     aliases: ['토글', '토글 그룹', 'toggle group', '세그먼트', 'segmented control', '눌린 버튼'],

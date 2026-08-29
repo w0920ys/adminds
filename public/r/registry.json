@@ -833,6 +833,24 @@
       ]
     },
     {
+      "name": "menubar",
+      "type": "registry:ui",
+      "title": "Menubar",
+      "dependencies": [
+        "@radix-ui/react-menubar"
+      ],
+      "registryDependencies": [
+        "https://adminds.vercel.app/r/tokens.json",
+        "https://adminds.vercel.app/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/menubar.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "toggle",
       "type": "registry:ui",
       "title": "Toggle",
@@ -878,7 +896,7 @@
       "name": "adminds",
       "type": "registry:item",
       "title": "Admin Design System",
-      "description": "토큰과 컴포넌트 마흔 개를 한 번에 가져온다.",
+      "description": "토큰과 컴포넌트 마흔하나 개를 한 번에 가져온다.",
       "registryDependencies": [
         "https://adminds.vercel.app/r/accordion.json",
         "https://adminds.vercel.app/r/alert.json",
@@ -902,6 +920,7 @@
         "https://adminds.vercel.app/r/field.json",
         "https://adminds.vercel.app/r/file-upload.json",
         "https://adminds.vercel.app/r/input.json",
+        "https://adminds.vercel.app/r/menubar.json",
         "https://adminds.vercel.app/r/pagination.json",
         "https://adminds.vercel.app/r/popover.json",
         "https://adminds.vercel.app/r/progress.json",

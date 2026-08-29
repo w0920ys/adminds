@@ -26,6 +26,7 @@ import { EmptyStatePage } from '@/routes/components/EmptyStatePage'
 import { FieldPage } from '@/routes/components/FieldPage'
 import { FileUploadPage } from '@/routes/components/FileUploadPage'
 import { InputPage } from '@/routes/components/InputPage'
+import { MenubarPage } from '@/routes/components/MenubarPage'
 import { PaginationPage } from '@/routes/components/PaginationPage'
 import { PopoverPage } from '@/routes/components/PopoverPage'
 import { ProgressPage } from '@/routes/components/ProgressPage'
@@ -130,6 +131,7 @@ export const routes: RouteObject[] = [
           { path: 'description-list', element: <DescriptionListPage /> },
           { path: 'accordion', element: <AccordionPage /> },
           { path: 'context-menu', element: <ContextMenuPage /> },
+          { path: 'menubar', element: <MenubarPage /> },
         ],
       },
 
