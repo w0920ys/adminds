@@ -707,6 +707,8 @@ export {
 },
 ```
 
+**추가로(Task 2가 실제로 겪어서 알게 된 것):** `registry.json`의 `adminds` 묶음 항목도 이 자리에서 같이 고쳐야 한다 — `registry-parity.test.ts`의 "손으로 적은 컴포넌트 개수"·"묶음 항목이 모든 컴포넌트를 가리킨다" 두 테스트가 `components.length`(이 Task가 끝나면 41)와 `adminds` 항목의 설명·`registryDependencies`를 즉시 대조하기 때문이다 — Task 5까지 미룰 수 없다. `adminds` 항목의 `description`에서 개수를 나타내는 한글 숫자를 하나 올리고(Context Menu Task가 이미 "서른아홉"→"마흔"으로 고쳐 뒀다 — 이 Task는 "마흔"→"마흔하나"로 고친다), `registryDependencies` 배열에 `https://adminds.vercel.app/r/menubar.json`을 알파벳 순서 자리(`file-upload.json`과 `input.json` 사이 근방, 실제 배열을 보고 정확한 자리를 찾는다)에 끼워 넣는다. `README.md`의 "40개 전부"도 "41개 전부"로 고친다(Context Menu Task가 "39개"→"40개"로 이미 고쳐 뒀다).
+
 - [ ] **Step 4: `src/routes/routes.tsx`에 라우트를 더한다**
 
 import 목록에 `import { MenubarPage } from '@/routes/components/MenubarPage'`를 더한다. `components` 라우트의 `children` 배열 맨 끝(Task 2가 추가한 `context-menu` 라우트 다음)에 더한다:
@@ -1162,6 +1164,8 @@ export { ResizablePanelGroup, ResizablePanel, ResizableHandle }
 },
 ```
 
+**추가로(Task 2·3와 같은 이유):** `adminds` 묶음 항목도 이 자리에서 같이 고친다 — `description`의 한글 숫자를 "마흔하나"→"마흔둘"로("두 개"가 맞는 표현이라 "둘"이 아니라 "두"를 쓴다는 걸 잊지 않는다), `registryDependencies`에 `https://adminds.vercel.app/r/resizable.json`을 알파벳 순서 자리(`radio.json`과 `scroll-area.json` 사이 근방)에 끼워 넣는다. `README.md`의 "41개 전부"도 "42개 전부"로 고친다. **이 Task가 끝나면 `components.length`가 정확히 42가 되고, 묶음 설명·`registryDependencies`·README가 전부 그 숫자와 맞아떨어져야 한다 — Task 5는 이제 새로 고칠 게 없고 그 상태를 확인만 한다.**
+
 - [ ] **Step 5: `src/routes/routes.tsx`에 라우트를 더한다**
 
 import 목록에 `import { ResizablePage } from '@/routes/components/ResizablePage'`를 더한다. `children` 배열 맨 끝(Task 3이 추가한 `menubar` 다음)에 더한다:
@@ -1343,14 +1347,16 @@ react-resizable-panels 4.x(Group/Panel/Separator)를 감싼다. 흔히
 
 ---
 
-## Task 5: 묶음 마무리 — registry.json의 adminds 번들과 손으로 적은 개수
+## Task 5: 묶음 마무리 확인 — registry.json의 adminds 번들이 실제로 다 맞는지 검증
+
+**⚠️ 이 Task는 Task 2 완료 후 계획 작성 중 다시 검증됐다.** 원래는 이 Task가 `adminds` 번들의 개수·`registryDependencies`를 39→42로 한 번에 올리는 일을 맡았으나, Task 2를 진행하며 `registry-parity.test.ts`의 "손으로 적은 컴포넌트 개수"·"묶음 항목이 모든 컴포넌트를 가리킨다" 두 테스트가 **각 컴포넌트 Task가 끝날 때마다 즉시** `components.length`와 번들 설명·`registryDependencies`를 대조한다는 게 드러났다 — Task 5까지 미룰 수 없었다. 그래서 Task 2·3·4 각각이 자기 컴포넌트 하나만큼(39→40→41→42) 번들을 이미 갱신해 뒀다. 이 Task는 이제 **새로 고칠 게 없고, 그 상태가 실제로 맞는지 확인만 한다** — 확인 중 어긋난 게 있으면 그때 고친다.
 
 **Files:**
-- Modify: `registry.json`(adminds 번들의 `registryDependencies`와 `description`)
-- Modify: `README.md`(컴포넌트 개수 문구)
+- Modify(필요시): `registry.json`(adminds 번들의 `registryDependencies`와 `description`)
+- Modify(필요시): `README.md`(컴포넌트 개수 문구)
 
 **Interfaces:**
-- Consumes: Task 2~4가 만든 세 `registry:ui` 항목
+- Consumes: Task 2~4가 만든 세 `registry:ui` 항목과 그때그때 갱신된 `adminds` 번들
 - Produces: 없음(최종 소비자)
 
 - [ ] **Step 1: 지금 컴포넌트 수를 실제로 센다**
@@ -1362,45 +1368,23 @@ grep -c "^    id: '" src/data/registry.ts
 
 Task 1~4 전이 39개였다(v0.14.0 최종 리뷰에서 확인된 수). Task 2~4가 셋을 더했으니 이 명령은 42를 찍어야 한다 — 다른 수가 나오면 멈추고 원인을 찾는다(어느 Task가 항목을 빠뜨렸거나 중복으로 넣었다는 뜻이다).
 
-- [ ] **Step 2: `registry.json`의 `adminds` 번들을 갱신한다**
+- [ ] **Step 2: `registry.json`의 `adminds` 번들이 실제로 42와 맞는지 확인한다**
 
-`"name": "adminds"` 항목을 찾는다.
+`"name": "adminds"` 항목을 찾는다. `description`이 "토큰과 컴포넌트 마흔두 개를 한 번에 가져온다."인지("두 개"가 맞는 표현이라 "둘"이 아니라 "두"를 쓴다), `registryDependencies` 배열에 `context-menu.json`·`menubar.json`·`resizable.json` 셋이 알파벳 순서 자리에 다 들어 있는지 직접 읽어 확인한다. **Task 2~4가 이미 각자 갱신해 뒀어야 한다** — 이미 맞다면 아무것도 고치지 않는다. 만약 어긋나 있으면(어느 Task가 이 갱신을 빠뜨렸다는 뜻이다) 지금 고친다.
 
-`description`의 "서른아홉"을 "마흔두"로 바꾼다(개수 셋이 늘었다 — 서른아홉+셋=마흔둘이지만, "개" 앞에 오는 관형형은 "마흔두"다. "둘"이 아니라 "두"를 쓴다 — "두 개"가 맞는 표현이고 "둘 개"는 틀린 표현이다):
-
-```
-"토큰과 컴포넌트 마흔두 개를 한 번에 가져온다."
-```
-
-`registryDependencies` 배열에 세 줄을 알파벳 순서 자리에 끼워 넣는다:
-```
-"https://adminds.vercel.app/r/context-menu.json",
-```
-(`combobox.json`과 `data-table.json` 사이, 또는 실제 배열의 알파벳 순서를 보고 정확한 자리를 찾는다)
-```
-"https://adminds.vercel.app/r/menubar.json",
-```
-(`file-upload.json`과 `input.json` 사이 근방, 실제 배열의 알파벳 순서를 보고 정확한 자리를 찾는다)
-```
-"https://adminds.vercel.app/r/resizable.json",
-```
-(`radio.json`과 `scroll-area.json` 사이 근방, 실제 배열의 알파벳 순서를 보고 정확한 자리를 찾는다)
-
-정확한 삽입 자리는 실제 파일을 읽고 알파벳 순서를 직접 확인해서 정해라 — 위 위치는 참고용이다. `registry-parity.test.ts`의 "묶음 항목이 모든 컴포넌트를 가리킨다" 테스트가 셋 다 빠짐없이 들어갔는지 검증한다.
-
-- [ ] **Step 3: `README.md`의 개수 문구를 갱신한다**
+- [ ] **Step 3: `README.md`의 개수 문구가 실제로 42와 맞는지 확인한다**
 
 `README.md`에서 다음 줄을 찾는다:
 ```
-npx shadcn@latest add https://adminds.vercel.app/r/adminds.json # 토큰과 39개 전부
+npx shadcn@latest add https://adminds.vercel.app/r/adminds.json # 토큰과 42개 전부
 ```
-"39"를 "42"로 바꾼다.
+"42"가 아니면(Task 2~4가 이미 39→40→41→42로 올려 뒀어야 한다) 지금 고친다.
 
-- [ ] **Step 4: registry를 다시 굽는다**
+- [ ] **Step 4: (Step 2·3에서 뭔가 고쳤다면) registry를 다시 굽는다**
 
 Run: `npm run registry`
 
-`adminds` 번들의 payload(`public/r/adminds.json`)가 Step 2의 변경을 반영해 다시 구워진다.
+아무것도 안 고쳤다면 이 단계는 건너뛴다(직전 Task가 이미 구워 뒀다).
 
 - [ ] **Step 5: 검사**
 
@@ -1408,12 +1392,14 @@ Run: `npm test && npx tsc -b && npm run build && npx oxlint src`
 
 `registry-parity.test.ts`의 "손으로 적은 컴포넌트 개수" 테스트 둘(adminds 설명, README)이 여기서 `components.length`(42)와 실제로 맞아떨어지는지 검증한다.
 
-- [ ] **Step 6: 커밋**
+- [ ] **Step 6: (Step 2·3에서 뭔가 고쳤을 때만) 커밋**
 
 ```bash
 git add registry.json README.md public/r/adminds.json
-git commit -m "chore(registry): adminds 번들에 세 컴포넌트를 마저 잇는다"
+git commit -m "chore(registry): adminds 번들 숫자가 42와 어긋난 자리를 마저 맞춘다"
 ```
+
+Step 2·3에서 고칠 게 없었다면(Task 2~4가 이미 다 맞춰 뒀다면) 커밋할 것도 없다 — 보고서에 "확인만 하고 변경 없음"이라고 적는다.
 
 - [ ] **Step 7: 사용자에게 회차 기록 여부를 확인한다**
 
