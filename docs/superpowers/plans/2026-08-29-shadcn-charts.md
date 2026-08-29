@@ -371,6 +371,8 @@ labelFormatter·hideIndicator·아이콘 지원까지 갖춘 shadcn 공식 소�
 
 - [ ] **Step 1: `src/components/ui/chart-area.tsx`를 만든다**
 
+**최종 코드는 아래 pinned 코드와 다르다 — whole-branch 리뷰가 real 버그 둘을 찾아 고쳤다: `stacked` 토글의 recharts 리마운트 버그(`key={String(stacked)}` 추가, Task 6 절의 "정정" 문단 참고)와 gradient id 충돌(`React.useId()`로 인스턴스마다 다르게). `trend`/`footerNote`/`ChartTrend`도 죽은 API라 지웠다. 문서 끝 "최종 whole-branch 리뷰 반영" 절 참고, 실제 파일이 정확한 최종 상태다.**
+
 ```tsx
 import { Area, AreaChart, CartesianGrid, XAxis } from 'recharts'
 import { TrendingDown, TrendingUp } from 'lucide-react'
@@ -1610,7 +1612,9 @@ shadcn 공식 chart-pie-simple·donut·legend를 참고해 계열 하나로
 - Consumes: Task 1의 `ChartContainer`/`ChartTooltip`/`ChartTooltipContent`/`ChartLegend`/`ChartLegendContent`/`ChartConfig`
 - Produces: `ChartRadar`, `ChartTrend`(독립 선언)
 
-**⚠️ Task 3(Chart Bar)에서 발견한 recharts 리마운트 버그를 여기서도 확인한다.** recharts 3.10.1은 이미 마운트된 차트의 구조적 prop(Bar의 `layout`)이 바뀌어도 축·도형 스케일을 다시 계산하지 않는 경우가 있었다(SVG의 실제 좌표를 읽어야 드러난다 — 눈으로만 보면 값이 살짝 다른 도형이 겹쳐 보여 착각하기 쉽다). `gridType`(`PolarGrid`의 구조적 prop)도 같은 위험군이다 — Step 9에서 `gridType`을 "circle"로 바꿨을 때 배경 격자가 실제로 다각형→동심원으로 바뀌는지, DOM에서 `.recharts-polar-grid` 요소의 실제 모양(원이면 `circle`/`path`가 원호를, 다각형이면 직선 다각형을 그린다)까지 확인한다. 안 바뀌면 Chart Bar와 같은 방식(`key`를 `gridType`에 묶어 리마운트 강제)으로 고친다 — Chart Area의 `stacked`(값만 바뀌는 축, 구조는 안 바뀜)는 이 버그가 없었다는 것도 참고한다(구조적 prop과 값 prop을 가르는 기준으로 삼는다).
+**⚠️ Task 3(Chart Bar)에서 발견한 recharts 리마운트 버그를 여기서도 확인한다.** recharts 3.10.1은 이미 마운트된 차트의 구조적 prop(Bar의 `layout`)이 바뀌어도 축·도형 스케일을 다시 계산하지 않는 경우가 있었다(SVG의 실제 좌표를 읽어야 드러난다 — 눈으로만 보면 값이 살짝 다른 도형이 겹쳐 보여 착각하기 쉽다). `gridType`(`PolarGrid`의 구조적 prop)도 같은 위험군이다 — Step 9에서 `gridType`을 "circle"로 바꿨을 때 배경 격자가 실제로 다각형→동심원으로 바뀌는지, DOM에서 `.recharts-polar-grid` 요소의 실제 모양(원이면 `circle`/`path`가 원호를, 다각형이면 직선 다각형을 그린다)까지 확인한다. 안 바뀌면 Chart Bar와 같은 방식(`key`를 `gridType`에 묶어 리마운트 강제)으로 고친다.
+
+**정정 — Chart Area의 `stacked`도 이 버그가 있었다.** 위 문단은 원래 "Chart Area의 `stacked`는 이 버그가 없었다"고 적어 두었으나 틀렸다. 최종 whole-branch 리뷰에서 다시 지적받아 재확인한 결과, `stacked` 토글도 Bar의 `layout`·`stackId`와 같은 recharts 3.10.1 리마운트 버그를 그대로 겪었다(토글 전후 SVG area path의 `d` 속성이 완전히 같았다) — Task 2 완료 당시의 검증이 실제로는 이 버그를 놓쳤다(자동화 브라우저 도구로 클릭 직후 곧바로 DOM을 읽어 React 렌더 커밋 전 상태를 본 것으로 보인다 — 클릭과 DOM 확인 사이에 짧게라도 대기해야 한다는 게 이번에 새로 확인한 교훈이다). `key={String(stacked)}`로 고쳤고(commit은 whole-branch 리뷰 반영 단계, 이 문서 끝의 "최종 whole-branch 리뷰 반영" 절 참고), 토글 후 리마운트(마커 속성이 사라짐)와 경로 값 변화, off로 되돌렸을 때 원래 경로로 복원되는 것까지 확인했다. **"구조적 prop과 값 prop을 가르는 기준" 자체가 신뢰할 수 없다** — Bar의 `stackId`도 구조가 아니라 값처럼 보이지만 버그가 있었다. recharts 3.10.1에서 마운트 후 바뀌는 chart-level prop은 전부 의심하고 실제로 토글해 SVG 좌표를 확인하는 것만이 확실하다.
 
 **⚠️ Task 5(Chart Pie)에서 발견한 애니메이션 타이밍 함정도 참고한다.** 자동화된 브라우저 도구로 확인할 때 도형이 하나도 안 그려지는 것처럼 보이면, 그게 진짜 렌더링 버그가 아니라 그 도구의 탭이 `document.hidden=true`를 계속 유지해서 recharts의 진입 애니메이션(requestAnimationFrame 기반, 기본 1500ms)이 0%에서 멈춘 채 안 끝난 것일 수 있다 — 원인을 성급히 다른 곳(Cell 누락처럼)에서 찾지 말고, 먼저 문제의 그래픽 요소에 `isAnimationActive={false}`를 임시로 줘서 애니메이션을 격리한 뒤에도 안 그려지는지부터 확인한다. 격리 후에도 안 그려지면 진짜 버그, 격리하니 그려지면 이 타이밍 함정이다(이 경우 원본 코드는 그대로 두고 넘어가면 된다 — 실사용자 브라우저는 포그라운드 탭이라 문제가 없다).
 
@@ -1873,6 +1877,8 @@ shadcn 공식 chart-radar-default·multiple·legend·grid-circle-fill을
 - Produces: `ChartRadial`, `ChartTrend`(독립 선언) — 마지막 Task, 다른 Task가 소비하지 않는다.
 
 - [ ] **Step 1: `src/components/ui/chart-radial.tsx`를 만든다**
+
+**최종 코드는 아래 pinned 코드와 다르다 — whole-branch 리뷰가 Critical 버그를 찾았다: 단일 계열에 `PolarAngleAxis`가 없어 링이 실제 값과 무관하게 항상 거의 꽉 차 보였다. `percentMax`(기본 100) prop을 추가하고 단일 계열에도 축을 명시했다. `trend`/`footerNote`/`ChartTrend`도 죽은 API라 지웠다. 문서 끝 "최종 whole-branch 리뷰 반영" 절 참고, 실제 파일이 정확한 최종 상태다.**
 
 ```tsx
 import { Label, PolarRadiusAxis, RadialBar, RadialBarChart } from 'recharts'
@@ -2184,8 +2190,30 @@ shadcn 공식 chart-radial-simple·label·stacked를 참고해 짓는다.
 - Card로 감싼 완성형 블록 — 6개 컴포넌트 전부 동일 구조
 - Tooltip 9종 흡수 — 각 컴포넌트가 `ChartTooltipContent`의 `indicator`/`hideLabel`을 상황에 맞게 이미 씀(별도 컴포넌트 없음)
 
-**타입 일관성:** `ChartConfig`(Task 1이 export)를 Task 2~7 전부 같은 이름으로 import. 각 컴포넌트의 `ChartTrend`는 의도적으로 파일마다 독립 선언(서로 import하지 않는 독립 컴포넌트 설계, Chart Area가 먼저 export해도 다른 파일이 거기서 가져다 쓰지 않는다 — 이 저장소의 "컴포넌트는 알맹이 하나, 서로 강하게 얽지 않는다" 관례와 같다). `categoryKey`/`valueKey` 파라미터 이름을 6개 컴포넌트 전부 동일하게 사용.
+**타입 일관성:** `ChartConfig`(Task 1이 export)를 Task 2~7 전부 같은 이름으로 import. `categoryKey`/`valueKey` 파라미터 이름을 6개 컴포넌트 전부 동일하게 사용. (`ChartTrend`는 각 컴포넌트가 독립 선언했었으나, 문서 페이지 어디서도 실제로 쓰이지 않는 죽은 API였다는 게 whole-branch 리뷰에서 드러나 `trend`/`footerNote`와 함께 전부 지웠다 — 아래 "최종 whole-branch 리뷰 반영" 절 참고.)
 
 **플레이스홀더 스캔:** `<오늘 날짜>`는 v0.16.0 계획과 같은 성격의 의도적 미확정(구현 시점 시스템 날짜 확인 필수).
 
 **모호성 점검:** Chart Radial의 "단일 계열 vs 다계열이 서로 다른 데이터 모양"은 shadcn 원본 자체가 그렇게 짜여 있어(chart-radial-simple은 data 한 행에 여러 카테고리, chart-radial-stacked는 data 한 행에 여러 시리즈 키) 억지로 통일하지 않고 그대로 반영했다 — Guidelines에 명시. `orientation`(Bar)과 recharts 자체의 `layout` prop 이름이 반대로 헷갈리는 문제(`layout="vertical"`이 실은 가로 막대)는 컴포넌트 내부에서만 recharts 이름을 쓰고 바깥에 노출하는 prop 이름은 `columns`/`bars`로 새로 지어 피했다.
+
+## 최종 whole-branch 리뷰 반영
+
+Task 1~7이 각각 태스크 단위 리뷰를 통과한 뒤, 계획 전체를 놓고 보는 최종 리뷰(가장 유능한 모델, opus)를 별도로 돌렸다. 태스크 단위 리뷰는 한 Task의 diff만 보므로 여러 Task에 걸쳐서만 드러나는 문제(컴포넌트 6개를 나란히 놓고서야 보이는 불일치, 죽은 API, 레지스트리 부기 누락 등)를 잡지 못한다 — 이 절이 그 최종 리뷰가 찾아낸 것과 controller가 고친 내용을 남긴다.
+
+**Critical — Chart Radial 단일 계열 링이 항상 거의 꽉 차 보였다.** `showLabel` 없이 단일 계열(목표 달성률 예시, `progress: 74`)을 렌더링할 때 `<PolarAngleAxis>`를 다계열일 때만(`isMultiSeries &&`) 넣었다. recharts는 명시적 축이 없으면 데이터의 최댓값을 축 끝으로 잡는다(`domain: [0, dataMax]`) — 값 자체가 최댓값이 되어 버려 링이 실제 비율과 무관하게 거의 항상 꽉 찬 원으로 보였다(SVG sector path가 거의 360도를 그리는 것으로 확인). 단일 계열에도 축을 명시하되, 값이 이미 백분율(0~100)이라는 가정을 그대로 두지 않고 `percentMax`(기본 100) prop으로 열어 뒀다 — `domain={isMultiSeries ? [0, total] : [0, percentMax]}`. 토글 전후 SVG sector path로 실제 74% 부채꼴이 그려지는지 확인했다.
+
+**Important — Chart Area의 `stacked`도 Chart Bar와 같은 recharts 리마운트 버그가 있었다.** 위 Task 6 절의 "정정" 문단 참고. `key={String(stacked)}`로 고쳤다.
+
+**Important — `trend`·`footerNote`(5개 컴포넌트 전부)·`showValueLabels`(Bar)가 어디서도 쓰이지 않는 죽은 API였다.** 문서 페이지의 Playground·Usage·Cases 어디도 이 props를 넘기지 않았고, 그 결과 `CardFooter` 마크업이 세 가지 다른 모양으로 다섯 번 중복되면서도 한 번도 나란히 비교된 적이 없었다. YAGNI 원칙대로 지웠다 — 나중에 실제 Case가 필요해지면 그때 다시 추가한다. `ChartTrend` 인터페이스·`TrendingUp`/`TrendingDown` import·`CardFooter` import도 함께 지웠다.
+
+**Important — Foundations의 Color Role 문서가 차트 색 6개를 "Surface"로 잘못 분류했다.** `ColorRolePage.tsx`의 `classify()`가 `chart-1`~`chart-6`을 못 알아채 기본값(`surface`)으로 떨어졌다. `chart` 갈래를 새로 추가했다(`classify`에 정규식 하나, `BRANCHES`에 항목 하나) — `ColorPage.tsx`도 같은 `classify`/`BRANCHES`를 쓰므로 두 문서 모두 한 번에 고쳐졌다.
+
+**Important — 이 계획의 첫 시도(momeokji-admin 이식, 나중에 폐기)가 남긴 고아 코드를 지웠다.** `src/lib/format.ts`(`formatNumber`/`formatPercent`)는 `registry.json`에 `registry:lib` 항목으로 남아 있었지만 `adminds` 번들에도, 6개 차트 컴포넌트 중 어디의 `registryDependencies`에도 없어 CLI로 설치할 방법이 없는 고아였다 — 소스·테스트·`registry.json` 항목·baked `public/r/format.json`을 전부 지웠다. `tokens.css`의 `--chart-grid`·`--chart-axis`도 같은 시도의 잔재로 `src/` 어디서도 참조되지 않아 함께 지웠다(각 컴포넌트는 `var(--border)`/`var(--muted-foreground)`를 직접 쓴다).
+
+**Important — 버전 부기가 실제 배포 버전과 어긋나 있었다.** 6개 컴포넌트 전부 `addedIn`/`changedIn: 'v0.18.0'`인데 `package.json`은 여전히 `0.17.0`이라 GNB 배지가 틀린 버전을 보였고, `releases.ts`에도 v0.18.0 회차 기록이 없었다. `package.json`·`package-lock.json`(버전 필드만, 무관한 lockfile 잡음은 되돌림)을 0.18.0으로 올리고 `releases.ts`에 한 줄 요약 회차를 추가했다.
+
+**Minor — 원 모양 차트 3개(Pie·Radar·Radial)의 `CardHeader`가 실제로는 가운데 정렬이 안 되고 있었다.** shadcn 원본의 `items-center`를 그대로 옮겼는데, `CardHeader`는 `grid-cols-[1fr_auto]`라 `items-center`는 세로 정렬만 바꾸고(가로 정렬은 `1fr` 칸이 전체 너비를 차지해 원래도 안 보임) 실제 가운데 정렬에는 아무 효과가 없었다 — `text-center`로 고쳤다. 같이 옮겨져 있던 `pb-0`/`pb-4`(`CardContent`는 세로 padding을 애초에 안 쓰고, 섹션 간 간격은 `Card`의 `gap-6`이 담당해 이 값들도 전부 no-op였다)도 지웠다.
+
+**Minor — Chart Area의 gradient `<linearGradient>` id가 페이지 전역에서 겹칠 수 있었다.** `id="chart-area-fill-${key}"`가 인스턴스마다 고정이라, 같은 페이지에 `ChartArea`가 여러 번(Playground·Cases 등) 렌더되면 서로 다른 인스턴스가 같은 id를 공유했다(내용이 같아서 눈에 티는 안 났지만 유효하지 않은 중복 id). `React.useId()`로 인스턴스마다 다르게 했다.
+
+**검증:** 위 수정 전부 `npx tsc -b`·`npm test`(305/305, format.ts 관련 테스트 5개가 빠져 310→305)·`npm run build`·`npx oxlint` 클린 확인. Chart Radial 단일 계열 도메인 fix와 Chart Area의 `stacked` 리마운트 fix는 자동화된 브라우저 도구로 직접 SVG 좌표를 읽어 재검증했다 — 이 과정에서 클릭 직후 곧바로 DOM을 읽으면 React 렌더 커밋 전 상태를 보게 된다는 것도 새로 확인했다(토글 확인 스텝에는 클릭과 확인 사이 최소한의 대기가 필요하다).
