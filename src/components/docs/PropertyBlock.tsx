@@ -101,11 +101,20 @@ export function PropertyBlock({
         </div>
       ) : (
         <div
-          className={
+          className={cn(
+            'gap-x-4 gap-y-5 rounded-lg border p-4 md:p-5',
             property.display === 'row'
-              ? 'flex flex-wrap items-end gap-x-6 gap-y-5 rounded-lg border p-4 md:p-5'
-              : 'grid gap-x-4 gap-y-5 rounded-lg border p-4 sm:grid-cols-2 md:p-5 lg:grid-cols-3'
-          }
+              ? 'flex flex-wrap items-end gap-x-6'
+              : /*
+                 * 칸 수를 옵션 개수에 맞춘다 — 옵션이 2개인데 lg:grid-cols-3을
+                 * 고정으로 주면 3번째 칸이 항상 비어 그만큼 나머지 두 칸이
+                 * 좁아진다(옵션 2개짜리가 전체 91개 축 중 42개로 가장 많다 —
+                 * 차트에서 특히 눈에 띄었지만 축이 2개인 다른 컴포넌트도 전부
+                 * 같은 폭으로 손해를 보고 있었다). 옵션이 3개 이상일 때만
+                 * lg:grid-cols-3까지 늘린다.
+                 */
+                cn('grid sm:grid-cols-2', property.options.length >= 3 && 'lg:grid-cols-3'),
+          )}
         >
           {property.options.map((option) => (
             /*
