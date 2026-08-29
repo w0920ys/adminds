@@ -12,6 +12,13 @@ import { Placeholder } from '@/routes/Placeholder'
  * 아닌 탭을 보이려면 활성인 다른 탭이 함께 있어야 값이 성립한다 —
  * Tabs가 하나뿐이면 Radix가 그 하나를 무조건 활성으로 만든다. 두 번째
  * 탭은 그 맥락을 위해서만 있다.
+ *
+ * value(제어)만 주고 onValueChange를 주지 않으면 Radix가 클릭을 받아도
+ * 부모 state가 바뀌지 않아 활성 표시가 그대로 있다 — Playground 위쪽의
+ * 실제 탭이 눌러도 반응하지 않는 것처럼 보였다. defaultValue(비제어)로
+ * 바꿔 실제로 눌러 바뀌게 하고, state 쪽 옵션 버튼을 눌렀을 때는
+ * key={state}로 다시 마운트시켜 그 프리셋이 여전히 미리보기에 반영되게
+ * 한다 — Slider의 key={layout}과 같은 이유다.
  */
 function renderTabs(options: RenderOptions) {
   const { variant, state } = options
@@ -20,7 +27,7 @@ function renderTabs(options: RenderOptions) {
   const disabled = state === 'disabled'
 
   return (
-    <Tabs value={active ? 'primary' : 'secondary'}>
+    <Tabs key={state} defaultValue={active ? 'primary' : 'secondary'}>
       <TabsList variant={v}>
         <TabsTrigger variant={v} value="primary" disabled={disabled}>
           개요
@@ -174,9 +181,9 @@ function renderExample(exampleId: string): ReactNode {
       return (
         <Bounds className="w-64">
           <Tabs defaultValue="a">
-            <TabsList className="overflow-x-auto">
+            <TabsList>
               {['일반', '멤버', '결제', '보안', '알림', '연동', '로그', '설정'].map((label, i) => (
-                <TabsTrigger key={label} value={i === 0 ? 'a' : label} className="shrink-0">
+                <TabsTrigger key={label} value={i === 0 ? 'a' : label}>
                   {label}
                 </TabsTrigger>
               ))}
@@ -202,7 +209,7 @@ function renderExample(exampleId: string): ReactNode {
       return (
         <Bounds className="w-40">
           <Tabs defaultValue="a">
-            <TabsList className="overflow-x-auto">
+            <TabsList>
               <TabsTrigger value="a">개요</TabsTrigger>
               <TabsTrigger value="b">멤버</TabsTrigger>
               <TabsTrigger value="c">설정</TabsTrigger>
