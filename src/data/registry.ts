@@ -2499,7 +2499,7 @@ export const components: ComponentMeta[] = [
     category: 'data-display',
     status: 'stable',
     addedIn: 'v0.9.0',
-    changedIn: 'v0.14.0',
+    changedIn: 'v0.21.0',
     purpose: '관련된 내용을 하나의 틀로 묶어 보인다. 안쪽 구획은 Separator로 나눈다.',
     anatomy: [
       { part: 'container', label: 'Container', note: 'rounded-lg. variant에 따른 테두리·배경·그림자' },

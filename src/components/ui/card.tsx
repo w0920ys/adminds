@@ -55,18 +55,29 @@ function Card({ className, variant = 'outlined', padding = 'default', ...props }
 }
 
 /*
- * CardAction이 있으면 두 번째 열을 만들어 오른쪽 끝에 고정한다.
- * Title·Description은 첫 번째 열(1fr)에 쌓이고 Action은 두 열에 걸쳐
- * 위쪽에 붙는다 — 제목이 길어져 col-1이 늘어나도 col-2는 auto 폭 그대로라
- * Action이 밀려나지 않는다. Action이 없으면 두 번째 열은 내용이 없어
- * 폭이 0이 되므로 Title·Description은 자연히 전체 폭을 쓴다.
+ * grid-cols-[1fr_auto]는 CardAction이 실제로 있을 때만 건다 —
+ * has-[[data-slot=card-action]]:로 조건을 걸었다. Action이 없으면
+ * 빈 두 번째 열이 폭 0으로 저절로 접힐 거라 믿고 무조건 걸어 뒀었는데,
+ * 실측해 보니 거짓이었다 — 좁은 카드(160px)에서 Action 없는 헤더를
+ * 직접 렌더링해 보니 두 번째 열이 50px 가까이 차지하고 첫 번째 열(제목)이
+ * 15px로 짓눌려, "워크스페이스 사용량"이 한 글자씩 세로로 줄바꿈됐다
+ * (브라우저로 재현·측정함 — gridTemplateColumns가 실제로 "15px 50px"
+ * 로 계산됐다). 한글은 음절 단위로 줄을 바꾸므로(Typography의
+ * word-break 규칙) 제목의 min-content가 글자 하나 폭까지 줄어들 수
+ * 있어, 빈 auto 열이 그 남는 공간을 가져가 버린 것으로 보인다 — 영문
+ * 제목처럼 min-content가 한 단어 폭으로 넉넉했다면 드러나지 않았을
+ * 결함이다. Action이 있을 때는 두 번째 열을 만들어 오른쪽 끝에
+ * 고정한다 — Title·Description은 첫 번째 열(1fr)에 쌓이고 Action은
+ * 두 열에 걸쳐 위쪽에 붙는다. 없을 때는 grid-cols를 아예 안 걸어
+ * Title·Description이 암묵적 한 열에 쌓이며 전체 폭을 그대로 쓴다.
  */
 function CardHeader({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
       data-slot="card-header"
       className={cn(
-        'grid grid-cols-[1fr_auto] grid-rows-[auto_auto] items-start gap-1.5 px-6',
+        'grid grid-rows-[auto_auto] items-start gap-1.5 px-6',
+        'has-[[data-slot=card-action]]:grid-cols-[1fr_auto]',
         className,
       )}
       {...props}
