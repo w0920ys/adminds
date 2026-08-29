@@ -53,19 +53,33 @@
 ```tsx
 import * as React from 'react'
 import * as RechartsPrimitive from 'recharts'
+import type { TooltipValueType } from 'recharts'
 import { cn } from '@/lib/utils'
 
 /*
  * 차트 6종(chart-area·chart-bar·chart-line·chart-pie·chart-radar·chart-radial)이
  * 공유하는 기반. shadcn/ui 공식 chart 레지스트리 컴포넌트를 그대로 옮겼다
- * (ui.shadcn.com/r/styles/new-york-v4/chart.json) — ChartContainer가 config
+ * (raw.githubusercontent.com/shadcn-ui/ui/main/apps/v4/registry/new-york-v4/ui/chart.tsx,
+ * curl로 직접 받아 확인 — WebFetch는 요약 모델을 거쳐 타입 시그니처가
+ * 깎여 나갈 수 있다는 걸 이 Task 자체에서 겪었다) — ChartContainer가 config
  * (어떤 데이터 키가 어떤 라벨·색을 갖는지)를 Context로 내려보내고,
  * ChartTooltipContent·ChartLegendContent가 그대로 읽는다. 색은 여기서
  * 문자열로 박지 않고 <style> 태그로 CSS 변수를 주입한다 — 다크모드 전환이
  * 각 차트가 아니라 이 컴포넌트 하나에서 해결된다.
+ *
+ * ChartTooltipContent·ChartLegendContent의 prop 타입이 recharts의
+ * DefaultTooltipContentProps·DefaultLegendContentProps를 반드시 끼고
+ * 있어야 한다 — recharts 3.x부터 Tooltip·Legend 자신의 공개 props
+ * 타입에서 payload·label·verticalAlign 등을 뺐다(내부 컨텍스트에서
+ * 읽는 값이 됐다). 그 타입들을 안 끼고 React.ComponentProps<'div'>만
+ * 쓰면 타입이 안 맞는다 — 실제로 한 번 이렇게 줄였다가 tsc가
+ * TS2339·TS7006 여섯 개를 뱉은 걸 겪었다.
  */
 
 const THEMES = { light: '', dark: '.dark' } as const
+
+const INITIAL_DIMENSION = { width: 320, height: 200 } as const
+type TooltipNameType = number | string
 
 export type ChartConfig = Record<
   string,
@@ -89,10 +103,12 @@ function ChartContainer({
   className,
   children,
   config,
+  initialDimension = INITIAL_DIMENSION,
   ...props
 }: React.ComponentProps<'div'> & {
   config: ChartConfig
   children: React.ComponentProps<typeof RechartsPrimitive.ResponsiveContainer>['children']
+  initialDimension?: { width: number; height: number }
 }) {
   const uniqueId = React.useId()
   const chartId = `chart-${id ?? uniqueId.replace(/:/g, '')}`
@@ -103,13 +119,13 @@ function ChartContainer({
         data-slot="chart"
         data-chart={chartId}
         className={cn(
-          "flex aspect-video justify-center text-12 [&_.recharts-cartesian-axis-tick_text]:fill-muted-foreground [&_.recharts-cartesian-grid_line]:stroke-border [&_.recharts-curve.recharts-tooltip-cursor]:stroke-border [&_.recharts-dot[stroke='#fff']]:stroke-transparent [&_.recharts-layer]:outline-hidden [&_.recharts-polar-grid_[stroke='#ccc']]:stroke-border [&_.recharts-radial-bar-background-sector]:fill-muted [&_.recharts-rectangle.recharts-tooltip-cursor]:fill-muted [&_.recharts-sector]:outline-hidden [&_.recharts-sector[stroke='#fff']]:stroke-transparent [&_.recharts-surface]:outline-hidden",
+          "flex aspect-video justify-center text-12 [&_.recharts-cartesian-axis-tick_text]:fill-muted-foreground [&_.recharts-cartesian-grid_line[stroke='#ccc']]:stroke-border/50 [&_.recharts-curve.recharts-tooltip-cursor]:stroke-border [&_.recharts-dot[stroke='#fff']]:stroke-transparent [&_.recharts-layer]:outline-hidden [&_.recharts-polar-grid_[stroke='#ccc']]:stroke-border [&_.recharts-radial-bar-background-sector]:fill-muted [&_.recharts-rectangle.recharts-tooltip-cursor]:fill-muted [&_.recharts-reference-line_[stroke='#ccc']]:stroke-border [&_.recharts-sector]:outline-hidden [&_.recharts-sector[stroke='#fff']]:stroke-transparent [&_.recharts-surface]:outline-hidden",
           className,
         )}
         {...props}
       >
         <ChartStyle id={chartId} config={config} />
-        <RechartsPrimitive.ResponsiveContainer>{children}</RechartsPrimitive.ResponsiveContainer>
+        <RechartsPrimitive.ResponsiveContainer initialDimension={initialDimension}>{children}</RechartsPrimitive.ResponsiveContainer>
       </div>
     </ChartContext.Provider>
   )
@@ -164,7 +180,7 @@ function ChartTooltipContent({
     indicator?: 'line' | 'dot' | 'dashed'
     nameKey?: string
     labelKey?: string
-  }) {
+  } & Omit<RechartsPrimitive.DefaultTooltipContentProps<TooltipValueType, TooltipNameType>, 'accessibilityLayer'>) {
   const { config } = useChart()
 
   const tooltipLabel = React.useMemo(() => {
@@ -261,8 +277,7 @@ function ChartLegendContent({
 }: React.ComponentProps<'div'> & {
   hideIcon?: boolean
   nameKey?: string
-  payload?: Array<{ value?: string; color?: string; dataKey?: string; type?: string }>
-}) {
+} & RechartsPrimitive.DefaultLegendContentProps) {
   const { config } = useChart()
   if (!payload?.length) return null
 
