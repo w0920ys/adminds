@@ -27,7 +27,13 @@ function LnbItem({
         onClick={onClose}
         className={({ isActive }) =>
           cn(
-            'flex h-control items-center gap-1.5 text-16',
+            /*
+             * h-11 text-18을 모바일 기본값으로 둔다 — 서랍이 손가락으로
+             * 짚는 자리인데 예전 h-control(36px)·text-16(16px)은 데스크톱
+             * 마우스 기준으로 잡은 값이다. md 이상에서는 md:h-control
+             * md:text-16으로 되돌려 데스크톱 정적 사이드바는 그대로 둔다.
+             */
+            'flex h-11 items-center gap-1.5 text-18 md:h-control md:text-16',
             depth === 0 ? 'rounded-md px-2' : 'ml-2 border-l pl-3',
             isActive
               ? 'bg-accent text-accent-foreground font-semibold'
@@ -113,9 +119,15 @@ export function Lnb({ open, onClose }: { open: boolean; onClose: () => void }) {
        * 새어 나가 html의 scrollHeight가 화면의 여덟 배가 됐다.
        */}
       <aside
+        /*
+         * w-full md:w-60 — 모바일 서랍은 화면 전체를 채운다. 240px
+         * 고정폭이던 예전 값은 데스크톱 정적 사이드바에는 맞지만, 같은
+         * 클래스를 그대로 쓰는 모바일 서랍에서는 화면 오른쪽에 좁은
+         * 조각만 남기고 나머지는 뒤의 배경 오버레이로 비어 보였다.
+         */
         className={cn(
-          'bg-surface fixed inset-y-0 right-0 z-drawer flex w-60 flex-col overflow-y-auto border-l p-3 transition-transform',
-          'md:static md:h-full md:shrink-0 md:translate-x-0',
+          'bg-surface fixed inset-y-0 right-0 z-drawer flex w-full flex-col overflow-y-auto border-l p-3 transition-transform',
+          'md:static md:h-full md:w-60 md:shrink-0 md:translate-x-0',
           open ? 'translate-x-0' : 'translate-x-full',
         )}
       >
@@ -171,8 +183,9 @@ export function Lnb({ open, onClose }: { open: boolean; onClose: () => void }) {
                 type="button"
                 onClick={() => setView({ kind: 'section', sectionId: item.id })}
                 aria-current={item.id === routeSection.id ? 'page' : undefined}
+                /* md:hidden 목록이라 데스크톱 축소가 필요 없다 — h-11·text-18을 그대로 둔다 */
                 className={cn(
-                  'flex h-control items-center rounded-md px-2 text-left text-16',
+                  'flex h-11 items-center rounded-md px-2 text-left text-18',
                   item.id === routeSection.id
                     ? 'bg-accent text-accent-foreground font-semibold'
                     : 'text-muted-foreground hover:bg-accent/60',
