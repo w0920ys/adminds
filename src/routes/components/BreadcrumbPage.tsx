@@ -311,10 +311,8 @@ function renderExample(exampleId: string): ReactNode {
                   </BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator />
-                <BreadcrumbItem className="min-w-0">
-                  <BreadcrumbCurrent className="block truncate">
-                    2026년 1분기 워크스페이스 사용량 리포트 상세
-                  </BreadcrumbCurrent>
+                <BreadcrumbItem>
+                  <BreadcrumbCurrent>2026년 1분기 워크스페이스 사용량 리포트 상세</BreadcrumbCurrent>
                 </BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>
