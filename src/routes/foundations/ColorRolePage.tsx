@@ -25,6 +25,7 @@ export function classify(name: string): string {
   if (/^(border|input|ring)$/.test(name)) return 'line'
   if (/^(destructive|success|warning|info)$/.test(name)) return 'status'
   if (/^(primary|secondary|accent)$/.test(name)) return 'emphasis'
+  if (/^chart-\d$/.test(name)) return 'chart'
   return 'surface'
 }
 
@@ -55,6 +56,11 @@ export const BRANCHES: { id: string; title: string; lead: string }[] = [
     id: 'line',
     title: 'Line',
     lead: '면을 가르고 입력의 범위를 알립니다. \'border\'는 면과 면 사이, \'input\'은 입력 컨트롤의 테두리, \'ring\'은 지금 키보드가 어디에 있는지 알리는 포커스 링입니다.',
+  },
+  {
+    id: 'chart',
+    title: 'Chart',
+    lead: '차트 시리즈를 구분하는 범주형 색 6개입니다. 순서가 고정이고 절대 순환하지 않습니다 — 상태색(success·warning 등)은 사건이 정하는 색이라 시리즈로 재사용하지 않습니다.',
   },
   {
     id: 'doc',
