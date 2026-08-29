@@ -80,7 +80,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
     case 'distinguish-dialog':
       return kind === 'do' ? (
         <div className="flex w-full flex-col gap-2">
-          <h4 className="text-muted-foreground text-11 font-bold tracking-widest">사용자 목록</h4>
+          <h4 className="text-muted-foreground text-12 font-bold tracking-widest">사용자 목록</h4>
           <ul className="rounded-md border text-16">
             {['홍길동', '김서연'].map((name) => (
               <li key={name} className="flex items-center justify-between border-b px-3 py-2 last:border-b-0">

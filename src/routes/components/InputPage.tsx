@@ -155,7 +155,7 @@ function renderExample(exampleId: string): ReactNode {
           <Bounds className="w-40">
             <Input defaultValue="어드민-디자인시스템-워크스페이스-24" />
           </Bounds>
-          <p className="text-muted-foreground text-11">
+          <p className="text-muted-foreground text-12">
             점선은 컨테이너 폭입니다. 줄바꿈하지 않고 칸 안에서 스크롤됩니다.
           </p>
         </div>
@@ -188,7 +188,7 @@ function renderExample(exampleId: string): ReactNode {
           <Bounds className="w-48">
             <Input placeholder="이름을 입력하세요" />
           </Bounds>
-          <p className="text-muted-foreground text-11">
+          <p className="text-muted-foreground text-12">
             점선은 컨테이너 폭입니다. 너비를 지정하지 않으면 부모를 채웁니다.
           </p>
         </div>

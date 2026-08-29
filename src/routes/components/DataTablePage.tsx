@@ -226,7 +226,7 @@ function ControlledSortExample() {
 
   return (
     <div className="flex w-full flex-col gap-2">
-      <p className="text-muted-foreground text-11">부모가 쥔 page: {page}</p>
+      <p className="text-muted-foreground text-12">부모가 쥔 page: {page}</p>
       <DataTable
         label="정렬과 페이지를 부모가 함께 쥔 컴포넌트 목록"
         columns={axisColumns}
@@ -316,7 +316,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
               perPage={3}
             />
           </Bounds>
-          <p className="text-muted-foreground text-11">
+          <p className="text-muted-foreground text-12">
             점선은 화면 폭입니다. 가로로 굴러도 선택 칸과 이름 열이 왼쪽에 남습니다.
           </p>
         </div>
@@ -494,7 +494,7 @@ function renderExample(exampleId: string): ReactNode {
               </>
             )}
           />
-          <p className="text-muted-foreground text-11">
+          <p className="text-muted-foreground text-12">
             몇 줄 고르고 다음 페이지로 넘어가 보세요. 위의 개수는 그대로 남습니다.
           </p>
         </div>
@@ -523,7 +523,7 @@ function renderExample(exampleId: string): ReactNode {
               perPage={3}
             />
           </Bounds>
-          <p className="text-muted-foreground text-11">
+          <p className="text-muted-foreground text-12">
             점선은 화면 폭입니다. 표 안에서 가로로 구르고, 선택 칸과 이름 열은
             왼쪽에 고정됩니다.
           </p>

@@ -156,7 +156,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
         <div className="w-full max-w-80 rounded-md border">
           <div className="text-muted-foreground flex items-center justify-between px-3 py-3 text-14">
             <span>ORD-4821 · 배송 중</span>
-            <span className="text-11">행 전체가 눌린다</span>
+            <span className="text-12">행 전체가 눌린다</span>
           </div>
         </div>
       )

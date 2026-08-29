@@ -93,7 +93,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
           </label>
           <Textarea id={`pg-charlimit-${kind}`} defaultValue="워크스페이스 관리자입니다" />
           {kind === 'do' && (
-            <span className="text-muted-foreground self-end text-11">12/50</span>
+            <span className="text-muted-foreground self-end text-12">12/50</span>
           )}
         </div>
       )
@@ -156,7 +156,7 @@ function renderExample(exampleId: string): ReactNode {
               className="h-24 min-h-0 w-full"
             />
           </Bounds>
-          <p className="text-muted-foreground text-11">
+          <p className="text-muted-foreground text-12">
             점선은 컨테이너 폭입니다. 내용이 상자보다 많으면 세로로 스크롤됩니다.
           </p>
         </div>
@@ -169,7 +169,7 @@ function renderExample(exampleId: string): ReactNode {
             소개
           </label>
           <Textarea id="ex-overlimit" aria-invalid defaultValue="아주 긴 자기소개 문구가 여기 들어갑니다" />
-          <span className="text-destructive self-end text-11">-12/50</span>
+          <span className="text-destructive self-end text-12">-12/50</span>
         </div>
       )
 
@@ -186,7 +186,7 @@ function renderExample(exampleId: string): ReactNode {
           <Bounds className="w-48">
             <Textarea placeholder="메모를 입력하세요" />
           </Bounds>
-          <p className="text-muted-foreground text-11">
+          <p className="text-muted-foreground text-12">
             점선은 컨테이너 폭입니다. 너비를 지정하지 않으면 부모를 채웁니다.
           </p>
         </div>
@@ -212,7 +212,7 @@ export function TextareaPage() {
             defaultValue="다음 주 화요일까지 승인 부탁드립니다"
             resize="vertical"
           />
-          <span data-anatomy="char-count" className="text-muted-foreground self-end text-11">
+          <span data-anatomy="char-count" className="text-muted-foreground self-end text-12">
             24/200
           </span>
         </div>

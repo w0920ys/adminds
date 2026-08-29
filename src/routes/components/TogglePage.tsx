@@ -133,7 +133,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
           <Toggle aria-label="굵게">
             <Bold aria-hidden />
           </Toggle>
-          <code className="bg-muted rounded px-1.5 py-1 text-11">aria-label='굵게'</code>
+          <code className="bg-muted rounded px-1.5 py-1 text-12">aria-label='굵게'</code>
         </div>
       ) : (
         /*
@@ -160,7 +160,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
               <LayoutGrid aria-hidden />
             </ToggleGroupItem>
           </ToggleGroup>
-          <p className="text-muted-foreground text-11">기본값을 정해 두어 값이 비는 순간이 없다</p>
+          <p className="text-muted-foreground text-12">기본값을 정해 두어 값이 비는 순간이 없다</p>
         </div>
       ) : (
         <div className="flex flex-col gap-2">
@@ -172,7 +172,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
               <LayoutGrid aria-hidden />
             </ToggleGroupItem>
           </ToggleGroup>
-          <p className="text-muted-foreground text-11">기본값이 없어 처음부터 아무것도 켜져 있지 않다</p>
+          <p className="text-muted-foreground text-12">기본값이 없어 처음부터 아무것도 켜져 있지 않다</p>
         </div>
       )
 
@@ -235,7 +235,7 @@ function renderExample(exampleId: string): ReactNode {
           <Toggle aria-label="굵게">
             <Bold aria-hidden />
           </Toggle>
-          <code className="bg-muted rounded px-1.5 py-1 text-11">aria-label='굵게'</code>
+          <code className="bg-muted rounded px-1.5 py-1 text-12">aria-label='굵게'</code>
         </div>
       )
 
@@ -250,7 +250,7 @@ function renderExample(exampleId: string): ReactNode {
               <LayoutGrid aria-hidden />
             </ToggleGroupItem>
           </ToggleGroup>
-          <p className="text-muted-foreground text-11">켜진 항목을 다시 누르면 둘 다 꺼진 상태가 된다</p>
+          <p className="text-muted-foreground text-12">켜진 항목을 다시 누르면 둘 다 꺼진 상태가 된다</p>
         </div>
       )
 

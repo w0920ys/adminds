@@ -116,7 +116,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
         <div className="flex flex-col items-start gap-3">
           <p className="text-16">'홍길동'의 역할은 아래에서 바꿉니다.</p>
           <Button size="sm">역할 설정 열기</Button>
-          <p className="text-muted-foreground text-11">
+          <p className="text-muted-foreground text-12">
             새 탭으로 열 수도, 주소를 복사할 수도 없습니다.
           </p>
         </div>
@@ -209,7 +209,7 @@ function renderExample(exampleId: string): ReactNode {
           <Bounds className="w-40">
             <Button size="sm">초대 메일 다시 보내기</Button>
           </Bounds>
-          <p className="text-muted-foreground text-11">
+          <p className="text-muted-foreground text-12">
             점선은 컨테이너 폭입니다. 라벨을 접지 않고 버튼이 넘어갑니다.
           </p>
         </div>
@@ -221,7 +221,7 @@ function renderExample(exampleId: string): ReactNode {
           <Button variant="outline" size="icon" aria-label="사용자 검색">
             <Search aria-hidden />
           </Button>
-          <code className="bg-muted rounded px-1.5 py-1 text-11">aria-label='사용자 검색'</code>
+          <code className="bg-muted rounded px-1.5 py-1 text-12">aria-label='사용자 검색'</code>
         </div>
       )
 
@@ -260,7 +260,7 @@ function renderExample(exampleId: string): ReactNode {
               사용자 추가
             </Button>
           </Bounds>
-          <p className="text-muted-foreground text-11">
+          <p className="text-muted-foreground text-12">
             폭이 좁으면 동작 하나를 가득 채웁니다.
           </p>
         </div>

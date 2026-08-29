@@ -38,7 +38,7 @@ export function ComponentsIndex() {
                 >
                   <strong className="text-16">{meta.name}</strong>
                   <p className="text-muted-foreground mt-1 line-clamp-2 text-12">{meta.purpose}</p>
-                  <span className="text-muted-foreground mt-2 block text-11">
+                  <span className="text-muted-foreground mt-2 block text-12">
                     {meta.status} · {meta.changedIn}
                   </span>
                 </Link>

@@ -298,7 +298,7 @@ function KeyTable({ caption, rows }: { caption: string; rows: { keys: string; ef
   return (
     <div className="overflow-x-auto rounded-lg border">
       <table className="w-full text-left text-14">
-        <caption className="text-muted-foreground px-3 py-2 text-left text-11 font-bold tracking-widest">
+        <caption className="text-muted-foreground px-3 py-2 text-left text-12 font-bold tracking-widest">
           {caption}
         </caption>
         <tbody>

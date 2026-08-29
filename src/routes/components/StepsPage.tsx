@@ -137,7 +137,7 @@ function renderGuidelineExample(guidelineId: string, kind: 'do' | 'dont'): React
           {['약관', '본인 확인', '정보 입력', '배송지', '결제', '검토', '완료'].map((title, index) => (
             <Step key={title} state={index === 1 ? 'current' : index < 1 ? 'complete' : 'pending'}>
               <StepIndicator>{index + 1}</StepIndicator>
-              <StepLabel className="text-11">{title}</StepLabel>
+              <StepLabel className="text-12">{title}</StepLabel>
             </Step>
           ))}
         </Steps>
@@ -266,11 +266,11 @@ function renderExample(exampleId: string): ReactNode {
             {['약관', '본인 확인', '정보 입력', '배송지', '결제', '검토', '완료'].map((title, index) => (
               <Step key={title} state={index === 2 ? 'current' : index < 2 ? 'complete' : 'pending'}>
                 <StepIndicator>{index + 1}</StepIndicator>
-                <StepLabel className="text-11">{title}</StepLabel>
+                <StepLabel className="text-12">{title}</StepLabel>
               </Step>
             ))}
           </Steps>
-          <p className="text-muted-foreground text-11">
+          <p className="text-muted-foreground text-12">
             일곱 단계다. 한 단계씩 좁아져 라벨을 읽기 어렵다.
           </p>
         </div>

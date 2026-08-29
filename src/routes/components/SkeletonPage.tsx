@@ -170,7 +170,7 @@ function renderExample(exampleId: string): ReactNode {
       return (
         <div className="flex flex-col gap-4 text-16">
           <div className="flex flex-col gap-1">
-            <p className="text-muted-foreground text-11">짧은 경우</p>
+            <p className="text-muted-foreground text-12">짧은 경우</p>
             <div className="flex items-center gap-2">
               <Skeleton shape="text" className="w-32" />
               <span aria-hidden>→</span>
@@ -178,7 +178,7 @@ function renderExample(exampleId: string): ReactNode {
             </div>
           </div>
           <div className="flex flex-col gap-1">
-            <p className="text-muted-foreground text-11">긴 경우</p>
+            <p className="text-muted-foreground text-12">긴 경우</p>
             <div className="flex items-center gap-2">
               <Skeleton shape="text" className="w-32" />
               <span aria-hidden>→</span>
@@ -232,7 +232,7 @@ function renderExample(exampleId: string): ReactNode {
               key={surface.label}
               className={cn('flex flex-col gap-2 rounded-md border p-3', surface.className)}
             >
-              <p className="text-muted-foreground text-11">{surface.label}</p>
+              <p className="text-muted-foreground text-12">{surface.label}</p>
               <Skeleton shape="text" className="w-20" />
             </div>
           ))}

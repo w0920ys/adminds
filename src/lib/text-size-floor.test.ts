@@ -53,23 +53,8 @@ const MENTIONS: Record<string, number> = {
    */
   'src/routes/foundations/DesignTokenPage.tsx': 2,
 
-  /* 아직 text-12로 못 옮긴 실제 사용처(pending) — Task 4~5가 하나씩 줄인다 */
+  /* 아직 text-12로 못 옮긴 실제 사용처(pending) — Task 5가 마저 줄인다 */
   'src/routes/UpdatesPage.tsx': 1,
-  'src/routes/components/BreadcrumbPage.tsx': 2,
-  'src/routes/components/ButtonPage.tsx': 4,
-  'src/routes/components/CollapsiblePage.tsx': 1,
-  'src/routes/components/ComponentsIndex.tsx': 1,
-  'src/routes/components/DataTablePage.tsx': 4,
-  'src/routes/components/DatePickerPage.tsx': 1,
-  'src/routes/components/InputPage.tsx': 2,
-  'src/routes/components/PaginationPage.tsx': 1,
-  'src/routes/components/SheetPage.tsx': 1,
-  'src/routes/components/SkeletonPage.tsx': 3,
-  'src/routes/components/StepsPage.tsx': 3,
-  'src/routes/components/TablePage.tsx': 1,
-  'src/routes/components/TextareaPage.tsx': 5,
-  'src/routes/components/ToastPage.tsx': 1,
-  'src/routes/components/TogglePage.tsx': 5,
   'src/routes/get-started/GetStartedOverview.tsx': 1,
   'src/routes/patterns/DetailPatternPage.tsx': 1,
   'src/routes/patterns/EmptyAndErrorPatternPage.tsx': 1,
