@@ -1,0 +1,79 @@
+# adminds
+
+> Tailwind v4 + shadcn/ui 기반 어드민 디자인 시스템. 검증된 컴포넌트 40개와 디자인 토큰을 shadcn CLI로 설치한다.
+
+React 19 + TypeScript 프로젝트에서 반복적으로 쓰는 어드민 컴포넌트(버튼, 폼, 데이터 테이블, 내비게이션 등)를 미리 만들고 검증해 둔 shadcn 레지스트리 겸 문서 사이트다. 컴포넌트 하나만 받거나, 토큰만 받거나, 전부를 한 번에 받을 수 있다.
+
+## Install
+
+- 컴포넌트 하나: `npx shadcn@latest add https://adminds.vercel.app/r/<name>.json` — `<name>`은 아래 Components 목록의 괄호 안 값
+- 토큰만: `npx shadcn@latest add https://adminds.vercel.app/r/tokens.json`
+- 토큰 + 컴포넌트 40개 전부: `npx shadcn@latest add https://adminds.vercel.app/r/adminds.json`
+- 받는 프로젝트 요건: Tailwind v4 / globals.css의 import 순서(tailwindcss → tw-animate-css → tokens.css) / tsconfig.json에 직접 넣는 `"paths": { "@/*": ["./src/*"] }`(baseUrl 금지 — TypeScript 6에서 하드 에러)
+
+## Components (40)
+
+### Actions
+
+- [Button](https://adminds.vercel.app/components/button) (`button`) — 사용자가 즉시 실행할 수 있는 동작을 나타낸다. 페이지 이동은 링크를 쓴다.
+- [Context Menu](https://adminds.vercel.app/components/context-menu) (`context-menu`) — 우클릭한 자리에서 그 대상에 대한 동작을 고르게 한다. 항상 눌러야 여는 Dropdown Menu와 달리, 마우스 오른쪽 버튼(또는 롱프레스)이 여는 자리를 정한다.
+- [Dropdown Menu](https://adminds.vercel.app/components/dropdown-menu) (`dropdown-menu`) — 한 자리에서 여러 동작을 고르게 한다. 값을 고르는 자리에는 Select를 쓴다.
+- [Toggle](https://adminds.vercel.app/components/toggle) (`toggle`) — 지금 보고 있는 것에 서식이나 필터를 켠다. 설정을 켜고 그 자리에서 저장하는 Switch와 다르다.
+
+### Inputs
+
+- [Checkbox](https://adminds.vercel.app/components/checkbox) (`checkbox`) — 여러 값 중 하나 이상을 켜고 끄도록 한다. 하나만 고를 수 있으면 Radio를 쓴다.
+- [Combobox](https://adminds.vercel.app/components/combobox) (`combobox`) — 많은 항목 중에서 검색해 하나 이상을 고르게 한다. Popover 위에 세우고 트리거는 Select와 같은 모양이다. 항목이 열 개 이하면 Select로 충분하다.
+- [Date Picker](https://adminds.vercel.app/components/date-picker) (`date-picker`) — 달력에서 날짜 하나 또는 기간을 고르게 한다. Popover 위에 Calendar를 놓고, 트리거는 Select와 같은 모양이다.
+- [Field](https://adminds.vercel.app/components/field) (`field`) — 라벨·도움말·오류를 입력 하나에 묶습니다. id를 잇는 일이 이 컴포넌트의 존재 이유입니다 — Field가 useId로 만든 id를 컨텍스트에 담아 FieldLabel의 htmlFor와 FieldControl의 aria-describedby·aria-invalid로 손 대지 않고 이어 줍니다.
+- [File Upload](https://adminds.vercel.app/components/file-upload) (`file-upload`) — 파일을 고르거나 끌어다 놓아 올릴 준비를 하게 합니다. 네이티브 input을 감추고 그 위에 dropzone이나 버튼을 그립니다. 이 컴포넌트는 파일을 실제로 올리지 않습니다 — 올리는 일은 이 화면을 쓰는 서비스의 몫이고, 여기서는 그 화면만 정합니다.
+- [Input](https://adminds.vercel.app/components/input) (`input`) — 사용자가 한 줄짜리 값을 직접 입력하도록 한다. 여러 값 중 고르게 할 때는 Select를, 여러 줄이 필요하면 Textarea를 쓴다.
+- [Radio](https://adminds.vercel.app/components/radio) (`radio`) — 여럿 중 하나만 고르도록 한다. 여럿을 고를 수 있으면 Checkbox를 쓴다.
+- [Select](https://adminds.vercel.app/components/select) (`select`) — 여러 값 중 하나를 고르게 한다. 선택지가 둘셋뿐이면 Radio를, 동작을 실행하는 자리에는 Dropdown Menu를 쓴다.
+- [Slider](https://adminds.vercel.app/components/slider) (`slider`) — 드래그하거나 화살표 키로 움직여 값을 어림잡아 고른다. Radix의 Slider를 감싼다.
+- [Switch](https://adminds.vercel.app/components/switch) (`switch`) — 즉시 반영되는 켜고 끄기를 나타낸다. Checkbox와 다르다 — 체크박스는 저장을 눌러야 반영되고 스위치는 누르는 즉시 반영된다.
+- [Textarea](https://adminds.vercel.app/components/textarea) (`textarea`) — 여러 줄짜리 값을 직접 입력하도록 한다. 한 줄이면 Input을 쓴다.
+
+### Navigation
+
+- [Breadcrumb](https://adminds.vercel.app/components/breadcrumb) (`breadcrumb`) — 지금 어디에 있는지와 어떻게 왔는지를 보인다. 뒤로 가기의 대체물로 쓰지 않는다.
+- [Command](https://adminds.vercel.app/components/command) (`command`) — 검색해서 곧장 실행한다. 값을 골라 폼에 담으면 Combobox고, 어딘가로 가거나 동작을 실행하면 Command다. cmdk 없이 Dialog와 이 저장소의 순수 함수만으로 세웠다.
+- [Pagination](https://adminds.vercel.app/components/pagination) (`pagination`) — 긴 목록을 나눠 보인다. 스크롤로 계속 불러오게 하려면 무한 스크롤을 쓴다.
+- [Steps](https://adminds.vercel.app/components/steps) (`steps`) — 여러 단계로 이루어진 흐름에서 지금 단계와 전체 진행 상태를 보인다. state는 단계 하나의 상태이므로 Steps가 현재 단계 번호로 계산하지 않고 각 Step이 직접 받는다.
+- [Tabs](https://adminds.vercel.app/components/tabs) (`tabs`) — 같은 자리에서 내용을 바꿔 보인다.
+
+### Data Display
+
+- [Accordion](https://adminds.vercel.app/components/accordion) (`accordion`) — 여러 항목 중 필요한 것만 펼쳐 한 번에 필요한 만큼만 보인다. 포털을 쓰지 않고 페이지를 잠그지 않아 expanded를 defaultValue로 그대로 보일 수 있다.
+- [Avatar](https://adminds.vercel.app/components/avatar) (`avatar`) — 사람이나 조직을 나타낸다.
+- [Badge](https://adminds.vercel.app/components/badge) (`badge`) — 짧은 상태나 분류를 보인다. 누를 수 있는 동작에는 쓰지 않는다.
+- [Card](https://adminds.vercel.app/components/card) (`card`) — 관련된 내용을 하나의 틀로 묶어 보인다. 안쪽 구획은 Separator로 나눈다.
+- [Collapsible](https://adminds.vercel.app/components/collapsible) (`collapsible`) — 접히는 자리 하나를 감싼다. Accordion과 달리 트리거를 헤딩으로 감싸지 않아, 카드 안이든 표 행 안이든 제목 층위를 새로 만들지 않고 놓을 수 있다.
+- [Data Table](https://adminds.vercel.app/components/data-table) (`data-table`) — 여러 행을 훑어보고 골라 한꺼번에 다루는 어드민 표다. 정렬·페이지 나눔·선택을 한 벌로 갖춰 목록 화면마다 그 셋을 다시 짜지 않게 한다. 세 상태 모두 비제어가 기본이고, 이름이 같은 prop을 주면 그때부터 부모가 쥔다.
+- [Description List](https://adminds.vercel.app/components/description-list) (`description-list`) — 라벨과 값의 쌍을 나열해 상세 정보를 보인다. <dl>·<dt>·<dd>를 써 키와 값이라는 뜻을 마크업에 그대로 담는다.
+- [Scroll Area](https://adminds.vercel.app/components/scroll-area) (`scroll-area`) — 브라우저의 기본 스크롤바는 운영체제마다 다르게 생기고 다크 모드에서 색이 따라오지 않는다. Radix가 그 자리에 자기 스크롤바를 그려 토큰으로 칠할 수 있게 한다. 굴리는 일 자체는 브라우저가 그대로 한다.
+- [Separator](https://adminds.vercel.app/components/separator) (`separator`) — 가로 또는 세로로 선을 그어 화면의 영역을 나눈다. 기본은 장식이므로 뜻이 있는 경계에서만 decorative를 거짓으로 둔다.
+- [Table](https://adminds.vercel.app/components/table) (`table`) — 어드민의 중심 화면이다. 여러 행의 데이터를 칸으로 나누어 보이고, 정렬 가능한 열은 이름을 누르는 단추로, 지금 방향은 aria-sort로 드러낸다. 다음 방향을 고르는 일은 호출하는 쪽의 몫이다.
+
+### Feedback
+
+- [Alert](https://adminds.vercel.app/components/alert) (`alert`) — 화면에 머무르는 알림을 보인다. 잠깐 나타났다 사라져도 되면 Toast를 쓴다.
+- [Alert Dialog](https://adminds.vercel.app/components/alert-dialog) (`alert-dialog`) — 되돌릴 수 없는 동작을 실행하기 전에 취소와 실행 중 하나를 고르게 한다.
+- [Dialog](https://adminds.vercel.app/components/dialog) (`dialog`) — 흐름을 멈추고 확인이나 입력을 받는다.
+- [Empty State](https://adminds.vercel.app/components/empty-state) (`empty-state`) — 표나 목록에 보일 내용이 없을 때 무엇이 없는지, 왜 없는지, 무엇을 할 수 있는지 안내한다. 아직 만든 것이 없는 것과 불러오지 못한 것을 variant로 구별한다.
+- [Popover](https://adminds.vercel.app/components/popover) (`popover`) — 트리거를 누르면 그 곁에 곁들여 보는 내용을 띄운다.
+- [Progress](https://adminds.vercel.app/components/progress) (`progress`) — 작업이 얼마나 끝났는지 막대 길이로 보인다. Radix의 Progress를 감싸 role="progressbar"와 aria-valuenow를 맡기고, Indicator는 width 대신 translateX로 값만큼만 보이게 민다.
+- [Sheet](https://adminds.vercel.app/components/sheet) (`sheet`) — Radix의 Dialog를 감싸 가장자리에 붙인다. 목록이나 작업 맥락을 곁에 둔 채 이어서 일할 때 쓴다.
+- [Skeleton](https://adminds.vercel.app/components/skeleton) (`skeleton`) — 아직 도착하지 않은 내용의 자리를 실제 모양에 가까운 뼈대로 채운다. 뼈대 자체는 aria-hidden이고, 불러오는 중이라는 사실은 role="status" 문구가 따로 알린다.
+- [Toast](https://adminds.vercel.app/components/toast) (`toast`) — 잠깐 나타났다 사라지는 알림을 보인다. 화면에 계속 남아야 하면 Alert를 쓴다.
+- [Tooltip](https://adminds.vercel.app/components/tooltip) (`tooltip`) — 가리키는 것의 이름이나 짧은 설명을 보인다.
+
+## Rules
+
+- 색·간격·radius·shadow는 tokens.css 토큰을 통해서만 쓴다.
+- 원시값과 임의 대괄호 표기(`[3px]`, `[#abc]`)는 쓰지 않는다.
+
+## Docs
+
+- Full docs: https://adminds.vercel.app
+- Install guide: https://adminds.vercel.app/get-started/install

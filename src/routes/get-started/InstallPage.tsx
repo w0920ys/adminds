@@ -2,19 +2,39 @@ import { Link } from 'react-router'
 import { CopyValue } from '@/components/docs/CopyValue'
 import { DocPage, DocSection } from '@/components/docs/DocPage'
 import { DoDont } from '@/components/docs/DoDont'
+import { categoryLabel, componentsByCategory } from '@/data/registry'
 import { installCommands } from '@/routes/get-started/install-commands'
 
 export function InstallPage() {
   return (
     <DocPage
       title="Install"
-      description="이 작업대를 로컬에서 띄우는 법과, 여기서 다듬은 토큰을 실제 제품으로 가져가는 법입니다."
+      description="이 작업대를 로컬에서 띄우는 법, 컴포넌트를 실제 제품으로 가져가는 법, 그리고 이 모두를 AI 에이전트에게 그대로 보여주는 법입니다."
     >
       <DocSection title="Overview">
         <p className="text-muted-foreground text-16">
-          쓰임이 둘입니다. 하나는 이 저장소 자체를 로컬에서 띄워 컴포넌트와 문서를 보는
-          것이고, 다른 하나는 여기서 정한 토큰을 실제로 화면을 만드는 제품 코드로 가져가는
-          것입니다. 전자는 아래 Run locally에서, 후자는 Use the tokens에서 다룹니다.
+          쓰임이 넷입니다. 이 저장소 자체를 로컬에서 띄워 컴포넌트와 문서를 보는 것, 여기서
+          다듬은 컴포넌트와 토큰을 실제 제품 코드로 가져가는 것, 지금 무엇이 있는지 한눈에
+          훑는 것, 그리고 이 모두를 사람 대신 AI 에이전트에게 보여주는 것입니다. 차례로
+          아래 Run locally, 컴포넌트를 프로젝트로 가져오기, Components, AI 에이전트에게
+          보여주기에서 다룹니다.
+        </p>
+      </DocSection>
+
+      <DocSection title="AI 에이전트에게 보여주기">
+        <p className="text-muted-foreground text-16">
+          이 사이트는 서버 렌더링이 없는 SPA입니다. AI 에이전트가 이 페이지 주소를 JS 실행
+          없이 그대로 가져가면(예: curl) 내용이 빈 HTML 껍데기만 받습니다. 같은 내용을 순수
+          텍스트로 담아 둔 파일이 <code className="text-12">/llms.txt</code>입니다 — 이
+          저장소의 정체, 설치 명령 세 가지, 컴포넌트 40개 목록을 registry.ts에서 그대로
+          생성합니다.
+        </p>
+        <div className="max-w-full rounded-lg border p-4">
+          <CopyValue value="https://adminds.vercel.app/llms.txt" className="w-full font-mono text-12" />
+        </div>
+        <p className="text-muted-foreground text-16">
+          다른 프로젝트에 이 디자인 시스템을 들이려는 AI 에이전트에게는 위 주소를 그대로
+          건네면 됩니다.
         </p>
       </DocSection>
 
@@ -49,7 +69,7 @@ export function InstallPage() {
         </div>
       </DocSection>
 
-      <DocSection title="Use the tokens">
+      <DocSection title="컴포넌트를 프로젝트로 가져오기">
         <p className="text-muted-foreground text-16">
           <code className="text-12">src/styles/tokens.css</code>가 색·간격·radius·shadow 같은
           디자인 토큰의 단일 출처입니다. Tailwind v4의{' '}
@@ -73,14 +93,22 @@ export function InstallPage() {
           문서에서 다룹니다.
         </p>
         <p className="text-muted-foreground text-16">
-          이 저장소는 문서 사이트인 동시에 shadcn 레지스트리입니다. 토큰만 다른 프로젝트로
-          가져가려면 아래 명령을 돌립니다.
+          이 저장소는 문서 사이트인 동시에 shadcn 레지스트리입니다. 받는 범위에 따라 명령이
+          셋으로 갈립니다.
         </p>
-        <div className="max-w-full rounded-lg border p-4">
-          <CopyValue
-            value="npx shadcn@latest add https://adminds.vercel.app/r/tokens.json"
-            className="w-full font-mono text-12"
-          />
+        <div className="divide-y rounded-lg border">
+          <div className="flex flex-col gap-1.5 p-4">
+            <span className="text-muted-foreground text-12">컴포넌트 하나만 — 아래 Components 목록의 이름을 그대로 넣습니다</span>
+            <CopyValue value="npx shadcn@latest add https://adminds.vercel.app/r/button.json" className="w-full font-mono text-12" />
+          </div>
+          <div className="flex flex-col gap-1.5 p-4">
+            <span className="text-muted-foreground text-12">토큰만</span>
+            <CopyValue value="npx shadcn@latest add https://adminds.vercel.app/r/tokens.json" className="w-full font-mono text-12" />
+          </div>
+          <div className="flex flex-col gap-1.5 p-4">
+            <span className="text-muted-foreground text-12">토큰과 컴포넌트 전부</span>
+            <CopyValue value="npx shadcn@latest add https://adminds.vercel.app/r/adminds.json" className="w-full font-mono text-12" />
+          </div>
         </div>
         <p className="text-muted-foreground text-16">
           받는 쪽에는 Tailwind v4가 있어야 하고, 위 import 순서와 함께{' '}
@@ -92,6 +120,31 @@ export function InstallPage() {
           떨어집니다. <code className="text-12">baseUrl</code>은 넣지 않습니다 — TypeScript
           6에서 하드 에러입니다.
         </p>
+      </DocSection>
+
+      <DocSection title="Components">
+        <p className="text-muted-foreground text-16">
+          지금 있는 컴포넌트 전체입니다. 부위·속성·가이드라인까지 보려면{' '}
+          <Link to="/components" className="underline underline-offset-2">
+            Components
+          </Link>{' '}
+          문서에서 하나씩 확인합니다.
+        </p>
+        {componentsByCategory().map(({ category, items }) => (
+          <div key={category} className="flex flex-col gap-2">
+            <h3 className="text-14 font-semibold">{categoryLabel[category]}</h3>
+            <ul className="divide-y rounded-lg border">
+              {items.map((meta) => (
+                <li key={meta.id}>
+                  <Link to={`/components/${meta.id}`} className="hover:bg-accent/50 flex flex-col gap-0.5 p-3">
+                    <span className="text-14 font-medium">{meta.name}</span>
+                    <span className="text-muted-foreground line-clamp-1 text-12">{meta.purpose}</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
       </DocSection>
 
       <DocSection title="Guidelines">

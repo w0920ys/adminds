@@ -29,6 +29,20 @@ export type Release = {
 /** 최신 버전이 배열의 맨 앞이다. */
 export const releases: Release[] = [
   {
+    version: 'v0.16.0',
+    publishedAt: '2026-08-29',
+    title: 'Install 페이지를 컴포넌트 목록과 AI 에이전트 안내로 넓혔어요',
+    purpose:
+      'Install 페이지가 컴포넌트 전체 목록과 세 가지 설치 명령을 보여주고, /llms.txt로 AI 에이전트도 같은 정보를 텍스트로 바로 받을 수 있어요.',
+    changes: [
+      { target: 'Get started / Install', type: 'Updated', note: '컴포넌트 40개 목록과 전체 번들 설치 명령을 추가했어요.' },
+      { target: 'llms.txt', type: 'New', note: 'registry.ts에서 생성한 AI 에이전트용 요약 파일을 추가했어요.' },
+    ],
+    requests: [],
+    reviewItems: [],
+    impact: ['Get started'],
+  },
+  {
     version: 'v0.15.0',
     publishedAt: '2026-08-29',
     title: '모바일 헤더·서랍 순서를 바꾸고 사이트 푸터를 다시 짰어요',
