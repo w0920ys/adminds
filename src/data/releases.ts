@@ -29,6 +29,19 @@ export type Release = {
 /** 최신 버전이 배열의 맨 앞이다. */
 export const releases: Release[] = [
   {
+    version: 'v0.18.0',
+    publishedAt: '2026-08-29',
+    title: 'Chart 카테고리를 새로 열었어요',
+    purpose:
+      'shadcn 공식 차트 갤러리를 6개 계열(Area·Bar·Line·Pie·Radar·Radial)로 옮겼어요. 구조는 shadcn을 따르고 색·타이포·spacing은 전부 이 시스템의 토큰을 써요.',
+    changes: [
+      { target: 'Components / Chart', type: 'New', note: 'Chart Area·Bar·Line·Pie·Radar·Radial 6종을 추가했어요.' },
+    ],
+    requests: [],
+    reviewItems: [],
+    impact: ['Components', 'Foundations / Color'],
+  },
+  {
     version: 'v0.17.0',
     publishedAt: '2026-08-29',
     title: 'Foundations에 Layout 문서를 새로 실었어요',
