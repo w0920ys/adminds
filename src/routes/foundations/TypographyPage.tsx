@@ -299,7 +299,7 @@ export function TypographyPage() {
                   <th scope="row" className="border-t px-3 py-2 font-medium whitespace-nowrap">
                     <code className="text-12">{row.className}</code>
                   </th>
-                  <td className="border-t px-3 py-2">
+                  <td className="border-t px-3 py-2 whitespace-nowrap">
                     <span className={row.className}>{SPECIMEN}</span>
                   </td>
                   <td className="text-muted-foreground border-t px-3 py-2 whitespace-nowrap">
@@ -363,7 +363,7 @@ export function TypographyPage() {
                   <th scope="row" className="border-t px-3 py-2 font-medium whitespace-nowrap">
                     <code className="text-12">{row.className}</code>
                   </th>
-                  <td className="border-t px-3 py-2">
+                  <td className="border-t px-3 py-2 whitespace-nowrap">
                     <span className={`text-16 ${row.className}`}>{SPECIMEN}</span>
                   </td>
                   <td className="text-muted-foreground border-t px-3 py-2 whitespace-nowrap">

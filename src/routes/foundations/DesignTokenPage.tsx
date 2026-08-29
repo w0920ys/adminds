@@ -181,11 +181,11 @@ export function DesignTokenPage() {
             <tbody>
               {NAMING_RULES.map((rule) => (
                 <tr key={rule.shape}>
-                  <th scope="row" className="border-t px-3 py-2 font-medium">
+                  <th scope="row" className="border-t px-3 py-2 font-medium whitespace-nowrap">
                     <code className="text-12">{rule.shape}</code>
                   </th>
                   <td className="border-t px-3 py-2">{rule.meaning}</td>
-                  <td className="text-muted-foreground border-t px-3 py-2">
+                  <td className="text-muted-foreground border-t px-3 py-2 whitespace-nowrap">
                     <code className="text-12">{rule.example}</code>
                   </td>
                 </tr>
