@@ -68,10 +68,10 @@ export function LayoutPage() {
             <tbody>
               {BREAKPOINTS.map((bp) => (
                 <tr key={bp.prefix}>
-                  <th scope="row" className="border-t px-3 py-3 font-medium">
+                  <th scope="row" className="border-t px-3 py-3 font-medium whitespace-nowrap">
                     <code className="text-12">{bp.prefix}</code>
                   </th>
-                  <td className="text-muted-foreground border-t px-3 py-3">{bp.minWidth}</td>
+                  <td className="text-muted-foreground border-t px-3 py-3 whitespace-nowrap">{bp.minWidth}</td>
                 </tr>
               ))}
             </tbody>

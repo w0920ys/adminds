@@ -304,7 +304,7 @@ function KeyTable({ caption, rows }: { caption: string; rows: { keys: string; ef
         <tbody>
           {rows.map((row) => (
             <tr key={row.keys}>
-              <th scope="row" className="w-44 border-t px-3 py-2.5 align-top font-medium">
+              <th scope="row" className="w-44 border-t px-3 py-2.5 align-top font-medium whitespace-nowrap">
                 {row.keys}
               </th>
               <td className="text-muted-foreground border-t px-3 py-2.5">{row.effect}</td>
