@@ -140,7 +140,7 @@ function ChartTooltipContent({
             <li key={i} className="flex items-center gap-2">
               <span
                 aria-hidden
-                className={cn('shrink-0 rounded-[2px]', indicator === 'dot' ? 'size-2.5 rounded-full' : 'h-0.5 w-3')}
+                className={cn('shrink-0 rounded-sm', indicator === 'dot' ? 'size-2.5 rounded-full' : 'h-0.5 w-3')}
                 style={{ backgroundColor: color }}
               />
               <span className="text-muted-foreground">{displayLabel}</span>
@@ -179,7 +179,7 @@ function ChartLegendContent({
         const itemConfig = config[key as string]
         return (
           <li key={i} className="text-muted-foreground flex items-center gap-1.5 text-12">
-            <span aria-hidden className="size-2.5 rounded-[3px]" style={{ backgroundColor: item.color }} />
+            <span aria-hidden className="size-2.5 rounded-sm" style={{ backgroundColor: item.color }} />
             {itemConfig?.label ?? item.value}
           </li>
         )
