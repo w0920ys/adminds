@@ -19,6 +19,7 @@
   | `text-sm` | `text-14` |
   | `rounded-[2px]` | `rounded-sm` |
   | `min-w-[8rem]` | `min-w-32` |
+  | `border-[1.5px]` | `border-2` |
   | `max-h-[250px]` / `max-w-[250px]` | `max-h-64` / `max-w-64` |
   | `max-h-[300px]` | `max-h-80` |
   | `text-2xl`(Radial 중앙 라벨) | `text-24` |
@@ -238,7 +239,7 @@ function ChartTooltipContent({
                           className={cn('shrink-0 rounded-sm border-(--color-border) bg-(--color-bg)', {
                             'h-2.5 w-2.5': indicator === 'dot',
                             'w-1': indicator === 'line',
-                            'w-0 border-[1.5px] border-dashed bg-transparent': indicator === 'dashed',
+                            'w-0 border-2 border-dashed bg-transparent': indicator === 'dashed',
                             'my-0.5': nestLabel && indicator === 'dashed',
                           })}
                           style={{ '--color-bg': indicatorColor, '--color-border': indicatorColor } as React.CSSProperties}
