@@ -3910,13 +3910,13 @@ export const components: ComponentMeta[] = [
     category: 'feedback',
     status: 'stable',
     addedIn: 'v0.8.0',
-    changedIn: 'v0.14.0',
+    changedIn: 'v0.16.0',
     purpose: '가리키는 것의 이름이나 짧은 설명을 보인다.',
     anatomy: [
       {
         part: 'trigger',
         label: 'Trigger',
-        note: '호버하거나 포커스하면 트리거 주변에 말풍선이 뜬다. bg-popover, 테두리, radius-md, 쌓임 순서는 z-popover. 글자는 text-12이고 트리거를 향한 작은 꼬리(Arrow)가 함께 붙는다. 표 헤더처럼 넘침이 있는 컨테이너 안에서도 잘리지 않도록 Portal로 렌더링된다',
+        note: '호버·포커스는 물론 클릭해도 뜨고, 바깥을 클릭해야 닫힌다. bg-popover, 테두리, radius-md, 쌓임 순서는 z-popover. 글자는 text-14이고 트리거를 향한 작은 꼬리(Arrow)가 함께 붙는다. 표 헤더처럼 넘침이 있는 컨테이너 안에서도 잘리지 않도록 Portal로 렌더링된다',
       },
     ],
     /*
@@ -3941,7 +3941,7 @@ export const components: ComponentMeta[] = [
       {
         id: 'not-only-source',
         title: 'Not the only source',
-        body: '중요한 정보를 Tooltip에만 두지 않습니다. 터치 기기에는 호버가 없어 마우스를 대지 않으면 존재조차 알 수 없습니다.',
+        body: '중요한 정보를 Tooltip에만 두지 않습니다. 터치 기기는 호버가 없어 트리거를 탭해야만 알 수 있고, 지나가다 우연히 발견되지 않습니다.',
         do: ['비활성 이유처럼 중요한 정보는 화면에 먼저 보이게 하고 Tooltip은 보조로 둔다'],
         dont: ['비활성인 이유를 Tooltip에만 적어 두지 않는다'],
       },
@@ -3962,7 +3962,7 @@ export const components: ComponentMeta[] = [
     cases: [
       { id: 'long-text', title: '글이 긴 경우', note: '한 줄을 넘기면 여러 줄로 줄바꿈된다' },
       { id: 'screen-edge', title: '화면 가장자리', note: '자리가 없으면 반대쪽으로 자동으로 뒤집힌다' },
-      { id: 'touch-device', title: '터치 기기', note: '호버가 없으므로 이름을 aria-label로도 함께 남긴다' },
+      { id: 'touch-device', title: '터치 기기', note: '호버가 없어 우연히 발견되진 않지만 탭하면 뜬다 — 스크린리더용 이름은 aria-label로 따로 남긴다' },
       { id: 'narrow-screen', title: '좁은 화면', note: '트리거가 줄바꿈되어도 말풍선 위치는 트리거를 따라간다' },
     ],
     verified: true,

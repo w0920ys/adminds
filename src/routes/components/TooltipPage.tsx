@@ -203,7 +203,7 @@ function renderExample(exampleId: string): ReactNode {
               <Info aria-hidden />
             </Button>
           </TooltipTrigger>
-          <TooltipContent>터치 기기에서는 뜨지 않으므로 aria-label이 이름을 대신한다</TooltipContent>
+          <TooltipContent>터치 기기는 호버가 없어 우연히 발견되진 않지만, 트리거를 탭하면 뜬다</TooltipContent>
         </Tooltip>
       )
 

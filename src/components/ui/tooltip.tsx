@@ -84,7 +84,16 @@ function TooltipContent({
         data-slot="tooltip-content"
         sideOffset={sideOffset}
         className={cn(
-          'bg-popover text-popover-foreground z-popover w-fit max-w-64 text-balance rounded-md border px-3 py-1.5 text-12 shadow-md',
+          /*
+           * text-12(설명·캡션 티어)가 원래 값이었으나 실측 결과 너무 작다는
+           * 피드백을 받아 text-14로 올렸다 — 이 스케일에서 text-14의
+           * 공식 역할은 "조밀 모드 전용(표 셀 등)"이라 말풍선 안 텍스트가
+           * 그 역할과 완전히 맞진 않지만, 사용자가 짧게 읽고 넘어가는
+           * 텍스트의 최소 크기를 12px 아래로 두지 않기로 한 결정에 따른
+           * 예외다. text-11(11px)을 쓰는 다른 컴포넌트 114곳은 이 결정과
+           * 별개로 남아 있다 — 그쪽은 아직 검토 전이다.
+           */
+          'bg-popover text-popover-foreground z-popover w-fit max-w-64 text-balance rounded-md border px-3 py-1.5 text-14 shadow-md',
           className,
         )}
         {...props}
