@@ -3438,6 +3438,44 @@ export const components: ComponentMeta[] = [
     verified: true,
   },
   {
+    id: 'chart-radar',
+    name: 'Chart Radar',
+    aliases: ['레이더 차트', '방사형 차트', 'radar chart'],
+    category: 'chart',
+    status: 'stable',
+    addedIn: 'v0.18.0',
+    changedIn: 'v0.18.0',
+    purpose: '여러 축에 걸친 값을 한 도형으로 보인다. 역량·평가 항목처럼 서로 다른 기준을 한눈에 비교할 때 쓴다.',
+    anatomy: [],
+    properties: [
+      {
+        name: 'gridType',
+        title: 'Grid type',
+        description: '배경 격자를 다각형으로 그릴지 원으로 그릴지 정한다.',
+        display: 'row',
+        options: [
+          { value: 'polygon', note: '기본. 축 개수만큼 각진 격자' },
+          { value: 'circle', note: '동심원 격자 — 값의 크기 비교가 더 직관적일 때' },
+        ],
+      },
+    ],
+    guidelines: [
+      {
+        id: 'axis-count',
+        title: '축은 3~8개 사이가 읽기 좋다',
+        body: '축이 너무 적으면 도형의 뜻이 안 살고, 너무 많으면 라벨이 겹친다.',
+        do: ['비교할 기준을 3~8개로 추린다'],
+        dont: ['축을 열 개 넘게 욱여넣지 않는다'],
+      },
+    ],
+    usage: [
+      { id: 'skill-profile', title: '역량 비교', note: '단일 계열로 여러 항목의 점수를 한 도형으로 보인다' },
+      { id: 'team-comparison', title: '두 팀 비교', note: '두 계열을 겹쳐 같은 기준으로 비교한다' },
+    ],
+    cases: [],
+    verified: true,
+  },
+  {
     id: 'alert',
     name: 'Alert',
     aliases: ['경고', '배너', 'banner', 'notice', '안내'],

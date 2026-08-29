@@ -15,6 +15,7 @@ import { ChartAreaPage } from '@/routes/components/ChartAreaPage'
 import { ChartBarPage } from '@/routes/components/ChartBarPage'
 import { ChartLinePage } from '@/routes/components/ChartLinePage'
 import { ChartPiePage } from '@/routes/components/ChartPiePage'
+import { ChartRadarPage } from '@/routes/components/ChartRadarPage'
 import { ContextMenuPage } from '@/routes/components/ContextMenuPage'
 import { CheckboxPage } from '@/routes/components/CheckboxPage'
 import { CollapsiblePage } from '@/routes/components/CollapsiblePage'
@@ -144,6 +145,7 @@ export const routes: RouteObject[] = [
           { path: 'chart-bar', element: <ChartBarPage /> },
           { path: 'chart-line', element: <ChartLinePage /> },
           { path: 'chart-pie', element: <ChartPiePage /> },
+          { path: 'chart-radar', element: <ChartRadarPage /> },
         ],
       },
 
