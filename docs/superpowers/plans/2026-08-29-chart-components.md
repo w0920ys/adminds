@@ -18,6 +18,7 @@
 - 임의 값 대괄호 표기 금지. 단, 원본이 `var(--chart-1)`처럼 CSS 변수를 `style`/`fill`/`stroke` prop에 문자열로 넘기는 것은 Tailwind 클래스가 아니므로 이 규칙 대상이 아니다.
 - **원본의 `text-xs`/`text-sm`/`text-2xs`는 이 저장소의 숫자 스케일로 바꿔 썼다** — 이 저장소는 Tailwind 기본 이름 스케일을 어디서도 쓰지 않고 `text-11`~`text-48` 픽셀 이름 스케일만 쓴다(전 컴포넌트에서 검색해 확인함). 값으로 맞춰 옮겼다: `text-xs`(0.75rem)→`text-12`, `text-sm`(0.875rem)→`text-14`.
 - **이번 회차는 `text-12`가 최소 크기다. `text-11`은 정말 피할 수 없는 예외에서만 쓴다(사용자 지시 — 11px은 너무 작아서 잘 안 보인다).** 원본의 `text-2xs`(어차피 adminds-starter에도 정의돼 있지 않은 클래스 — 검색해 확인함, 원본에서도 사실상 아무 크기도 안 먹었을 가능성이 있다)는 `text-11`이 아니라 `text-12`로 옮겼다 — 아래 각 Task의 코드에는 이미 이 변환이 반영돼 있다. 이번 6개 컴포넌트 어디에도 `text-11`을 쓰지 않는다.
+- **원본의 색 스와치가 쓰던 `rounded-[2px]`/`rounded-[3px]`(Tailwind 임의 값 대괄호)는 이 저장소의 반경 스케일 중 가장 가까운 `rounded-sm`(4px, `--radius-sm`)으로 옮겼다** — Task 1 리뷰가 실제로 잡아낸 위반이다(이 저장소는 임의 값 대괄호를 어디서도 안 쓴다). 10px짜리 작은 점 표시라 4px과 2~3px의 시각 차이는 무시할 만하다 — 아래 각 Task의 코드에는 이미 `rounded-sm`으로 반영돼 있다.
 - 언어 규칙 — 구조를 가리키는 이름은 영문, 설명은 한국어.
 - 화면에 나오는 숫자를 손으로 적지 않는다 — `README.md`·`registry.json`의 `adminds` 번들 설명 속 개수는 `components.length` 실측과 맞아야 한다.
 - 서식은 손으로 맞춘다 — 작은따옴표, 세미콜론 없음. `prettier --write`를 돌리지 않는다.
@@ -258,7 +259,7 @@ function ChartTooltipContent({
             <li key={i} className="flex items-center gap-2">
               <span
                 aria-hidden
-                className={cn('shrink-0 rounded-[2px]', indicator === 'dot' ? 'size-2.5 rounded-full' : 'h-0.5 w-3')}
+                className={cn('shrink-0 rounded-sm', indicator === 'dot' ? 'size-2.5 rounded-full' : 'h-0.5 w-3')}
                 style={{ backgroundColor: color }}
               />
               <span className="text-muted-foreground">{displayLabel}</span>
@@ -297,7 +298,7 @@ function ChartLegendContent({
         const itemConfig = config[key as string]
         return (
           <li key={i} className="text-muted-foreground flex items-center gap-1.5 text-12">
-            <span aria-hidden className="size-2.5 rounded-[3px]" style={{ backgroundColor: item.color }} />
+            <span aria-hidden className="size-2.5 rounded-sm" style={{ backgroundColor: item.color }} />
             {itemConfig?.label ?? item.value}
           </li>
         )
@@ -920,7 +921,7 @@ export function ChartDonut({ data, height = 200 }: { data: DonutDatum[]; height?
           return (
             <li key={d.label} className="flex flex-col gap-0.5">
               <div className="flex items-center gap-1.5">
-                <span aria-hidden className="size-2.5 shrink-0 rounded-[3px]" style={{ backgroundColor: `var(--chart-${(i % 6) + 1})` }} />
+                <span aria-hidden className="size-2.5 shrink-0 rounded-sm" style={{ backgroundColor: `var(--chart-${(i % 6) + 1})` }} />
                 <span className="text-foreground truncate text-14">{d.label}</span>
               </div>
               <div className="text-muted-foreground pl-4 text-12 tabular-nums">
