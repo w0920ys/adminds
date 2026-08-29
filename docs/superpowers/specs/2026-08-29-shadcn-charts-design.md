@@ -4,6 +4,8 @@
 
 이전 스펙(`2026-08-29-chart-components-design.md`, 폐기)은 `adminds-starter`(momeokji-admin에서 실전 검증된 소스)를 원본 삼아 알맹이 컴포넌트 5종을 이식하는 방향이었다. 사용자가 방향을 바꿨다 — shadcn 공식 차트 갤러리(`ui.shadcn.com/charts`)를 원본으로 삼고, shadcn의 실제 코드 스타일(Card로 감싼 완성형 블록)을 그대로 따르며, LNB에 Chart라는 별도 카테고리를 새로 만들어 그 아래 순차적으로 넣는다.
 
+**원칙 — 구조는 shadcn, 값은 이 저장소의 토큰.** shadcn에서 가져오는 건 레이아웃 구조(Card로 감싸는 조합, 차트 유형 선택, 컴포넌트가 받는 prop의 모양)뿐이다. 화면에 실제로 찍히는 값 — 글자 크기·간격·반경·색 — 은 전부 이 저장소의 토큰을 거친다. `CardTitle`(`text-18`)·`CardDescription`(`text-16`)·`CardHeader`/`CardFooter`의 `px-6`처럼 기존 `Card`를 그대로 조합만 하면 저절로 토큰을 상속받는 부분도 있고, `chart.tsx`나 새 6개 컴포넌트 파일 안에서 shadcn 원본이 자기 스케일을 직접 쓰는 자리(`text-xs`·`text-sm`·`rounded-[2px]`·`min-w-[8rem]` 등)는 옮기는 사람이 이 저장소의 숫자 스케일·반경 스케일로 명시적으로 바꿔야 한다 — 아래 "결정 4"에 전체 변환표가 있다.
+
 ## 실측 — shadcn 차트 갤러리 전체
 
 `ui.shadcn.com`의 각 차트 계열 페이지를 브라우저로 열어 iframe `src`에서 실제 레지스트리 이름을 직접 긁어 확인했다(마케팅 페이지의 표시 이름은 전부 "Bar Chart" 등으로 뭉뚱그려져 있어 페이지 텍스트만으로는 구별이 안 된다):
@@ -38,7 +40,18 @@
 
 ## 결정 4 — `chart.tsx` 스캐폴드를 shadcn 공식 버전으로 올린다
 
-Task 1이 이미 이식한 `chart.tsx`는 momeokji-admin이 다시 줄인 버전이라 `nameKey`·`labelKey`·`formatter`·`labelFormatter`·`hideIndicator`·아이콘 지원이 빠져 있다. shadcn 공식 소스를 직접 읽어 확인했고(`ui.shadcn.com/r/styles/new-york-v4/chart.json`), 68개 예시 다수가 이 기능들을 실제로 쓴다. **`chart.tsx`를 공식 버전으로 다시 이식한다** — 이번에도 이 저장소의 두 규칙을 적용해 옮긴다: `text-xs`→`text-12`, 색 스와치의 `rounded-[2px]`→`rounded-sm`(Task 1 리뷰가 이미 잡은 것과 같은 두 규칙). `min-w-[8rem]`도 임의 값이라 `min-w-32`(정확히 같은 값, 8rem)로 옮긴다. `border-(--color-border) bg-(--color-bg)` 같은 Tailwind v4 파렌 문법 대신, 지금 코드가 이미 쓰는 `style={{ backgroundColor: color }}` 방식을 그대로 유지한다(같은 목적, 이 저장소에 이미 있는 패턴).
+Task 1이 이미 이식한 `chart.tsx`는 momeokji-admin이 다시 줄인 버전이라 `nameKey`·`labelKey`·`formatter`·`labelFormatter`·`hideIndicator`·아이콘 지원이 빠져 있다. shadcn 공식 소스를 직접 읽어 확인했고(`ui.shadcn.com/r/styles/new-york-v4/chart.json`), 68개 예시 다수가 이 기능들을 실제로 쓴다. **`chart.tsx`를 공식 버전으로 다시 이식한다.**
+
+shadcn 원본 코드가 자기 스케일을 직접 쓰는 자리는 아래 표대로 옮긴다 — `chart.tsx`뿐 아니라 새로 짓는 6개 컴포넌트 파일에서 shadcn 원본을 그대로 옮겨 적는 모든 자리(특히 `CardFooter`의 추세 문구가 쓰는 `text-sm`)에 똑같이 적용한다:
+
+| shadcn 원본 | 이 저장소 | 비고 |
+|---|---|---|
+| `text-xs` | `text-12` | chart.tsx의 축·툴팁·범례 |
+| `text-sm` | `text-14` | CardFooter의 추세 문구 등 6개 컴포넌트 전부에 반복해서 나옴 |
+| `rounded-[2px]` | `rounded-sm` | 색 스와치 (Task 1 리뷰가 이미 잡은 것과 같은 규칙) |
+| `min-w-[8rem]` | `min-w-32` | 정확히 같은 값(8rem), 임의 값 대괄호만 없앰 |
+
+`border-(--color-border) bg-(--color-bg)` 같은 Tailwind v4 파렌 문법 대신, 지금 코드가 이미 쓰는 `style={{ backgroundColor: color }}` 방식을 그대로 유지한다(같은 목적, 이 저장소에 이미 있는 패턴).
 
 ## 6개 컴포넌트 설계
 
