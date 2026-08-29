@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "resizable",
+  "title": "Resizable",
+  "dependencies": [
+    "react-resizable-panels"
+  ],
+  "registryDependencies": [
+    "https://adminds.vercel.app/r/tokens.json",
+    "https://adminds.vercel.app/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/resizable.tsx",
+      "content": "import * as React from 'react'\nimport { GripVertical } from 'lucide-react'\nimport { Group, Panel, Separator } from 'react-resizable-panels'\nimport { cn } from '@/lib/utils'\n\n/*\n * react-resizable-panels 4.x는 방향을 가리키는 data 속성을 DOM에 스스로\n * 심어 주지 않는다(Group의 orientation prop으로만 있다). Handle의 CSS가\n * 방향에 따라 갈리므로(가로 분할=세로선, 세로 분할=가로선), Group이 받은\n * orientation을 Context로 내려 Handle이 다시 읽는다 — 호출부가 Group과\n * Handle 양쪽에 orientation을 따로 넘기다 값이 어긋나는 실수를 막는다.\n */\nconst OrientationContext = React.createContext<'horizontal' | 'vertical'>('horizontal')\n\nfunction ResizablePanelGroup({\n  className,\n  orientation = 'horizontal',\n  ...props\n}: React.ComponentProps<typeof Group>) {\n  return (\n    <OrientationContext.Provider value={orientation}>\n      <Group\n        data-slot=\"resizable-panel-group\"\n        orientation={orientation}\n        className={cn('flex h-full w-full', orientation === 'vertical' && 'flex-col', className)}\n        {...props}\n      />\n    </OrientationContext.Provider>\n  )\n}\n\nconst ResizablePanel = Panel\n\n/*\n * withHandle이 켜지면 가운데 그립(점 여섯 개 아이콘)이 뜬다 — 드래그할\n * 수 있다는 것을 시각적으로 알려준다. orientation은 부모 Group이\n * Context로 내린 값을 읽는다(prop으로 따로 안 받는다).\n */\nfunction ResizableHandle({\n  withHandle,\n  className,\n  ...props\n}: React.ComponentProps<typeof Separator> & { withHandle?: boolean }) {\n  const orientation = React.useContext(OrientationContext)\n  return (\n    <Separator\n      data-slot=\"resizable-handle\"\n      className={cn(\n        'bg-border relative flex items-center justify-center',\n        orientation === 'vertical' ? 'h-px w-full' : 'w-px',\n        'after:absolute after:inset-y-0 after:left-1/2 after:w-1 after:-translate-x-1/2',\n        orientation === 'vertical' &&\n          'after:inset-x-0 after:left-0 after:h-1 after:w-full after:translate-x-0 after:-translate-y-1/2',\n        'focus-visible:ring-ring/50 focus-visible:ring-2 focus-visible:outline-none',\n        className,\n      )}\n      {...props}\n    >\n      {withHandle && (\n        <div className=\"bg-border z-10 flex h-4 w-3 items-center justify-center rounded-sm border\">\n          <GripVertical className=\"size-2.5\" />\n        </div>\n      )}\n    </Separator>\n  )\n}\n\nexport { ResizablePanelGroup, ResizablePanel, ResizableHandle }\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

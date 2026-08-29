@@ -2938,6 +2938,52 @@ export const components: ComponentMeta[] = [
     verified: false,
   },
   {
+    id: 'resizable',
+    name: 'Resizable',
+    aliases: ['크기 조절', '분할', 'split', 'panel', '패널'],
+    category: 'data-display',
+    status: 'stable',
+    addedIn: 'v0.16.0',
+    changedIn: 'v0.16.0',
+    purpose: '화면을 여러 패널로 나누고, 경계를 드래그해 각 패널의 크기를 바꾸게 한다.',
+    verified: true,
+    anatomy: [
+      {
+        part: 'handle',
+        label: 'Handle',
+        note: '패널 사이의 경계선. 가운데 그립 아이콘(선택)으로 드래그 가능함을 알린다. 세로 분할(orientation=vertical)에서는 가로선으로, 가로 분할에서는 세로선으로 90도 돈다. 포커스되면 ring이 뜬다 — 키보드(방향키)로도 크기를 조절할 수 있다.',
+      },
+    ],
+    properties: [
+      {
+        name: 'orientation',
+        title: 'Orientation',
+        description: '패널이 가로로 나뉘는지 세로로 나뉘는지 정한다.',
+        display: 'row',
+        options: [
+          { value: 'horizontal', note: '좌우로 나뉜다' },
+          { value: 'vertical', note: '위아래로 나뉜다' },
+        ],
+      },
+    ],
+    guidelines: [
+      {
+        id: 'min-size',
+        title: 'Set a minimum size',
+        body: '패널을 끝까지 좁히면 안의 내용이 잘리거나 아예 안 보이게 됩니다. 각 패널에 최소 크기를 둬 내용이 항상 읽히게 합니다.',
+        do: ['각 패널에 defaultSize·minSize를 두어 너무 좁아지지 않게 한다'],
+        dont: ['최소 크기 없이 패널이 0까지 줄어들게 두지 않는다'],
+      },
+    ],
+    usage: [
+      { id: 'master-detail', title: '마스터-디테일', note: '왼쪽은 목록, 오른쪽은 선택한 항목의 상세 — 전형적인 좌우 분할이다.' },
+      { id: 'vertical-split', title: '세로 분할', note: '위는 미리보기, 아래는 로그처럼 위아래로 나뉜 배치.' },
+    ],
+    cases: [
+      { id: 'narrow-screen', title: '좁은 화면', note: 'Resizable 자체는 반응형을 강제하지 않는다 — 좁은 화면에서 드래그로 나누는 대신 위아래로 쌓을지는 호출부가 결정한다.' },
+    ],
+  },
+  {
     id: 'scroll-area',
     name: 'Scroll Area',
     aliases: ['스크롤 영역', '스크롤바', 'scrollbar', '스크롤', '넘치는 내용'],

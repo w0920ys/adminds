@@ -31,6 +31,7 @@ import { PaginationPage } from '@/routes/components/PaginationPage'
 import { PopoverPage } from '@/routes/components/PopoverPage'
 import { ProgressPage } from '@/routes/components/ProgressPage'
 import { RadioPage } from '@/routes/components/RadioPage'
+import { ResizablePage } from '@/routes/components/ResizablePage'
 import { ScrollAreaPage } from '@/routes/components/ScrollAreaPage'
 import { SelectPage } from '@/routes/components/SelectPage'
 import { SeparatorPage } from '@/routes/components/SeparatorPage'
@@ -132,6 +133,7 @@ export const routes: RouteObject[] = [
           { path: 'accordion', element: <AccordionPage /> },
           { path: 'context-menu', element: <ContextMenuPage /> },
           { path: 'menubar', element: <MenubarPage /> },
+          { path: 'resizable', element: <ResizablePage /> },
         ],
       },
 
