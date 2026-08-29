@@ -47,8 +47,8 @@ export function ChartRadial({
     : Number(data[0]?.[valueKey ?? seriesKeys[0]] ?? 0)
 
   return (
-    <Card>
-      <CardHeader className="text-center">
+    <Card className="w-full">
+      <CardHeader>
         <CardTitle>{title}</CardTitle>
         <CardDescription>{description}</CardDescription>
       </CardHeader>
@@ -61,10 +61,23 @@ export function ChartRadial({
              * 이 값은 원본이 가정한 넓은 캔버스에서만 맞다 — 컨테이너 너비가 원의
              * 지름보다 좁아지면 고정 px 반지름이 절반 너비를 넘어서 링이 꽉 찬
              * 사각형처럼 잘려 보인다(실제로 재현해 확인함). 퍼센트로 바꿔 컨테이너가
-             * 얼마나 좁든 같은 비율로 맞게 했다 — 원본 비율(80/110·30/110)을 그대로
-             * 유지한 값이다.
+             * 얼마나 좁든 같은 비율로 맞게 했다.
+             *
+             * 단일 계열은 showLabel일 때 링을 더 얇게 한다(22%→60%) — 가운데
+             * 숫자(text-24)+단위(퍼센트)가 차지하는 자리가 22% 반지름보다 커서
+             * 링과 글자가 겹쳤다(실제로 재현해 확인함, "74"의 위쪽 절반이 이미
+             * 링 안쪽까지 번져 있었다). showLabel이 꺼져 있을 때는 원본 비율
+             * (30/110≈27%에 가까운 22%)을 그대로 쓴다 — 글자가 없으면 두꺼운
+             * 링이 더 낫다.
+             *
+             * key를 showLabel에도 묶는다 — innerRadius가 이제 showLabel에 따라
+             * 바뀌는 기하 값이라, Chart Bar·Area·Pie와 같은 recharts 3.10.1
+             * 리마운트 버그를 그대로 물려받는다. isMultiSeries는 마운트 이후
+             * 안 바뀌는 값(props 자체가 다른 데이터 모양을 요구)이라 key에서
+             * 뺐다.
              */
-            innerRadius={isMultiSeries ? '58%' : '22%'}
+            key={String(showLabel)}
+            innerRadius={isMultiSeries ? '58%' : showLabel ? '60%' : '22%'}
             outerRadius="80%"
             endAngle={isMultiSeries ? 180 : undefined}
           >

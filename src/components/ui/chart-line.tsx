@@ -27,7 +27,7 @@ export function ChartLine({
   const seriesKeys = Object.keys(config).filter((key) => key !== categoryKey)
 
   return (
-    <Card>
+    <Card className="w-full">
       <CardHeader>
         <CardTitle>{title}</CardTitle>
         <CardDescription>{description}</CardDescription>

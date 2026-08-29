@@ -30,7 +30,7 @@ export function ChartBar({
   const isBars = orientation === 'bars'
 
   return (
-    <Card>
+    <Card className="w-full">
       <CardHeader>
         <CardTitle>{title}</CardTitle>
         <CardDescription>{description}</CardDescription>
@@ -63,7 +63,21 @@ export function ChartBar({
             <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel={seriesKeys.length === 1} />} />
             {seriesKeys.length > 1 && <ChartLegend content={<ChartLegendContent />} />}
             {seriesKeys.map((key) => (
-              <Bar key={key} dataKey={key} stackId={stacked ? 'a' : undefined} fill={`var(--color-${key})`} radius={isBars ? 4 : 8} />
+              <Bar
+                key={key}
+                dataKey={key}
+                stackId={stacked ? 'a' : undefined}
+                fill={`var(--color-${key})`}
+                /*
+                 * shadcn 원본은 radius를 숫자 하나로 준다(네 모서리 전부 둥글게).
+                 * 축에 닿는 쪽까지 둥글면 막대가 축에서 떠 보이고, 막대 폭이 좁을
+                 * 때(카테고리가 많을 때) 반지름이 폭의 절반에 가까워져 알약처럼
+                 * 보인다(실제로 확인함) — [좌상, 우상, 우하, 좌하] 배열로 진행
+                 * 방향의 앞쪽 두 모서리만 둥글게 한다. columns(세로)는 위쪽,
+                 * bars(가로)는 오른쪽(축 반대편)이 진행 방향이다.
+                 */
+                radius={isBars ? [0, 4, 4, 0] : [8, 8, 0, 0]}
+              />
             ))}
           </BarChart>
         </ChartContainer>

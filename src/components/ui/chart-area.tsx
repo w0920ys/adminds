@@ -34,7 +34,7 @@ export function ChartArea({
   const gradientId = React.useId()
 
   return (
-    <Card>
+    <Card className="w-full">
       <CardHeader>
         <CardTitle>{title}</CardTitle>
         <CardDescription>{description}</CardDescription>

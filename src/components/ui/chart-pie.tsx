@@ -38,16 +38,24 @@ export function ChartPie({
   showLegend?: boolean
 }) {
   return (
-    <Card>
-      <CardHeader className="text-center">
+    <Card className="w-full">
+      <CardHeader>
         <CardTitle>{title}</CardTitle>
         <CardDescription>{description}</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={config} className="mx-auto aspect-square max-h-64">
-          <PieChart>
+          {/*
+           * key를 variant·showLegend에 묶어 리마운트를 강제한다 — Chart Bar의
+           * layout·stackId, Chart Area의 stacked와 같은 recharts 3.10.1 버그를
+           * 여기서도 재현했다(Playground에서 donut+범례 켬으로 순서대로 토글하면
+           * 조각이 하나도 안 그려짐 — sector layer는 만들어지는데 그 안의 실제
+           * path가 비어 있었다. SVG를 직접 읽어 확인함). 단일 조합 안에서는
+           * 렌더링 결과에 영향 없다.
+           */}
+          <PieChart key={`${variant}-${showLegend}`}>
             {!showLegend && <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel nameKey={categoryKey} />} />}
-            <Pie data={data} dataKey={valueKey} nameKey={categoryKey} innerRadius={variant === 'donut' ? 60 : 0} />
+            <Pie data={data} dataKey={valueKey} nameKey={categoryKey} innerRadius={variant === 'donut' ? '48%' : 0} />
             {showLegend && (
               // recharts 3.10.1의 Legend 선언 타입에는 className이 없다(런타임은 실제로
               // ChartLegendContent까지 그대로 전달돼 동작한다 — Legend.js가 content로

@@ -27,8 +27,8 @@ export function ChartRadar({
   const seriesKeys = Object.keys(config).filter((key) => key !== categoryKey)
 
   return (
-    <Card>
-      <CardHeader className="text-center">
+    <Card className="w-full">
+      <CardHeader>
         <CardTitle>{title}</CardTitle>
         <CardDescription>{description}</CardDescription>
       </CardHeader>
