@@ -108,7 +108,7 @@ function FourSlotsExample() {
     <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2">
       {FOUR_SLOTS.map((slot) => (
         <div key={slot.variant} className="min-w-0 rounded-lg border p-4">
-          <p className="text-muted-foreground text-11 font-bold tracking-widest">{slot.label}</p>
+          <p className="text-muted-foreground text-12 font-bold tracking-widest">{slot.label}</p>
           <div className="mt-3">
             <Slot
               variant={slot.variant}

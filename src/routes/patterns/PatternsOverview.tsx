@@ -38,7 +38,7 @@ export function PatternsOverview() {
               >
                 <strong className="text-16">{pattern.name}</strong>
                 <p className="text-muted-foreground mt-1 line-clamp-2 text-12">{pattern.purpose}</p>
-                <span className="text-muted-foreground mt-2 block text-11">
+                <span className="text-muted-foreground mt-2 block text-12">
                   {pattern.status} · {pattern.changedIn}
                 </span>
               </Link>

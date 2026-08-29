@@ -13,14 +13,17 @@ import { describe, expect, it } from 'vitest'
  * 그런데도 이 문자열은 계속 새로 생겼다. v0.14.0에서 "새 코드는 text-12부터"
  * 라 정했지만 그 뒤에도 Toggle·Collapsible·DataTable 페이지가 다시
  * text-11을 썼다. 용도를 나열하던 예전 tokens.css 주석은 안 자랐지만
- * grep은 자랐다.
+ * grep은 자랐다. 그래서 2026-08-29에 있던 실제 사용처 115곳을 전부
+ * text-12로 옮겼다 — 아래 MENTIONS에 남은 것은 이제 전부 그 규칙 자체를
+ * 설명하는 자리(주석·문서)뿐이고, 진짜로 11px을 적용한 곳은 하나도 없다.
  *
- * 그래서 파일마다 'text-11'이 몇 번 나오는지 손으로 세어 둔다
+ * 그래도 파일마다 'text-11'이 몇 번 나오는지는 계속 손으로 세어 둔다
  * (registry-parity.test.ts의 '손으로 적은 컴포넌트 개수'와 같은 방식).
- * 이 규칙을 설명하는 자리(주석·문서·이 파일 자체)에서도 그 이름은 언급해야
- * 하므로 전부 0으로 만들 수는 없다 — 대신 개수가 하나라도 어긋나면(늘어도
- * 줄어도) 실패하게 해서, 늘었으면 왜 늘었는지 사람이 보게 하고 줄었으면
- * 이 목록도 함께 줄이게 한다. 아래에 없는 파일은 하나도 허용하지 않는다.
+ * 이 규칙을 설명하려면 그 이름을 언급해야 하므로 전부 0으로 만들 수는
+ * 없다 — 대신 개수가 하나라도 어긋나면(늘어도 줄어도) 실패하게 해서,
+ * 늘었으면 왜 늘었는지 사람이 보게 하고 줄었으면 이 목록도 함께 줄이게
+ * 한다. 아래에 없는 파일은 하나도 허용하지 않는다 — 새로 생기는 text-11은
+ * 전부 위 세 조건을 실제로 통과하는지부터 확인한다.
  */
 /*
  * 이 파일 자체는 목록에 넣지 않는다 — Vite의 import.meta.glob은 그 glob을
@@ -41,26 +44,16 @@ const MENTIONS: Record<string, number> = {
   'src/components/ui/calendar.tsx': 1,
   'src/components/ui/tooltip.tsx': 1,
   /*
-   * TypographyPage는 규칙 설명과 미처리 사용처가 섞여 있었다 — Task 3이 남은
-   * 넷(FONT STACK 라벨·표 머리 둘·wrap 데모 제목)을 옮겨, 이제 SCALE 정의와
-   * 설명 문단만 남았다.
+   * TypographyPage는 SCALE 정의('text-11')와 이 조건을 설명하는 문단
+   * (<code>text-11</code> 두 번)만 남았다 — 적용된 클래스는 전부 옮겼다.
    */
   'src/routes/foundations/TypographyPage.tsx': 2,
   /*
-   * DesignTokenPage도 마찬가지다 — 50행의 note 문구('text-11~text-48')와
-   * 97행의 Naming 예시('--text-11')는 토큰 이름 자체를 가리키는 문서이지
-   * 적용된 클래스가 아니다. Task 3이 남은 둘(표 머리·개수 표시)을 옮겼다.
+   * DesignTokenPage도 같다 — 50행의 note 문구('text-11~text-48')와 97행의
+   * Naming 예시('--text-11')는 토큰 이름 자체를 가리키는 문서이지 적용된
+   * 클래스가 아니다.
    */
   'src/routes/foundations/DesignTokenPage.tsx': 2,
-
-  /* 아직 text-12로 못 옮긴 실제 사용처(pending) — Task 5가 마저 줄인다 */
-  'src/routes/UpdatesPage.tsx': 1,
-  'src/routes/get-started/GetStartedOverview.tsx': 1,
-  'src/routes/patterns/DetailPatternPage.tsx': 1,
-  'src/routes/patterns/EmptyAndErrorPatternPage.tsx': 1,
-  'src/routes/patterns/FormPatternPage.tsx': 1,
-  'src/routes/patterns/ListPatternPage.tsx': 1,
-  'src/routes/patterns/PatternsOverview.tsx': 1,
 }
 
 /*

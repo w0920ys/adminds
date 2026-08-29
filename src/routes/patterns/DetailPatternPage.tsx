@@ -406,7 +406,7 @@ function NarrowScreenCase() {
           </Tabs>
         </div>
       </div>
-      <p className="text-muted-foreground text-11">
+      <p className="text-muted-foreground text-12">
         점선은 화면 폭입니다. 제목과 동작은 세로로 쌓이고, Description List는 한 줄씩 놓입니다.
       </p>
     </div>

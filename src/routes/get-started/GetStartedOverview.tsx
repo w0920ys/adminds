@@ -35,7 +35,7 @@ export function GetStartedOverview() {
               >
                 <strong className="text-16">{section.label}</strong>
                 <p className="text-muted-foreground mt-1 text-12">{sectionRole[section.id]}</p>
-                <span className="text-muted-foreground mt-2 block text-11">
+                <span className="text-muted-foreground mt-2 block text-12">
                   문서 {flattenDocs(section.items).length}개
                 </span>
               </Link>
