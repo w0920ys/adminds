@@ -75,9 +75,27 @@ function ScrollBar({
        * 두 막대가 모서리에서 겹친다 — both의 두 인스턴스로 실측했다.
        */
       className={cn(
+        /*
+         * type="hover"에서 Radix는 Presence로 마운트·해제만 하고 애니메이션은
+         * 전혀 주지 않는다 — data-state(visible/hidden)만 달아 두고 나머지는
+         * 우리 몫이다. transition-opacity로는 안 된다: Presence는 실제 해제
+         * 시점을 CSS *keyframe* 애니메이션(animationstart/end)으로만
+         * 감지하므로, transition만 걸면 opacity가 0으로 줄어드는 도중에
+         * 노드가 그냥 뽑혀 나가 뚝 끊겨 보인다 — Popover가 이미 쓰는
+         * animate-in/out·fade-in/out-0(tw-animate-css의 keyframe)과 같은
+         * 처방을 그대로 따른다.
+         *
+         * my-1(세로)·mx-1(가로)로 양 끝에 약간의 틈을 둔다. Radix가 인라인으로
+         * 박아 두는 top:0·bottom:var(...)(세로) / left:0·right:var(...)(가로)는
+         * 그대로 둔 채 margin만 더하는 것이라 위 h-full/w-full 얘기와는
+         * 다르다 — top·bottom·margin이 함께 방정식을 이뤄 height를 풀 뿐,
+         * 세 번째 크기 지정이 새로 끼어드는 게 아니라서 코너 자리를 다시
+         * 깨지 않는다.
+         */
         'flex touch-none p-px transition-colors select-none',
-        orientation === 'vertical' && 'w-2.5 border-l border-l-transparent',
-        orientation === 'horizontal' && 'flex-col h-2.5 border-t border-t-transparent',
+        'data-[state=visible]:animate-in data-[state=hidden]:animate-out data-[state=visible]:fade-in-0 data-[state=hidden]:fade-out-0',
+        orientation === 'vertical' && 'my-1 w-2.5 border-l border-l-transparent',
+        orientation === 'horizontal' && 'mx-1 h-2.5 flex-col border-t border-t-transparent',
         className,
       )}
       {...props}
