@@ -16,7 +16,8 @@
 - `public/r/*.json`을 손으로 고치지 않는다. `npm run registry`를 돌린다.
 - 컴포넌트 파일은 기존 관례를 따른다 — `data-slot` 속성(원본에 있는 것만 유지), `cn()` 유틸, `forwardRef` 안 씀, `React.ComponentProps<typeof X>`로 타입을 뽑는다(단, 이번 컴포넌트들은 Radix 원시가 아니라 `recharts`를 감싸므로 이 규칙이 100% 그대로 적용되지 않는 지점이 있다 — 원본 코드의 실제 타입 선언을 따른다).
 - 임의 값 대괄호 표기 금지. 단, 원본이 `var(--chart-1)`처럼 CSS 변수를 `style`/`fill`/`stroke` prop에 문자열로 넘기는 것은 Tailwind 클래스가 아니므로 이 규칙 대상이 아니다.
-- **원본의 `text-xs`/`text-sm`/`text-2xs`는 이 저장소의 숫자 스케일로 바꿔 썼다** — 이 저장소는 Tailwind 기본 이름 스케일을 어디서도 쓰지 않고 `text-11`~`text-48` 픽셀 이름 스케일만 쓴다(전 컴포넌트에서 검색해 확인함). 값으로 맞춰 옮겼다: `text-xs`(0.75rem)→`text-12`, `text-sm`(0.875rem)→`text-14`. `text-2xs`는 adminds-starter에도 정의돼 있지 않은 클래스라(검색해 확인함, 원본에서도 사실상 아무 크기도 안 먹었을 가능성이 있다) 이 스케일에서 가장 작은 실제 값인 `text-11`로 대체했다 — 아래 각 Task의 코드에는 이미 이 변환이 반영돼 있다.
+- **원본의 `text-xs`/`text-sm`/`text-2xs`는 이 저장소의 숫자 스케일로 바꿔 썼다** — 이 저장소는 Tailwind 기본 이름 스케일을 어디서도 쓰지 않고 `text-11`~`text-48` 픽셀 이름 스케일만 쓴다(전 컴포넌트에서 검색해 확인함). 값으로 맞춰 옮겼다: `text-xs`(0.75rem)→`text-12`, `text-sm`(0.875rem)→`text-14`.
+- **이번 회차는 `text-12`가 최소 크기다. `text-11`은 정말 피할 수 없는 예외에서만 쓴다(사용자 지시 — 11px은 너무 작아서 잘 안 보인다).** 원본의 `text-2xs`(어차피 adminds-starter에도 정의돼 있지 않은 클래스 — 검색해 확인함, 원본에서도 사실상 아무 크기도 안 먹었을 가능성이 있다)는 `text-11`이 아니라 `text-12`로 옮겼다 — 아래 각 Task의 코드에는 이미 이 변환이 반영돼 있다. 이번 6개 컴포넌트 어디에도 `text-11`을 쓰지 않는다.
 - 언어 규칙 — 구조를 가리키는 이름은 영문, 설명은 한국어.
 - 화면에 나오는 숫자를 손으로 적지 않는다 — `README.md`·`registry.json`의 `adminds` 번들 설명 속 개수는 `components.length` 실측과 맞아야 한다.
 - 서식은 손으로 맞춘다 — 작은따옴표, 세미콜론 없음. `prettier --write`를 돌리지 않는다.
@@ -463,7 +464,7 @@ export function ChartBarHorizontal({
             dataKey="value"
             position="right"
             formatter={(v: unknown) => (typeof v === 'number' ? valueFormatter(v) : '')}
-            className="fill-muted-foreground text-11"
+            className="fill-muted-foreground text-12"
           />
         </RechartsPrimitive.Bar>
       </RechartsPrimitive.BarChart>
@@ -698,7 +699,7 @@ export function ChartBarVertical({
             dataKey="value"
             position="top"
             formatter={(v: unknown) => (typeof v === 'number' ? valueFormatter(v) : '')}
-            className="fill-muted-foreground text-11"
+            className="fill-muted-foreground text-12"
           />
         </RechartsPrimitive.Bar>
       </RechartsPrimitive.BarChart>
