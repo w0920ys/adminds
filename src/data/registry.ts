@@ -3389,6 +3389,55 @@ export const components: ComponentMeta[] = [
     verified: true,
   },
   {
+    id: 'chart-pie',
+    name: 'Chart Pie',
+    aliases: ['파이 차트', '원형 차트', '도넛 차트', 'pie chart', 'donut chart'],
+    category: 'chart',
+    status: 'stable',
+    addedIn: 'v0.18.0',
+    changedIn: 'v0.18.0',
+    purpose: '전체에서 각 항목이 차지하는 비율을 보인다. 항목이 4~6개 안팎일 때 가장 잘 읽힌다.',
+    anatomy: [],
+    properties: [
+      {
+        name: 'variant',
+        title: 'Variant',
+        description: '가운데를 비울지(도넛) 채울지(파이) 정한다.',
+        display: 'row',
+        options: [
+          { value: 'pie', note: '기본' },
+          { value: 'donut', note: '가운데가 비어 다른 정보를 겹쳐 보일 여지가 생긴다' },
+        ],
+      },
+      {
+        name: 'showLegend',
+        title: 'Show legend',
+        description: '조각 옆에 범례를 보일지 정한다. 범례를 켜면 툴팁은 대신 생략된다.',
+        display: 'row',
+        options: [
+          { value: 'off', note: '기본. 조각에 마우스를 올리면 툴팁으로 이름·값을 본다' },
+          { value: 'on', note: '정적인 화면(인쇄·캡처)에도 이름이 항상 보여야 할 때' },
+        ],
+      },
+    ],
+    guidelines: [
+      {
+        id: 'angle-alone-not-enough',
+        title: '조각 각도만으로 비교하게 두지 않는다',
+        body: '사람 눈은 각도 차이를 정확히 못 읽는다. 항상 범례나 툴팁으로 실제 값·비율을 함께 보인다.',
+        do: ['범례나 툴팁으로 값과 비율을 함께 보인다'],
+        dont: ['조각만 그려 두고 값을 어디서도 안 보이지 않는다'],
+      },
+    ],
+    usage: [
+      { id: 'browser-share', title: '브라우저 점유율', note: '도넛 + 범례로 항목별 비율을 보인다' },
+    ],
+    cases: [
+      { id: 'plain-pie', title: '가운데를 채운 파이', note: '도넛의 빈 가운데가 필요 없을 때' },
+    ],
+    verified: true,
+  },
+  {
     id: 'alert',
     name: 'Alert',
     aliases: ['경고', '배너', 'banner', 'notice', '안내'],
