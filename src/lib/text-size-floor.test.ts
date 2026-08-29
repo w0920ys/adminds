@@ -31,8 +31,14 @@ import { describe, expect, it } from 'vitest'
  * 보인다), 아래 sourceFiles에는 애초에 이 파일이 나타나지 않는다.
  */
 const MENTIONS: Record<string, number> = {
-  /* 규칙을 설명하는 자리. 문구를 다시 쓰지 않는 한 이 수는 안 줄어든다. */
-  'src/styles/tokens.css': 4,
+  /*
+   * 규칙을 설명하는 자리 4곳에, 모바일(max-width:767px)에서 text-11·
+   * text-12를 text-14로 강제 승격하는 실제 셀렉터(.text-11)와 그
+   * 이유를 적은 주석 다섯 곳이 더해져 9다 — 이 승격 자체는 text-11을
+   * "쓰는" 자리가 아니라 "못 쓰게 막는" 자리이므로 자격 조건 목록의
+   * 취지와 어긋나지 않는다.
+   */
+  'src/styles/tokens.css': 9,
   'src/lib/tokens.ts': 1,
   'src/lib/utils.ts': 4,
   'src/lib/utils.test.ts': 4,
