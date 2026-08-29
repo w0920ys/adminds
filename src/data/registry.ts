@@ -234,6 +234,53 @@ export const components: ComponentMeta[] = [
     verified: true,
   },
   {
+    id: 'context-menu',
+    name: 'Context Menu',
+    aliases: ['우클릭 메뉴', '컨텍스트 메뉴', 'right click', '컨텍스트'],
+    category: 'actions',
+    status: 'stable',
+    addedIn: 'v0.16.0',
+    changedIn: 'v0.16.0',
+    purpose: '우클릭한 자리에서 그 대상에 대한 동작을 고르게 한다. 항상 눌러야 여는 Dropdown Menu와 달리, 마우스 오른쪽 버튼(또는 롱프레스)이 여는 자리를 정한다.',
+    verified: true,
+    anatomy: [
+      {
+        part: 'trigger',
+        label: 'Trigger',
+        note: '우클릭(또는 롱프레스)하면 그 좌표에 목록이 뜬다. bg-popover, 테두리, radius-md, 쌓임 순서는 z-popover. 각 항목은 text-16이고 포커스되면 bg-accent, 위험한 항목은 text-destructive다. Dropdown Menu와 같은 Item 규칙을 그대로 쓴다 — 위험한 항목은 구분선 아래로 모은다.',
+      },
+    ],
+    properties: [
+      {
+        name: 'state',
+        title: 'State',
+        description: '트리거의 상호작용 상태를 나타낸다. 열림은 우클릭해야만 보이는 값이라 이 격자에는 없다 — Usage에서 실제로 우클릭해서 본다.',
+        display: 'grid',
+        options: [
+          { value: 'default' },
+          { value: 'hover', note: '포인터가 올라간 동안' },
+          { value: 'disabled', note: '지금 열 수 없음' },
+        ],
+      },
+    ],
+    guidelines: [
+      {
+        id: 'not-only-affordance',
+        title: 'Not the only way in',
+        body: '우클릭은 존재를 몰라도 되는 사용자가 없어야 합니다. Context Menu가 제공하는 동작은 같은 화면의 다른 곳(더보기 버튼 등)에서도 닿을 수 있어야 합니다 — 발견하기 어려운 유일한 통로로 두지 않습니다.',
+        do: ['우클릭 메뉴가 여는 동작을 다른 명시적 버튼으로도 제공한다'],
+        dont: ['우클릭 메뉴에만 있고 다른 곳에서는 닿을 수 없는 동작을 두지 않는다'],
+      },
+    ],
+    usage: [
+      { id: 'row-actions', title: '표 행 동작', note: '표의 한 행을 우클릭하면 그 행에 대한 동작이 뜬다.' },
+      { id: 'card-actions', title: '카드 동작', note: '카드 전체를 우클릭 영역으로 삼는다.' },
+    ],
+    cases: [
+      { id: 'disabled-target', title: '동작이 없는 대상', note: '우클릭해도 열 동작이 없는 대상에는 Context Menu 자체를 달지 않는다 — 열리는데 안이 비어 있으면 안 된다.' },
+    ],
+  },
+  {
     id: 'dropdown-menu',
     name: 'Dropdown Menu',
     aliases: ['드롭다운', '메뉴', '더보기', 'menu', 'kebab', '케밥'],

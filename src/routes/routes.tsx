@@ -11,6 +11,7 @@ import { BadgePage } from '@/routes/components/BadgePage'
 import { BreadcrumbPage } from '@/routes/components/BreadcrumbPage'
 import { ButtonPage } from '@/routes/components/ButtonPage'
 import { CardPage } from '@/routes/components/CardPage'
+import { ContextMenuPage } from '@/routes/components/ContextMenuPage'
 import { CheckboxPage } from '@/routes/components/CheckboxPage'
 import { CollapsiblePage } from '@/routes/components/CollapsiblePage'
 import { ComboboxPage } from '@/routes/components/ComboboxPage'
@@ -128,6 +129,7 @@ export const routes: RouteObject[] = [
           { path: 'separator', element: <SeparatorPage /> },
           { path: 'description-list', element: <DescriptionListPage /> },
           { path: 'accordion', element: <AccordionPage /> },
+          { path: 'context-menu', element: <ContextMenuPage /> },
         ],
       },
 

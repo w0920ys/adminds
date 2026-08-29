@@ -426,6 +426,24 @@
       ]
     },
     {
+      "name": "context-menu",
+      "type": "registry:ui",
+      "title": "Context Menu",
+      "dependencies": [
+        "@radix-ui/react-context-menu"
+      ],
+      "registryDependencies": [
+        "https://adminds.vercel.app/r/tokens.json",
+        "https://adminds.vercel.app/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/context-menu.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "dropdown-menu",
       "type": "registry:ui",
       "title": "Dropdown Menu",
@@ -860,7 +878,7 @@
       "name": "adminds",
       "type": "registry:item",
       "title": "Admin Design System",
-      "description": "토큰과 컴포넌트 서른아홉 개를 한 번에 가져온다.",
+      "description": "토큰과 컴포넌트 마흔 개를 한 번에 가져온다.",
       "registryDependencies": [
         "https://adminds.vercel.app/r/accordion.json",
         "https://adminds.vercel.app/r/alert.json",
@@ -874,6 +892,7 @@
         "https://adminds.vercel.app/r/collapsible.json",
         "https://adminds.vercel.app/r/combobox.json",
         "https://adminds.vercel.app/r/command.json",
+        "https://adminds.vercel.app/r/context-menu.json",
         "https://adminds.vercel.app/r/data-table.json",
         "https://adminds.vercel.app/r/date-picker.json",
         "https://adminds.vercel.app/r/description-list.json",
