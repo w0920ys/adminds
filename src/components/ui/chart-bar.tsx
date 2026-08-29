@@ -7,6 +7,10 @@ import { ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip, ChartToo
  * 옮긴 계열 컴포넌트. config 키가 하나면 default, 둘 이상이면 legend가
  * 자동으로 붙는다(multiple). 음수 값은 data에 그대로 넣으면 recharts가
  * 알아서 그린다 — 별도 prop 없음.
+ *
+ * showLegend를 명시하지 않으면 계열이 둘 이상일 때 자동으로 범례가
+ * 붙는다(기존 관례). showLegend={false}로 계열이 여럿이어도 범례를
+ * 끌 수 있고, showLegend={true}로 강제로 켤 수도 있다.
  */
 export function ChartBar({
   title,
@@ -16,6 +20,7 @@ export function ChartBar({
   categoryKey,
   orientation = 'columns',
   stacked = false,
+  showLegend,
 }: {
   title: string
   description: string
@@ -25,27 +30,32 @@ export function ChartBar({
   /** columns: 세로 막대(기본). bars: 가로 막대 — recharts의 layout="vertical"에 대응한다 */
   orientation?: 'columns' | 'bars'
   stacked?: boolean
+  /** 안 정하면 계열이 둘 이상일 때 자동으로 켜진다 */
+  showLegend?: boolean
 }) {
   const seriesKeys = Object.keys(config).filter((key) => key !== categoryKey)
   const isBars = orientation === 'bars'
+  const resolvedShowLegend = showLegend ?? seriesKeys.length > 1
 
   return (
     <Card className="w-full">
-      <CardHeader>
-        <CardTitle>{title}</CardTitle>
-        <CardDescription>{description}</CardDescription>
+      <CardHeader className="gap-2">
+        <CardTitle className="text-16">{title}</CardTitle>
+        <CardDescription className="text-14">{description}</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={config}>
           <BarChart
             /*
-             * key를 orientation·stacked에 묶어 리마운트를 강제한다 — recharts
-             * 3.10.1은 이미 마운트된 BarChart의 layout·stackId만 바뀌면 축·막대
-             * 스케일을 다시 계산하지 않는다(Playground 토글이 화면상 안 바뀌는 것으로
-             * 드러났다. SVG의 실제 x/y/width/height 속성을 읽어 확인했다). 단일 조합
-             * 안에서는 렌더링 결과에 영향 없다 — 토글할 때만 새로 마운트되게 한다.
+             * key를 orientation·stacked·showLegend에 묶어 리마운트를 강제한다 —
+             * recharts 3.10.1은 이미 마운트된 BarChart의 layout·stackId만 바뀌면
+             * 축·막대 스케일을 다시 계산하지 않는다(Playground 토글이 화면상 안
+             * 바뀌는 것으로 드러났다. SVG의 실제 x/y/width/height 속성을 읽어
+             * 확인했다). showLegend도 이제 명시적으로 켜고 끌 수 있는 구조적
+             * 변화라 같은 취급을 한다. 단일 조합 안에서는 렌더링 결과에 영향
+             * 없다 — 토글할 때만 새로 마운트되게 한다.
              */
-            key={`${orientation}-${stacked}`}
+            key={`${orientation}-${stacked}-${resolvedShowLegend}`}
             accessibilityLayer
             data={data}
             layout={isBars ? 'vertical' : 'horizontal'}
@@ -61,7 +71,7 @@ export function ChartBar({
               <XAxis dataKey={categoryKey} tickLine={false} axisLine={false} tickMargin={8} />
             )}
             <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel={seriesKeys.length === 1} />} />
-            {seriesKeys.length > 1 && <ChartLegend content={<ChartLegendContent />} />}
+            {resolvedShowLegend && <ChartLegend content={<ChartLegendContent />} />}
             {seriesKeys.map((key) => (
               <Bar
                 key={key}

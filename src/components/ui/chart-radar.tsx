@@ -28,9 +28,9 @@ export function ChartRadar({
 
   return (
     <Card className="w-full">
-      <CardHeader>
-        <CardTitle>{title}</CardTitle>
-        <CardDescription>{description}</CardDescription>
+      <CardHeader className="gap-2">
+        <CardTitle className="text-16">{title}</CardTitle>
+        <CardDescription className="text-14">{description}</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={config} className="mx-auto aspect-square max-h-64">

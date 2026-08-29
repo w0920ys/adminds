@@ -25,6 +25,7 @@ export function ChartRadial({
   valueKey,
   percentMax = 100,
   showLabel = false,
+  showLegend = false,
   totalLabel,
 }: {
   title: string
@@ -38,6 +39,7 @@ export function ChartRadial({
   /** 단일 계열일 때 링이 100%로 보는 값. 값이 이미 백분율(0~100)이면 기본값 그대로 둔다 */
   percentMax?: number
   showLabel?: boolean
+  showLegend?: boolean
   totalLabel?: string
 }) {
   const seriesKeys = Object.keys(config).filter((key) => key !== categoryKey)
@@ -45,12 +47,29 @@ export function ChartRadial({
   const total = isMultiSeries
     ? seriesKeys.reduce((sum, key) => sum + Number(data[0]?.[key] ?? 0), 0)
     : Number(data[0]?.[valueKey ?? seriesKeys[0]] ?? 0)
+  /*
+   * ChartLegend(recharts Legend)를 안 쓴다 — RadialBar의 legend payload는
+   * recharts 내부에서 시리즈가 아니라 "행" 단위로 자동 생성되고
+   * (selectRadialBarLegendPayload가 data를 한 행씩 돌며 각 행의 name 필드를
+   * value로 쓴다 — node_modules에서 직접 확인함), 우리 데이터 행에는 name이
+   * 없어 그 자동 payload가 항상 비어 있었다(범례에 색 점만 찍히고 글자가
+   * 안 보임, 실제로 재현·확인함). Legend에 payload를 직접 넘겨도 소용없다 —
+   * ChartLegendContent가 실제로 읽는 값은 Legend 내부가 Redux 상태에서
+   * 만드는 contextPayload지 우리가 준 payload prop이 아니다(recharts
+   * Legend.js를 직접 읽어 확인함). config에서 직접 라벨·색을 읽어 같은
+   * 모양의 범례를 손으로 그린다.
+   */
+  const legendItems = (isMultiSeries ? seriesKeys : [valueKey ?? seriesKeys[0]]).map((key) => ({
+    key,
+    label: config[key]?.label ?? key,
+    color: `var(--color-${key})`,
+  }))
 
   return (
     <Card className="w-full">
-      <CardHeader>
-        <CardTitle>{title}</CardTitle>
-        <CardDescription>{description}</CardDescription>
+      <CardHeader className="gap-2">
+        <CardTitle className="text-16">{title}</CardTitle>
+        <CardDescription className="text-14">{description}</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={config} className="mx-auto aspect-square w-full max-h-64">
@@ -72,9 +91,11 @@ export function ChartRadial({
              *
              * key를 showLabel에도 묶는다 — innerRadius가 이제 showLabel에 따라
              * 바뀌는 기하 값이라, Chart Bar·Area·Pie와 같은 recharts 3.10.1
-             * 리마운트 버그를 그대로 물려받는다. isMultiSeries는 마운트 이후
-             * 안 바뀌는 값(props 자체가 다른 데이터 모양을 요구)이라 key에서
-             * 뺐다.
+             * 리마운트 버그를 그대로 물려받는다. showLegend는 이제 recharts
+             * 트리 밖의 평범한 HTML로 그리므로(아래 legendItems 렌더링 참고)
+             * 차트 구조에 영향이 없어 key에서 뺐다. isMultiSeries는 마운트
+             * 이후 안 바뀌는 값(props 자체가 다른 데이터 모양을 요구)이라
+             * 마찬가지로 key에서 뺐다.
              */
             key={String(showLabel)}
             innerRadius={isMultiSeries ? '58%' : showLabel ? '60%' : '22%'}
@@ -124,6 +145,16 @@ export function ChartRadial({
             )}
           </RadialBarChart>
         </ChartContainer>
+        {showLegend && (
+          <div className="flex items-center justify-center gap-4 pt-3">
+            {legendItems.map((item) => (
+              <div key={item.key} className="flex items-center gap-1.5 text-12 [&>svg]:h-3 [&>svg]:w-3 [&>svg]:text-muted-foreground">
+                <div className="h-2 w-2 shrink-0 rounded-sm" style={{ backgroundColor: item.color }} />
+                {item.label}
+              </div>
+            ))}
+          </div>
+        )}
       </CardContent>
     </Card>
   )
