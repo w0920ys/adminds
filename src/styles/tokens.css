@@ -105,8 +105,6 @@
   --chart-4: #db2777;
   --chart-5: #65a30d;
   --chart-6: #7c3aed;
-  --chart-grid: var(--border);
-  --chart-axis: var(--muted-foreground);
   --annotation-muted: oklch(0.573 0.14 285);
 }
 

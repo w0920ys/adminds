@@ -55,17 +55,6 @@
       ]
     },
     {
-      "name": "format",
-      "type": "registry:lib",
-      "title": "Format",
-      "files": [
-        {
-          "path": "src/lib/format.ts",
-          "type": "registry:lib"
-        }
-      ]
-    },
-    {
       "name": "theme",
       "type": "registry:lib",
       "title": "Theme",
