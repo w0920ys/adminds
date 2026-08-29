@@ -29,6 +29,33 @@ export type Release = {
 /** 최신 버전이 배열의 맨 앞이다. */
 export const releases: Release[] = [
   {
+    version: 'v0.20.0',
+    publishedAt: '2026-08-30',
+    title: '표·내비게이션의 모바일 터치 영역을 다듬었어요',
+    purpose: '표 정렬 버튼, LNB 서랍, GNB 버튼의 모바일 터치 영역과 Tabs 문서의 가로 넘침을 고쳤어요.',
+    changes: [
+      { target: 'Components / Table', type: 'Fixed', note: '정렬 버튼의 터치 영역이 행 높이만큼 커지도록 고쳤어요.' },
+      { target: 'Layout', type: 'Fixed', note: '모바일 LNB 서랍 폭과 GNB 버튼 크기를 키웠어요.' },
+      { target: 'Components / Tabs', type: 'Fixed', note: '탭이 많을 때 페이지 전체가 가로로 스크롤되던 문제를 고쳤어요.' },
+    ],
+    requests: [],
+    reviewItems: [],
+    impact: ['Components', 'Layout'],
+  },
+  {
+    version: 'v0.19.0',
+    publishedAt: '2026-08-30',
+    title: '차트 스타일을 shadcn과 맞추고 다듬었어요',
+    purpose: '차트 6종의 렌더링·레이아웃 버그를 고치고, 제목·범례·예시 데이터를 shadcn 관례에 맞췄어요.',
+    changes: [
+      { target: 'Components / Chart', type: 'Fixed', note: '렌더링·레이아웃 버그와 제목·부제 스타일을 shadcn에 맞췄어요.' },
+      { target: 'Components / Chart', type: 'New', note: '차트 6종 모두에 범례 선택 옵션을 추가했어요.' },
+    ],
+    requests: [],
+    reviewItems: [],
+    impact: ['Components'],
+  },
+  {
     version: 'v0.18.0',
     publishedAt: '2026-08-29',
     title: 'Chart 카테고리를 새로 열었어요',
