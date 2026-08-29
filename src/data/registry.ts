@@ -3299,6 +3299,56 @@ export const components: ComponentMeta[] = [
     verified: true,
   },
   {
+    id: 'chart-bar',
+    name: 'Chart Bar',
+    aliases: ['막대 차트', '바 차트', 'bar chart'],
+    category: 'chart',
+    status: 'stable',
+    addedIn: 'v0.18.0',
+    changedIn: 'v0.18.0',
+    purpose: '카테고리별 값을 막대로 비교한다. 순위·크기 비교의 기본 차트다.',
+    anatomy: [],
+    properties: [
+      {
+        name: 'orientation',
+        title: 'Orientation',
+        description: '막대를 세로로 세울지 가로로 눕힐지 정한다.',
+        display: 'row',
+        options: [
+          { value: 'columns', note: '기본. 세로 막대' },
+          { value: 'bars', note: '이름이 길거나 항목이 적어 순위 비교가 목적일 때' },
+        ],
+      },
+      {
+        name: 'stacked',
+        title: 'Stacked',
+        description: '계열이 둘 이상일 때 쌓아 보일지 정한다.',
+        display: 'row',
+        options: [
+          { value: 'off', note: '기본. 계열이 나란히 놓인다' },
+          { value: 'on', note: '계열이 쌓여 합계를 보인다' },
+        ],
+      },
+    ],
+    guidelines: [
+      {
+        id: 'bars-for-long-labels',
+        title: '이름이 길면 가로 막대를 쓴다',
+        body: '세로 막대는 카테고리 이름이 길면 서로 겹치거나 잘린다. 이름이 길거나 항목 수가 적어 순위 비교가 목적이면 orientation을 bars로 바꾼다.',
+        do: ['이름이 긴 카테고리는 가로 막대로 바꾼다'],
+        dont: ['긴 이름을 세로 막대에 억지로 구겨 넣지 않는다'],
+      },
+    ],
+    usage: [
+      { id: 'monthly-visitors', title: '월별 방문자', note: '단일 계열로 시간에 따른 값을 비교한다' },
+      { id: 'platform-stacked', title: '플랫폼별 방문자', note: '두 계열을 stacked로 쌓아 합계와 구성비를 함께 보인다' },
+    ],
+    cases: [
+      { id: 'ranking-bars', title: '순위 비교', note: '항목 이름이 길 때 가로 막대로 바꾼다' },
+    ],
+    verified: true,
+  },
+  {
     id: 'alert',
     name: 'Alert',
     aliases: ['경고', '배너', 'banner', 'notice', '안내'],
