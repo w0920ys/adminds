@@ -1,0 +1,74 @@
+import type { ReactNode } from 'react'
+import { ChartArea } from '@/components/ui/chart-area'
+import { ComponentPage } from '@/components/docs/ComponentPage'
+import { getComponent } from '@/data/registry'
+import { Placeholder } from '@/routes/Placeholder'
+import type { ChartConfig } from '@/components/ui/chart'
+
+const VISITOR_DATA = [
+  { date: '1월', visitors: 186 },
+  { date: '2월', visitors: 305 },
+  { date: '3월', visitors: 237 },
+  { date: '4월', visitors: 273 },
+  { date: '5월', visitors: 209 },
+  { date: '6월', visitors: 314 },
+]
+const VISITOR_CONFIG: ChartConfig = { visitors: { label: '방문자', color: 'var(--chart-1)' } }
+
+const CHANNEL_DATA = [
+  { date: '1월', direct: 80, search: 186 },
+  { date: '2월', direct: 200, search: 305 },
+  { date: '3월', direct: 120, search: 237 },
+  { date: '4월', direct: 190, search: 273 },
+  { date: '5월', direct: 130, search: 209 },
+  { date: '6월', direct: 140, search: 314 },
+]
+const CHANNEL_CONFIG: ChartConfig = {
+  direct: { label: '다이렉트', color: 'var(--chart-2)' },
+  search: { label: '검색', color: 'var(--chart-1)' },
+}
+
+function render(options: { stacked?: string; gradient?: string }) {
+  return (
+    <ChartArea
+      title="방문자 추이"
+      description="1월 - 6월"
+      data={CHANNEL_DATA}
+      config={CHANNEL_CONFIG}
+      categoryKey="date"
+      stacked={options.stacked === 'on'}
+      gradient={options.gradient === 'on'}
+    />
+  )
+}
+
+function renderExample(exampleId: string): ReactNode {
+  switch (exampleId) {
+    case 'visitor-trend':
+      return <ChartArea title="방문자 추이" description="1월 - 6월" data={VISITOR_DATA} config={VISITOR_CONFIG} categoryKey="date" />
+    case 'channel-stacked':
+      return (
+        <ChartArea title="유입경로별 방문자" description="1월 - 6월" data={CHANNEL_DATA} config={CHANNEL_CONFIG} categoryKey="date" stacked />
+      )
+    case 'gradient-fill':
+      return (
+        <ChartArea title="방문자 추이" description="1월 - 6월" data={VISITOR_DATA} config={VISITOR_CONFIG} categoryKey="date" gradient />
+      )
+    default:
+      return null
+  }
+}
+
+export function ChartAreaPage() {
+  const meta = getComponent('chart-area')
+  if (!meta) return <Placeholder title="Chart Area 메타를 찾을 수 없습니다" />
+
+  return (
+    <ComponentPage
+      meta={meta}
+      render={render}
+      preview={<ChartArea title="방문자 추이" description="1월 - 6월" data={VISITOR_DATA} config={VISITOR_CONFIG} categoryKey="date" />}
+      renderExample={renderExample}
+    />
+  )
+}

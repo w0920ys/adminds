@@ -4,17 +4,19 @@ export type ComponentCategory =
   | 'navigation'
   | 'feedback'
   | 'data-display'
+  | 'chart'
 
 /**
  * 카테고리를 늘어놓는 순서. 읽는 순서이자 LNB의 묶음 순서다.
  * 무엇을 누르는가(actions) → 무엇을 채우는가(inputs) → 어디로 가는가(navigation) →
- * 무엇을 보는가(data-display) → 무엇을 듣는가(feedback) 순으로 좁혀 읽는다.
+ * 무엇을 보는가(data-display) → 무엇을 그림으로 보는가(chart) → 무엇을 듣는가(feedback) 순으로 좁혀 읽는다.
  */
 export const categoryOrder: ComponentCategory[] = [
   'actions',
   'inputs',
   'navigation',
   'data-display',
+  'chart',
   'feedback',
 ]
 
@@ -23,6 +25,7 @@ export const categoryLabel: Record<ComponentCategory, string> = {
   inputs: 'Inputs',
   navigation: 'Navigation',
   'data-display': 'Data Display',
+  chart: 'Chart',
   feedback: 'Feedback',
 }
 
@@ -3242,6 +3245,272 @@ export const components: ComponentMeta[] = [
       { id: 'loading', title: '불러오는 중', note: '행 자리에 스켈레톤을 두어 곧 채워질 것을 알린다' },
       { id: 'missing-value', title: '값이 없는 칸', note: '빈칸으로 두지 않고 —로 값이 없음을 밝힌다' },
       { id: 'narrow-screen', title: '좁은 화면', note: '표 안에서 가로로 스크롤되고 첫 열은 고정된 채 남는다' },
+    ],
+    verified: true,
+  },
+  {
+    id: 'chart-area',
+    name: 'Chart Area',
+    aliases: ['영역 차트', '에어리어 차트', 'area chart'],
+    category: 'chart',
+    status: 'stable',
+    addedIn: 'v0.18.0',
+    changedIn: 'v0.18.0',
+    purpose: '시간에 따른 값의 흐름을 채워진 영역으로 보인다. 값 자체보다 크기·비중의 인상을 강조할 때 막대·선보다 낫다.',
+    anatomy: [],
+    properties: [
+      {
+        name: 'stacked',
+        title: 'Stacked',
+        description: '계열이 둘 이상일 때 겹쳐 쌓을지 정한다.',
+        display: 'row',
+        options: [
+          { value: 'off', note: '기본. 계열이 겹쳐 보인다' },
+          { value: 'on', note: '계열이 쌓여 합계를 보인다' },
+        ],
+      },
+      {
+        name: 'gradient',
+        title: 'Gradient',
+        description: '채움을 단색으로 할지 그라데이션으로 할지 정한다.',
+        display: 'row',
+        options: [
+          { value: 'off', note: '기본. 단색 채움' },
+          { value: 'on', note: '위에서 아래로 옅어지는 채움' },
+        ],
+      },
+    ],
+    guidelines: [
+      {
+        id: 'stacked-needs-multiple-series',
+        title: 'stacked는 계열이 둘 이상일 때만 뜻이 있다',
+        body: '계열이 하나면 stacked를 켜도 화면이 달라지지 않는다. 여러 항목의 합과 구성비를 함께 보일 때만 켠다.',
+        do: ['계열이 둘 이상일 때 stacked로 합계와 구성비를 함께 보인다'],
+        dont: ['계열이 하나뿐인데 stacked를 켜지 않는다'],
+      },
+    ],
+    usage: [
+      { id: 'visitor-trend', title: '방문자 추이', note: '단일 계열로 시간에 따른 값의 흐름을 보인다' },
+      { id: 'channel-stacked', title: '유입경로별 누적', note: '여러 계열을 stacked로 쌓아 합계와 구성비를 함께 보인다' },
+    ],
+    cases: [
+      { id: 'gradient-fill', title: '그라데이션 채움', note: '단색보다 부드러운 인상이 필요할 때' },
+    ],
+    verified: true,
+  },
+  {
+    id: 'chart-bar',
+    name: 'Chart Bar',
+    aliases: ['막대 차트', '바 차트', 'bar chart'],
+    category: 'chart',
+    status: 'stable',
+    addedIn: 'v0.18.0',
+    changedIn: 'v0.18.0',
+    purpose: '카테고리별 값을 막대로 비교한다. 순위·크기 비교의 기본 차트다.',
+    anatomy: [],
+    properties: [
+      {
+        name: 'orientation',
+        title: 'Orientation',
+        description: '막대를 세로로 세울지 가로로 눕힐지 정한다.',
+        display: 'row',
+        options: [
+          { value: 'columns', note: '기본. 세로 막대' },
+          { value: 'bars', note: '이름이 길거나 항목이 적어 순위 비교가 목적일 때' },
+        ],
+      },
+      {
+        name: 'stacked',
+        title: 'Stacked',
+        description: '계열이 둘 이상일 때 쌓아 보일지 정한다.',
+        display: 'row',
+        options: [
+          { value: 'off', note: '기본. 계열이 나란히 놓인다' },
+          { value: 'on', note: '계열이 쌓여 합계를 보인다' },
+        ],
+      },
+    ],
+    guidelines: [
+      {
+        id: 'bars-for-long-labels',
+        title: '이름이 길면 가로 막대를 쓴다',
+        body: '세로 막대는 카테고리 이름이 길면 서로 겹치거나 잘린다. 이름이 길거나 항목 수가 적어 순위 비교가 목적이면 orientation을 bars로 바꾼다.',
+        do: ['이름이 긴 카테고리는 가로 막대로 바꾼다'],
+        dont: ['긴 이름을 세로 막대에 억지로 구겨 넣지 않는다'],
+      },
+    ],
+    usage: [
+      { id: 'monthly-visitors', title: '월별 방문자', note: '단일 계열로 시간에 따른 값을 비교한다' },
+      { id: 'platform-stacked', title: '플랫폼별 방문자', note: '두 계열을 stacked로 쌓아 합계와 구성비를 함께 보인다' },
+    ],
+    cases: [
+      { id: 'ranking-bars', title: '순위 비교', note: '항목 이름이 길 때 가로 막대로 바꾼다' },
+    ],
+    verified: true,
+  },
+  {
+    id: 'chart-line',
+    name: 'Chart Line',
+    aliases: ['선 차트', '꺾은선 그래프', '추세선', 'line chart'],
+    category: 'chart',
+    status: 'stable',
+    addedIn: 'v0.18.0',
+    changedIn: 'v0.18.0',
+    purpose: '시간에 따라 값이 어떻게 늘고 주는지 보인다. 여러 계열을 겹쳐 비교할 때도 쓴다.',
+    anatomy: [],
+    properties: [
+      {
+        name: 'curveType',
+        title: 'Curve type',
+        description: '점 사이를 부드러운 곡선으로 이을지, 계단식으로 이을지 정한다.',
+        display: 'row',
+        options: [
+          { value: 'monotone', note: '기본. 부드러운 곡선' },
+          { value: 'step', note: '값이 유지되다 갑자기 바뀌는 데이터(재고·상태 등)' },
+        ],
+      },
+    ],
+    guidelines: [
+      {
+        id: 'legend-for-multi-series',
+        title: '계열이 둘 이상이면 범례가 자동으로 붙는다',
+        body: '색만으로 계열을 구별하게 두지 않는다. 계열이 하나면 범례를 생략한다 — 구별할 게 없기 때문이다.',
+        do: ['config에 시리즈를 둘 이상 넣으면 범례가 저절로 붙는다'],
+        dont: ['계열이 하나뿐인데 범례를 억지로 붙이지 않는다'],
+      },
+    ],
+    usage: [
+      { id: 'signup-trend', title: '가입 추세', note: '단일 계열로 시간에 따른 변화를 보인다' },
+      { id: 'plan-comparison', title: '유료·무료 비교', note: '두 계열을 겹쳐 시간에 따른 변화를 비교한다' },
+    ],
+    cases: [
+      { id: 'with-dots', title: '포인트 표시', note: '데이터 포인트가 적어 각 지점을 눈에 띄게 해야 할 때' },
+    ],
+    verified: true,
+  },
+  {
+    id: 'chart-pie',
+    name: 'Chart Pie',
+    aliases: ['파이 차트', '원형 차트', '도넛 차트', 'pie chart', 'donut chart'],
+    category: 'chart',
+    status: 'stable',
+    addedIn: 'v0.18.0',
+    changedIn: 'v0.18.0',
+    purpose: '전체에서 각 항목이 차지하는 비율을 보인다. 항목이 4~6개 안팎일 때 가장 잘 읽힌다.',
+    anatomy: [],
+    properties: [
+      {
+        name: 'variant',
+        title: 'Variant',
+        description: '가운데를 비울지(도넛) 채울지(파이) 정한다.',
+        display: 'row',
+        options: [
+          { value: 'pie', note: '기본' },
+          { value: 'donut', note: '가운데가 비어 다른 정보를 겹쳐 보일 여지가 생긴다' },
+        ],
+      },
+      {
+        name: 'showLegend',
+        title: 'Show legend',
+        description: '조각 옆에 범례를 보일지 정한다. 범례를 켜면 툴팁은 대신 생략된다.',
+        display: 'row',
+        options: [
+          { value: 'off', note: '기본. 조각에 마우스를 올리면 툴팁으로 이름·값을 본다' },
+          { value: 'on', note: '정적인 화면(인쇄·캡처)에도 이름이 항상 보여야 할 때' },
+        ],
+      },
+    ],
+    guidelines: [
+      {
+        id: 'angle-alone-not-enough',
+        title: '조각 각도만으로 비교하게 두지 않는다',
+        body: '사람 눈은 각도 차이를 정확히 못 읽는다. 항상 범례나 툴팁으로 실제 값·비율을 함께 보인다.',
+        do: ['범례나 툴팁으로 값과 비율을 함께 보인다'],
+        dont: ['조각만 그려 두고 값을 어디서도 안 보이지 않는다'],
+      },
+    ],
+    usage: [
+      { id: 'browser-share', title: '브라우저 점유율', note: '도넛 + 범례로 항목별 비율을 보인다' },
+    ],
+    cases: [
+      { id: 'plain-pie', title: '가운데를 채운 파이', note: '도넛의 빈 가운데가 필요 없을 때' },
+    ],
+    verified: true,
+  },
+  {
+    id: 'chart-radar',
+    name: 'Chart Radar',
+    aliases: ['레이더 차트', '방사형 차트', 'radar chart'],
+    category: 'chart',
+    status: 'stable',
+    addedIn: 'v0.18.0',
+    changedIn: 'v0.18.0',
+    purpose: '여러 축에 걸친 값을 한 도형으로 보인다. 역량·평가 항목처럼 서로 다른 기준을 한눈에 비교할 때 쓴다.',
+    anatomy: [],
+    properties: [
+      {
+        name: 'gridType',
+        title: 'Grid type',
+        description: '배경 격자를 다각형으로 그릴지 원으로 그릴지 정한다.',
+        display: 'row',
+        options: [
+          { value: 'polygon', note: '기본. 축 개수만큼 각진 격자' },
+          { value: 'circle', note: '동심원 격자 — 값의 크기 비교가 더 직관적일 때' },
+        ],
+      },
+    ],
+    guidelines: [
+      {
+        id: 'axis-count',
+        title: '축은 3~8개 사이가 읽기 좋다',
+        body: '축이 너무 적으면 도형의 뜻이 안 살고, 너무 많으면 라벨이 겹친다.',
+        do: ['비교할 기준을 3~8개로 추린다'],
+        dont: ['축을 열 개 넘게 욱여넣지 않는다'],
+      },
+    ],
+    usage: [
+      { id: 'skill-profile', title: '역량 비교', note: '단일 계열로 여러 항목의 점수를 한 도형으로 보인다' },
+      { id: 'team-comparison', title: '두 팀 비교', note: '두 계열을 겹쳐 같은 기준으로 비교한다' },
+    ],
+    cases: [],
+    verified: true,
+  },
+  {
+    id: 'chart-radial',
+    name: 'Chart Radial',
+    aliases: ['방사형 막대', '원형 진행률', 'radial chart', 'radial bar'],
+    category: 'chart',
+    status: 'stable',
+    addedIn: 'v0.18.0',
+    changedIn: 'v0.18.0',
+    purpose: '목표 대비 달성률이나 여러 항목의 합을 둥근 막대로 보인다.',
+    anatomy: [],
+    properties: [
+      {
+        name: 'showLabel',
+        title: 'Show label',
+        description: '가운데에 합계 숫자를 보일지 정한다.',
+        display: 'row',
+        options: [
+          { value: 'off', note: '기본' },
+          { value: 'on', note: '단일 계열일 때 가운데에 총합을 숫자로 보인다' },
+        ],
+      },
+    ],
+    guidelines: [
+      {
+        id: 'two-data-shapes',
+        title: '단일 계열과 다계열은 데이터 모양이 다르다',
+        body: '계열·다계열 둘 다 data의 첫 행 하나만 읽는다(여러 행을 겹쳐 보이는 컴포넌트가 아니다). 계열이 하나면 그 행의 값 하나를 percentMax(기본 100)를 만점으로 보는 백분율로 다뤄 링 하나를 채운다 — 값이 이미 0~100 백분율이 아니면 percentMax를 그 값의 만점으로 넘긴다. 계열이 둘 이상이면 config의 각 시리즈 값을 그 행에서 읽어 겹겹이 쌓인 링이 된다 — 서로 다른 데이터 모양이니 섞어 쓰지 않는다.',
+        do: [],
+        dont: ['단일 계열용 데이터에 시리즈를 여러 개 얹어 다계열처럼 쓰지 않는다'],
+      },
+    ],
+    usage: [
+      { id: 'goal-progress', title: '목표 달성률', note: '단일 계열 + 가운데 라벨로 진행률을 보인다' },
+    ],
+    cases: [
+      { id: 'stacked-total', title: '항목별 합계', note: '여러 항목이 쌓여 전체 합을 보인다' },
     ],
     verified: true,
   },

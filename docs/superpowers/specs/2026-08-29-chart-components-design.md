@@ -1,5 +1,11 @@
 # Chart 컴포넌트 6종 이식 설계
 
+> ⚠️ **이 스펙은 폐기됐다.** momeokji-admin에서 이식하는 방향(알맹이만, Card 없음, 5종)으로
+> 썼으나, 사용자가 shadcn 공식 차트 갤러리를 참고해 Card로 감싼 완성형 블록으로 다시 짓고
+> LNB에 별도 Chart 카테고리를 두는 방향으로 바꿨다. 새 설계는
+> `docs/superpowers/specs/2026-08-29-shadcn-charts-design.md`를 본다. 이 파일은 그 결정에
+> 이르기까지의 기록으로만 남긴다.
+
 ## 배경
 
 이전에 사용자가 로드맵 순서를 "새 컴포넌트 먼저, 차트는 그다음"으로 정해뒀고, 남은 로드맵 컴포넌트(Context Menu·Menubar·Resizable)가 v0.16.0으로 끝나면서 차례가 됐다.

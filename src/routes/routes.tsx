@@ -11,6 +11,12 @@ import { BadgePage } from '@/routes/components/BadgePage'
 import { BreadcrumbPage } from '@/routes/components/BreadcrumbPage'
 import { ButtonPage } from '@/routes/components/ButtonPage'
 import { CardPage } from '@/routes/components/CardPage'
+import { ChartAreaPage } from '@/routes/components/ChartAreaPage'
+import { ChartBarPage } from '@/routes/components/ChartBarPage'
+import { ChartLinePage } from '@/routes/components/ChartLinePage'
+import { ChartPiePage } from '@/routes/components/ChartPiePage'
+import { ChartRadarPage } from '@/routes/components/ChartRadarPage'
+import { ChartRadialPage } from '@/routes/components/ChartRadialPage'
 import { ContextMenuPage } from '@/routes/components/ContextMenuPage'
 import { CheckboxPage } from '@/routes/components/CheckboxPage'
 import { CollapsiblePage } from '@/routes/components/CollapsiblePage'
@@ -136,6 +142,12 @@ export const routes: RouteObject[] = [
           { path: 'context-menu', element: <ContextMenuPage /> },
           { path: 'menubar', element: <MenubarPage /> },
           { path: 'resizable', element: <ResizablePage /> },
+          { path: 'chart-area', element: <ChartAreaPage /> },
+          { path: 'chart-bar', element: <ChartBarPage /> },
+          { path: 'chart-line', element: <ChartLinePage /> },
+          { path: 'chart-pie', element: <ChartPiePage /> },
+          { path: 'chart-radar', element: <ChartRadarPage /> },
+          { path: 'chart-radial', element: <ChartRadialPage /> },
         ],
       },
 

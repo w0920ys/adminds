@@ -1,5 +1,10 @@
 # Chart 컴포넌트 6종 이식 Implementation Plan
 
+> ⚠️ **이 계획은 폐기됐다.** Task 1(스캐폴드·토큰)까지만 유효하고 Task 2 이후(momeokji-admin
+> 스타일 알맹이 컴포넌트)는 되돌렸다. 사용자가 shadcn 공식 차트 갤러리를 참고해 Card로 감싼
+> 완성형 블록 + 새 Chart 카테고리로 다시 짓기로 했다. 새 계획은
+> `docs/superpowers/plans/2026-08-29-shadcn-charts.md`를 본다.
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** `adminds-starter`(`momeokji-admin`에서 실전 검증된 소스)의 차트 스캐폴드 + 5종(Line·BarHorizontal·BarVertical·Funnel·Donut)을 adminds 레지스트리 관례에 맞춰 이식한다.

@@ -25,6 +25,7 @@ export function classify(name: string): string {
   if (/^(border|input|ring)$/.test(name)) return 'line'
   if (/^(destructive|success|warning|info)$/.test(name)) return 'status'
   if (/^(primary|secondary|accent)$/.test(name)) return 'emphasis'
+  if (/^chart-\d$/.test(name)) return 'chart'
   return 'surface'
 }
 
@@ -57,6 +58,11 @@ export const BRANCHES: { id: string; title: string; lead: string }[] = [
     lead: '면을 가르고 입력의 범위를 알립니다. \'border\'는 면과 면 사이, \'input\'은 입력 컨트롤의 테두리, \'ring\'은 지금 키보드가 어디에 있는지 알리는 포커스 링입니다.',
   },
   {
+    id: 'chart',
+    title: 'Chart',
+    lead: '차트 시리즈를 구분하는 범주형 색 6개입니다. 순서가 고정이고 절대 순환하지 않습니다 — 상태색(success·warning 등)은 사건이 정하는 색이라 시리즈로 재사용하지 않습니다.',
+  },
+  {
     id: 'doc',
     title: 'Doc only',
     lead: '이 문서 사이트에서 주석을 그릴 때만 씁니다. 제품 UI의 어떤 역할도 맡지 않으므로 앞의 갈래들과 나란히 놓고 고르지 않고, 컴포넌트에서는 쓰지 않습니다.',
@@ -69,6 +75,7 @@ const DECISION = [
   '면과 면을 가르는 선이거나 포커스를 알리는 링인가 — Line',
   '시스템이 알리는 결과(성공·경고·안내·위험)를 뜻하는가 — Status',
   '사용자가 다음에 할 일을 가리키는가 — Emphasis',
+  '차트 시리즈를 구분하는 색인가 — Chart',
   '무언가를 담는 바닥인가 — Surface',
 ]
 
