@@ -52,7 +52,7 @@ export function ChartRadial({
         <CardTitle>{title}</CardTitle>
         <CardDescription>{description}</CardDescription>
       </CardHeader>
-      <CardContent className="flex flex-1 items-center">
+      <CardContent>
         <ChartContainer config={config} className="mx-auto aspect-square w-full max-h-64">
           <RadialBarChart
             data={data}
@@ -68,7 +68,16 @@ export function ChartRadial({
             outerRadius="80%"
             endAngle={isMultiSeries ? 180 : undefined}
           >
-            <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel nameKey={categoryKey} />} />
+            {/*
+             * nameKey={categoryKey}를 넣지 않는다 — Chart Pie는 config 키가 곧
+             * categoryKey 값이라(data.browser === 'chrome' === config의 chrome 키)
+             * nameKey가 필요하지만, Radial은 config 키가 시리즈 키(progress·desktop 등)라
+             * categoryKey 값(예: '이번 분기')이 config에 없어 라벨이 못 찾아지고 원시
+             * dataKey('progress' 등)가 그대로 보였다(실제로 재현·확인함). nameKey 없이
+             * item.name(=dataKey, config 키와 일치)에 맡긴다 — Area·Bar·Line·Radar와
+             * 같은 방식이다.
+             */}
+            <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
             <PolarAngleAxis type="number" domain={isMultiSeries ? [0, total] : [0, percentMax]} tick={false} axisLine={false} />
             {isMultiSeries ? (
               seriesKeys.map((key) => (

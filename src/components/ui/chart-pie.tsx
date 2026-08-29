@@ -43,7 +43,7 @@ export function ChartPie({
         <CardTitle>{title}</CardTitle>
         <CardDescription>{description}</CardDescription>
       </CardHeader>
-      <CardContent className="flex-1">
+      <CardContent>
         <ChartContainer config={config} className="mx-auto aspect-square max-h-64">
           <PieChart>
             {!showLegend && <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel nameKey={categoryKey} />} />}

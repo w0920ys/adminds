@@ -3,8 +3,7 @@
   "name": "chart-radar",
   "title": "Chart Radar",
   "dependencies": [
-    "recharts",
-    "lucide-react"
+    "recharts"
   ],
   "registryDependencies": [
     "https://adminds.vercel.app/r/card.json",

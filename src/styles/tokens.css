@@ -95,7 +95,7 @@
    * 통과를 확인한 값이다(adminds-starter의 momeokji-admin 대시보드에서
    * 검증). 상태색(info/success/warning/destructive)은 상태 표현에 예약돼
    * 있어 시리즈 색으로 재사용하지 않는다 — 그래서 별도 6색을 둔다. 순서는
-   * 고정이고 절대 순환하지 않는다(9번째 시리즈부터는 호출부가 "기타"로
+   * 고정이고 절대 순환하지 않는다(7번째 시리즈부터는 호출부가 "기타"로
    * 접는다). 1 indigo(주 계열) 2 teal 3 orange(브랜드계) 4 pink 5 lime
    * 6 violet.
    */

@@ -3,8 +3,7 @@
   "name": "chart-area",
   "title": "Chart Area",
   "dependencies": [
-    "recharts",
-    "lucide-react"
+    "recharts"
   ],
   "registryDependencies": [
     "https://adminds.vercel.app/r/card.json",

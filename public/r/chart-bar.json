@@ -3,8 +3,7 @@
   "name": "chart-bar",
   "title": "Chart Bar",
   "dependencies": [
-    "recharts",
-    "lucide-react"
+    "recharts"
   ],
   "registryDependencies": [
     "https://adminds.vercel.app/r/card.json",

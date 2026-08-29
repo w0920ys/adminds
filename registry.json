@@ -280,8 +280,7 @@
       "type": "registry:ui",
       "title": "Chart Area",
       "dependencies": [
-        "recharts",
-        "lucide-react"
+        "recharts"
       ],
       "registryDependencies": [
         "https://adminds.vercel.app/r/card.json",
@@ -300,8 +299,7 @@
       "type": "registry:ui",
       "title": "Chart Bar",
       "dependencies": [
-        "recharts",
-        "lucide-react"
+        "recharts"
       ],
       "registryDependencies": [
         "https://adminds.vercel.app/r/card.json",
@@ -320,8 +318,7 @@
       "type": "registry:ui",
       "title": "Chart Line",
       "dependencies": [
-        "recharts",
-        "lucide-react"
+        "recharts"
       ],
       "registryDependencies": [
         "https://adminds.vercel.app/r/card.json",
@@ -359,8 +356,7 @@
       "type": "registry:ui",
       "title": "Chart Radar",
       "dependencies": [
-        "recharts",
-        "lucide-react"
+        "recharts"
       ],
       "registryDependencies": [
         "https://adminds.vercel.app/r/card.json",
@@ -379,8 +375,7 @@
       "type": "registry:ui",
       "title": "Chart Radial",
       "dependencies": [
-        "recharts",
-        "lucide-react"
+        "recharts"
       ],
       "registryDependencies": [
         "https://adminds.vercel.app/r/card.json",
