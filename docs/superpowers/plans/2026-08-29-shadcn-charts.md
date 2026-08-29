@@ -2204,6 +2204,8 @@ Task 1~7이 각각 태스크 단위 리뷰를 통과한 뒤, 계획 전체를 �
 
 **Important — Chart Area의 `stacked`도 Chart Bar와 같은 recharts 리마운트 버그가 있었다.** 위 Task 6 절의 "정정" 문단 참고. `key={String(stacked)}`로 고쳤다.
 
+**같은 의심으로 Chart Radial의 `showLabel` 토글도 확인했다 — 이쪽은 버그가 없었다.** `showLabel`은 `<PolarRadiusAxis>`+`<Label>`을 껐다 켰다 할 뿐, 값 축(`domain`)이나 각도 축 자체를 바꾸지 않는다 — Bar의 `layout`·`stackId`, Area의 `stacked`와 달리 이미 그려진 링의 기하 계산에 관여하지 않는 구조다. 실제로 `showLabel` off→on 전후 `.recharts-radial-bar-sector`의 SVG `d` 속성이 완전히 같음을 확인했다(라벨만 추가되고 링 자체는 그대로) — `key` 없이도 안전하다.
+
 **Important — `trend`·`footerNote`(5개 컴포넌트 전부)·`showValueLabels`(Bar)가 어디서도 쓰이지 않는 죽은 API였다.** 문서 페이지의 Playground·Usage·Cases 어디도 이 props를 넘기지 않았고, 그 결과 `CardFooter` 마크업이 세 가지 다른 모양으로 다섯 번 중복되면서도 한 번도 나란히 비교된 적이 없었다. YAGNI 원칙대로 지웠다 — 나중에 실제 Case가 필요해지면 그때 다시 추가한다. `ChartTrend` 인터페이스·`TrendingUp`/`TrendingDown` import·`CardFooter` import도 함께 지웠다.
 
 **Important — Foundations의 Color Role 문서가 차트 색 6개를 "Surface"로 잘못 분류했다.** `ColorRolePage.tsx`의 `classify()`가 `chart-1`~`chart-6`을 못 알아채 기본값(`surface`)으로 떨어졌다. `chart` 갈래를 새로 추가했다(`classify`에 정규식 하나, `BRANCHES`에 항목 하나) — `ColorPage.tsx`도 같은 `classify`/`BRANCHES`를 쓰므로 두 문서 모두 한 번에 고쳐졌다.
