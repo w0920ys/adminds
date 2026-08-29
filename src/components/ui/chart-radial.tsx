@@ -1,6 +1,5 @@
 import { Label, PolarAngleAxis, PolarRadiusAxis, RadialBar, RadialBarChart } from 'recharts'
-import { TrendingDown, TrendingUp } from 'lucide-react'
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { ChartContainer, ChartTooltip, ChartTooltipContent, type ChartConfig } from '@/components/ui/chart'
 
 /*
@@ -10,12 +9,13 @@ import { ChartContainer, ChartTooltip, ChartTooltipContent, type ChartConfig } f
  * (config에 여러 시리즈 키) 그 시리즈들이 겹겹이 쌓인 링(stacked)이 된다.
  * 이 둘은 shadcn 원본에서도 서로 다른 데이터 모양을 쓴다 — 억지로 하나로
  * 합치지 않는다.
+ *
+ * 단일 계열은 percentMax(기본 100)를 만점으로 삼는 백분율 값을 가정한다
+ * ("목표 대비 달성률"). 명시적 PolarAngleAxis 없이는 recharts가 데이터의
+ * 최댓값을 축으로 써서(값 74 → 축 0~74) 링이 실제 비율과 무관하게 항상
+ * 거의 꽉 차 보인다(SVG sector path가 거의 360도를 그리는 것으로 확인함) —
+ * 다계열 쪽(축을 total로 명시)과 같은 이유로 단일 계열에도 축을 명시한다.
  */
-export interface ChartTrend {
-  value: number
-  note: string
-}
-
 export function ChartRadial({
   title,
   description,
@@ -23,10 +23,9 @@ export function ChartRadial({
   config,
   categoryKey,
   valueKey,
+  percentMax = 100,
   showLabel = false,
   totalLabel,
-  trend,
-  footerNote,
 }: {
   title: string
   description: string
@@ -36,10 +35,10 @@ export function ChartRadial({
   categoryKey: string
   /** 단일 계열일 때만 쓴다 — 다계열이면 config의 시리즈 키들을 대신 읽는다 */
   valueKey?: string
+  /** 단일 계열일 때 링이 100%로 보는 값. 값이 이미 백분율(0~100)이면 기본값 그대로 둔다 */
+  percentMax?: number
   showLabel?: boolean
   totalLabel?: string
-  trend?: ChartTrend
-  footerNote?: string
 }) {
   const seriesKeys = Object.keys(config).filter((key) => key !== categoryKey)
   const isMultiSeries = seriesKeys.length > 1
@@ -48,12 +47,12 @@ export function ChartRadial({
     : Number(data[0]?.[valueKey ?? seriesKeys[0]] ?? 0)
 
   return (
-    <Card className="flex flex-col">
-      <CardHeader className="items-center pb-0">
+    <Card>
+      <CardHeader className="text-center">
         <CardTitle>{title}</CardTitle>
         <CardDescription>{description}</CardDescription>
       </CardHeader>
-      <CardContent className="flex flex-1 items-center pb-0">
+      <CardContent className="flex flex-1 items-center">
         <ChartContainer config={config} className="mx-auto aspect-square w-full max-h-64">
           <RadialBarChart
             data={data}
@@ -70,7 +69,7 @@ export function ChartRadial({
             endAngle={isMultiSeries ? 180 : undefined}
           >
             <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel nameKey={categoryKey} />} />
-            {isMultiSeries && <PolarAngleAxis type="number" domain={[0, total]} tick={false} axisLine={false} />}
+            <PolarAngleAxis type="number" domain={isMultiSeries ? [0, total] : [0, percentMax]} tick={false} axisLine={false} />
             {isMultiSeries ? (
               seriesKeys.map((key) => (
                 <RadialBar key={key} dataKey={key} stackId="a" cornerRadius={5} fill={`var(--color-${key})`} className="stroke-transparent stroke-2" />
@@ -104,16 +103,6 @@ export function ChartRadial({
           </RadialBarChart>
         </ChartContainer>
       </CardContent>
-      {(trend || footerNote) && (
-        <CardFooter className="flex-col gap-2 text-14">
-          {trend && (
-            <div className="flex items-center gap-2 leading-none font-medium">
-              {trend.note} {trend.value >= 0 ? <TrendingUp className="h-4 w-4" /> : <TrendingDown className="h-4 w-4" />}
-            </div>
-          )}
-          {footerNote && <div className="text-muted-foreground leading-none">{footerNote}</div>}
-        </CardFooter>
-      )}
     </Card>
   )
 }

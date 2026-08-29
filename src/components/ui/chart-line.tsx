@@ -1,6 +1,5 @@
 import { CartesianGrid, Line, LineChart, XAxis } from 'recharts'
-import { TrendingDown, TrendingUp } from 'lucide-react'
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip, ChartTooltipContent, type ChartConfig } from '@/components/ui/chart'
 
 /*
@@ -8,11 +7,6 @@ import { ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip, ChartToo
  * chart-line-dots를 옮긴 계열 컴포넌트. config 키가 둘 이상이면 범례가
  * 자동으로 붙는다(multiple).
  */
-export interface ChartTrend {
-  value: number
-  note: string
-}
-
 export function ChartLine({
   title,
   description,
@@ -21,8 +15,6 @@ export function ChartLine({
   categoryKey,
   curveType = 'monotone',
   showDots = false,
-  trend,
-  footerNote,
 }: {
   title: string
   description: string
@@ -31,8 +23,6 @@ export function ChartLine({
   categoryKey: string
   curveType?: 'monotone' | 'step'
   showDots?: boolean
-  trend?: ChartTrend
-  footerNote?: string
 }) {
   const seriesKeys = Object.keys(config).filter((key) => key !== categoryKey)
 
@@ -62,16 +52,6 @@ export function ChartLine({
           </LineChart>
         </ChartContainer>
       </CardContent>
-      {(trend || footerNote) && (
-        <CardFooter className="flex-col items-start gap-2 text-14">
-          {trend && (
-            <div className="flex gap-2 leading-none font-medium">
-              {trend.note} {trend.value >= 0 ? <TrendingUp className="h-4 w-4" /> : <TrendingDown className="h-4 w-4" />}
-            </div>
-          )}
-          {footerNote && <div className="text-muted-foreground leading-none">{footerNote}</div>}
-        </CardFooter>
-      )}
     </Card>
   )
 }
