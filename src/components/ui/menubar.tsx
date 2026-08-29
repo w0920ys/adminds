@@ -3,7 +3,15 @@ import { Check } from 'lucide-react'
 import * as MenubarPrimitive from '@radix-ui/react-menubar'
 import { cn } from '@/lib/utils'
 
-const Menubar = MenubarPrimitive.Root
+function Menubar({ className, ...props }: React.ComponentProps<typeof MenubarPrimitive.Root>) {
+  return (
+    <MenubarPrimitive.Root
+      data-slot="menubar"
+      className={cn('flex items-center gap-1 rounded-md border p-1', className)}
+      {...props}
+    />
+  )
+}
 const MenubarMenu = MenubarPrimitive.Menu
 
 function MenubarTrigger({
@@ -15,6 +23,7 @@ function MenubarTrigger({
       data-slot="menubar-trigger"
       className={cn(
         'flex cursor-default items-center rounded-sm px-3 py-1.5 text-16 outline-none select-none',
+        'hover:bg-accent hover:text-accent-foreground',
         'focus:bg-accent focus:text-accent-foreground',
         'data-[state=open]:bg-accent data-[state=open]:text-accent-foreground',
         'data-[disabled]:pointer-events-none data-[disabled]:opacity-50',

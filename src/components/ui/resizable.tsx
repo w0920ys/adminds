@@ -58,7 +58,9 @@ function ResizableHandle({
     >
       {withHandle && (
         <div className="bg-border z-10 flex h-4 w-3 items-center justify-center rounded-sm border">
-          <GripVertical className="size-2.5" />
+          <GripVertical
+            className={cn('size-2.5', orientation === 'vertical' && 'rotate-90')}
+          />
         </div>
       )}
     </Separator>
