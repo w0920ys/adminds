@@ -1319,7 +1319,18 @@ import { ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip, ChartToo
  * 계열 컴포넌트. data의 각 행은 categoryKey(이름)·valueKey(값)와, 조각별
  * 색을 가리키는 fill(예: 'var(--color-chrome)')을 함께 가져야 한다 —
  * config의 각 키에 짝지어 둔 색을 그대로 쓰기 위해서다(shadcn 원본과
- * 같은 방식).
+ * 같은 방식). shadcn 원본과 동일하게 <Cell>은 쓰지 않는다.
+ *
+ * 자동화된 브라우저 도구로 확인할 때 조각이 하나도 안 그려지는 것처럼
+ * 보일 수 있다 — recharts의 기본 진입 애니메이션(1500ms)이
+ * requestAnimationFrame으로 진행되는데, 그 도구의 브라우저 탭이 실제로는
+ * 화면에 그려지지 않는(hidden) 상태면 rAF 콜백 자체가 브라우저에 의해
+ * 멈춰서 애니메이션이 0%에서 멈춘 채로 안 끝난다(각도 0에서 시작하는
+ * 진입 상태라 조각이 안 보인다). 실제 사용자 브라우저(포그라운드 탭)에서는
+ * 정상적으로 애니메이션이 끝나고 조각이 그려진다 — <Pie
+ * isAnimationActive={false}>로 직접 검증함. 자동화 도구로 재확인할 때는
+ * 이 점을 감안한다(애니메이션 없이 임시로 끄고 확인하거나, 탭을 실제
+ * 전경에 두고 충분히 기다린다).
  */
 export interface ChartPieDatum {
   [key: string]: string | number
@@ -1357,9 +1368,15 @@ export function ChartPie({
             {!showLegend && <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel nameKey={categoryKey} />} />}
             <Pie data={data} dataKey={valueKey} nameKey={categoryKey} innerRadius={variant === 'donut' ? 60 : 0} />
             {showLegend && (
+              // recharts 3.10.1의 Legend 선언 타입에는 className이 없다(런타임은 실제로
+              // ChartLegendContent까지 그대로 전달돼 동작한다 — Legend.js가 content로
+              // 넘기는 모든 props를 cloneElement로 그대로 얹는다, node_modules에서 직접
+              // 확인함). shadcn 공식 소스도 같은 코드를 쓴다(그쪽은 recharts 3.8.0을 써서
+              // 이 타입 에러가 없다). chart.tsx의 ChartLegend 타입을 넓히는 대신, 여기
+              // 호출부 하나에만 스프레드로 좁게 우회한다.
               <ChartLegend
                 content={<ChartLegendContent nameKey={categoryKey} />}
-                className="flex-wrap gap-2 *:basis-1/4 *:justify-center"
+                {...{ className: 'flex-wrap gap-2 *:basis-1/4 *:justify-center' }}
               />
             )}
           </PieChart>
@@ -1369,6 +1386,23 @@ export function ChartPie({
   )
 }
 ```
+
+**진행 중 발견 — 위 코드는 이미 실제 검증을 거쳐 고친 상태다:**
+
+1. `<ChartLegend className="...">`(리터럴 속성)는 recharts 3.10.1에서 `TS2322`가 난다 —
+   `Legend`의 선언 타입(`node_modules/recharts/types/component/Legend.d.ts`)에
+   `className`이 없다(런타임은 Legend.js가 `content`로 넘기는 모든 props를
+   그대로 전달해 정상 동작 — 타입 선언만의 문제). `{...{ className: '...' }}`
+   스프레드로 이 한 자리만 우회한다(TS의 과잉 속성 검사를 피함, 직접
+   검증 완료).
+2. shadcn 원본처럼 `<Cell>` 없이 `data`의 `fill`만으로 조각 색을 칠해도 된다
+   — Cell을 추가해야만 렌더링된다는 초기 가설은 틀렸다. 실제 원인은
+   자동화된 브라우저 도구의 탭이 `document.hidden=true`를 계속 유지해
+   recharts의 진입 애니메이션(requestAnimationFrame 기반)이 0%에서 멈춘
+   채 끝나지 않은 것이었다 — `isAnimationActive={false}`로 격리해
+   직접 확인함(그 상태에서는 Cell 유무와 무관하게 항상 정상 렌더링됨).
+   `variant`·`showLegend` 네 조합(pie/donut × off/on) 전부 SVG
+   sector-path 개수·fill로 검증했다.
 
 - [ ] **Step 2: `src/data/registry.ts`에 항목을 추가한다**
 
@@ -1577,6 +1611,8 @@ shadcn 공식 chart-pie-simple·donut·legend를 참고해 계열 하나로
 - Produces: `ChartRadar`, `ChartTrend`(독립 선언)
 
 **⚠️ Task 3(Chart Bar)에서 발견한 recharts 리마운트 버그를 여기서도 확인한다.** recharts 3.10.1은 이미 마운트된 차트의 구조적 prop(Bar의 `layout`)이 바뀌어도 축·도형 스케일을 다시 계산하지 않는 경우가 있었다(SVG의 실제 좌표를 읽어야 드러난다 — 눈으로만 보면 값이 살짝 다른 도형이 겹쳐 보여 착각하기 쉽다). `gridType`(`PolarGrid`의 구조적 prop)도 같은 위험군이다 — Step 9에서 `gridType`을 "circle"로 바꿨을 때 배경 격자가 실제로 다각형→동심원으로 바뀌는지, DOM에서 `.recharts-polar-grid` 요소의 실제 모양(원이면 `circle`/`path`가 원호를, 다각형이면 직선 다각형을 그린다)까지 확인한다. 안 바뀌면 Chart Bar와 같은 방식(`key`를 `gridType`에 묶어 리마운트 강제)으로 고친다 — Chart Area의 `stacked`(값만 바뀌는 축, 구조는 안 바뀜)는 이 버그가 없었다는 것도 참고한다(구조적 prop과 값 prop을 가르는 기준으로 삼는다).
+
+**⚠️ Task 5(Chart Pie)에서 발견한 애니메이션 타이밍 함정도 참고한다.** 자동화된 브라우저 도구로 확인할 때 도형이 하나도 안 그려지는 것처럼 보이면, 그게 진짜 렌더링 버그가 아니라 그 도구의 탭이 `document.hidden=true`를 계속 유지해서 recharts의 진입 애니메이션(requestAnimationFrame 기반, 기본 1500ms)이 0%에서 멈춘 채 안 끝난 것일 수 있다 — 원인을 성급히 다른 곳(Cell 누락처럼)에서 찾지 말고, 먼저 문제의 그래픽 요소에 `isAnimationActive={false}`를 임시로 줘서 애니메이션을 격리한 뒤에도 안 그려지는지부터 확인한다. 격리 후에도 안 그려지면 진짜 버그, 격리하니 그려지면 이 타이밍 함정이다(이 경우 원본 코드는 그대로 두고 넘어가면 된다 — 실사용자 브라우저는 포그라운드 탭이라 문제가 없다).
 
 - [ ] **Step 1: `src/components/ui/chart-radar.tsx`를 만든다**
 
