@@ -49,6 +49,7 @@ import { ColorRolePage } from '@/routes/foundations/ColorRolePage'
 import { DesignTokenPage } from '@/routes/foundations/DesignTokenPage'
 import { FoundationsOverview } from '@/routes/foundations/FoundationsOverview'
 import { IconographyPage } from '@/routes/foundations/IconographyPage'
+import { LayoutPage } from '@/routes/foundations/LayoutPage'
 import { PalettePage } from '@/routes/foundations/PalettePage'
 import { SpacingPage } from '@/routes/foundations/SpacingPage'
 import { StatePage } from '@/routes/foundations/StatePage'
@@ -81,6 +82,7 @@ export const routes: RouteObject[] = [
       { path: 'foundations/palette', element: <PalettePage /> },
       { path: 'foundations/typography', element: <TypographyPage /> },
       { path: 'foundations/spacing', element: <SpacingPage /> },
+      { path: 'foundations/layout', element: <LayoutPage /> },
       { path: 'foundations/iconography', element: <IconographyPage /> },
       { path: 'foundations/state', element: <StatePage /> },
       { path: 'foundations/voice-and-tone', element: <VoiceAndTonePage /> },

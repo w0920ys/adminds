@@ -66,6 +66,7 @@ export const sections: NavSection[] = [
       },
       { to: '/foundations/typography', label: 'Typography', summary: '크기 스케일과 굵기, 정보 위계', updatedAt: '2026-08-29' },
       { to: '/foundations/spacing', label: 'Spacing', summary: '4px 기반 간격과 어드민 밀도 축', updatedAt: '2026-08-29' },
+      { to: '/foundations/layout', label: 'Layout', summary: '반응형 기준점, 콘텐츠 폭, 격자 패턴', updatedAt: '2026-08-29' },
       { to: '/foundations/iconography', label: 'Iconography', summary: '아이콘 크기·스트로크·사용 규칙', updatedAt: '2026-08-29' },
       { to: '/foundations/state', label: 'State', summary: '상호작용 상태의 표현 규칙', updatedAt: '2026-08-29' },
       { to: '/foundations/voice-and-tone', label: 'Voice and Tone', summary: '어드민이 사용자에게 말하는 방식', updatedAt: '2026-08-29' },
