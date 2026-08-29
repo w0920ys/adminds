@@ -71,7 +71,7 @@ function ContextMenuLabel({
   return (
     <ContextMenuPrimitive.Label
       data-slot="context-menu-label"
-      className={cn('text-muted-foreground px-2 py-1.5 text-11 font-bold tracking-widest', className)}
+      className={cn('text-muted-foreground px-2 py-1.5 text-12 font-bold tracking-widest', className)}
       {...props}
     />
   )

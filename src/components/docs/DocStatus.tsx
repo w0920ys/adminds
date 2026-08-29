@@ -3,10 +3,11 @@ import { cn } from '@/lib/utils'
 
 /*
  * Badge와 같은, 15% 탄 배경 위에 글자를 얹는 칩 패턴이라 같은
- * on-tint 토큰을 쓴다 — text-11 font-bold(11px)는 WCAG 4.5:1
+ * on-tint 토큰을 쓴다 — text-12 font-bold(12px)는 WCAG 4.5:1
  * 대상이고, 탄 배경 위에 원래 색을 그대로 쓰면 라이트에서 기준에
  * 못 미친다(review 1.91 · stable 3.06 · deprecated 3.64 · draft
- * 4.34였다).
+ * 4.34였다). Badge와 마찬가지로 py-0.5를 py-0으로 낮춰 text-11일 때의
+ * 높이(20px)를 그대로 지킨다.
  */
 const STATUS_STYLE: Record<ComponentStatus, string> = {
   draft: 'bg-muted text-neutral-on-tint',
@@ -29,10 +30,10 @@ export function DocStatus({
 }) {
   return (
     <div className="flex flex-wrap items-center gap-2">
-      <span className={cn('rounded px-2 py-0.5 text-11 font-bold', STATUS_STYLE[status])}>
+      <span className={cn('rounded px-2 py-0 text-12 font-bold', STATUS_STYLE[status])}>
         {status}
       </span>
-      <span className="text-muted-foreground text-11">
+      <span className="text-muted-foreground text-12">
         {addedIn}에 추가 · {changedIn}에서 마지막 변경
         {verified ? ' · 검증 완료' : ' · 검증 필요'}
       </span>

@@ -177,7 +177,7 @@ function Command({
                     id={headingId}
                     {...groupLabelProps}
                     className={cn(
-                      'text-muted-foreground px-2 py-1 text-11 font-bold tracking-widest',
+                      'text-muted-foreground px-2 py-1 text-12 font-bold tracking-widest',
                       groupLabelProps?.className,
                     )}
                   >

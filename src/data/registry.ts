@@ -240,7 +240,7 @@ export const components: ComponentMeta[] = [
     category: 'actions',
     status: 'stable',
     addedIn: 'v0.16.0',
-    changedIn: 'v0.16.0',
+    changedIn: 'v0.18.0',
     purpose: '우클릭한 자리에서 그 대상에 대한 동작을 고르게 한다. 항상 눌러야 여는 Dropdown Menu와 달리, 마우스 오른쪽 버튼(또는 롱프레스)이 여는 자리를 정한다.',
     verified: true,
     anatomy: [
@@ -287,7 +287,7 @@ export const components: ComponentMeta[] = [
     category: 'actions',
     status: 'stable',
     addedIn: 'v0.8.0',
-    changedIn: 'v0.14.0',
+    changedIn: 'v0.18.0',
     purpose: '한 자리에서 여러 동작을 고르게 한다. 값을 고르는 자리에는 Select를 쓴다.',
     anatomy: [
       {
@@ -731,7 +731,7 @@ export const components: ComponentMeta[] = [
     category: 'inputs',
     status: 'stable',
     addedIn: 'v0.10.0',
-    changedIn: 'v0.14.0',
+    changedIn: 'v0.18.0',
     purpose:
       '달력에서 날짜 하나 또는 기간을 고르게 한다. Popover 위에 Calendar를 놓고, 트리거는 Select와 같은 모양이다.',
     /*
@@ -1805,7 +1805,7 @@ export const components: ComponentMeta[] = [
     category: 'navigation',
     status: 'stable',
     addedIn: 'v0.12.0',
-    changedIn: 'v0.14.0',
+    changedIn: 'v0.18.0',
     purpose:
       '검색해서 곧장 실행한다. 값을 골라 폼에 담으면 Combobox고, 어딘가로 가거나 동작을 실행하면 Command다. cmdk 없이 Dialog와 이 저장소의 순수 함수만으로 세웠다.',
     anatomy: [
@@ -2415,7 +2415,7 @@ export const components: ComponentMeta[] = [
     category: 'data-display',
     status: 'stable',
     addedIn: 'v0.8.0',
-    changedIn: 'v0.14.0',
+    changedIn: 'v0.18.0',
     purpose: '짧은 상태나 분류를 보인다. 누를 수 있는 동작에는 쓰지 않는다.',
     anatomy: [
       { part: 'container', label: 'Container', note: 'radius-sm, variant에 따른 배경·글자색' },
@@ -2425,7 +2425,7 @@ export const components: ComponentMeta[] = [
         note: '1.5×1.5, bg-current로 글자색을 그대로 물려받는다',
         optional: true,
       },
-      { part: 'label', label: 'Label', note: 'text-11 / font-bold' },
+      { part: 'label', label: 'Label', note: 'text-12 / font-bold' },
     ],
     properties: [
       {

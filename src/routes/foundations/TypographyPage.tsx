@@ -33,8 +33,8 @@ const SCALE = [
     weight: '본문 normal · 라벨 medium',
   },
   { className: 'text-14', role: '조밀 모드 전용 — 표 셀 등', weight: 'normal' },
-  { className: 'text-12', role: '설명·캡션·도움말', weight: 'normal' },
-  { className: 'text-11', role: '배지·메뉴 그룹 라벨·요일 머리', weight: 'bold' },
+  { className: 'text-12', role: '설명·캡션·도움말 — 사실상 바닥', weight: 'normal' },
+  { className: 'text-11', role: '예비 — 아래 세 조건을 모두 통과하는 자리가 아직 없다', weight: 'bold' },
 ]
 
 /** 여기도 선언 순서는 무관하다. 실측한 font-weight 내림차순으로 늘어놓는다 */
@@ -270,6 +270,15 @@ export function TypographyPage() {
           값이고, 표의 순서도 실측한 크기가 정합니다 — 스케일을 바꾸면 이 표의 순서까지
           따라옵니다. 자간은 단계마다 따로 정하지 않습니다. 자간 칸의 <code>normal</code>은 그 단계에 값을
           정하지 않아 글꼴이 잡은 자간을 그대로 쓴다는 뜻입니다.
+        </p>
+        <p className="text-muted-foreground text-16">
+          <code>text-11</code>은 예비 단계입니다. 세 조건을 모두 만족할 때만 씁니다 — ① 그 글자가
+          유일한 정보원이 아니고(옆의 아이콘·색·더 큰 글자가 같은 뜻을 이미 전달해, 이 글자가 안
+          읽혀도 과업을 끝낼 수 있다), ② 한두 글자 수준으로 극히 짧고, ③ 담는 그릇의 크기가 이
+          시스템의 다른 규칙에 못 박혀 있습니다. "좁아 보여서"는 조건이 아닙니다 — Badge·메뉴 그룹
+          라벨·요일 머리가 전에는 이 값을 썼지만 실측해 보니 셋 다 ③이 거짓이었습니다(text-12로
+          올려도 안 깨졌습니다). 지금 이 조건을 통과하는 자리는 어디에도 없어, 실제로 쓰는 최소
+          크기는 <code>text-12</code>부터입니다.
         </p>
         <div className="overflow-x-auto rounded-lg border">
           <table className="w-full text-left text-14">

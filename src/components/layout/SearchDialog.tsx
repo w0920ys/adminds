@@ -146,7 +146,7 @@ export function SearchDialog({
 
           {groups.map((group, groupIndex) => (
             <section key={group.kind + group.label} className="mb-2 last:mb-0">
-              <h3 className="text-muted-foreground px-2 py-1 text-11 font-bold tracking-widest">
+              <h3 className="text-muted-foreground px-2 py-1 text-12 font-bold tracking-widest">
                 {group.label.toUpperCase()}
               </h3>
               {group.hits.map((hit, i) => {
@@ -187,7 +187,7 @@ export function SearchDialog({
                           {hit.summary}
                         </span>
                       )}
-                      <span className="text-muted-foreground mt-1 block text-11">
+                      <span className="text-muted-foreground mt-1 block text-12">
                         {hit.breadcrumb.join(' › ')}
                       </span>
                     </span>
@@ -198,7 +198,7 @@ export function SearchDialog({
           ))}
         </div>
 
-        <div className="text-muted-foreground flex gap-3 border-t px-4 py-2 text-11">
+        <div className="text-muted-foreground flex gap-3 border-t px-4 py-2 text-12">
           <span>↵ 이동</span>
           <span>↑↓ 선택</span>
           <span>esc 닫기</span>

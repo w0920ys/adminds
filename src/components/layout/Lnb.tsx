@@ -128,7 +128,7 @@ export function Lnb({ open, onClose }: { open: boolean; onClose: () => void }) {
          */}
         {view.kind === 'sections' ? (
           <div className="flex h-9 items-center px-2">
-            <p className="text-muted-foreground text-11 font-bold tracking-widest md:hidden">Sections</p>
+            <p className="text-muted-foreground text-12 font-bold tracking-widest md:hidden">Sections</p>
             <button
               className="text-muted-foreground ml-auto md:hidden"
               onClick={onClose}
@@ -146,7 +146,7 @@ export function Lnb({ open, onClose }: { open: boolean; onClose: () => void }) {
             >
               <ChevronLeft size={18} />
             </button>
-            <p className="text-muted-foreground text-11 font-bold tracking-widest">
+            <p className="text-muted-foreground text-12 font-bold tracking-widest">
               {browsedSection.label.toUpperCase()}
             </p>
             <button
@@ -198,7 +198,7 @@ export function Lnb({ open, onClose }: { open: boolean; onClose: () => void }) {
             isGroup(item) ? (
               /* 묶음은 이동하지 않으므로 링크가 아니라 목록의 머리글이다 */
               <section key={item.label} className="mt-8 flex flex-col first:mt-0">
-                <h2 className="text-muted-foreground mb-2 px-2 text-11 font-bold tracking-widest">
+                <h2 className="text-muted-foreground mb-2 px-2 text-12 font-bold tracking-widest">
                   {item.label.toUpperCase()}
                 </h2>
                 {item.items.map((doc) => (

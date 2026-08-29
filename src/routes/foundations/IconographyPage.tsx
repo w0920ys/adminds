@@ -15,7 +15,7 @@ import { DoDont } from '@/components/docs/DoDont'
 import { Button } from '@/components/ui/button'
 
 const SIZES = [
-  { size: 12, where: '배지 안', note: 'text-11 옆에 놓을 때만' },
+  { size: 12, where: '배지 안', note: 'text-12 옆에 놓을 때만' },
   { size: 14, where: '보조 텍스트 옆', note: '테이블 셀 설명, 도움말 문장 앞' },
   { size: 16, where: '버튼과 컨트롤', note: '기본값. 정하기 어려우면 16을 쓴다' },
   { size: 20, where: '툴바', note: '라벨 없이 아이콘만 클릭 대상일 때' },

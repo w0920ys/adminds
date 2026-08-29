@@ -19,14 +19,14 @@ export function SiteFooter() {
           </span>
           <span className="text-16 font-bold tracking-tight">서비스 대시보드</span>
         </Link>
-        <p className="text-muted-foreground text-11">
+        <p className="text-muted-foreground text-12">
           © {new Date().getFullYear()} sunwooyoon. All rights reserved.
         </p>
       </div>
 
       <div className="flex gap-12">
         <nav aria-label="섹션 이동" className="flex flex-col gap-2">
-          <p className="text-muted-foreground text-11 font-bold tracking-widest">MENU</p>
+          <p className="text-muted-foreground text-12 font-bold tracking-widest">MENU</p>
           {sections.map((section) => (
             <Link
               key={section.id}
@@ -38,7 +38,7 @@ export function SiteFooter() {
           ))}
         </nav>
         <nav aria-label="연락처" className="flex flex-col gap-2">
-          <p className="text-muted-foreground text-11 font-bold tracking-widest">CONTACT</p>
+          <p className="text-muted-foreground text-12 font-bold tracking-widest">CONTACT</p>
           <a
             href={LINKEDIN}
             target="_blank"

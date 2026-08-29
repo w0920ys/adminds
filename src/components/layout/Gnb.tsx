@@ -34,7 +34,7 @@ export function Gnb({ onMenuClick }: { onMenuClick: () => void }) {
             <Command size={14} strokeWidth={2.4} />
           </span>
           <span className="text-16 font-bold tracking-tight">서비스 대시보드</span>
-          <span className="text-muted-foreground text-11 font-medium">{currentRelease.version}</span>
+          <span className="text-muted-foreground text-12 font-medium">{currentRelease.version}</span>
         </Link>
 
         <nav className="ml-6 hidden items-center gap-1 md:flex" aria-label="전역 메뉴">
@@ -62,7 +62,8 @@ export function Gnb({ onMenuClick }: { onMenuClick: () => void }) {
         >
           <Search size={15} aria-hidden />
           <span className="hidden text-12 sm:inline">검색</span>
-          <kbd className="bg-muted hidden rounded px-1 py-0.5 text-11 font-medium sm:inline">
+          {/* py-0.5→py-0 + text-12: text-11일 때의 높이(20px)를 그대로 지킨다(Badge와 같은 트릭) */}
+          <kbd className="bg-muted hidden rounded px-1 py-0 text-12 font-medium sm:inline">
             ⌘K
           </kbd>
         </button>

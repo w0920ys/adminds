@@ -31,7 +31,13 @@ const CELL_SIZE: Record<CalendarSize, string> = {
  * 정하므로, 여기만 고정 폭(w-9)으로 두면 sm·default에서 날짜 배지보다 넓은 열이
  * 되어 요일과 날짜의 세로줄이 어긋나고 격자 전체도 그만큼 넓어진다. CELL_SIZE의
  * size-*와 같은 눈금을 쓴다. 글자 크기는 따라가지 않는다 — 머리 글자는 날짜가
- * 아니라 요일 이름이라 세 크기 모두 text-11다.
+ * 아니라 요일 이름이라 세 크기 모두 한 크기(text-12)로 고정한다.
+ *
+ * 전에는 text-11이었다. "칸이 좁으니 작게"였지만 실측해 보니 근거가 아니었다 —
+ * 한 글자짜리 요일 이름은 size-7(28px) 칸에도 넉넉히 들어간다. 게다가 요일
+ * 이름은 위치만으로는 대신할 수 없는 정보라(월요일 칸이 어느 자리인지는 이
+ * 글자로만 안다) text-size-floor 자격 조건 ①(유일한 정보원이 아닐 것)에도
+ * 못 미쳤다.
  */
 const HEADER_CELL_WIDTH: Record<CalendarSize, string> = {
   sm: 'w-7',
@@ -255,7 +261,7 @@ function Calendar(props: CalendarProps) {
                 key={label}
                 scope="col"
                 className={cn(
-                  'text-muted-foreground pb-1 text-11 font-normal',
+                  'text-muted-foreground pb-1 text-12 font-normal',
                   HEADER_CELL_WIDTH[size],
                 )}
               >

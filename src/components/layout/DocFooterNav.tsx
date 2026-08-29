@@ -16,7 +16,7 @@ export function DocFooterNav() {
   return (
     <footer className="mt-16 flex flex-col gap-4">
       {doc && (
-        <time className="text-muted-foreground text-11" dateTime={doc.updatedAt}>
+        <time className="text-muted-foreground text-12" dateTime={doc.updatedAt}>
           Last updated {doc.updatedAt}
         </time>
       )}
@@ -27,7 +27,7 @@ export function DocFooterNav() {
               to={prev.to}
               className="bg-secondary/60 hover:bg-secondary flex flex-col gap-2 rounded-lg p-4 md:p-5"
             >
-              <span className="text-muted-foreground flex items-center gap-1 text-11">
+              <span className="text-muted-foreground flex items-center gap-1 text-12">
                 <ChevronLeft size={12} aria-hidden /> 이전 문서
               </span>
               <strong className="text-16">{prev.label}</strong>
@@ -40,7 +40,7 @@ export function DocFooterNav() {
               to={next.to}
               className="bg-secondary/60 hover:bg-secondary flex flex-col items-end gap-2 rounded-lg p-4 sm:text-right md:p-5"
             >
-              <span className="text-muted-foreground flex items-center gap-1 text-11">
+              <span className="text-muted-foreground flex items-center gap-1 text-12">
                 다음 문서 <ChevronRight size={12} aria-hidden />
               </span>
               <strong className="text-16">{next.label}</strong>
