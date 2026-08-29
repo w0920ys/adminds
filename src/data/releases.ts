@@ -29,6 +29,19 @@ export type Release = {
 /** 최신 버전이 배열의 맨 앞이다. */
 export const releases: Release[] = [
   {
+    version: 'v0.17.0',
+    publishedAt: '2026-08-29',
+    title: 'Foundations에 Layout 문서를 새로 실었어요',
+    purpose:
+      'Foundations에 반응형 기준점·콘텐츠 폭·grid 관례를 다루는 Layout 문서가 추가돼요. 새 토큰 없이 지금 실제로 쓰는 값을 그대로 정리했어요.',
+    changes: [
+      { target: 'Foundations / Layout', type: 'New', note: 'Breakpoint 표, 콘텐츠 폭, 반복되는 grid 패턴을 문서화했어요.' },
+    ],
+    requests: [],
+    reviewItems: [],
+    impact: ['Foundations'],
+  },
+  {
     version: 'v0.16.0',
     publishedAt: '2026-08-29',
     title: 'Install 페이지를 컴포넌트 목록과 AI 에이전트 안내로 넓혔어요',
