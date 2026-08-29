@@ -20,7 +20,7 @@ export function ExampleFrame({
         // DO 글자는 success-on-tint를 쓴다 — 원래 success 색은 흰 바탕에서도 3.67:1이다
         <p
           className={cn(
-            'flex items-center gap-1.5 border-b px-3 py-3 text-11 font-bold tracking-widest',
+            'flex items-center gap-1.5 border-b px-3 py-3 text-12 font-bold tracking-widest',
             kind === 'do' ? 'text-success-on-tint' : 'text-destructive',
           )}
         >

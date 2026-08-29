@@ -199,7 +199,7 @@ export function Anatomy({ meta, preview }: { meta: ComponentMeta; preview: React
                   style={{ top: item.labelY, [item.side]: GUTTER }}
                 >
                   <strong className="block text-12 font-medium">{item.part.label}</strong>
-                  {item.part.optional && <span className="text-11">(Optional)</span>}
+                  {item.part.optional && <span className="text-12">(Optional)</span>}
                 </div>
               ))}
             </div>
@@ -212,7 +212,7 @@ export function Anatomy({ meta, preview }: { meta: ComponentMeta; preview: React
               <span
                 key={item.index}
                 className={cn(
-                  'absolute grid size-5 place-items-center rounded-full text-11 font-bold',
+                  'absolute grid size-5 place-items-center rounded-full text-12 font-bold',
                   active === item.index
                     ? 'bg-annotation text-background'
                     : 'bg-annotation-muted text-background',
@@ -243,7 +243,7 @@ export function Anatomy({ meta, preview }: { meta: ComponentMeta; preview: React
               >
                 <span
                   className={cn(
-                    'mt-0.5 grid size-5 shrink-0 place-items-center rounded-full text-11 font-bold',
+                    'mt-0.5 grid size-5 shrink-0 place-items-center rounded-full text-12 font-bold',
                     isActive
                       ? 'bg-annotation text-background'
                       : 'bg-muted text-neutral-on-tint',

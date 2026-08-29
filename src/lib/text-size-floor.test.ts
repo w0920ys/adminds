@@ -48,16 +48,7 @@ const MENTIONS: Record<string, number> = {
    */
   'src/routes/foundations/TypographyPage.tsx': 6,
 
-  /* 아직 text-12로 못 옮긴 실제 사용처(pending) — Task 2~5가 하나씩 줄인다 */
-  'src/components/docs/Anatomy.tsx': 3,
-  'src/components/docs/CopyPair.tsx': 3,
-  'src/components/docs/DoDont.tsx': 2,
-  'src/components/docs/ExampleFrame.tsx': 1,
-  'src/components/docs/GuidelineBlock.tsx': 1,
-  'src/components/docs/PatternPage.tsx': 2,
-  'src/components/docs/Playground.tsx': 3,
-  'src/components/docs/Swatch.tsx': 4,
-  'src/components/docs/TokenTable.tsx': 1,
+  /* 아직 text-12로 못 옮긴 실제 사용처(pending) — Task 3~5가 하나씩 줄인다 */
   'src/routes/UpdatesPage.tsx': 1,
   'src/routes/components/BreadcrumbPage.tsx': 2,
   'src/routes/components/ButtonPage.tsx': 4,

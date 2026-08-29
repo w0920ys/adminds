@@ -18,7 +18,7 @@ function StructureList({ steps }: { steps: PatternStructureStep[] }) {
     <ol className="flex flex-col gap-2">
       {steps.map((step, index) => (
         <li key={step.slot} className="flex items-start gap-2.5 rounded-md p-2">
-          <span className="bg-muted text-neutral-on-tint mt-0.5 grid size-5 shrink-0 place-items-center rounded-full text-11 font-bold">
+          <span className="bg-muted text-neutral-on-tint mt-0.5 grid size-5 shrink-0 place-items-center rounded-full text-12 font-bold">
             {index + 1}
           </span>
           <span className="min-w-0">
@@ -35,7 +35,7 @@ function StructureList({ steps }: { steps: PatternStructureStep[] }) {
                   <Link
                     key={id}
                     to={`/components/${id}`}
-                    className="hover:bg-accent text-muted-foreground rounded border px-1.5 py-0.5 text-11"
+                    className="hover:bg-accent text-muted-foreground rounded border px-1.5 py-0.5 text-12"
                   >
                     {/* id가 registry에 실재하는지는 patterns.test.ts가 지킨다 */}
                     {getComponent(id)?.name ?? id}

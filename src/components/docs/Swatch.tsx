@@ -21,13 +21,13 @@ export function Swatch({ row }: { row: TokenRow }) {
       />
       <div className="flex flex-col gap-1">
         <CopyValue value={row.name} className="text-16 font-semibold" />
-        <CopyValue value={row.cssVar} className="text-muted-foreground text-11" />
+        <CopyValue value={row.cssVar} className="text-muted-foreground text-12" />
         {row.value ? (
-          <CopyValue value={row.value} className="text-muted-foreground text-11" />
+          <CopyValue value={row.value} className="text-muted-foreground text-12" />
         ) : (
-          <p className="text-muted-foreground px-1.5 py-0.5 text-11">(정의되지 않음)</p>
+          <p className="text-muted-foreground px-1.5 py-0.5 text-12">(정의되지 않음)</p>
         )}
-        {hex && <CopyValue value={hex} className="text-muted-foreground text-11" />}
+        {hex && <CopyValue value={hex} className="text-muted-foreground text-12" />}
       </div>
     </div>
   )
