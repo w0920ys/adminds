@@ -31,7 +31,7 @@ import { Placeholder } from '@/routes/Placeholder'
 /*
  * 행을 손으로 적지 않는다. 이 저장소의 components(@/data/registry)를 그대로
  * 목록의 자료로 쓴다 — ScrollAreaPage·DataTablePage가 먼저 그렇게 했다.
- * 덕분에 행이 서른아홉이라 페이지가 여러 장이 되고, '선택 상태에서 페이지
+ * 덕분에 행이 마흔둘이라 페이지가 여러 장이 되고, '선택 상태에서 페이지
  * 이동'을 글이 아니라 실제로 눌러서 볼 수 있다.
  */
 type Row = (typeof components)[number]
@@ -58,7 +58,7 @@ const STATUS_VARIANT: Record<ComponentStatus, 'neutral' | 'warning' | 'success' 
 /*
  * 정렬할 수 있는 열은 sortValue를 가진 열뿐이다. '상태'를 뺀 셋에 두었다.
  *
- * '상태'에만 두지 않은 것은 지금 서른아홉 행이 모두 stable이라 견줄 것이
+ * '상태'에만 두지 않은 것은 지금 마흔두 행이 모두 stable이라 견줄 것이
  * 없어서다 — 머리를 눌러도 순서가 그대로인 열은 고장으로 읽힌다.
  *
  * '도입'은 versionOrder로 견준다. 버전을 글자로 견주면 v0.10.0이 v0.9.0
@@ -396,7 +396,7 @@ function EmptyScreen() {
  * no-filter-results: 조건이 너무 좁을 때.
  *
  * 처음 조건을 아무것도 걸리지 않는 말로 두어 빈 화면부터 보이고, '필터
- * 초기화'가 실제로 그 조건을 지운다 — 누르면 서른아홉 행이 돌아온다.
+ * 초기화'가 실제로 그 조건을 지운다 — 누르면 마흔두 행이 돌아온다.
  * 조건을 지우는 길을 준다는 말이 글이 아니라 버튼으로 서 있어야 한다.
  */
 function NoResultsScreen() {

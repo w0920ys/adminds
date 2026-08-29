@@ -348,6 +348,52 @@ export const components: ComponentMeta[] = [
     verified: true,
   },
   {
+    id: 'menubar',
+    name: 'Menubar',
+    aliases: ['메뉴바', '상단 메뉴', 'menu bar'],
+    category: 'actions',
+    status: 'stable',
+    addedIn: 'v0.16.0',
+    changedIn: 'v0.16.0',
+    purpose: '가로로 늘어선 메뉴 묶음을 제공한다. 데스크톱 앱의 File/Edit/View 같은 자리다.',
+    verified: true,
+    anatomy: [
+      {
+        part: 'trigger',
+        label: 'Trigger',
+        note: '가로로 늘어선 트리거 각각이 하나의 메뉴를 연다. 열리면 트리거 아래에 목록이 뜬다. bg-popover, 테두리, radius-md, 쌓임 순서는 z-popover. 항목은 Dropdown Menu와 같은 규칙(text-16, 포커스 bg-accent, 위험 항목 text-destructive)이다. 값을 켜고 끄는 항목은 CheckboxItem으로 왼쪽에 체크 표시를 둔다.',
+      },
+    ],
+    properties: [
+      {
+        name: 'state',
+        title: 'State',
+        description: '트리거의 상호작용 상태를 나타낸다. 열림은 눌러야만 보이는 값이라 이 격자에는 없다 — Usage에서 실제로 눌러서 본다.',
+        display: 'grid',
+        options: [
+          { value: 'default' },
+          { value: 'hover', note: '포인터가 올라간 동안' },
+          { value: 'disabled', note: '지금 열 수 없음' },
+        ],
+      },
+    ],
+    guidelines: [
+      {
+        id: 'few-top-level-menus',
+        title: 'Few top-level menus',
+        body: '가로로 늘어선 메뉴가 많아지면 한 화면에서 훑어보기 어렵습니다. 최상위 메뉴는 서너 개 안으로 둡니다 — 더 필요하면 하위 메뉴가 아니라 화면 구조 자체를 다시 생각합니다.',
+        do: ['최상위 메뉴를 서너 개 안으로 둔다'],
+        dont: ['최상위 메뉴를 여러 줄로 늘어놓지 않는다'],
+      },
+    ],
+    usage: [
+      { id: 'app-shell', title: '앱 셸 메뉴바', note: 'File · Edit · View 세 메뉴로 데스크톱 앱 스타일의 상단 메뉴바를 구성한다.' },
+    ],
+    cases: [
+      { id: 'disabled-menu', title: '지금 쓸 수 없는 항목', note: '문서가 없어 저장할 게 없을 때는 File 메뉴 자체가 아니라 그 안의 저장 항목만 비활성화한다.' },
+    ],
+  },
+  {
     id: 'toggle',
     name: 'Toggle',
     aliases: ['토글', '토글 그룹', 'toggle group', '세그먼트', 'segmented control', '눌린 버튼'],
@@ -2890,6 +2936,52 @@ export const components: ComponentMeta[] = [
       },
     ],
     verified: false,
+  },
+  {
+    id: 'resizable',
+    name: 'Resizable',
+    aliases: ['크기 조절', '분할', 'split', 'panel', '패널'],
+    category: 'data-display',
+    status: 'stable',
+    addedIn: 'v0.16.0',
+    changedIn: 'v0.16.0',
+    purpose: '화면을 여러 패널로 나누고, 경계를 드래그해 각 패널의 크기를 바꾸게 한다.',
+    verified: true,
+    anatomy: [
+      {
+        part: 'handle',
+        label: 'Handle',
+        note: '패널 사이의 경계선. 가운데 그립 아이콘(선택)으로 드래그 가능함을 알린다. 세로 분할(orientation=vertical)에서는 가로선으로, 가로 분할에서는 세로선으로 90도 돈다. 포커스되면 ring이 뜬다 — 키보드(방향키)로도 크기를 조절할 수 있다.',
+      },
+    ],
+    properties: [
+      {
+        name: 'orientation',
+        title: 'Orientation',
+        description: '패널이 가로로 나뉘는지 세로로 나뉘는지 정한다.',
+        display: 'row',
+        options: [
+          { value: 'horizontal', note: '좌우로 나뉜다' },
+          { value: 'vertical', note: '위아래로 나뉜다' },
+        ],
+      },
+    ],
+    guidelines: [
+      {
+        id: 'min-size',
+        title: 'Set a minimum size',
+        body: '패널을 끝까지 좁히면 안의 내용이 잘리거나 아예 안 보이게 됩니다. 각 패널에 최소 크기를 둬 내용이 항상 읽히게 합니다.',
+        do: ['각 패널에 defaultSize·minSize를 두어 너무 좁아지지 않게 한다'],
+        dont: ['최소 크기 없이 패널이 0까지 줄어들게 두지 않는다'],
+      },
+    ],
+    usage: [
+      { id: 'master-detail', title: '마스터-디테일', note: '왼쪽은 목록, 오른쪽은 선택한 항목의 상세 — 전형적인 좌우 분할이다.' },
+      { id: 'vertical-split', title: '세로 분할', note: '위는 미리보기, 아래는 로그처럼 위아래로 나뉜 배치.' },
+    ],
+    cases: [
+      { id: 'narrow-screen', title: '좁은 화면', note: 'Resizable 자체는 반응형을 강제하지 않는다 — 좁은 화면에서 드래그로 나누는 대신 위아래로 쌓을지는 호출부가 결정한다.' },
+    ],
   },
   {
     id: 'scroll-area',
