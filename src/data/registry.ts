@@ -3150,7 +3150,7 @@ export const components: ComponentMeta[] = [
     category: 'data-display',
     status: 'stable',
     addedIn: 'v0.8.0',
-    changedIn: 'v0.20.0',
+    changedIn: 'v0.21.0',
     purpose: '어드민의 중심 화면이다. 여러 행의 데이터를 칸으로 나누어 보이고, 정렬 가능한 열은 이름을 누르는 단추로, 지금 방향은 aria-sort로 드러낸다. 다음 방향을 고르는 일은 호출하는 쪽의 몫이다.',
     anatomy: [
       { part: 'header', label: 'Header', note: 'bg-surface. 열 이름을 담는 행. text-12 font-bold' },
