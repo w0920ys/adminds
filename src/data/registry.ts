@@ -3476,6 +3476,45 @@ export const components: ComponentMeta[] = [
     verified: true,
   },
   {
+    id: 'chart-radial',
+    name: 'Chart Radial',
+    aliases: ['방사형 막대', '원형 진행률', 'radial chart', 'radial bar'],
+    category: 'chart',
+    status: 'stable',
+    addedIn: 'v0.18.0',
+    changedIn: 'v0.18.0',
+    purpose: '목표 대비 달성률이나 여러 항목의 합을 둥근 막대로 보인다.',
+    anatomy: [],
+    properties: [
+      {
+        name: 'showLabel',
+        title: 'Show label',
+        description: '가운데에 합계 숫자를 보일지 정한다.',
+        display: 'row',
+        options: [
+          { value: 'off', note: '기본' },
+          { value: 'on', note: '단일 계열일 때 가운데에 총합을 숫자로 보인다' },
+        ],
+      },
+    ],
+    guidelines: [
+      {
+        id: 'two-data-shapes',
+        title: '단일 계열과 다계열은 데이터 모양이 다르다',
+        body: '계열이 하나면 항목마다 다른 색(fill)을 데이터에 직접 적어 하나의 링에 나눠 그린다. 계열이 둘 이상이면 config의 각 시리즈가 겹겹이 쌓인 링이 된다 — 서로 다른 데이터 모양이니 섞어 쓰지 않는다.',
+        do: [],
+        dont: ['단일 계열용 데이터에 시리즈를 여러 개 얹어 다계열처럼 쓰지 않는다'],
+      },
+    ],
+    usage: [
+      { id: 'goal-progress', title: '목표 달성률', note: '단일 계열 + 가운데 라벨로 진행률을 보인다' },
+    ],
+    cases: [
+      { id: 'stacked-total', title: '항목별 합계', note: '여러 항목이 쌓여 전체 합을 보인다' },
+    ],
+    verified: true,
+  },
+  {
     id: 'alert',
     name: 'Alert',
     aliases: ['경고', '배너', 'banner', 'notice', '안내'],

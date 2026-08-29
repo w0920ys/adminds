@@ -386,6 +386,26 @@
       ]
     },
     {
+      "name": "chart-radial",
+      "type": "registry:ui",
+      "title": "Chart Radial",
+      "dependencies": [
+        "recharts",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://adminds.vercel.app/r/card.json",
+        "https://adminds.vercel.app/r/chart.json",
+        "https://adminds.vercel.app/r/tokens.json"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/chart-radial.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "checkbox",
       "type": "registry:ui",
       "title": "Checkbox",
@@ -1042,7 +1062,7 @@
       "name": "adminds",
       "type": "registry:item",
       "title": "Admin Design System",
-      "description": "토큰과 컴포넌트 마흔일곱 개를 한 번에 가져온다.",
+      "description": "토큰과 컴포넌트 마흔여덟 개를 한 번에 가져온다.",
       "registryDependencies": [
         "https://adminds.vercel.app/r/accordion.json",
         "https://adminds.vercel.app/r/alert.json",
@@ -1057,6 +1077,7 @@
         "https://adminds.vercel.app/r/chart-line.json",
         "https://adminds.vercel.app/r/chart-pie.json",
         "https://adminds.vercel.app/r/chart-radar.json",
+        "https://adminds.vercel.app/r/chart-radial.json",
         "https://adminds.vercel.app/r/checkbox.json",
         "https://adminds.vercel.app/r/collapsible.json",
         "https://adminds.vercel.app/r/combobox.json",
