@@ -91,6 +91,18 @@
       ]
     },
     {
+      "name": "format",
+      "type": "registry:lib",
+      "title": "Format",
+      "description": "퍼센트를 소수 자릿수 지정해 문자열로 만드는 순수 함수. Chart Funnel이 전환율을 보일 때 쓴다.",
+      "files": [
+        {
+          "path": "src/lib/format.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
       "name": "filter-options",
       "type": "registry:lib",
       "title": "Filter Options",
@@ -309,6 +321,26 @@
       "files": [
         {
           "path": "src/components/ui/chart-bar.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "chart-funnel",
+      "type": "registry:ui",
+      "title": "Chart Funnel",
+      "dependencies": [
+        "recharts"
+      ],
+      "registryDependencies": [
+        "https://adminds.vercel.app/r/card.json",
+        "https://adminds.vercel.app/r/chart.json",
+        "https://adminds.vercel.app/r/format.json",
+        "https://adminds.vercel.app/r/tokens.json"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/chart-funnel.tsx",
           "type": "registry:ui"
         }
       ]
@@ -1046,7 +1078,7 @@
       "name": "adminds",
       "type": "registry:item",
       "title": "Admin Design System",
-      "description": "토큰과 컴포넌트 마흔여덟 개를 한 번에 가져온다.",
+      "description": "토큰과 컴포넌트 마흔아홉 개를 한 번에 가져온다.",
       "registryDependencies": [
         "https://adminds.vercel.app/r/accordion.json",
         "https://adminds.vercel.app/r/alert.json",
@@ -1058,6 +1090,7 @@
         "https://adminds.vercel.app/r/card.json",
         "https://adminds.vercel.app/r/chart-area.json",
         "https://adminds.vercel.app/r/chart-bar.json",
+        "https://adminds.vercel.app/r/chart-funnel.json",
         "https://adminds.vercel.app/r/chart-line.json",
         "https://adminds.vercel.app/r/chart-pie.json",
         "https://adminds.vercel.app/r/chart-radar.json",

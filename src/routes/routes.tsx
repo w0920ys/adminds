@@ -13,6 +13,7 @@ import { ButtonPage } from '@/routes/components/ButtonPage'
 import { CardPage } from '@/routes/components/CardPage'
 import { ChartAreaPage } from '@/routes/components/ChartAreaPage'
 import { ChartBarPage } from '@/routes/components/ChartBarPage'
+import { ChartFunnelPage } from '@/routes/components/ChartFunnelPage'
 import { ChartLinePage } from '@/routes/components/ChartLinePage'
 import { ChartPiePage } from '@/routes/components/ChartPiePage'
 import { ChartRadarPage } from '@/routes/components/ChartRadarPage'
@@ -144,6 +145,7 @@ export const routes: RouteObject[] = [
           { path: 'resizable', element: <ResizablePage /> },
           { path: 'chart-area', element: <ChartAreaPage /> },
           { path: 'chart-bar', element: <ChartBarPage /> },
+          { path: 'chart-funnel', element: <ChartFunnelPage /> },
           { path: 'chart-line', element: <ChartLinePage /> },
           { path: 'chart-pie', element: <ChartPiePage /> },
           { path: 'chart-radar', element: <ChartRadarPage /> },

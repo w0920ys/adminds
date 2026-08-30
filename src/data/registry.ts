@@ -3369,6 +3369,34 @@ export const components: ComponentMeta[] = [
     verified: true,
   },
   {
+    id: 'chart-funnel',
+    name: 'Chart Funnel',
+    aliases: ['퍼널 차트', '깔때기 차트', 'funnel chart', '전환율'],
+    category: 'chart',
+    status: 'stable',
+    addedIn: 'v0.21.0',
+    changedIn: 'v0.21.0',
+    purpose: '여러 단계를 거치며 줄어드는 값을 보인다. 어디서 많이 빠지는지, 처음부터 끝까지 몇 %가 남는지를 함께 본다.',
+    anatomy: [],
+    properties: [],
+    guidelines: [
+      {
+        id: 'read-step-over-step',
+        title: '전체 대비가 아니라 직전 단계 대비로 읽는다',
+        body: '초반 단계는 원래 모수가 커서 전체 대비 비율이 낮게 나오는 게 당연하다. 정작 봐야 할 것은 각 전환 지점에서 얼마나 새는가라, 도형 안 라벨은 직전 단계 대비 전환율을 보이고 전체 전환율은 위에 따로 한 줄로 둔다.',
+        do: ['어디서 많이 빠지는지는 직전 단계 대비로 본다'],
+        dont: ['초반 단계의 낮은 전체 대비 비율만 보고 문제라 판단하지 않는다'],
+      },
+    ],
+    usage: [
+      { id: 'spin-funnel', title: '룰렛 참여 퍼널', note: '세션에서 확정까지 네 단계의 전환을 본다' },
+    ],
+    cases: [
+      { id: 'step-increase', title: '중간 단계가 늘어난 경우', note: '직전 대비 100%를 넘는 구간도 그대로 보인다' },
+    ],
+    verified: true,
+  },
+  {
     id: 'chart-line',
     name: 'Chart Line',
     aliases: ['선 차트', '꺾은선 그래프', '추세선', 'line chart'],

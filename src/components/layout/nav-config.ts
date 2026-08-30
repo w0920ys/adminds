@@ -136,6 +136,7 @@ export const sections: NavSection[] = [
         items: [
           { to: '/components/chart-area', label: 'Chart Area', updatedAt: '2026-08-29' },
           { to: '/components/chart-bar', label: 'Chart Bar', updatedAt: '2026-08-29' },
+          { to: '/components/chart-funnel', label: 'Chart Funnel', updatedAt: '2026-08-30' },
           { to: '/components/chart-line', label: 'Chart Line', updatedAt: '2026-08-29' },
           { to: '/components/chart-pie', label: 'Chart Pie', updatedAt: '2026-08-29' },
           { to: '/components/chart-radar', label: 'Chart Radar', updatedAt: '2026-08-29' },

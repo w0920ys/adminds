@@ -1,0 +1,14 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "format",
+  "title": "Format",
+  "description": "퍼센트를 소수 자릿수 지정해 문자열로 만드는 순수 함수. Chart Funnel이 전환율을 보일 때 쓴다.",
+  "files": [
+    {
+      "path": "src/lib/format.ts",
+      "content": "/**\n * 퍼센트를 소수점 자릿수 지정해 문자열로 만든다. digits 기본값은 1 —\n * ChartFunnel의 전체 전환율처럼 한 자리 소수가 필요한 자리에 맞춘다.\n * 반올림은 Number.toFixed에 그대로 맡긴다 — 이 값들은 화면에 보이는\n * 요약 수치라 계산 정밀도(은행가 반올림 등)까지 다툴 자리가 아니다.\n */\nexport function formatPercent(n: number, digits = 1): string {\n  return `${n.toFixed(digits)}%`\n}\n",
+      "type": "registry:lib"
+    }
+  ],
+  "type": "registry:lib"
+}
