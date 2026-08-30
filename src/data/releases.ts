@@ -29,6 +29,40 @@ export type Release = {
 /** 최신 버전이 배열의 맨 앞이다. */
 export const releases: Release[] = [
   {
+    version: 'v0.21.0',
+    publishedAt: '2026-08-30',
+    title: 'GNB·LNB·Alert·파비콘을 다듬고 표·타이포 버그를 마저 고쳤어요',
+    purpose:
+      'GNB 검색 버튼을 나머지 버튼과 같은 모양으로 통일하고, 검색창 모바일 위치·LNB 메뉴 크기·Alert 아이콘 크기를 고쳤어요. 파비콘을 실제 로고와 같은 도형으로 바꾸고, 표·타이포그래피의 남은 버그도 정리했어요.',
+    changes: [
+      {
+        target: 'Layout',
+        type: 'Fixed',
+        note: 'GNB 검색 버튼을 테마·메뉴 버튼과 같은 모양으로 통일하고, 검색창을 모바일 최상단에 붙였어요. LNB 메뉴 항목도 더 키웠어요.',
+      },
+      { target: 'Components / Alert', type: 'Fixed', note: '아이콘이 Title보다 작아 보이던 것을 고쳤어요.' },
+      {
+        target: 'Components / Table',
+        type: 'Fixed',
+        note: '가로 스크롤 가능함을 가장자리 페이드로 알리고, 좁은 열이 줄바꿈 대신 스크롤되게 했어요.',
+      },
+      {
+        target: 'Components / Card',
+        type: 'Fixed',
+        note: 'Action 없는 헤더에서 제목이 한 글자씩 줄바꿈되던 문제를 고쳤어요.',
+      },
+      {
+        target: 'Foundations / Typography',
+        type: 'Fixed',
+        note: '모바일에서는 text-11·text-12를 text-14로 강제 승격해요.',
+      },
+      { target: 'Brand', type: 'Fixed', note: '파비콘을 실제 GNB 로고와 같은 도형으로 바꿨어요.' },
+    ],
+    requests: [],
+    reviewItems: [],
+    impact: ['Components', 'Layout', 'Foundations'],
+  },
+  {
     version: 'v0.20.0',
     publishedAt: '2026-08-30',
     title: '표·내비게이션의 모바일 터치 영역을 다듬었어요',

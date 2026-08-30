@@ -42,7 +42,8 @@ const MENTIONS: Record<string, number> = {
   'src/lib/tokens.ts': 1,
   'src/lib/utils.ts': 4,
   'src/lib/utils.test.ts': 4,
-  'src/data/releases.ts': 1,
+  /* v0.21.0 회차 노트가 text-11·text-12 모바일 승격을 설명하며 한 번 더 언급한다 */
+  'src/data/releases.ts': 2,
   'src/components/docs/DocPage.tsx': 1,
   'src/components/docs/DocStatus.tsx': 1,
   'src/components/ui/badge.tsx': 1,
