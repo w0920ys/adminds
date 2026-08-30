@@ -845,6 +845,26 @@
       ]
     },
     {
+      "name": "stat-card",
+      "type": "registry:ui",
+      "title": "Stat Card",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://adminds.vercel.app/r/card.json",
+        "https://adminds.vercel.app/r/tokens.json",
+        "https://adminds.vercel.app/r/tooltip.json",
+        "https://adminds.vercel.app/r/trend-badge.json"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/stat-card.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "sheet",
       "type": "registry:ui",
       "title": "Sheet",
@@ -1096,7 +1116,7 @@
       "name": "adminds",
       "type": "registry:item",
       "title": "Admin Design System",
-      "description": "토큰과 컴포넌트 쉰 개를 한 번에 가져온다.",
+      "description": "토큰과 컴포넌트 쉰한 개를 한 번에 가져온다.",
       "registryDependencies": [
         "https://adminds.vercel.app/r/accordion.json",
         "https://adminds.vercel.app/r/alert.json",
@@ -1136,6 +1156,7 @@
         "https://adminds.vercel.app/r/scroll-area.json",
         "https://adminds.vercel.app/r/select.json",
         "https://adminds.vercel.app/r/separator.json",
+        "https://adminds.vercel.app/r/stat-card.json",
         "https://adminds.vercel.app/r/sheet.json",
         "https://adminds.vercel.app/r/skeleton.json",
         "https://adminds.vercel.app/r/slider.json",

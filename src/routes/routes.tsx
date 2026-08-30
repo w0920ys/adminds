@@ -45,6 +45,7 @@ import { SeparatorPage } from '@/routes/components/SeparatorPage'
 import { SheetPage } from '@/routes/components/SheetPage'
 import { SkeletonPage } from '@/routes/components/SkeletonPage'
 import { SliderPage } from '@/routes/components/SliderPage'
+import { StatCardPage } from '@/routes/components/StatCardPage'
 import { StepsPage } from '@/routes/components/StepsPage'
 import { SwitchPage } from '@/routes/components/SwitchPage'
 import { TablePage } from '@/routes/components/TablePage'
@@ -131,6 +132,7 @@ export const routes: RouteObject[] = [
           { path: 'sheet', element: <SheetPage /> },
           { path: 'progress', element: <ProgressPage /> },
           { path: 'empty-state', element: <EmptyStatePage /> },
+          { path: 'stat-card', element: <StatCardPage /> },
           { path: 'table', element: <TablePage /> },
           { path: 'trend-badge', element: <TrendBadgePage /> },
           { path: 'data-table', element: <DataTablePage /> },

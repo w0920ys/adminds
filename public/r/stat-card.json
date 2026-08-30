@@ -1,0 +1,22 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "stat-card",
+  "title": "Stat Card",
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://adminds.vercel.app/r/card.json",
+    "https://adminds.vercel.app/r/tokens.json",
+    "https://adminds.vercel.app/r/tooltip.json",
+    "https://adminds.vercel.app/r/trend-badge.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/stat-card.tsx",
+      "content": "import { Info } from 'lucide-react'\nimport { Card, CardContent } from '@/components/ui/card'\nimport { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'\nimport { TrendBadge } from '@/components/ui/trend-badge'\n\n/*\n * KPI 타일. 어느 관리자 대시보드에나 있는 \"라벨 + 큰 숫자 + 증감\" 조합을\n * Card 위에 고정 배치한 것 — Card 자체는 범용이라 이 조합을 반복해서\n * 손으로 짜지 않도록 별도 컴포넌트로 승격했다.\n *\n * value는 이미 포맷된 문자열을 받는다 — 단위(₩, %, 만 단위 축약 등)는\n * 서비스마다 다른 포맷 규칙이라 이 컴포넌트가 알 필요가 없다(소비자의\n * format 유틸이 책임진다).\n *\n * hint(Info 아이콘)가 있으면 호출부가 트리를 TooltipProvider로 감싸야\n * 한다 — 안 감싸면 Tooltip이 런타임 에러를 던진다. 이 저장소는\n * AppShell이 최상단에서 감싸므로 문서·실제 화면 모두 안전하다.\n */\nexport function StatCard({\n  label,\n  value,\n  deltaPct,\n  higherIsBetter = true,\n  hint,\n}: {\n  label: string\n  value: string\n  deltaPct?: number\n  higherIsBetter?: boolean\n  hint?: string\n}) {\n  return (\n    <Card>\n      <CardContent className=\"flex flex-col gap-2\">\n        <div className=\"flex items-center gap-1.5\">\n          <span className=\"text-muted-foreground text-12 font-medium\">{label}</span>\n          {hint && (\n            <Tooltip>\n              <TooltipTrigger asChild>\n                <button\n                  type=\"button\"\n                  className=\"text-muted-foreground/70 hover:text-foreground -m-1 p-1\"\n                  aria-label={`${label} 설명`}\n                >\n                  <Info className=\"size-3\" />\n                </button>\n              </TooltipTrigger>\n              <TooltipContent>{hint}</TooltipContent>\n            </Tooltip>\n          )}\n        </div>\n        <div className=\"flex items-end justify-between gap-2\">\n          {/*\n           * whitespace-nowrap을 원본에 더한다 — 좁은 그리드 칸(대시보드 KPI\n           * 타일을 grid-cols-2 이상으로 두는 흔한 배치)에서 줄바꿈 없는 이\n           * span이 flex 폭에 눌리면 \"1,204명\" 같은 값이 \"1,204\"/\"명\"으로\n           * 글자 중간이 아니라 숫자와 단위 사이에서 줄이 바뀌었다 — 숫자는\n           * 절대 줄바꿈되면 안 된다. 폭이 정말 부족하면 줄바꿈 대신 카드\n           * 밖으로 넘치는 쪽을 택한다.\n           */}\n          <span className=\"text-24 font-semibold tracking-tight tabular-nums whitespace-nowrap\">\n            {value}\n          </span>\n          {deltaPct != null && (\n            <span className=\"mb-0.5 shrink-0\">\n              <TrendBadge deltaPct={deltaPct} higherIsBetter={higherIsBetter} />\n            </span>\n          )}\n        </div>\n      </CardContent>\n    </Card>\n  )\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

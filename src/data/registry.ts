@@ -3144,6 +3144,64 @@ export const components: ComponentMeta[] = [
     verified: false,
   },
   {
+    id: 'stat-card',
+    name: 'Stat Card',
+    aliases: ['통계 카드', 'KPI 카드', '지표 카드', 'kpi', 'metric card'],
+    category: 'data-display',
+    status: 'stable',
+    addedIn: 'v0.21.0',
+    changedIn: 'v0.21.0',
+    purpose: '라벨 + 큰 숫자 + 증감을 한 타일로 보인다. 대시보드 어디에나 반복되는 KPI 조합을 Card로 매번 손으로 짜지 않도록 승격한 것이다.',
+    anatomy: [],
+    properties: [
+      {
+        name: 'delta',
+        title: 'Delta',
+        description: '증감 배지를 보일지 정한다. deltaPct를 생략하면 배지 없이 값만 보인다.',
+        display: 'row',
+        options: [
+          { value: 'shown', note: '기본. 이전 기간과 비교할 값이 있을 때' },
+          { value: 'hidden', note: '첫 집계처럼 비교할 이전 값이 아직 없을 때' },
+        ],
+      },
+      {
+        name: 'hint',
+        title: 'Hint',
+        description: '라벨 옆에 설명 툴팁을 보일지 정한다.',
+        display: 'row',
+        options: [
+          { value: 'hidden', note: '기본' },
+          { value: 'shown', note: '지표 이름만으로 뜻이 짐작되지 않을 때' },
+        ],
+      },
+    ],
+    guidelines: [
+      {
+        id: 'value-already-formatted',
+        title: '값은 이미 포맷된 문자열로 받는다',
+        body: '단위(₩, %, 만 단위 축약 등)는 서비스마다 다른 규칙이라 이 컴포넌트가 알지 못합니다. 호출하는 쪽이 포맷을 마친 문자열을 value로 넘깁니다.',
+        do: ['호출부의 format 유틸로 통화·퍼센트·단위를 미리 붙인 문자열을 넘긴다'],
+        dont: ['StatCard 안에 단위나 자릿수 포맷 로직을 새로 넣지 않는다'],
+      },
+      {
+        id: 'tooltip-provider-required',
+        title: 'hint를 쓰려면 TooltipProvider가 필요하다',
+        body: '호출하는 쪽에서 트리를 TooltipProvider로 감싸지 않으면 hint가 있을 때 런타임 에러가 납니다. 이 저장소는 AppShell이 최상단에서 이미 감싸므로 별도 조치 없이 안전합니다.',
+        do: ['앱 최상단(AppShell 등)에서 TooltipProvider로 트리를 감싼 뒤 hint를 쓴다'],
+        dont: ['TooltipProvider 없는 트리에 hint만 급하게 추가하지 않는다'],
+      },
+    ],
+    usage: [
+      { id: 'dashboard-grid', title: '대시보드 KPI 그리드', note: '여러 StatCard를 grid로 나란히 두어 핵심 지표를 한눈에 본다' },
+      { id: 'with-hint', title: '설명이 필요한 지표', note: '지표 이름만으로 뜻이 짐작되지 않을 때 hint로 보충한다' },
+    ],
+    cases: [
+      { id: 'no-delta', title: '증감이 없는 경우', note: 'deltaPct를 생략하면 배지 없이 값만 보인다' },
+      { id: 'negative-value', title: '값 자체가 음수인 경우', note: '순손실처럼 값 자체가 음수여도 포맷은 호출부 책임이라 그대로 보인다' },
+    ],
+    verified: true,
+  },
+  {
     id: 'table',
     name: 'Table',
     aliases: ['테이블', '표', '목록', 'grid', 'list'],
