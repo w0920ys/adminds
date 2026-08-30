@@ -58,6 +58,15 @@ type CalendarCommonProps = {
   disabledReason?: string
   size?: CalendarSize
   className?: string
+  /*
+   * 달 이동 줄(이전·다음 버튼 + 'YYYY년 M월')과 요일+날짜 격자 table에
+   * 임의 속성을 얹는 통로다. Tabs의 indicatorProps와 같은 이유로 연다 —
+   * 무엇을 실을지는 소비자가 정하므로 이 컴포넌트는 내용을 알지 못한다.
+   * 문서 페이지가 data-anatomy를 여기로 흘려보내 Anatomy 지시선이 실제
+   * DOM에 닿게 한다.
+   */
+  headerProps?: React.ComponentProps<'div'> & { [dataAttr: `data-${string}`]: string }
+  gridProps?: React.ComponentProps<'table'> & { [dataAttr: `data-${string}`]: string }
 }
 
 type CalendarSingleProps = CalendarCommonProps & {
@@ -100,6 +109,8 @@ function Calendar(props: CalendarProps) {
     className,
     selected,
     onSelect,
+    headerProps,
+    gridProps,
   } = props as CalendarInternalProps
 
   const isRange = mode === 'range'
@@ -222,7 +233,10 @@ function Calendar(props: CalendarProps) {
 
   return (
     <div data-slot="calendar" className={cn('w-fit', className)}>
-      <div className="mb-2 flex items-center justify-between px-1">
+      <div
+        {...headerProps}
+        className={cn('mb-2 flex items-center justify-between px-1', headerProps?.className)}
+      >
         <button
           type="button"
           aria-label="이전 달"
@@ -250,7 +264,8 @@ function Calendar(props: CalendarProps) {
        * aria-selected를 어떻게 달지까지 가른다.
        */}
       <table
-        className="w-full border-collapse"
+        {...gridProps}
+        className={cn('w-full border-collapse', gridProps?.className)}
         role="grid"
         aria-multiselectable={isRange || undefined}
       >

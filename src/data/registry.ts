@@ -513,6 +513,104 @@ export const components: ComponentMeta[] = [
     verified: false,
   },
   {
+    id: 'calendar',
+    name: 'Calendar',
+    aliases: ['달력', '날짜 격자', 'date grid'],
+    category: 'inputs',
+    status: 'stable',
+    addedIn: 'v0.23.0',
+    changedIn: 'v0.23.0',
+    purpose:
+      '날짜 하나 또는 기간을 고르는 달력 그 자체다. Date Picker가 이 위에 트리거·팝오버를 얹는다 — 팝오버로 접어 두지 않고 달력을 화면에 계속 펼쳐 둬야 할 때(예약 가능일 확인, 필터 사이드바)는 이 컴포넌트를 직접 쓴다.',
+    /*
+     * Date Picker와 달리 Popover 포털 안에 숨지 않고 무대에 그대로 남는다 —
+     * 그래서 지시선을 실제로 그릴 수 있다. 다만 요일 줄과 날짜 격자는 한
+     * table 안에서 thead·tbody로만 나뉘어 서로 다른 DOM 경계가 없다 — 두
+     * 부위로 쪼개려면 Calendar 안에 임의 개수의 data-anatomy 통로를
+     * 늘려야 하는데, 그 대가로 실제로 얻는 것은 '요일 줄'과 '격자'를
+     * 가리키는 지시선 두 개뿐이다. header(달 이동)와 grid(요일+날짜를
+     * 담은 표 전체) 둘로 좁혀 header·gridProps 두 통로만 연다.
+     */
+    anatomy: [
+      {
+        part: 'header',
+        label: 'Header',
+        note: "이전·다음 달 버튼과 'YYYY년 M월'. 버튼은 원형 아이콘 단추, 라벨은 aria-live=polite로 달이 바뀌면 다시 읽힌다",
+      },
+      {
+        part: 'grid',
+        label: 'Grid',
+        note: '요일 머리글(일~토) + 6주×7일 날짜 격자. role=grid, WAI-ARIA grid 패턴의 roving tabIndex로 화살표·Home·End·PageUp·PageDown이 초점을 옮긴다. 오늘은 테두리, 고른 날은 채운 배경, range 가운데 구간은 옅은 배경, 고를 수 없는 날은 취소선으로 나뉜다',
+      },
+    ],
+    properties: [
+      {
+        name: 'size',
+        title: 'Size',
+        description: '날짜 칸 한 변의 길이와 글자 크기를 함께 정한다.',
+        display: 'row',
+        options: [{ value: 'sm' }, { value: 'default' }, { value: 'lg' }],
+      },
+      {
+        name: 'mode',
+        title: 'Mode',
+        description: '날짜 하나를 고르는지 기간을 고르는지 정한다.',
+        display: 'row',
+        options: [
+          { value: 'single', note: '기본. 날짜 하나를 고른다' },
+          { value: 'range', note: '시작과 끝, 두 날짜를 고른다' },
+        ],
+      },
+      {
+        name: 'state',
+        title: 'State',
+        description: '상호작용 상태를 나타낸다.',
+        display: 'grid',
+        options: [
+          { value: 'default' },
+          { value: 'hover', note: '포인터가 올라간 동안' },
+          { value: 'focus', note: '키보드로 짚은 칸. roving tabIndex라 격자 안 한 칸만 이 상태를 가진다' },
+          { value: 'disabled', note: 'isDateDisabled로 고를 수 없게 막은 날. aria-disabled와 취소선으로 알린다' },
+        ],
+      },
+    ],
+    guidelines: [
+      {
+        id: 'today-vs-selected',
+        title: 'Today vs selected',
+        body: '오늘과 고른 날을 다르게 표시합니다. 둘이 같은 모양이면 오늘을 이미 고른 것으로 읽습니다.',
+        do: ['오늘은 테두리로, 고른 날은 채운 배경으로 나눈다'],
+        dont: ['오늘과 고른 날을 같은 채운 배경으로 그리지 않는다'],
+      },
+      {
+        id: 'disabled-reason',
+        title: 'Disabled reason',
+        body: '고를 수 없는 날은 이유를 알립니다. 취소선만 두면 왜 안 되는지 알 수 없습니다.',
+        do: ['고를 수 없는 날에 이유를 title과 aria-label로 함께 단다'],
+        dont: ['이유 없이 취소선만 긋지 않는다'],
+      },
+      {
+        id: 'range-shows-both-ends',
+        title: 'Range shows both ends',
+        body: '범위는 시작과 끝, 그 사이를 함께 보입니다. 끝 두 날만 표시하면 사이의 날들이 고른 것에 들지 않는 것처럼 읽힙니다.',
+        do: ['시작과 끝 사이 구간을 옅은 배경으로 이어 그린다'],
+        dont: ['시작·끝 두 날만 채우고 사이는 빈 채로 두지 않는다'],
+      },
+    ],
+    usage: [
+      { id: 'availability-widget', title: '예약 가능일 위젯', note: '팝오버로 접지 않고 항상 펼쳐 둬 바로 고르게 한다' },
+      { id: 'filter-sidebar', title: '필터 사이드바의 기간 선택', note: 'range 모드로 시작·끝을 사이드바에 계속 보여준다' },
+      { id: 'reference-widget', title: '조회 기준일 위젯', note: '대시보드 상단에 고정해 지금 보는 기준일을 알린다' },
+    ],
+    cases: [
+      { id: 'block-before-today', title: '오늘 이전을 막는 경우', note: '고를 수 없는 날에 이유를 함께 단다' },
+      { id: 'range-partial', title: '기간의 시작만 고른 경우', note: '시작 칸만 채워지고 끝은 아직 비어 있다' },
+      { id: 'range-over-a-month', title: '범위가 한 달을 넘는 경우', note: '달을 넘겨야 끝을 볼 수 있다' },
+      { id: 'narrow-screen', title: '좁은 화면', note: 'sm 크기로 격자 전체 폭을 줄인다' },
+    ],
+    verified: false,
+  },
+  {
     id: 'checkbox',
     name: 'Checkbox',
     aliases: ['체크박스', '체크', '다중 선택', 'check'],

@@ -92,6 +92,7 @@ export const sections: NavSection[] = [
       {
         label: 'Inputs',
         items: [
+          { to: '/components/calendar', label: 'Calendar', updatedAt: '2026-08-31' },
           { to: '/components/checkbox', label: 'Checkbox', updatedAt: '2026-08-29' },
           { to: '/components/combobox', label: 'Combobox', updatedAt: '2026-08-26' },
           { to: '/components/date-picker', label: 'Date Picker', updatedAt: '2026-08-29' },

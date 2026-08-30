@@ -11,6 +11,7 @@ import { AvatarPage } from '@/routes/components/AvatarPage'
 import { BadgePage } from '@/routes/components/BadgePage'
 import { BreadcrumbPage } from '@/routes/components/BreadcrumbPage'
 import { ButtonPage } from '@/routes/components/ButtonPage'
+import { CalendarPage } from '@/routes/components/CalendarPage'
 import { CardPage } from '@/routes/components/CardPage'
 import { ChartAreaPage } from '@/routes/components/ChartAreaPage'
 import { ChartBarPage } from '@/routes/components/ChartBarPage'
@@ -115,6 +116,7 @@ export const routes: RouteObject[] = [
           { path: 'slider', element: <SliderPage /> },
           { path: 'checkbox', element: <CheckboxPage /> },
           { path: 'combobox', element: <ComboboxPage /> },
+          { path: 'calendar', element: <CalendarPage /> },
           { path: 'date-picker', element: <DatePickerPage /> },
           { path: 'radio', element: <RadioPage /> },
           { path: 'switch', element: <SwitchPage /> },
