@@ -19,11 +19,13 @@ import { cn } from '@/lib/utils'
  * 대비를 받는다. warning만 text-warning-foreground가 검정이다 —
  * --warning 자체가 밝은 색이라 흰 글자를 얹으면 Button에조차 없는 조합을
  * 새로 만드는 셈이라, 이미 검증된 --warning-foreground(검정)를 그대로
- * 물려쓴다. size-2.5(10px) 아이콘 + p-[3px] + box-content로 바깥 눈금은
- * 이전과 같은 16px을 유지해 레이아웃이 밀리지 않는다.
+ * 물려쓴다. size-2.5(10px) 아이콘은 실측해보니 Title(text-16)보다
+ * 눈에 띄게 작아 보였다 — size-4(16px, Title과 같은 크기) + p-1(4px) +
+ * box-content로 바깥 눈금을 24px로 키워 Title 줄과 시각적 무게가
+ * 비슷해지게 했다.
  */
 const alertVariants = cva(
-  'relative flex w-full items-start gap-3 rounded-md border p-4 text-16 [&>svg]:mt-0.5 [&>svg]:box-content [&>svg]:size-2.5 [&>svg]:shrink-0 [&>svg]:rounded-md [&>svg]:p-[3px]',
+  'relative flex w-full items-start gap-3 rounded-md border p-4 text-16 [&>svg]:box-content [&>svg]:size-4 [&>svg]:shrink-0 [&>svg]:rounded-md [&>svg]:p-1',
   {
     variants: {
       variant: {

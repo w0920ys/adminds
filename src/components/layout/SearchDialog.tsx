@@ -112,7 +112,15 @@ export function SearchDialog({
       <DialogContent
         size="lg"
         showClose={false}
-        className="mt-16 max-w-xl gap-0 self-start p-0"
+        /*
+         * self-start로 항상 화면 위쪽에 붙이되, 위 여백(mt)은 화면
+         * 크기로 가른다 — 데스크톱(mt-16, 64px)은 GNB 아래 적당히 뜬
+         * 자리가 검색창임을 알아보기 좋지만, 모바일은 화면 자체가
+         * 짧아 같은 64px이 입력 칸과 결과 목록이 함께 보이는 공간을
+         * 크게 깎았다(키보드까지 뜨면 더 줄어든다). sm(640px) 밑에서는
+         * mt-0으로 최상단(바깥 그릇의 p-4만 남은 여백)까지 바짝 붙인다.
+         */
+        className="mt-0 max-w-xl gap-0 self-start p-0 sm:mt-16"
         onKeyDown={onKeyDown}
       >
         <DialogTitle className="sr-only">문서 검색</DialogTitle>

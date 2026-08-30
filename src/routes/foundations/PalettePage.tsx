@@ -295,7 +295,7 @@ export function PalettePage() {
                 const match = hex ? nearest(hex, paletteHex) : null
                 return (
                   <tr key={row.cssVar}>
-                    <th scope="row" className="border-t px-3 py-2 font-medium">
+                    <th scope="row" className="border-t px-3 py-2 font-medium whitespace-nowrap">
                       <span className="flex items-center gap-2">
                         <span
                           className="size-4 shrink-0 rounded-sm border"

@@ -288,7 +288,7 @@ export function ColorRolePage() {
                 const pair = pairOf(row.name)!
                 return (
                   <tr key={row.cssVar}>
-                    <th scope="row" className="border-t px-3 py-2 font-medium">
+                    <th scope="row" className="border-t px-3 py-2 font-medium whitespace-nowrap">
                       <span className="flex items-center gap-2">
                         <span
                           className="size-4 shrink-0 rounded-sm border"
@@ -298,7 +298,7 @@ export function ColorRolePage() {
                         {row.name}
                       </span>
                     </th>
-                    <td className="text-muted-foreground border-t px-3 py-2">{pair}</td>
+                    <td className="text-muted-foreground border-t px-3 py-2 whitespace-nowrap">{pair}</td>
                     <td className="text-muted-foreground border-t px-1.5 py-1">
                       {hexes[row.name] && <CopyValue value={hexes[row.name]} className="text-12" />}
                     </td>
