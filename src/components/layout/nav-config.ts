@@ -129,6 +129,7 @@ export const sections: NavSection[] = [
           { to: '/components/scroll-area', label: 'Scroll Area', updatedAt: '2026-08-29' },
           { to: '/components/separator', label: 'Separator', updatedAt: '2026-08-29' },
           { to: '/components/table', label: 'Table', updatedAt: '2026-08-29' },
+          { to: '/components/trend-badge', label: 'Trend Badge', updatedAt: '2026-08-30' },
         ],
       },
       {

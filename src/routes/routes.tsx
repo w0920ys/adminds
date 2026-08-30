@@ -53,6 +53,7 @@ import { TextareaPage } from '@/routes/components/TextareaPage'
 import { ToastPage } from '@/routes/components/ToastPage'
 import { TogglePage } from '@/routes/components/TogglePage'
 import { TooltipPage } from '@/routes/components/TooltipPage'
+import { TrendBadgePage } from '@/routes/components/TrendBadgePage'
 import { ColorPage } from '@/routes/foundations/ColorPage'
 import { ColorRolePage } from '@/routes/foundations/ColorRolePage'
 import { DesignTokenPage } from '@/routes/foundations/DesignTokenPage'
@@ -131,6 +132,7 @@ export const routes: RouteObject[] = [
           { path: 'progress', element: <ProgressPage /> },
           { path: 'empty-state', element: <EmptyStatePage /> },
           { path: 'table', element: <TablePage /> },
+          { path: 'trend-badge', element: <TrendBadgePage /> },
           { path: 'data-table', element: <DataTablePage /> },
           { path: 'badge', element: <BadgePage /> },
           { path: 'avatar', element: <AvatarPage /> },

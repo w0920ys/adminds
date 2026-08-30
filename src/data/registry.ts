@@ -3249,6 +3249,64 @@ export const components: ComponentMeta[] = [
     verified: true,
   },
   {
+    id: 'trend-badge',
+    name: 'Trend Badge',
+    aliases: ['증감 배지', '증감률', '트렌드 배지', 'delta', 'trend'],
+    category: 'data-display',
+    status: 'stable',
+    addedIn: 'v0.21.0',
+    changedIn: 'v0.21.0',
+    purpose: '증감률을 화살표와 색으로 보인다. 색만으로 좋고 나쁨을 말하지 않는다.',
+    anatomy: [],
+    properties: [
+      {
+        name: 'direction',
+        title: 'Direction',
+        description: '증감의 방향을 정한다. 화살표 모양과 부호(+)를 함께 바꾼다.',
+        display: 'row',
+        options: [
+          { value: 'up', note: '증가. 화살표가 오른쪽 위를 향하고 +로 시작한다' },
+          { value: 'down', note: '감소. 화살표가 오른쪽 아래를 향한다' },
+        ],
+      },
+      {
+        name: 'meaning',
+        title: 'Meaning',
+        description: '이 지표가 증가할 때 좋은 신호인지 정한다. 색은 방향이 아니라 이 값으로 정해진다.',
+        display: 'row',
+        options: [
+          { value: 'higher-better', note: '기본. 매출·전환율처럼 증가가 좋은 지표' },
+          { value: 'lower-better', note: '이탈률처럼 감소가 좋은 지표' },
+        ],
+      },
+    ],
+    guidelines: [
+      {
+        id: 'color-alone',
+        title: 'Color alone',
+        body: '색만으로 좋고 나쁨을 말하지 않습니다. 화살표 아이콘과 색이 항상 같이 붙어 방향과 뜻을 함께 전합니다.',
+        do: ['화살표와 색을 함께 쓴다'],
+        dont: ['화살표 없이 색만으로 증감의 좋고 나쁨을 전하지 않는다'],
+      },
+      {
+        id: 'direction-vs-meaning',
+        title: '방향과 좋고 나쁨을 헷갈리지 않는다',
+        body: '증가(위쪽 화살표)가 항상 좋은 신호는 아닙니다. 이탈률처럼 감소가 좋은 지표는 higherIsBetter를 false로 두어, 증가해도 destructive 색이 붙게 합니다.',
+        do: ['호출하는 쪽에서 이 지표의 증가가 좋은지 나쁜지를 판단해 higherIsBetter를 넘긴다'],
+        dont: ['모든 지표에 higherIsBetter 기본값(true)을 그대로 쓰지 않는다'],
+      },
+    ],
+    usage: [
+      { id: 'stat-card-delta', title: 'StatCard의 증감 표시', note: '라벨과 큰 숫자 옆에 붙여 증감을 함께 보인다' },
+      { id: 'table-cell-delta', title: '표 셀의 증감 열', note: '행마다 직전 기간 대비 증감을 짧게 보인다' },
+    ],
+    cases: [
+      { id: 'zero', title: '증감이 0%인 경우', note: '0은 증가로 보고 +0.0%로 표시한다' },
+      { id: 'large-number', title: '자릿수가 늘어난 경우', note: '두 자리 이상이어도 줄바꿈하지 않는다' },
+    ],
+    verified: true,
+  },
+  {
     id: 'chart-area',
     name: 'Chart Area',
     aliases: ['영역 차트', '에어리어 차트', 'area chart'],

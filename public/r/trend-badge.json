@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "trend-badge",
+  "title": "Trend Badge",
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://adminds.vercel.app/r/tokens.json",
+    "https://adminds.vercel.app/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/trend-badge.tsx",
+      "content": "import { ArrowDownRight, ArrowUpRight } from 'lucide-react'\nimport { cn } from '@/lib/utils'\n\n/*\n * 증감률 배지. 방향(화살표)과 색(success/destructive)이 항상 같이 붙는다\n * — 색만으로 좋고 나쁨을 말하지 않는다(dataviz: 상태는 아이콘+라벨 동반).\n *\n * \"증가가 좋은 지표인지\"는 호출하는 쪽이 안다(예: 이탈률은 감소가 좋음) —\n * 그래서 higherIsBetter를 받는다. 기본값은 true(대부분의 지표가 그렇다).\n */\nexport function TrendBadge({\n  deltaPct,\n  higherIsBetter = true,\n  className,\n}: {\n  deltaPct: number\n  higherIsBetter?: boolean\n  className?: string\n}) {\n  const up = deltaPct >= 0\n  const good = up === higherIsBetter\n  const Icon = up ? ArrowUpRight : ArrowDownRight\n  const sign = up ? '+' : ''\n\n  return (\n    <span\n      className={cn(\n        'inline-flex items-center gap-0.5 text-12 font-semibold tabular-nums',\n        good ? 'text-success-on-tint' : 'text-destructive-on-tint',\n        className,\n      )}\n    >\n      <Icon className=\"size-3.5\" />\n      {sign}\n      {deltaPct.toFixed(1)}%\n    </span>\n  )\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}
