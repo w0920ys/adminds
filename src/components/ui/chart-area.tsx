@@ -84,7 +84,15 @@ export function ChartArea({
                 dataKey={key}
                 type="natural"
                 fill={gradient ? `url(#chart-area-fill-${gradientId}-${key})` : `var(--color-${key})`}
-                fillOpacity={0.4}
+                /*
+                 * 계열이 하나뿐이면(겹칠 상대가 없으면) fillOpacity를 거의
+                 * 불투명(0.9)으로 올린다 — 실측해보니 계열이 여럿이든
+                 * 하나든 항상 0.4를 쓰던 예전 값은, 같은 --chart-N 색인데도
+                 * 다른 차트 타입(Bar·Pie 등, 항상 불투명)보다 옅게 보이는
+                 * 원인이었다. 계열이 둘 이상 겹칠 때(특히 stacked)는 뒤
+                 * 레이어가 안 보이지 않도록 기존 0.4를 그대로 둔다.
+                 */
+                fillOpacity={seriesKeys.length > 1 ? 0.4 : 0.9}
                 stroke={`var(--color-${key})`}
                 stackId={stacked ? 'a' : undefined}
               />

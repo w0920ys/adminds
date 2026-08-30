@@ -38,8 +38,18 @@ export function ChartRadar({
             <ChartTooltip cursor={false} content={<ChartTooltipContent indicator={seriesKeys.length > 1 ? 'line' : 'dot'} />} />
             <PolarAngleAxis dataKey={categoryKey} />
             <PolarGrid gridType={gridType} />
+            {/*
+             * Chart Area와 같은 이유로 계열이 하나뿐일 때만 fillOpacity를
+             * 거의 불투명(0.9)으로 올린다 — 여럿이 겹칠 때(multiple)는
+             * 뒤 도형이 가려지지 않도록 기존 0.6을 그대로 둔다.
+             */}
             {seriesKeys.map((key) => (
-              <Radar key={key} dataKey={key} fill={`var(--color-${key})`} fillOpacity={0.6} />
+              <Radar
+                key={key}
+                dataKey={key}
+                fill={`var(--color-${key})`}
+                fillOpacity={seriesKeys.length > 1 ? 0.6 : 0.9}
+              />
             ))}
             {showLegend && <ChartLegend content={<ChartLegendContent />} />}
           </RadarChart>

@@ -3486,7 +3486,7 @@ export const components: ComponentMeta[] = [
     category: 'chart',
     status: 'stable',
     addedIn: 'v0.18.0',
-    changedIn: 'v0.18.0',
+    changedIn: 'v0.22.0',
     purpose: '시간에 따른 값의 흐름을 채워진 영역으로 보인다. 값 자체보다 크기·비중의 인상을 강조할 때 막대·선보다 낫다.',
     anatomy: [],
     properties: [
@@ -3733,7 +3733,7 @@ export const components: ComponentMeta[] = [
     category: 'chart',
     status: 'stable',
     addedIn: 'v0.18.0',
-    changedIn: 'v0.18.0',
+    changedIn: 'v0.22.0',
     purpose: '여러 축에 걸친 값을 한 도형으로 보인다. 역량·평가 항목처럼 서로 다른 기준을 한눈에 비교할 때 쓴다.',
     anatomy: [],
     properties: [

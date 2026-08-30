@@ -90,21 +90,37 @@
    */
   --annotation: oklch(0.55 0.22 285);
   /*
-   * 범주형(categorical) 시리즈 색 6개. dataviz 스킬의 validate_palette.js로
-   * 라이트/다크 각각 전 항목(명도대·채도하한·CVD 분리·정상시각 하한·대비)
-   * 통과를 확인한 값이다(adminds-starter의 momeokji-admin 대시보드에서
-   * 검증). 상태색(info/success/warning/destructive)은 상태 표현에 예약돼
-   * 있어 시리즈 색으로 재사용하지 않는다 — 그래서 별도 6색을 둔다. 순서는
-   * 고정이고 절대 순환하지 않는다(7번째 시리즈부터는 호출부가 "기타"로
-   * 접는다). 1 indigo(주 계열) 2 teal 3 orange(브랜드계) 4 pink 5 lime
-   * 6 violet.
+   * 범주형(categorical) 시리즈 색 6개. "차트마다 색이 다르게 보인다"는
+   * 지적을 조사해 보니 실은 색상값(chart-N)은 모든 차트에서 이미 같았고
+   * — Area(fillOpacity 0.4)·Radar(0.6)만 반투명이라 흰/검 배경과 섞여
+   * 옅게 보였을 뿐이었다(그 문제는 각 chart-*.tsx의 fillOpacity 자체를
+   * 손보는 게 맞는 별개 사안이다). 이 6색 자체를 파란 계열로 통일해
+   * 달라는 요청을 받아 원래의 다색(orange·pink·lime 등 상태색과 가까운
+   * 색 포함) 팔레트를 버리고 단일 hue(OKLCH H≈260, 진짜 파랑)로 바꿨다.
+   *
+   * dataviz 스킬의 validate_palette.js로 확인한 사실: sRGB 감마럿에서
+   * 같은 hue 안의 6단계는 명도(L)만으로 벌려야 하는데, 인접 항목을
+   * 명도 순으로 나란히 두면 정상시각에서도 거의 안 갈린다(ΔE 6대,
+   * 기준 15). 그래서 배열 순서를 명도가 지그재그로 뛰게 짰다(1→4→2→5→3→6
+   * 명도 순) — 그 상태로도 라이트는 CVD 분리만 겨우 넘고(ΔE 10.5,
+   * 기준 6~8) 정상시각 하한(11.7 < 15)은 못 넘는다. 다크는 명도 밴드
+   * 자체가 좁아(0.48~0.67, 라이트는 0.43~0.77) 더 타이트하다(CVD 5.9,
+   * 정상시각 7.1 — 둘 다 기준 미달). 원래의 다색 팔레트는 이 검증을 전부
+   * 통과했었다 — 이번 교체는 "구별력보다 색상 통일이 우선"이라는 요청을
+   * 그대로 받아들인 트레이드오프다. 계열이 둘 이상인 차트(Area stacked,
+   * Radar multiple, Pie 등)는 legend·tooltip으로 색과 라벨을 반드시
+   * 함께 보여야 한다 — 색만으로는 구별이 어렵다.
+   *
+   * 상태색(info/success/warning/destructive)은 상태 표현에 예약돼 있어
+   * 시리즈 색으로 재사용하지 않는다. 순서는 고정이고 절대 순환하지
+   * 않는다(7번째 시리즈부터는 호출부가 "기타"로 접는다).
    */
-  --chart-1: #4f46e5;
-  --chart-2: #0d9488;
-  --chart-3: #ea580c;
-  --chart-4: #db2777;
-  --chart-5: #65a30d;
-  --chart-6: #7c3aed;
+  --chart-1: #034ab1;
+  --chart-2: #327efa;
+  --chart-3: #0659d0;
+  --chart-4: #5593fb;
+  --chart-5: #0a68f1;
+  --chart-6: #679ef8;
   --annotation-muted: oklch(0.573 0.14 285);
 }
 
@@ -159,12 +175,13 @@
   --annotation: oklch(0.75 0.16 285);
   --annotation-muted: oklch(0.62 0.12 285);
 
-  --chart-1: #6366f1;
-  --chart-2: #0d9488;
-  --chart-3: #ea580c;
-  --chart-4: #db2777;
-  --chart-5: #65a30d;
-  --chart-6: #8b5cf6;
+  /* 위 :root와 같은 이유(H≈260 단일 hue, 지그재그 명도)로 바꿨다 — 명도 밴드가 라이트보다 좁아(0.48~0.67) 더 타이트하다 */
+  --chart-1: #0c57c9;
+  --chart-2: #2275f9;
+  --chart-3: #0a5fdc;
+  --chart-4: #3b83fa;
+  --chart-5: #0a68f1;
+  --chart-6: #4f8ffa;
 }
 
 @theme inline {
