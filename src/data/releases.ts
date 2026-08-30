@@ -29,6 +29,23 @@ export type Release = {
 /** 최신 버전이 배열의 맨 앞이다. */
 export const releases: Release[] = [
   {
+    version: 'v0.23.0',
+    publishedAt: '2026-08-31',
+    title: 'Calendar를 독립 컴포넌트로 뗐어요',
+    purpose:
+      'Date Picker 안에서만 쓰던 달력을 Calendar라는 이름으로 따로 등록했어요. 팝오버 없이 화면에 계속 펼쳐 둬야 하는 예약 위젯·필터 사이드바 같은 곳에 바로 쓸 수 있어요.',
+    changes: [
+      {
+        target: 'Components / Calendar',
+        type: 'New',
+        note: '날짜 하나 또는 기간을 고르는 달력이에요. 오늘·선택일·비활성일이 구별되고 키보드로도 움직여요.',
+      },
+    ],
+    requests: [],
+    reviewItems: [],
+    impact: ['Components'],
+  },
+  {
     version: 'v0.22.0',
     publishedAt: '2026-08-30',
     title: '차트 색상을 파란 계열로 통일했어요',
