@@ -2998,6 +2998,64 @@ export const components: ComponentMeta[] = [
     verified: false,
   },
   {
+    id: 'page-header',
+    name: 'Page Header',
+    aliases: ['페이지 헤더', '페이지 타이틀', '상단 타이틀', 'title bar', 'page title'],
+    category: 'data-display',
+    status: 'stable',
+    addedIn: 'v0.21.0',
+    changedIn: 'v0.21.0',
+    purpose: '페이지 상단의 타이틀 영역이다. 제목과 설명을 왼쪽에, 기간 선택 같은 동작을 오른쪽에 둔다.',
+    anatomy: [],
+    properties: [
+      {
+        name: 'description',
+        title: 'Description',
+        description: '제목 아래 설명 한 줄을 보일지 정한다.',
+        display: 'row',
+        options: [
+          { value: 'shown', note: '이 페이지가 무엇인지 한 줄로 보탤 말이 있을 때' },
+          { value: 'hidden', note: '기본. 제목만으로 충분할 때' },
+        ],
+      },
+      {
+        name: 'actions',
+        title: 'Actions',
+        description: '오른쪽에 놓일 동작 영역이 있을지 정한다. 기간 선택 Tabs, 주요 동작 Button 등 무엇이든 그대로 꽂는다.',
+        display: 'row',
+        options: [
+          { value: 'shown', note: '기간 선택, 새로 만들기 같은 페이지 단위 동작이 있을 때' },
+          { value: 'hidden', note: '기본' },
+        ],
+      },
+    ],
+    guidelines: [
+      {
+        id: 'one-per-page',
+        title: '한 페이지에 하나만 쓴다',
+        body: '이 컴포넌트의 제목은 h1입니다 — 페이지의 진짜 제목을 맡습니다. 목록과 상세를 한 화면에 나란히 두는 레이아웃이라도 페이지 제목은 하나여야 하므로, PageHeader도 하나만 둡니다.',
+        do: ['페이지 최상단에 정확히 하나만 둔다'],
+        dont: ['같은 페이지 안에 PageHeader를 두 번 이상 두지 않는다'],
+      },
+      {
+        id: 'actions-agnostic',
+        title: 'actions 슬롯은 안의 내용을 모른다',
+        body: '기간 선택 Tabs, 필터, 주요 동작 Button 등 어떤 조합이 오는지 이 컴포넌트는 알 필요가 없습니다. 배치(오른쪽 정렬, 좁은 화면에서 줄바꿈)만 책임집니다.',
+        do: ['필요한 조합을 actions에 그대로 꽂는다'],
+        dont: ['특정 액션 UI를 가정한 로직을 PageHeader 안에 넣지 않는다'],
+      },
+    ],
+    usage: [
+      { id: 'list-page-title', title: '목록 페이지 제목', note: '제목과 함께 기간 선택 Tabs를 오른쪽에 둔다' },
+      { id: 'detail-page-title', title: '상세 페이지 제목', note: '제목 아래 설명 한 줄로 대상의 맥락을 보탠다' },
+    ],
+    cases: [
+      { id: 'no-description', title: '설명이 없는 경우', note: '설명 없이 제목만 보인다' },
+      { id: 'narrow-screen', title: '좁은 화면', note: 'sm 미만에서는 제목과 actions가 세로로 쌓인다' },
+    ],
+    verified: true,
+  },
+  {
     id: 'resizable',
     name: 'Resizable',
     aliases: ['크기 조절', '분할', 'split', 'panel', '패널'],

@@ -35,6 +35,7 @@ import { FieldPage } from '@/routes/components/FieldPage'
 import { FileUploadPage } from '@/routes/components/FileUploadPage'
 import { InputPage } from '@/routes/components/InputPage'
 import { MenubarPage } from '@/routes/components/MenubarPage'
+import { PageHeaderPage } from '@/routes/components/PageHeaderPage'
 import { PaginationPage } from '@/routes/components/PaginationPage'
 import { PopoverPage } from '@/routes/components/PopoverPage'
 import { ProgressPage } from '@/routes/components/ProgressPage'
@@ -145,6 +146,7 @@ export const routes: RouteObject[] = [
           { path: 'scroll-area', element: <ScrollAreaPage /> },
           { path: 'separator', element: <SeparatorPage /> },
           { path: 'description-list', element: <DescriptionListPage /> },
+          { path: 'page-header', element: <PageHeaderPage /> },
           { path: 'accordion', element: <AccordionPage /> },
           { path: 'context-menu', element: <ContextMenuPage /> },
           { path: 'menubar', element: <MenubarPage /> },
