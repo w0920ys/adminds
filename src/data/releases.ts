@@ -29,6 +29,33 @@ export type Release = {
 /** 최신 버전이 배열의 맨 앞이다. */
 export const releases: Release[] = [
   {
+    version: 'v0.22.0',
+    publishedAt: '2026-08-30',
+    title: '차트 색상을 파란 계열로 통일했어요',
+    purpose:
+      '차트 6종의 시리즈 색(--chart-1~6)을 다색에서 파란 계열 하나로 바꿨어요. Area·Radar만 반투명이라 같은 색인데도 옅게 보이던 것도 함께 고쳤어요.',
+    changes: [
+      {
+        target: 'Foundations / Color',
+        type: 'Updated',
+        note: '차트 시리즈 팔레트를 파란 계열(단일 색상) 6단계로 바꿨어요.',
+      },
+      {
+        target: 'Components / Chart Area',
+        type: 'Fixed',
+        note: '계열이 하나뿐일 때 다른 차트보다 옅게 보이던 것을 고쳤어요.',
+      },
+      {
+        target: 'Components / Chart Radar',
+        type: 'Fixed',
+        note: '계열이 하나뿐일 때 다른 차트보다 옅게 보이던 것을 고쳤어요.',
+      },
+    ],
+    requests: [],
+    reviewItems: [],
+    impact: ['Components', 'Foundations'],
+  },
+  {
     version: 'v0.21.0',
     publishedAt: '2026-08-30',
     title: '컴포넌트 5종을 새로 짓고 GNB·LNB·Alert·파비콘을 다듬었어요',
