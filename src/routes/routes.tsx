@@ -6,6 +6,7 @@ import { UpdatesPage } from '@/routes/UpdatesPage'
 import { AccordionPage } from '@/routes/components/AccordionPage'
 import { AlertDialogPage } from '@/routes/components/AlertDialogPage'
 import { AlertPage } from '@/routes/components/AlertPage'
+import { AppShellPage } from '@/routes/components/AppShellPage'
 import { AvatarPage } from '@/routes/components/AvatarPage'
 import { BadgePage } from '@/routes/components/BadgePage'
 import { BreadcrumbPage } from '@/routes/components/BreadcrumbPage'
@@ -118,6 +119,7 @@ export const routes: RouteObject[] = [
           { path: 'switch', element: <SwitchPage /> },
           { path: 'textarea', element: <TextareaPage /> },
           { path: 'tabs', element: <TabsPage /> },
+          { path: 'app-shell', element: <AppShellPage /> },
           { path: 'breadcrumb', element: <BreadcrumbPage /> },
           { path: 'command', element: <CommandPage /> },
           { path: 'pagination', element: <PaginationPage /> },

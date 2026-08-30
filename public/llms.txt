@@ -1,6 +1,6 @@
 # adminds
 
-> Tailwind v4 + shadcn/ui 기반 어드민 디자인 시스템. 검증된 컴포넌트 51개와 디자인 토큰을 shadcn CLI로 설치한다.
+> Tailwind v4 + shadcn/ui 기반 어드민 디자인 시스템. 검증된 컴포넌트 52개와 디자인 토큰을 shadcn CLI로 설치한다.
 
 React 19 + TypeScript 프로젝트에서 반복적으로 쓰는 어드민 컴포넌트(버튼, 폼, 데이터 테이블, 내비게이션 등)를 미리 만들고 검증해 둔 shadcn 레지스트리 겸 문서 사이트다. 컴포넌트 하나만 받거나, 토큰만 받거나, 전부를 한 번에 받을 수 있다.
 
@@ -8,10 +8,10 @@ React 19 + TypeScript 프로젝트에서 반복적으로 쓰는 어드민 컴포
 
 - 컴포넌트 하나: `npx shadcn@latest add https://adminds.vercel.app/r/<name>.json` — `<name>`은 아래 Components 목록의 괄호 안 값
 - 토큰만: `npx shadcn@latest add https://adminds.vercel.app/r/tokens.json`
-- 토큰 + 컴포넌트 51개 전부: `npx shadcn@latest add https://adminds.vercel.app/r/adminds.json`
+- 토큰 + 컴포넌트 52개 전부: `npx shadcn@latest add https://adminds.vercel.app/r/adminds.json`
 - 받는 프로젝트 요건: Tailwind v4 / globals.css의 import 순서(tailwindcss → tw-animate-css → tokens.css) / tsconfig.json에 직접 넣는 `"paths": { "@/*": ["./src/*"] }`(baseUrl 금지 — TypeScript 6에서 하드 에러)
 
-## Components (51)
+## Components (52)
 
 ### Actions
 
@@ -37,6 +37,7 @@ React 19 + TypeScript 프로젝트에서 반복적으로 쓰는 어드민 컴포
 
 ### Navigation
 
+- [App Shell](https://adminds.vercel.app/components/app-shell) (`app-shell`) — 사이드바 내비게이션과 컨텐츠 영역을 갖는 반응형 레이아웃 셸이다. md 이상은 고정 사이드바, 그 아래는 상단 바 + 햄버거로 여는 Sheet 메뉴로 바뀐다.
 - [Breadcrumb](https://adminds.vercel.app/components/breadcrumb) (`breadcrumb`) — 지금 어디에 있는지와 어떻게 왔는지를 보인다. 뒤로 가기의 대체물로 쓰지 않는다.
 - [Command](https://adminds.vercel.app/components/command) (`command`) — 검색해서 곧장 실행한다. 값을 골라 폼에 담으면 Combobox고, 어딘가로 가거나 동작을 실행하면 Command다. cmdk 없이 Dialog와 이 저장소의 순수 함수만으로 세웠다.
 - [Pagination](https://adminds.vercel.app/components/pagination) (`pagination`) — 긴 목록을 나눠 보인다. 스크롤로 계속 불러오게 하려면 무한 스크롤을 쓴다.

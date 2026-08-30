@@ -1716,6 +1716,63 @@ export const components: ComponentMeta[] = [
     verified: true,
   },
   {
+    id: 'app-shell',
+    name: 'App Shell',
+    aliases: ['앱 셸', '레이아웃 셸', '사이드바 레이아웃', 'shell', 'layout shell', 'sidebar layout'],
+    category: 'navigation',
+    status: 'stable',
+    addedIn: 'v0.21.0',
+    changedIn: 'v0.21.0',
+    purpose: '사이드바 내비게이션과 컨텐츠 영역을 갖는 반응형 레이아웃 셸이다. md 이상은 고정 사이드바, 그 아래는 상단 바 + 햄버거로 여는 Sheet 메뉴로 바뀐다.',
+    anatomy: [],
+    properties: [
+      {
+        name: 'nav',
+        title: 'Nav',
+        description: '사이드바 내비 목록이 있을지 정한다. 비우면 사이드바에서 nav 영역 자체가 사라진다.',
+        display: 'row',
+        options: [
+          { value: 'with-items', note: '기본. 섹션을 오갈 수 있는 목록을 보인다' },
+          { value: 'empty', note: '단일 화면 도구처럼 오갈 섹션이 없을 때. actions는 하단에 고정된다' },
+        ],
+      },
+      {
+        name: 'actions',
+        title: 'Actions',
+        description: '사이드바 하단(md 이상) / 상단 바 우측(모바일)에 놓일 영역이 있을지 정한다.',
+        display: 'row',
+        options: [
+          { value: 'shown', note: '테마 토글 같은 전역 동작을 둘 때' },
+          { value: 'hidden', note: '기본' },
+        ],
+      },
+    ],
+    guidelines: [
+      {
+        id: 'must-keep-md-h-svh',
+        title: 'md:h-svh와 min-h-0을 유지한다',
+        body: '루트에 min-h-svh를 쓰면 콘텐츠가 넘칠 때 셸 자체가 늘어나 버려 main이 "넘칠 일 없는 상자"가 되고 main의 overflow-y-auto가 죽습니다(사이드바 내비를 눌러도 main.scrollTop이 0에 고정되는 형태로 드러남). md:h-svh로 md 이상에서만 뷰포트 높이로 못 박고 main에 min-h-0을 둬야 실제 경계를 가진 스크롤 컨테이너가 됩니다.',
+        do: ['루트에 md:h-svh, main에 min-h-0을 그대로 유지한다'],
+        dont: ['min-h-svh로 되돌리지 않는다 — 콘솔 에러 없이 내비게이션만 조용히 고장난다'],
+      },
+      {
+        id: 'mobile-vertical-list-not-pills',
+        title: '모바일에서 가로 스크롤 pill 목록으로 되돌리지 않는다',
+        body: '항목이 5~6개일 땐 가로 스크롤 pill도 괜찮아 보이지만, 실제로 10개가 넘는 nav에서는 한 화면에 2~3개만 보이고 나머지는 옆으로 밀어야 찾을 수 있어 데스크톱 사이드바보다 오히려 불편해집니다. 항목 수가 늘어도 무너지지 않는 표준 패턴은 햄버거 → 세로 목록 Sheet입니다.',
+        do: ['모바일은 햄버거 버튼으로 Sheet를 열어 사이드바와 같은 세로 목록을 보인다'],
+        dont: ['nav 항목을 상단에 가로 스크롤 pill로 나열하지 않는다'],
+      },
+    ],
+    usage: [
+      { id: 'admin-dashboard-shell', title: '어드민 대시보드 전체 레이아웃', note: '사이드바 내비 + 우측 컨텐츠로 어드민 화면 전체를 감싼다' },
+    ],
+    cases: [
+      { id: 'no-nav', title: 'nav가 없는 경우', note: '사이드바의 nav 영역을 생략하고 actions를 하단에 고정한다' },
+      { id: 'many-nav-items', title: 'nav 항목이 많은 경우', note: '사이드바는 스크롤로, 모바일은 Sheet 세로 목록으로 전부 보여준다' },
+    ],
+    verified: true,
+  },
+  {
     id: 'breadcrumb',
     name: 'Breadcrumb',
     aliases: ['경로', '빵부스러기', 'path', '위치'],
