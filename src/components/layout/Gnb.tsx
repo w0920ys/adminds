@@ -56,21 +56,22 @@ export function Gnb({ onMenuClick }: { onMenuClick: () => void }) {
         </nav>
 
         {/*
+         * 검색·테마 전환·메뉴 셋을 같은 모양(정사각형, 테두리 없음,
+         * hover:bg-accent)으로 통일한다 — 검색만 테두리 있는 pill이고
+         * "검색"·⌘K 글자가 붙어 있어 나머지 둘과 다른 버튼처럼 보였다.
+         * ⌘K는 여전히 키보드 단축키로 동작한다(위 useEffect) — 여기서
+         * 빠지는 건 그 힌트를 보여주던 글자뿐이다.
+         *
          * 모바일에서는 control-lg(40px)로 터치 영역을 넉넉히 준다 — 데스크톱은
          * 마우스로 정확히 짚을 수 있어 지금 크기(32px)를 그대로 둔다. 이
          * 저장소가 이미 Button 등에서 쓰는 control 높이 스케일과 같은 값이다.
          */}
         <button
-          className="text-muted-foreground hover:bg-accent hover:text-foreground h-control-lg ml-auto flex items-center gap-2 rounded-md border px-2.5 md:h-8"
+          className="hover:bg-accent size-control-lg ml-auto grid place-items-center rounded-md md:size-8"
           onClick={() => setSearchOpen(true)}
-          aria-label="문서 검색"
+          aria-label="문서 검색 (⌘K)"
         >
-          <Search size={15} aria-hidden />
-          <span className="hidden text-12 sm:inline">검색</span>
-          {/* py-0.5→py-0 + text-12: text-11일 때의 높이(20px)를 그대로 지킨다(Badge와 같은 트릭) */}
-          <kbd className="bg-muted hidden rounded px-1 py-0 text-12 font-medium sm:inline">
-            ⌘K
-          </kbd>
+          <Search size={17} aria-hidden />
         </button>
 
         <button

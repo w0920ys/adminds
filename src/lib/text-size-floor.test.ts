@@ -39,7 +39,6 @@ const MENTIONS: Record<string, number> = {
   'src/data/releases.ts': 1,
   'src/components/docs/DocPage.tsx': 1,
   'src/components/docs/DocStatus.tsx': 1,
-  'src/components/layout/Gnb.tsx': 1,
   'src/components/ui/badge.tsx': 1,
   'src/components/ui/calendar.tsx': 1,
   'src/components/ui/tooltip.tsx': 1,

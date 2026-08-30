@@ -27,7 +27,13 @@ function LnbItem({
         onClick={onClose}
         className={({ isActive }) =>
           cn(
-            'flex h-control items-center gap-1.5 text-16',
+            /*
+             * h-control(36px) 대신 h-control-lg(40px) — Button의 lg
+             * 크기와 같은 높이다. LNB는 이 사이트에서 가장 자주
+             * 반복해 누르는 목록이라, 다른 컨트롤보다 한 단계 큰
+             * 터치·클릭 영역을 준다.
+             */
+            'flex h-control-lg items-center gap-1.5 text-16',
             depth === 0 ? 'rounded-md px-2' : 'ml-2 border-l pl-3',
             isActive
               ? 'bg-accent text-accent-foreground font-semibold'
@@ -181,7 +187,8 @@ export function Lnb({ open, onClose }: { open: boolean; onClose: () => void }) {
                 onClick={() => setView({ kind: 'section', sectionId: item.id })}
                 aria-current={item.id === routeSection.id ? 'page' : undefined}
                 className={cn(
-                  'flex h-control items-center rounded-md px-2 text-left text-16',
+                  /* LnbItem과 같은 이유로 h-control-lg(40px) — Button lg와 같은 높이 */
+                  'flex h-control-lg items-center rounded-md px-2 text-left text-16',
                   item.id === routeSection.id
                     ? 'bg-accent text-accent-foreground font-semibold'
                     : 'text-muted-foreground hover:bg-accent/60',

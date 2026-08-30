@@ -3571,10 +3571,10 @@ export const components: ComponentMeta[] = [
     category: 'feedback',
     status: 'stable',
     addedIn: 'v0.8.0',
-    changedIn: 'v0.14.0',
+    changedIn: 'v0.21.0',
     purpose: '화면에 머무르는 알림을 보인다. 잠깐 나타났다 사라져도 되면 Toast를 쓴다.',
     anatomy: [
-      { part: 'icon', label: 'Icon', note: '16×16, variant가 정하는 색을 그대로 물려받는다' },
+      { part: 'icon', label: 'Icon', note: '24×24, Title(text-16)과 시각적으로 비슷한 무게로 맞춘 크기다. variant가 정하는 색을 그대로 물려받는다' },
       { part: 'title', label: 'Title', note: 'text-16 / font-medium' },
       { part: 'body', label: 'Body', note: 'text-muted-foreground / text-16', optional: true },
       { part: 'action', label: 'Action', note: 'Button을 그대로 재사용한다', optional: true },
