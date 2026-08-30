@@ -4635,6 +4635,72 @@ export const components: ComponentMeta[] = [
     verified: false,
   },
   {
+    id: 'spinner',
+    name: 'Spinner',
+    aliases: ['스피너', '로딩 아이콘', 'loading spinner', 'loader'],
+    category: 'feedback',
+    status: 'stable',
+    addedIn: 'v0.24.0',
+    changedIn: 'v0.24.0',
+    purpose:
+      '지금 무언가 처리되고 있다는 사실만 알린다. 얼마나 남았는지는 모른다 — 퍼센트를 알면 Progress, 도착할 내용의 모양을 알면 Skeleton을 대신 쓴다.',
+    anatomy: [],
+    properties: [
+      {
+        name: 'size',
+        title: 'Size',
+        description: '놓이는 자리에 맞춰 크기를 고른다.',
+        display: 'row',
+        options: [{ value: 'sm' }, { value: 'default' }, { value: 'lg' }],
+      },
+    ],
+    guidelines: [
+      {
+        id: 'pair-with-text',
+        title: '문구 없이 혼자 두지 않는다',
+        body: '스피너만으로는 무엇을 기다리는지 알 수 없습니다.',
+        do: ['옆이나 안에 상태를 설명하는 문구를 둔다'],
+        dont: ['스피너 하나만 화면에 덩그러니 두지 않는다'],
+      },
+      {
+        id: 'progress-or-skeleton-for-long-waits',
+        title: '오래 걸리거나 진행률을 아는 경우는 다른 컴포넌트를 쓴다',
+        body: '스피너는 "일하는 중"만 말할 뿐 "얼마나 남았는지"는 말하지 못합니다.',
+        do: ['퍼센트를 알면 Progress를, 도착할 내용의 모양을 알면 Skeleton을 쓴다'],
+        dont: ['오래 걸리는 로딩에 스피너만 남겨 두지 않는다'],
+      },
+      {
+        id: 'size-matches-context',
+        title: '놓이는 자리에 맞는 크기를 쓴다',
+        body: '문맥보다 크거나 작으면 눈에 먼저 걸립니다.',
+        do: ['인라인은 sm, 버튼·단독은 default, 전체 화면은 lg를 쓴다'],
+        dont: ['자리와 안 맞는 크기를 그대로 쓰지 않는다'],
+      },
+      {
+        id: 'inherit-color',
+        title: '색은 스스로 정하지 않는다',
+        body: 'currentColor라 부모의 글자색을 그대로 물려받습니다.',
+        do: ['부모의 글자색을 그대로 물려받게 둔다'],
+        dont: ['문맥과 안 맞는 고정 색을 직접 입히지 않는다'],
+      },
+    ],
+    usage: [
+      { id: 'button-loading', title: '버튼 안', note: '제출 중인 버튼에서 라벨 앞에 스피너를 둔다' },
+      { id: 'table-cell-loading', title: '표 셀 안', note: '행 일부 값이 비동기로 채워질 때 그 칸에만 스피너를 둔다' },
+      { id: 'full-page-loading', title: '전체 화면 로딩', note: '화면 전체가 아직 없을 때 가운데에 큰 스피너와 문구를 둔다' },
+    ],
+    cases: [
+      { id: 'icon-only-button', title: '아이콘 버튼 안', note: '라벨이 없는 아이콘 버튼은 아이콘 자체가 스피너로 바뀐다' },
+      {
+        id: 'on-colored-background',
+        title: '색 있는 배경 위',
+        note: 'currentColor라 Primary 버튼처럼 배경이 있는 곳에서도 글자색을 그대로 따라간다',
+      },
+      { id: 'inline-with-text', title: '문구와 나란히', note: '문구 왼쪽에 작게 두어 대기 중임을 알린다' },
+    ],
+    verified: false,
+  },
+  {
     id: 'toast',
     name: 'Toast',
     aliases: ['토스트', '스낵바', 'snackbar', '알림', 'notification'],

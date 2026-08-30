@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "spinner",
+  "title": "Spinner",
+  "dependencies": [
+    "lucide-react",
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "https://adminds.vercel.app/r/tokens.json",
+    "https://adminds.vercel.app/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/spinner.tsx",
+      "content": "import * as React from 'react'\nimport { Loader2 } from 'lucide-react'\nimport { cva, type VariantProps } from 'class-variance-authority'\nimport { cn } from '@/lib/utils'\n\n/*\n * 아이콘 하나 그리는 게 전부다. 자체 색을 정하지 않고 currentColor를\n * 그대로 쓴다(lucide 아이콘의 기본 stroke) — Button 안에서 쓰이면\n * Button 글자색을, Badge 안에서 쓰이면 Badge 글자색을 따라간다.\n * role=\"status\"·aria-label은 스스로 달아 별도 문구 없이도 스크린\n * 리더가 \"불러오는 중\"임을 안다 — 다만 옆에 보이는 문구가 있으면\n * 그 문구가 우선 읽히도록 aria-hidden으로 겹침을 피하는 건 쓰는 쪽의\n * 몫이다(Usage의 '버튼 안' 예시가 그렇게 한다).\n */\nconst spinnerVariants = cva('animate-spin', {\n  variants: {\n    size: {\n      sm: 'size-3.5',\n      default: 'size-4',\n      lg: 'size-6',\n    },\n  },\n  defaultVariants: { size: 'default' },\n})\n\ntype SpinnerProps = React.ComponentProps<'svg'> & VariantProps<typeof spinnerVariants>\n\nfunction Spinner({ className, size, ...props }: SpinnerProps) {\n  return (\n    <Loader2\n      data-slot=\"spinner\"\n      role=\"status\"\n      aria-label=\"불러오는 중\"\n      className={cn(spinnerVariants({ size, className }))}\n      {...props}\n    />\n  )\n}\n\nexport { Spinner, spinnerVariants }\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

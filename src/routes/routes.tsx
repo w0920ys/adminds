@@ -48,6 +48,7 @@ import { SeparatorPage } from '@/routes/components/SeparatorPage'
 import { SheetPage } from '@/routes/components/SheetPage'
 import { SkeletonPage } from '@/routes/components/SkeletonPage'
 import { SliderPage } from '@/routes/components/SliderPage'
+import { SpinnerPage } from '@/routes/components/SpinnerPage'
 import { StatCardPage } from '@/routes/components/StatCardPage'
 import { StepsPage } from '@/routes/components/StepsPage'
 import { SwitchPage } from '@/routes/components/SwitchPage'
@@ -134,6 +135,7 @@ export const routes: RouteObject[] = [
           { path: 'dialog', element: <DialogPage /> },
           { path: 'alert-dialog', element: <AlertDialogPage /> },
           { path: 'skeleton', element: <SkeletonPage /> },
+          { path: 'spinner', element: <SpinnerPage /> },
           { path: 'sheet', element: <SheetPage /> },
           { path: 'progress', element: <ProgressPage /> },
           { path: 'empty-state', element: <EmptyStatePage /> },

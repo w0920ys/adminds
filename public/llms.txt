@@ -1,6 +1,6 @@
 # adminds
 
-> Tailwind v4 + shadcn/ui 기반 어드민 디자인 시스템. 검증된 컴포넌트 54개와 디자인 토큰을 shadcn CLI로 설치한다.
+> Tailwind v4 + shadcn/ui 기반 어드민 디자인 시스템. 검증된 컴포넌트 55개와 디자인 토큰을 shadcn CLI로 설치한다.
 
 React 19 + TypeScript 프로젝트에서 반복적으로 쓰는 어드민 컴포넌트(버튼, 폼, 데이터 테이블, 내비게이션 등)를 미리 만들고 검증해 둔 shadcn 레지스트리 겸 문서 사이트다. 컴포넌트 하나만 받거나, 토큰만 받거나, 전부를 한 번에 받을 수 있다.
 
@@ -8,10 +8,10 @@ React 19 + TypeScript 프로젝트에서 반복적으로 쓰는 어드민 컴포
 
 - 컴포넌트 하나: `npx shadcn@latest add https://adminds.vercel.app/r/<name>.json` — `<name>`은 아래 Components 목록의 괄호 안 값
 - 토큰만: `npx shadcn@latest add https://adminds.vercel.app/r/tokens.json`
-- 토큰 + 컴포넌트 54개 전부: `npx shadcn@latest add https://adminds.vercel.app/r/adminds.json`
+- 토큰 + 컴포넌트 55개 전부: `npx shadcn@latest add https://adminds.vercel.app/r/adminds.json`
 - 받는 프로젝트 요건: Tailwind v4 / globals.css의 import 순서(tailwindcss → tw-animate-css → tokens.css) / tsconfig.json에 직접 넣는 `"paths": { "@/*": ["./src/*"] }`(baseUrl 금지 — TypeScript 6에서 하드 에러)
 
-## Components (54)
+## Components (55)
 
 ### Actions
 
@@ -82,6 +82,7 @@ React 19 + TypeScript 프로젝트에서 반복적으로 쓰는 어드민 컴포
 - [Progress](https://adminds.vercel.app/components/progress) (`progress`) — 작업이 얼마나 끝났는지 막대 길이로 보인다. Radix의 Progress를 감싸 role="progressbar"와 aria-valuenow를 맡기고, Indicator는 width 대신 translateX로 값만큼만 보이게 민다.
 - [Sheet](https://adminds.vercel.app/components/sheet) (`sheet`) — Radix의 Dialog를 감싸 가장자리에 붙인다. 목록이나 작업 맥락을 곁에 둔 채 이어서 일할 때 쓴다.
 - [Skeleton](https://adminds.vercel.app/components/skeleton) (`skeleton`) — 아직 도착하지 않은 내용의 자리를 실제 모양에 가까운 뼈대로 채운다. 뼈대 자체는 aria-hidden이고, 불러오는 중이라는 사실은 role="status" 문구가 따로 알린다.
+- [Spinner](https://adminds.vercel.app/components/spinner) (`spinner`) — 지금 무언가 처리되고 있다는 사실만 알린다. 얼마나 남았는지는 모른다 — 퍼센트를 알면 Progress, 도착할 내용의 모양을 알면 Skeleton을 대신 쓴다.
 - [Toast](https://adminds.vercel.app/components/toast) (`toast`) — 잠깐 나타났다 사라지는 알림을 보인다. 화면에 계속 남아야 하면 Alert를 쓴다.
 - [Tooltip](https://adminds.vercel.app/components/tooltip) (`tooltip`) — 가리키는 것의 이름이나 짧은 설명을 보인다.
 

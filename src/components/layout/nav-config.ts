@@ -159,6 +159,7 @@ export const sections: NavSection[] = [
           { to: '/components/progress', label: 'Progress', updatedAt: '2026-08-29' },
           { to: '/components/sheet', label: 'Sheet', updatedAt: '2026-08-29' },
           { to: '/components/skeleton', label: 'Skeleton', updatedAt: '2026-08-29' },
+          { to: '/components/spinner', label: 'Spinner', updatedAt: '2026-08-31' },
           { to: '/components/toast', label: 'Toast', updatedAt: '2026-08-29' },
           { to: '/components/tooltip', label: 'Tooltip', updatedAt: '2026-08-29' },
         ],
