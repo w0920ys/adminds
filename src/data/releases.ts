@@ -31,10 +31,35 @@ export const releases: Release[] = [
   {
     version: 'v0.21.0',
     publishedAt: '2026-08-30',
-    title: 'GNB·LNB·Alert·파비콘을 다듬고 표·타이포 버그를 마저 고쳤어요',
+    title: '컴포넌트 5종을 새로 짓고 GNB·LNB·Alert·파비콘을 다듬었어요',
     purpose:
-      'GNB 검색 버튼을 나머지 버튼과 같은 모양으로 통일하고, 검색창 모바일 위치·LNB 메뉴 크기·Alert 아이콘 크기를 고쳤어요. 파비콘을 실제 로고와 같은 도형으로 바꾸고, 표·타이포그래피의 남은 버그도 정리했어요.',
+      'momeokji-admin 대시보드에서 먼저 쓰던 컴포넌트 5종(Chart Funnel·Trend Badge·Stat Card·App Shell·Page Header)을 정식 레지스트리로 들여왔어요. GNB 검색 버튼을 나머지 버튼과 같은 모양으로 통일하고, 검색창 모바일 위치·LNB 메뉴 크기·Alert 아이콘 크기를 고쳤어요. 파비콘을 실제 로고와 같은 도형으로 바꾸고, 표·타이포그래피의 남은 버그도 정리했어요.',
     changes: [
+      {
+        target: 'Components / Chart Funnel',
+        type: 'New',
+        note: '여러 단계를 거치며 줄어드는 값을 보여요. 직전 단계 대비 전환율과 처음-끝 전체 전환율을 함께 봐요.',
+      },
+      {
+        target: 'Components / Stat Card',
+        type: 'New',
+        note: '라벨 + 큰 숫자 + 증감을 한 타일로 보여요. 대시보드 KPI 조합을 Card로 매번 손으로 짜지 않아도 돼요.',
+      },
+      {
+        target: 'Components / Trend Badge',
+        type: 'New',
+        note: '증감률을 화살표와 색으로 보여요. 색만으로 좋고 나쁨을 말하지 않아요.',
+      },
+      {
+        target: 'Components / App Shell',
+        type: 'New',
+        note: '사이드바 내비게이션 + 콘텐츠 영역을 갖는 반응형 레이아웃 셸이에요.',
+      },
+      {
+        target: 'Components / Page Header',
+        type: 'New',
+        note: '페이지 상단 타이틀 영역이에요. 제목·설명은 왼쪽, 기간 선택 같은 동작은 오른쪽에 둬요.',
+      },
       {
         target: 'Layout',
         type: 'Fixed',
