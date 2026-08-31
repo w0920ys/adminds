@@ -513,6 +513,105 @@ export const components: ComponentMeta[] = [
     verified: false,
   },
   {
+    id: 'toggle-group',
+    name: 'Toggle Group',
+    aliases: ['토글 그룹', '세그먼트', 'segmented control', '보기 전환'],
+    category: 'actions',
+    status: 'stable',
+    addedIn: 'v0.24.0',
+    changedIn: 'v0.24.0',
+    purpose:
+      'Toggle 여러 개를 하나의 단위로 묶는다. type이 single이면 그 안에서 하나만, multiple이면 여럿이 함께 켜진다. 낱개로 켜고 끄면 충분한 자리는 Toggle을 직접 쓴다.',
+    anatomy: [
+      {
+        part: 'group',
+        label: 'Group',
+        note: '항목을 가로로 늘어놓고 4px 간격(gap-1)을 둔다. w-fit이라 넓은 자리에서는 한 줄로 서고, 부모가 좁아지면 flex-wrap으로 다음 줄로 넘어간다',
+      },
+      {
+        part: 'item',
+        label: 'Item',
+        note: 'Toggle과 같은 모양 — 높이는 control 토큰, 모서리는 radius-md. variant·size는 묶음에서 물려받고 항목이 직접 주면 그 값이 이긴다. 켜진 항목은 Radix가 data-state="on"을 붙인다',
+      },
+    ],
+    properties: [
+      {
+        name: 'type',
+        title: 'Type',
+        description: '묶음 안에서 몇 개까지 켜질 수 있는지 정한다.',
+        display: 'row',
+        options: [
+          { value: 'single', note: '하나만 켜진다. 보기 전환·기간 필터' },
+          { value: 'multiple', note: '여럿이 함께 켜진다. 서식 도구·표시할 열' },
+        ],
+      },
+      {
+        name: 'variant',
+        title: 'Variant',
+        description: '쉬고 있을 때 테두리를 보일지 정한다. 항목마다 다르게 주지 않고 묶음 전체에 준다.',
+        display: 'row',
+        options: [
+          { value: 'default', note: '기본. 쉬고 있을 때는 배경도 테두리도 없다' },
+          { value: 'outline', note: '눌러야 하는 자리라는 것을 쉬고 있을 때도 보인다' },
+        ],
+      },
+      {
+        name: 'size',
+        title: 'Size',
+        description: '같은 줄에 놓이는 컨트롤과 높이를 맞춘다. Toggle과 같은 control 토큰을 쓴다.',
+        display: 'row',
+        options: [
+          { value: 'sm', note: '표 위의 도구 줄' },
+          { value: 'default', note: '기본' },
+          { value: 'lg', note: '화면 위쪽의 보기 전환처럼 손이 자주 가는 자리' },
+        ],
+      },
+    ],
+    guidelines: [
+      {
+        id: 'shared-size',
+        title: '묶음 안에서 크기를 통일한다',
+        body: '항목마다 크기가 다르면 한 덩어리로 보이지 않습니다. ToggleGroup에 준 variant·size를 항목이 그대로 물려받게 두고, 항목마다 따로 주지 않습니다.',
+        do: ['variant·size는 ToggleGroup 하나에만 준다'],
+        dont: ['같은 묶음 안의 항목마다 다른 variant·size를 직접 주지 않는다'],
+      },
+      {
+        id: 'group-vs-tabs',
+        title: 'Toggle Group vs Tabs',
+        body: 'Tabs는 화면의 내용을 통째로 갈아 끼웁니다. Toggle Group은 같은 내용을 다르게 보이거나 걸러 낼 뿐 내용 자체를 바꾸지 않습니다.',
+        do: ['같은 데이터를 다른 형태로 보이거나 거를 때 Toggle Group을 쓴다'],
+        dont: ['서로 다른 화면을 전환하는 데 Toggle Group을 쓰지 않는다'],
+      },
+      {
+        id: 'decide-empty-single',
+        title: 'single이 빌 수 있는지 정해 둔다',
+        body: 'Radix는 켜진 항목을 다시 눌러 끄는 것을 막지 않습니다. 목록 보기처럼 반드시 하나가 켜져 있어야 하는 자리에서는 값이 비지 않게 쓰는 쪽에서 붙잡습니다.',
+        do: ['반드시 하나가 필요한 묶음은 onValueChange에서 빈 값을 막는다'],
+        dont: ['빈 값을 허용해도 되는지 확인하지 않고 type="single"을 쓰지 않는다'],
+      },
+      {
+        id: 'name-icon-only',
+        title: '아이콘만 있는 항목에 이름을 준다',
+        body: '아이콘만 두면 스크린 리더가 아무것도 읽지 못합니다. aria-label이나 화면에서 감춘 글자로 이름을 함께 둡니다.',
+        do: ['아이콘만 있는 Toggle Group Item에 aria-label을 붙인다'],
+        dont: ['이름 없이 아이콘만 남기지 않는다'],
+      },
+    ],
+    usage: [
+      { id: 'view-switcher', title: '목록·격자 보기 전환', note: "type='single'로 하나만 켜지게 한다. 아이콘만으로도 뜻이 통해 라벨을 생략할 때가 많다" },
+      { id: 'formatting-toolbar', title: '서식 도구', note: "type='multiple'로 굵게·기울임처럼 함께 켤 수 있는 값을 묶는다" },
+      { id: 'period-filter', title: '기간 필터', note: "type='single'로 '오늘'·'이번 주'·'이번 달' 중 하나를 고른다" },
+      { id: 'column-picker', title: '표시할 열 고르기', note: "type='multiple'로 표에서 보일 열을 여러 개 함께 켠다" },
+    ],
+    cases: [
+      { id: 'icon-only', title: '아이콘만 있는 경우', note: 'aria-label이 없으면 스크린리더에서 이름 없는 버튼이 된다' },
+      { id: 'empty-value', title: '값이 비는 경우', note: "type='single'에서 켜진 항목을 다시 누르면 값이 빈다. 막으려면 쓰는 쪽에서 붙잡는다" },
+      { id: 'many-items', title: '항목이 많은 경우', note: '한 줄에 다 들어가지 않으면 줄바꿈된다' },
+      { id: 'narrow-screen', title: '좁은 화면', note: '묶음 폭이 컨테이너를 넘지 않고 줄바꿈된다' },
+    ],
+    verified: false,
+  },
+  {
     id: 'calendar',
     name: 'Calendar',
     aliases: ['달력', '날짜 격자', 'date grid'],

@@ -1,6 +1,6 @@
 # adminds
 
-> Tailwind v4 + shadcn/ui 기반 어드민 디자인 시스템. 검증된 컴포넌트 55개와 디자인 토큰을 shadcn CLI로 설치한다.
+> Tailwind v4 + shadcn/ui 기반 어드민 디자인 시스템. 검증된 컴포넌트 56개와 디자인 토큰을 shadcn CLI로 설치한다.
 
 React 19 + TypeScript 프로젝트에서 반복적으로 쓰는 어드민 컴포넌트(버튼, 폼, 데이터 테이블, 내비게이션 등)를 미리 만들고 검증해 둔 shadcn 레지스트리 겸 문서 사이트다. 컴포넌트 하나만 받거나, 토큰만 받거나, 전부를 한 번에 받을 수 있다.
 
@@ -8,10 +8,10 @@ React 19 + TypeScript 프로젝트에서 반복적으로 쓰는 어드민 컴포
 
 - 컴포넌트 하나: `npx shadcn@latest add https://adminds.vercel.app/r/<name>.json` — `<name>`은 아래 Components 목록의 괄호 안 값
 - 토큰만: `npx shadcn@latest add https://adminds.vercel.app/r/tokens.json`
-- 토큰 + 컴포넌트 55개 전부: `npx shadcn@latest add https://adminds.vercel.app/r/adminds.json`
+- 토큰 + 컴포넌트 56개 전부: `npx shadcn@latest add https://adminds.vercel.app/r/adminds.json`
 - 받는 프로젝트 요건: Tailwind v4 / globals.css의 import 순서(tailwindcss → tw-animate-css → tokens.css) / tsconfig.json에 직접 넣는 `"paths": { "@/*": ["./src/*"] }`(baseUrl 금지 — TypeScript 6에서 하드 에러)
 
-## Components (55)
+## Components (56)
 
 ### Actions
 
@@ -20,6 +20,7 @@ React 19 + TypeScript 프로젝트에서 반복적으로 쓰는 어드민 컴포
 - [Dropdown Menu](https://adminds.vercel.app/components/dropdown-menu) (`dropdown-menu`) — 한 자리에서 여러 동작을 고르게 한다. 값을 고르는 자리에는 Select를 쓴다.
 - [Menubar](https://adminds.vercel.app/components/menubar) (`menubar`) — 가로로 늘어선 메뉴 묶음을 제공한다. 데스크톱 앱의 File/Edit/View 같은 자리다.
 - [Toggle](https://adminds.vercel.app/components/toggle) (`toggle`) — 지금 보고 있는 것에 서식이나 필터를 켠다. 설정을 켜고 그 자리에서 저장하는 Switch와 다르다.
+- [Toggle Group](https://adminds.vercel.app/components/toggle-group) (`toggle-group`) — Toggle 여러 개를 하나의 단위로 묶는다. type이 single이면 그 안에서 하나만, multiple이면 여럿이 함께 켜진다. 낱개로 켜고 끄면 충분한 자리는 Toggle을 직접 쓴다.
 
 ### Inputs
 
