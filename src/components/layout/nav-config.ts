@@ -83,6 +83,7 @@ export const sections: NavSection[] = [
         label: 'Actions',
         items: [
           { to: '/components/button', label: 'Button', updatedAt: '2026-08-29' },
+          { to: '/components/button-group', label: 'Button Group', updatedAt: '2026-08-31' },
           { to: '/components/context-menu', label: 'Context Menu', updatedAt: '2026-08-29' },
           { to: '/components/dropdown-menu', label: 'Dropdown Menu', updatedAt: '2026-08-29' },
           { to: '/components/menubar', label: 'Menubar', updatedAt: '2026-08-29' },
@@ -100,6 +101,7 @@ export const sections: NavSection[] = [
           { to: '/components/field', label: 'Field', updatedAt: '2026-08-29' },
           { to: '/components/file-upload', label: 'File Upload', updatedAt: '2026-08-29' },
           { to: '/components/input', label: 'Input', updatedAt: '2026-08-29' },
+          { to: '/components/input-group', label: 'Input Group', updatedAt: '2026-08-31' },
           { to: '/components/radio', label: 'Radio', updatedAt: '2026-08-29' },
           { to: '/components/select', label: 'Select', updatedAt: '2026-08-29' },
           { to: '/components/slider', label: 'Slider', updatedAt: '2026-08-29' },

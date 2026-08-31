@@ -1,6 +1,6 @@
 # adminds
 
-> Tailwind v4 + shadcn/ui 기반 어드민 디자인 시스템. 검증된 컴포넌트 57개와 디자인 토큰을 shadcn CLI로 설치한다.
+> Tailwind v4 + shadcn/ui 기반 어드민 디자인 시스템. 검증된 컴포넌트 59개와 디자인 토큰을 shadcn CLI로 설치한다.
 
 React 19 + TypeScript 프로젝트에서 반복적으로 쓰는 어드민 컴포넌트(버튼, 폼, 데이터 테이블, 내비게이션 등)를 미리 만들고 검증해 둔 shadcn 레지스트리 겸 문서 사이트다. 컴포넌트 하나만 받거나, 토큰만 받거나, 전부를 한 번에 받을 수 있다.
 
@@ -8,14 +8,15 @@ React 19 + TypeScript 프로젝트에서 반복적으로 쓰는 어드민 컴포
 
 - 컴포넌트 하나: `npx shadcn@latest add https://adminds.vercel.app/r/<name>.json` — `<name>`은 아래 Components 목록의 괄호 안 값
 - 토큰만: `npx shadcn@latest add https://adminds.vercel.app/r/tokens.json`
-- 토큰 + 컴포넌트 57개 전부: `npx shadcn@latest add https://adminds.vercel.app/r/adminds.json`
+- 토큰 + 컴포넌트 59개 전부: `npx shadcn@latest add https://adminds.vercel.app/r/adminds.json`
 - 받는 프로젝트 요건: Tailwind v4 / globals.css의 import 순서(tailwindcss → tw-animate-css → tokens.css) / tsconfig.json에 직접 넣는 `"paths": { "@/*": ["./src/*"] }`(baseUrl 금지 — TypeScript 6에서 하드 에러)
 
-## Components (57)
+## Components (59)
 
 ### Actions
 
 - [Button](https://adminds.vercel.app/components/button) (`button`) — 사용자가 즉시 실행할 수 있는 동작을 나타낸다. 페이지 이동은 링크를 쓴다.
+- [Button Group](https://adminds.vercel.app/components/button-group) (`button-group`) — 관련 있는 버튼 여럿을 하나의 덩어리로 묶는다. 상태를 켜고 끄면 Toggle Group을, 눌러서 그 자리에서 실행하고 끝나면 Button Group을 쓴다.
 - [Context Menu](https://adminds.vercel.app/components/context-menu) (`context-menu`) — 우클릭한 자리에서 그 대상에 대한 동작을 고르게 한다. 항상 눌러야 여는 Dropdown Menu와 달리, 마우스 오른쪽 버튼(또는 롱프레스)이 여는 자리를 정한다.
 - [Dropdown Menu](https://adminds.vercel.app/components/dropdown-menu) (`dropdown-menu`) — 한 자리에서 여러 동작을 고르게 한다. 값을 고르는 자리에는 Select를 쓴다.
 - [Menubar](https://adminds.vercel.app/components/menubar) (`menubar`) — 가로로 늘어선 메뉴 묶음을 제공한다. 데스크톱 앱의 File/Edit/View 같은 자리다.
@@ -31,6 +32,7 @@ React 19 + TypeScript 프로젝트에서 반복적으로 쓰는 어드민 컴포
 - [Field](https://adminds.vercel.app/components/field) (`field`) — 라벨·도움말·오류를 입력 하나에 묶습니다. id를 잇는 일이 이 컴포넌트의 존재 이유입니다 — Field가 useId로 만든 id를 컨텍스트에 담아 FieldLabel의 htmlFor와 FieldControl의 aria-describedby·aria-invalid로 손 대지 않고 이어 줍니다.
 - [File Upload](https://adminds.vercel.app/components/file-upload) (`file-upload`) — 파일을 고르거나 끌어다 놓아 올릴 준비를 하게 합니다. 네이티브 input을 감추고 그 위에 dropzone이나 버튼을 그립니다. 이 컴포넌트는 파일을 실제로 올리지 않습니다 — 올리는 일은 이 화면을 쓰는 서비스의 몫이고, 여기서는 그 화면만 정합니다.
 - [Input](https://adminds.vercel.app/components/input) (`input`) — 사용자가 한 줄짜리 값을 직접 입력하도록 한다. 여러 값 중 고르게 할 때는 Select를, 여러 줄이 필요하면 Textarea를 쓴다.
+- [Input Group](https://adminds.vercel.app/components/input-group) (`input-group`) — Input에 아이콘·버튼·짧은 텍스트를 붙여 하나의 입력처럼 보이게 묶는다. 검색 아이콘, 단위, 지우기 버튼처럼 입력과 한 몸으로 움직여야 하는 것에 쓴다.
 - [Radio](https://adminds.vercel.app/components/radio) (`radio`) — 여럿 중 하나만 고르도록 한다. 여럿을 고를 수 있으면 Checkbox를 쓴다.
 - [Select](https://adminds.vercel.app/components/select) (`select`) — 여러 값 중 하나를 고르게 한다. 선택지가 둘셋뿐이면 Radio를, 동작을 실행하는 자리에는 Dropdown Menu를 쓴다.
 - [Slider](https://adminds.vercel.app/components/slider) (`slider`) — 드래그하거나 화살표 키로 움직여 값을 어림잡아 고른다. Radix의 Slider를 감싼다.

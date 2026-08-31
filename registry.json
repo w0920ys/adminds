@@ -290,6 +290,25 @@
       ]
     },
     {
+      "name": "button-group",
+      "type": "registry:ui",
+      "title": "Button Group",
+      "dependencies": [
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "https://adminds.vercel.app/r/separator.json",
+        "https://adminds.vercel.app/r/tokens.json",
+        "https://adminds.vercel.app/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/button-group.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "card",
       "type": "registry:ui",
       "title": "Card",
@@ -774,6 +793,24 @@
       ]
     },
     {
+      "name": "input-group",
+      "type": "registry:ui",
+      "title": "Input Group",
+      "dependencies": [
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "https://adminds.vercel.app/r/tokens.json",
+        "https://adminds.vercel.app/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/input-group.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "pagination",
       "type": "registry:ui",
       "title": "Pagination",
@@ -1228,7 +1265,7 @@
       "name": "adminds",
       "type": "registry:item",
       "title": "Admin Design System",
-      "description": "토큰과 컴포넌트 쉰일곱 개를 한 번에 가져온다.",
+      "description": "토큰과 컴포넌트 쉰아홉 개를 한 번에 가져온다.",
       "registryDependencies": [
         "https://adminds.vercel.app/r/accordion.json",
         "https://adminds.vercel.app/r/alert.json",
@@ -1238,6 +1275,7 @@
         "https://adminds.vercel.app/r/app-shell.json",
         "https://adminds.vercel.app/r/breadcrumb.json",
         "https://adminds.vercel.app/r/button.json",
+        "https://adminds.vercel.app/r/button-group.json",
         "https://adminds.vercel.app/r/card.json",
         "https://adminds.vercel.app/r/chart-area.json",
         "https://adminds.vercel.app/r/chart-bar.json",
@@ -1263,6 +1301,7 @@
         "https://adminds.vercel.app/r/field.json",
         "https://adminds.vercel.app/r/file-upload.json",
         "https://adminds.vercel.app/r/input.json",
+        "https://adminds.vercel.app/r/input-group.json",
         "https://adminds.vercel.app/r/menubar.json",
         "https://adminds.vercel.app/r/pagination.json",
         "https://adminds.vercel.app/r/popover.json",

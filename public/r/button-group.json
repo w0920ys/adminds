@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button-group",
+  "title": "Button Group",
+  "dependencies": [
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "https://adminds.vercel.app/r/separator.json",
+    "https://adminds.vercel.app/r/tokens.json",
+    "https://adminds.vercel.app/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/button-group.tsx",
+      "content": "import * as React from 'react'\nimport { cva, type VariantProps } from 'class-variance-authority'\nimport { Separator } from '@/components/ui/separator'\nimport { cn } from '@/lib/utils'\n\n/*\n * 여기 담기는 Button들은 액션을 실행한다 — Toggle Group과 다른\n * 자리다(Toggle Group은 상태를 켜고 끈다). 직접 자식(Button·Input·\n * ButtonGroupText 무엇이든)의 테두리를 이어 붙여 한 덩어리로 보이게\n * 한다. variant는 강제하지 않는다 — outline 버튼끼리는 테두리가\n * 겹쳐 저절로 하나로 보이고, 다른 variant를 섞어 쓰는 것도 쓰는 쪽의\n * 선택이다.\n */\nconst buttonGroupVariants = cva('flex w-fit items-stretch [&>*]:focus-visible:z-10 [&>*]:relative', {\n  variants: {\n    orientation: {\n      horizontal:\n        'flex-row [&>*:not(:first-child)]:-ml-px [&>*:not(:first-child)]:rounded-l-none [&>*:not(:last-child)]:rounded-r-none',\n      vertical:\n        'flex-col [&>*:not(:first-child)]:-mt-px [&>*:not(:first-child)]:rounded-t-none [&>*:not(:last-child)]:rounded-b-none',\n    },\n  },\n  defaultVariants: { orientation: 'horizontal' },\n})\n\ntype ButtonGroupProps = React.ComponentProps<'div'> & VariantProps<typeof buttonGroupVariants>\n\nfunction ButtonGroup({ className, orientation, ...props }: ButtonGroupProps) {\n  return (\n    <div\n      data-slot=\"button-group\"\n      role=\"group\"\n      className={cn(buttonGroupVariants({ orientation, className }))}\n      {...props}\n    />\n  )\n}\n\n/*\n * outline 버튼끼리는 이미 테두리가 있어 굳이 필요 없다 — 배경만 있는\n * variant(default·secondary·ghost)를 섞어 쓸 때 경계를 보이려고 둔다.\n * orientation 기본값이 Separator와 반대다: 가로로 늘어선 묶음에는\n * 세로 선이 어울린다.\n */\nfunction ButtonGroupSeparator({\n  className,\n  orientation = 'vertical',\n  ...props\n}: React.ComponentProps<typeof Separator>) {\n  return (\n    <Separator\n      data-slot=\"button-group-separator\"\n      orientation={orientation}\n      decorative\n      className={cn('self-stretch', className)}\n      {...props}\n    />\n  )\n}\n\nfunction ButtonGroupText({ className, ...props }: React.ComponentProps<'div'>) {\n  return (\n    <div\n      data-slot=\"button-group-text\"\n      className={cn(\n        'bg-muted flex items-center gap-2 rounded-md border px-3 text-14 font-medium',\n        className,\n      )}\n      {...props}\n    />\n  )\n}\n\nexport { ButtonGroup, ButtonGroupSeparator, ButtonGroupText, buttonGroupVariants }\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

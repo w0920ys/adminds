@@ -237,6 +237,78 @@ export const components: ComponentMeta[] = [
     verified: true,
   },
   {
+    id: 'button-group',
+    name: 'Button Group',
+    aliases: ['버튼 그룹', '버튼 묶음', '분할 버튼', 'split button'],
+    category: 'actions',
+    status: 'stable',
+    addedIn: 'v0.25.0',
+    changedIn: 'v0.25.0',
+    purpose:
+      '관련 있는 버튼 여럿을 하나의 덩어리로 묶는다. 상태를 켜고 끄면 Toggle Group을, 눌러서 그 자리에서 실행하고 끝나면 Button Group을 쓴다.',
+    anatomy: [
+      {
+        part: 'container',
+        label: 'Container',
+        note: '직접 자식(Button·Input 무엇이든)의 맞닿는 테두리를 이어 붙인다. orientation이 가로·세로를 정한다',
+      },
+      {
+        part: 'separator',
+        label: 'Separator',
+        note: '테두리 없는 variant를 섞어 쓸 때 경계를 보인다',
+        optional: true,
+      },
+    ],
+    properties: [
+      {
+        name: 'orientation',
+        title: 'Orientation',
+        description: '버튼이 가로로 늘어서는지 세로로 쌓이는지 정한다.',
+        display: 'row',
+        options: [
+          { value: 'horizontal', note: '기본. 표 행의 동작 모음처럼 가로로 늘어선다' },
+          { value: 'vertical', note: '좁은 사이드바처럼 세로 자리가 넉넉할 때' },
+        ],
+      },
+    ],
+    guidelines: [
+      {
+        id: 'group-vs-toggle-group',
+        title: 'Button Group vs Toggle Group',
+        body: 'Toggle Group은 눌린 상태를 계속 보입니다. Button Group은 누르면 그 자리에서 실행되고 끝입니다.',
+        do: ['실행하고 끝나는 동작은 Button Group을, 상태를 켜고 끄는 것은 Toggle Group을 쓴다'],
+        dont: ['상태를 계속 표시해야 하는 곳에 Button Group을 쓰지 않는다'],
+      },
+      {
+        id: 'separator-for-borderless',
+        title: '테두리 없는 variant는 구분선을 더한다',
+        body: 'default·secondary·ghost처럼 배경만 있는 버튼은 맞닿아도 경계가 보이지 않습니다.',
+        do: ['outline이 아닌 버튼을 묶을 때는 ButtonGroupSeparator를 더한다'],
+        dont: ['테두리 없는 버튼을 구분선 없이 붙여 어디까지가 한 버튼인지 안 보이게 두지 않는다'],
+      },
+      {
+        id: 'label-the-group',
+        title: '묶음 전체에 이름을 준다',
+        body: '버튼 하나하나의 이름 말고, 묶음이 통째로 무엇을 하는지도 전해야 합니다.',
+        do: ['aria-label이나 aria-labelledby로 묶음 전체를 설명한다'],
+        dont: ['이름 없이 버튼만 늘어놓지 않는다'],
+      },
+    ],
+    usage: [
+      { id: 'row-actions', title: '표 행의 동작 모음', note: '보관·신고·미루기처럼 한 행에 딸린 동작 여러 개를 묶는다' },
+      { id: 'split-button', title: '분할 버튼', note: '기본 동작과 부가 동작(드롭다운)을 구분선으로 나눠 하나처럼 보인다' },
+      { id: 'stepper', title: '수량 조절', note: '증가·감소 버튼 사이에 값을 보이는 텍스트를 끼워 넣는다' },
+      { id: 'input-with-button', title: '입력과 버튼 묶기', note: 'Input과 Button을 나란히 붙여 검색창처럼 보인다' },
+    ],
+    cases: [
+      { id: 'mixed-variant', title: 'variant가 섞이는 경우', note: '테두리 없는 버튼 사이에는 구분선이 필요하다' },
+      { id: 'vertical', title: '세로로 놓이는 경우', note: 'orientation이 vertical이면 위아래로 테두리가 이어진다' },
+      { id: 'disabled-item', title: '일부만 비활성인 경우', note: '비활성 버튼도 자리와 테두리는 그대로 유지한다' },
+      { id: 'narrow-screen', title: '좁은 화면', note: 'w-fit이라 내용 너비만큼만 차지하고 줄바꿈되지 않는다' },
+    ],
+    verified: false,
+  },
+  {
     id: 'context-menu',
     name: 'Context Menu',
     aliases: ['우클릭 메뉴', '컨텍스트 메뉴', 'right click', '컨텍스트'],
@@ -1379,6 +1451,80 @@ export const components: ComponentMeta[] = [
       { id: 'narrow-screen', title: '좁은 화면', note: '기본 폭이 부모를 채우므로 별도 처리가 필요 없다' },
     ],
     verified: true,
+  },
+  {
+    id: 'input-group',
+    name: 'Input Group',
+    aliases: ['인풋 그룹', '입력 묶음', '검색창', 'search input'],
+    category: 'inputs',
+    status: 'stable',
+    addedIn: 'v0.25.0',
+    changedIn: 'v0.25.0',
+    purpose:
+      'Input에 아이콘·버튼·짧은 텍스트를 붙여 하나의 입력처럼 보이게 묶는다. 검색 아이콘, 단위, 지우기 버튼처럼 입력과 한 몸으로 움직여야 하는 것에 쓴다.',
+    anatomy: [
+      {
+        part: 'container',
+        label: 'Container',
+        note: 'Input과 같은 테두리·배경·radius를 진다. 포커스 고리는 안의 InputGroupInput이 포커스를 받을 때 컨테이너에 뜬다(focus-within)',
+      },
+      { part: 'input', label: 'Input', note: '테두리 없이 배경이 투명하다. 남는 폭을 모두 차지한다' },
+      {
+        part: 'addon',
+        label: 'Addon',
+        note: '아이콘·InputGroupText·InputGroupButton 중 하나. align으로 입력의 앞(inline-start)·뒤(inline-end)에 놓는다',
+        optional: true,
+      },
+    ],
+    properties: [
+      {
+        name: 'size',
+        title: 'Size',
+        description: '같은 줄에 놓이는 컨트롤과 높이를 맞춘다. Input과 같은 control 토큰을 쓴다.',
+        display: 'row',
+        options: [
+          { value: 'sm', note: '표 위 필터 줄' },
+          { value: 'default', note: '기본' },
+          { value: 'lg', note: '화면 위쪽 넓은 검색창' },
+        ],
+      },
+    ],
+    guidelines: [
+      {
+        id: 'addon-after-input-in-dom',
+        title: 'InputGroupAddon은 항상 Input 뒤에 둔다',
+        body: 'align은 보이는 자리만 정할 뿐 DOM 순서와 다르다. 뒤에 두어야 Tab 이동이 입력 → addon 순서로 자연스럽습니다.',
+        do: ['InputGroupAddon을 InputGroupInput 다음에 적고, 보이는 위치는 align으로 정한다'],
+        dont: ['보이는 자리를 맞추겠다고 InputGroupAddon을 Input보다 앞서 적지 않는다'],
+      },
+      {
+        id: 'one-action-per-addon',
+        title: 'addon 하나에는 핵심 동작 하나만 둔다',
+        body: '아이콘이 여러 개면 무엇을 눌러야 하는지 헷갈립니다.',
+        do: ['검색·지우기·복사처럼 뜻이 분명한 동작 하나만 InputGroupButton으로 둔다'],
+        dont: ['한 addon 안에 관련 없는 동작을 여러 개 욱여넣지 않는다'],
+      },
+      {
+        id: 'icon-only-addon-needs-label',
+        title: '아이콘만 있는 InputGroupButton에 이름을 준다',
+        body: '아이콘만 두면 스크린 리더가 아무것도 읽지 못합니다.',
+        do: ['아이콘만 있는 InputGroupButton에 aria-label을 붙인다'],
+        dont: ['이름 없이 아이콘만 남기지 않는다'],
+      },
+    ],
+    usage: [
+      { id: 'search-input', title: '검색창', note: '앞에 검색 아이콘 addon을 둔다' },
+      { id: 'amount-input', title: '금액 입력', note: '앞에 통화 기호, 뒤에 단위 텍스트를 붙인다' },
+      { id: 'copyable-value', title: '복사할 수 있는 값', note: '읽기 전용 입력 뒤에 복사 버튼을 붙인다' },
+      { id: 'domain-input', title: '도메인 입력', note: '앞뒤에 고정 텍스트(https://·.com)를 붙여 나머지만 입력받는다' },
+    ],
+    cases: [
+      { id: 'both-ends', title: '앞뒤 모두에 addon이 있는 경우', note: 'inline-start·inline-end를 함께 쓴다' },
+      { id: 'disabled', title: '비활성인 경우', note: '컨테이너 전체가 흐려지고 addon도 함께 비활성으로 보인다' },
+      { id: 'invalid', title: '오류인 경우', note: '테두리와 고리가 destructive 색으로 바뀐다' },
+      { id: 'narrow-screen', title: '좁은 화면', note: 'Input이 줄어들고 addon은 줄어들지 않는다' },
+    ],
+    verified: false,
   },
   {
     id: 'radio',

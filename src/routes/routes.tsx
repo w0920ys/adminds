@@ -11,6 +11,7 @@ import { AvatarPage } from '@/routes/components/AvatarPage'
 import { BadgePage } from '@/routes/components/BadgePage'
 import { BreadcrumbPage } from '@/routes/components/BreadcrumbPage'
 import { ButtonPage } from '@/routes/components/ButtonPage'
+import { ButtonGroupPage } from '@/routes/components/ButtonGroupPage'
 import { CalendarPage } from '@/routes/components/CalendarPage'
 import { CardPage } from '@/routes/components/CardPage'
 import { ChartAreaPage } from '@/routes/components/ChartAreaPage'
@@ -35,6 +36,7 @@ import { EmptyStatePage } from '@/routes/components/EmptyStatePage'
 import { FieldPage } from '@/routes/components/FieldPage'
 import { FileUploadPage } from '@/routes/components/FileUploadPage'
 import { InputPage } from '@/routes/components/InputPage'
+import { InputGroupPage } from '@/routes/components/InputGroupPage'
 import { ItemPage } from '@/routes/components/ItemPage'
 import { MenubarPage } from '@/routes/components/MenubarPage'
 import { PageHeaderPage } from '@/routes/components/PageHeaderPage'
@@ -110,10 +112,12 @@ export const routes: RouteObject[] = [
         children: [
           { index: true, element: <ComponentsIndex /> },
           { path: 'button', element: <ButtonPage /> },
+          { path: 'button-group', element: <ButtonGroupPage /> },
           { path: 'dropdown-menu', element: <DropdownMenuPage /> },
           { path: 'toggle', element: <TogglePage /> },
           { path: 'toggle-group', element: <ToggleGroupPage /> },
           { path: 'input', element: <InputPage /> },
+          { path: 'input-group', element: <InputGroupPage /> },
           { path: 'item', element: <ItemPage /> },
           { path: 'field', element: <FieldPage /> },
           { path: 'file-upload', element: <FileUploadPage /> },
