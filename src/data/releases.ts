@@ -29,6 +29,28 @@ export type Release = {
 /** 최신 버전이 배열의 맨 앞이다. */
 export const releases: Release[] = [
   {
+    version: 'v0.25.0',
+    publishedAt: '2026-08-31',
+    title: 'Input Group·Button Group을 더했어요',
+    purpose:
+      'shadcn 대비 남은 것 중 우선순위가 높았던 두 개를 채웠어요. 아이콘·버튼을 인풋에 붙이거나, 버튼 여럿을 하나로 묶어야 할 때 씁니다.',
+    changes: [
+      {
+        target: 'Components / Input Group',
+        type: 'New',
+        note: '인풋에 아이콘·버튼·짧은 텍스트를 붙여 하나의 입력처럼 보이게 묶어요. 검색창, 단위 붙은 금액 입력 등에 써요.',
+      },
+      {
+        target: 'Components / Button Group',
+        type: 'New',
+        note: '관련 있는 버튼 여럿을 테두리를 이어 붙여 한 덩어리로 묶어요. 표 행의 동작 모음, 분할 버튼 등에 써요.',
+      },
+    ],
+    requests: [],
+    reviewItems: [],
+    impact: ['Components'],
+  },
+  {
     version: 'v0.24.0',
     publishedAt: '2026-08-31',
     title: 'Spinner·Toggle Group·Item을 새로 더했어요',
