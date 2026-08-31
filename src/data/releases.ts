@@ -29,6 +29,33 @@ export type Release = {
 /** 최신 버전이 배열의 맨 앞이다. */
 export const releases: Release[] = [
   {
+    version: 'v0.27.0',
+    publishedAt: '2026-08-31',
+    title: 'Container Grid System을 이 사이트 자신에도 적용했어요',
+    purpose:
+      'App Shell 소비 프로젝트만의 규칙이 아니라, 이 문서 사이트 자신도 같은 LNB 구조라 똑같이 따라야 하는 규칙이에요. 별개였던 두 절을 하나로 합치고, 실제 카드 그리드 8곳의 gap과 breakpoint를 recipe에 맞춰 통일했어요.',
+    changes: [
+      {
+        target: 'Foundations / Layout',
+        type: 'Updated',
+        note: "이 사이트 자신용 'Grid'와 소비 프로젝트용 'Container Grid System' 두 절을 하나로 합쳤어요.",
+      },
+      {
+        target: 'Foundations / Iconography, Voice and Tone',
+        type: 'Fixed',
+        note: '카드 그리드의 gap과 breakpoint를 Container Grid System recipe에 맞춰 통일했어요.',
+      },
+      {
+        target: 'Components / DoDont, ExampleList',
+        type: 'Fixed',
+        note: '카드 그리드의 gap과 breakpoint를 Container Grid System recipe에 맞춰 통일했어요.',
+      },
+    ],
+    requests: [],
+    reviewItems: [],
+    impact: ['Foundations', 'Components'],
+  },
+  {
     version: 'v0.26.0',
     publishedAt: '2026-08-31',
     title: 'Foundations에 Container Grid System을 더했어요',
