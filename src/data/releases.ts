@@ -29,6 +29,33 @@ export type Release = {
 /** 최신 버전이 배열의 맨 앞이다. */
 export const releases: Release[] = [
   {
+    version: 'v0.24.0',
+    publishedAt: '2026-08-31',
+    title: 'Spinner·Toggle Group·Item을 새로 더했어요',
+    purpose:
+      'shadcn에는 있지만 adminds엔 없던 세 개를 채웠어요. Toggle Group은 Toggle 문서 안에서만 쓰이던 걸 독립 컴포넌트로 뗐고, Spinner와 Item은 새로 만들었어요.',
+    changes: [
+      {
+        target: 'Components / Spinner',
+        type: 'New',
+        note: '지금 처리되고 있다는 사실만 알리는 로딩 아이콘이에요. 색은 스스로 정하지 않고 놓이는 곳의 글자색을 따라가요.',
+      },
+      {
+        target: 'Components / Toggle Group',
+        type: 'New',
+        note: '여러 Toggle을 하나로 묶어요. 하나만 켜지거나 여럿이 함께 켜지는 두 가지를 골라요.',
+      },
+      {
+        target: 'Components / Item',
+        type: 'New',
+        note: '알림·설정 행·검색 결과처럼 미디어·제목·설명·동작 조합이 행마다 달라지는 목록 한 칸이에요.',
+      },
+    ],
+    requests: [],
+    reviewItems: [],
+    impact: ['Components'],
+  },
+  {
     version: 'v0.23.0',
     publishedAt: '2026-08-31',
     title: 'Calendar를 독립 컴포넌트로 뗐어요',
