@@ -126,7 +126,11 @@ export function Lnb({ open, onClose }: { open: boolean; onClose: () => void }) {
          * 조각만 남기고 나머지는 뒤의 배경 오버레이로 비어 보였다.
          */
         className={cn(
-          'bg-surface fixed inset-y-0 right-0 z-drawer flex w-full flex-col overflow-y-auto border-l p-3 transition-transform',
+          /*
+           * scrollbar-none — AppShell의 main이 이미 쓰는 유틸리티다.
+           * 스크롤 자체는 overflow-y-auto가 그대로 하고, 막대만 감춘다.
+           */
+          'bg-surface fixed inset-y-0 right-0 z-drawer flex w-full flex-col overflow-y-auto border-l p-3 transition-transform scrollbar-none',
           'md:static md:h-full md:w-60 md:shrink-0 md:translate-x-0',
           open ? 'translate-x-0' : 'translate-x-full',
         )}
