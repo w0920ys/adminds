@@ -35,6 +35,7 @@ import { EmptyStatePage } from '@/routes/components/EmptyStatePage'
 import { FieldPage } from '@/routes/components/FieldPage'
 import { FileUploadPage } from '@/routes/components/FileUploadPage'
 import { InputPage } from '@/routes/components/InputPage'
+import { ItemPage } from '@/routes/components/ItemPage'
 import { MenubarPage } from '@/routes/components/MenubarPage'
 import { PageHeaderPage } from '@/routes/components/PageHeaderPage'
 import { PaginationPage } from '@/routes/components/PaginationPage'
@@ -113,6 +114,7 @@ export const routes: RouteObject[] = [
           { path: 'toggle', element: <TogglePage /> },
           { path: 'toggle-group', element: <ToggleGroupPage /> },
           { path: 'input', element: <InputPage /> },
+          { path: 'item', element: <ItemPage /> },
           { path: 'field', element: <FieldPage /> },
           { path: 'file-upload', element: <FileUploadPage /> },
           { path: 'select', element: <SelectPage /> },

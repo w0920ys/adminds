@@ -128,6 +128,7 @@ export const sections: NavSection[] = [
           { to: '/components/collapsible', label: 'Collapsible', updatedAt: '2026-08-29' },
           { to: '/components/data-table', label: 'Data Table', updatedAt: '2026-08-29' },
           { to: '/components/description-list', label: 'Description List', updatedAt: '2026-08-26' },
+          { to: '/components/item', label: 'Item', updatedAt: '2026-08-31' },
           { to: '/components/page-header', label: 'Page Header', updatedAt: '2026-08-30' },
           { to: '/components/resizable', label: 'Resizable', updatedAt: '2026-08-29' },
           { to: '/components/scroll-area', label: 'Scroll Area', updatedAt: '2026-08-29' },

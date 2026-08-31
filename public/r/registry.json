@@ -609,6 +609,26 @@
       ]
     },
     {
+      "name": "item",
+      "type": "registry:ui",
+      "title": "Item",
+      "dependencies": [
+        "@radix-ui/react-slot",
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "https://adminds.vercel.app/r/separator.json",
+        "https://adminds.vercel.app/r/tokens.json",
+        "https://adminds.vercel.app/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/item.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "page-header",
       "type": "registry:ui",
       "title": "Page Header",
@@ -1208,7 +1228,7 @@
       "name": "adminds",
       "type": "registry:item",
       "title": "Admin Design System",
-      "description": "토큰과 컴포넌트 쉰여섯 개를 한 번에 가져온다.",
+      "description": "토큰과 컴포넌트 쉰일곱 개를 한 번에 가져온다.",
       "registryDependencies": [
         "https://adminds.vercel.app/r/accordion.json",
         "https://adminds.vercel.app/r/alert.json",
@@ -1235,6 +1255,7 @@
         "https://adminds.vercel.app/r/data-table.json",
         "https://adminds.vercel.app/r/date-picker.json",
         "https://adminds.vercel.app/r/description-list.json",
+        "https://adminds.vercel.app/r/item.json",
         "https://adminds.vercel.app/r/page-header.json",
         "https://adminds.vercel.app/r/dialog.json",
         "https://adminds.vercel.app/r/dropdown-menu.json",
