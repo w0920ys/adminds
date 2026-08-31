@@ -33,9 +33,9 @@ grep -o "grid-cols-[a-z0-9\[\]_]*|gap-[0-9]*|px-[0-9]* py-[0-9]*" 결과
 
 **momeokji-admin**: 같은 라운드에서 `src/App.tsx`(그리고 필요하면 `src/pages/*.tsx`)의 기존 grid 조합을 아래 recipe로 교체한다. 데이터·로직은 건드리지 않는다.
 
-## 핵심 구조 — 컨테이너 하나 · 행 하나 · span 다섯 가지
+## 핵심 구조 — 컨테이너 하나 · 행 하나 · span 여섯 가지
 
-사용자가 시각화(Artifact)를 검토하고 "진행"으로 승인한 안이다.
+사용자가 시각화(Artifact)를 세 차례 검토·수정하고 "진행"으로 승인한 최종안이다. 첫 리뷰에서 px 값 표기를 요청받아 모든 recipe·컨테이너 값에 실제 px를 병기했고, 두 번째 리뷰에서 momeokji-admin 실제 화면 콘텐츠(HomeSection.tsx·SettingsSection.tsx·DesignSystemSection.tsx의 실제 라벨·문구)로 미리보기를 다시 만들면서 홈 KPI 타일의 **실제 콘텐츠가 스펙 초안이 참고했던 로딩 스켈레톤과 다르다**(`xl:grid-cols-6`까지 씀)는 사실을 발견했다. 처음에는 이걸 "KPI 타일만의 예외 패턴"으로 12칸 시스템 밖에 뒀으나, 세 번째 리뷰에서 사용자가 "KPI 타일에만 한정하지 말고 6개도 들어갈 수 있는 span도 만들어"라고 요청해 **Sixth**를 정식 recipe로 12칸 시스템 안에 편입했다 — 그 결과 xl 예외 없이 lg에서 곧바로 6-up이 되어 기존 코드보다 오히려 더 이른 시점에 6-up이 시작된다.
 
 ### 1. 페이지 컨테이너 (세로 리듬)
 
@@ -60,33 +60,37 @@ grep -o "grid-cols-[a-z0-9\[\]_]*|gap-[0-9]*|px-[0-9]* py-[0-9]*" 결과
 - **lg(≥1024px)**: `grid-cols-12` — 진짜 12칸 그리드.
 - **md(≥768px)에서 별도 단계를 두지 않는다.** `AppShell`의 LNB(`md:w-56` = 224px)가 md부터 항상 고정으로 뜬다 — 뷰포트가 768px여도 콘텐츠 실폭은 544px 남짓이라 sm의 2칸을 유지하는 편이 더 붐비지 않는다. lg(1024px)에 가서야 콘텐츠 실폭이 800px 근처로 넉넉해져 12칸이 의미를 가진다. 이 판단은 새 breakpoint를 만들지 않고 기존 sm·lg 중 어느 쪽에 각 전환을 배정할지만 고른 것이다(`LayoutPage`의 "임의로 새 breakpoint 값을 만들지 않는다" 원칙을 그대로 지킨다).
 
-### 3. 카드 span 다섯 가지
+### 3. 카드 span 여섯 가지
 
-카드마다 아래 중 하나를 이름으로 고른다. 다섯 개 다 모바일→sm→lg 세 단계를 이미 포함한 완성형 클래스이고, 소비하는 쪽은 값을 계산하지 않고 이름만 고르면 된다.
+카드마다 아래 중 하나를 이름으로 고른다. 여섯 개 다 모바일→sm→lg 세 단계를 이미 포함한 완성형 클래스이고, 소비하는 쪽은 값을 계산하지 않고 이름만 고르면 된다.
 
 | Recipe | 클래스 | lg 기준 폭 | 실제 매핑 |
 |---|---|---|---|
 | **Full** | `col-span-1 sm:col-span-2 lg:col-span-12` | 12/12 | 표, 긴 카드 — 늘 한 줄 전체 |
 | **Half** | `col-span-1 sm:col-span-1 lg:col-span-6` | 6/12 | 설정 카드 2개처럼 sm부터 2-up |
 | **Third** | `col-span-1 sm:col-span-2 lg:col-span-4` | 4/12 | 3-up 카드 목록 — lg 전까지 풀와이드로 쌓임 |
-| **Quarter** | `col-span-1 sm:col-span-1 lg:col-span-3` | 3/12 | KPI 타일 — 기존 `grid-cols-2 → lg:grid-cols-4` 스켈레톤과 정확히 일치 |
+| **Quarter** | `col-span-1 sm:col-span-1 lg:col-span-3` | 3/12 | 차트·설명이 딸린 요약 카드 — 정보량이 있는 4-up |
+| **Sixth** | `col-span-1 sm:col-span-1 lg:col-span-2` | 2/12 | 숫자만 있는 저정보량 카드 — KPI 타일처럼 6-up. Quarter보다 한 단계 더 촘촘하다 |
 | **Two-thirds + One-third** (짝) | `lg:col-span-8` + `lg:col-span-4` (둘 다 `col-span-1 sm:col-span-2`) | 8+4/12 | 유입 섹션의 차트+도넛 — 기존 `lg:col-span-2`(3칸 중 2칸) 관례를 12칸 기준으로 formalize |
 
-Half·Quarter는 sm에서부터 2-up이 되고, Third·Two-thirds/One-third는 lg 전까지 풀와이드로 쌓인다 — 콘텐츠가 무거울수록(차트·표) 좁은 화면에서 억지로 나누지 않는다는 원칙을 다섯 개가 공유한다.
+Half·Quarter·Sixth는 sm에서부터 다칸이 되고, Third·Two-thirds/One-third는 lg 전까지 풀와이드로 쌓인다 — 콘텐츠가 무거울수록(차트·표) 좁은 화면에서 억지로 나누지 않는다는 원칙을 여섯 개가 공유한다. Sixth는 KPI 타일 전용이 아니라 저정보량 카드라면 어디서든 쓰는 일반 recipe다.
 
 ### momeokji-admin 실제 화면 매핑
 
-Artifact에서 사용자가 검토한 표를 그대로 옮긴다.
+Artifact 리뷰 중 실제 코드(`HomeSection.tsx`·`SettingsSection.tsx`·`DesignSystemSection.tsx`)를 다시 열어 확인한 진짜 라벨·문구로 검증한 표다.
 
 | 화면 | 추천 recipe | 기존 코드 |
 |---|---|---|
-| 홈 KPI 타일 8개 (`HomeSection`) | Quarter | `grid-cols-2 gap-4 lg:grid-cols-4` (이미 일치) |
-| 유입 — 추세 차트 + 도넛 (`acquisition`) | Two-thirds / One-third | `grid-cols-1 gap-4 lg:grid-cols-3` + `lg:col-span-2` |
-| 유입 — UTM 표 (`acquisition`) | Full | `Card` 단독 |
-| 설정 카드 2개 (`settings`) | Half | `grid-cols-1 gap-4 lg:grid-cols-2` |
-| 디자인 시스템 컴포넌트 목록 (`design-system`) | Third | `grid-cols-3` 계열 |
+| 홈 KPI 타일 6개(콘텐츠, `HomeSection.tsx`) | Sixth | `grid-cols-2 gap-4 lg:grid-cols-3 xl:grid-cols-6` → Sixth로 xl 없이 lg에서 곧장 6-up |
+| 홈 KPI 로딩 스켈레톤(`App.tsx`) ⚠ 실제 수정 필요 | Sixth | `grid-cols-2 gap-4 lg:grid-cols-4` → Sixth로 콘텐츠와 맞춰 로딩→표시 레이아웃 튐을 없앤다 |
+| 유입 — 추세 차트 + 도넛 (`App.tsx`, acquisition) | Two-thirds / One-third | `grid-cols-1 gap-4 lg:grid-cols-3` + `lg:col-span-2` |
+| 유입 — UTM 표 (`App.tsx`, acquisition) | Full | `Card` 단독 |
+| 설정 — "디자인 시스템"·"관리자 계정" 카드 2개 (`SettingsSection.tsx`) | Half | `grid-cols-1 gap-4 lg:grid-cols-2` |
+| 디자인 시스템 — 사용 현황 하이라이트 3장 (`DesignSystemSection.tsx`) | Third | `grid-cols-1 gap-4 lg:grid-cols-3` |
 
-App.tsx·pages/*.tsx의 나머지 grid 사용처(설정 섹션 스켈레톤의 `lg:grid-cols-2`, 이벤트 카탈로그 등)는 구현 단계에서 하나씩 다섯 recipe 중 가장 가까운 것으로 옮긴다. 정확히 대응되지 않는 특이 케이스(`grid-cols-[280px_1fr]`처럼 라벨+값 2칸 패턴)는 이 시스템의 대상이 아니다 — `LayoutPage`가 이미 별도로 다루는 `grid-cols-[auto_1fr]` 패턴 그대로 둔다.
+**발견한 로딩 스켈레톤 불일치**: 스펙 초안은 App.tsx의 로딩 스켈레톤(`grid-cols-2 lg:grid-cols-4`)만 보고 이를 실제 KPI 타일 grid로 오인했다. 실제 `HomeSection.tsx`의 콘텐츠 grid는 `lg:grid-cols-3 xl:grid-cols-6`로 스켈레톤과 다르다 — 로딩이 끝나는 순간 4칸에서 3→6칸으로 레이아웃이 튄다. 이번 마이그레이션에서 스켈레톤을 Sixth로 맞추면 이 불일치도 함께 해소된다.
+
+App.tsx·pages/*.tsx의 나머지 grid 사용처(이벤트 카탈로그 등)는 구현 단계에서 하나씩 여섯 recipe 중 가장 가까운 것으로 옮긴다. 정확히 대응되지 않는 특이 케이스(`grid-cols-[280px_1fr]`처럼 라벨+값 2칸 패턴)는 이 시스템의 대상이 아니다 — `LayoutPage`가 이미 별도로 다루는 `grid-cols-[auto_1fr]` 패턴 그대로 둔다.
 
 ## 영향받는 파일
 
@@ -94,13 +98,14 @@ App.tsx·pages/*.tsx의 나머지 grid 사용처(설정 섹션 스켈레톤의 `
 - 수정: `src/routes/foundations/LayoutPage.tsx` — "Content width"·"Grid" 섹션을 위 표·클래스로 교체. "통일된 grid 시스템이나 breakpoint 토큰은 아직 없다"는 기존 문구를 이 시스템 설명으로 바꾼다. Breakpoints·Guidelines 섹션은 원칙(새 breakpoint 금지, 임의 값 대괄호 금지)이 그대로 유효하므로 손대지 않는다.
 
 **momeokji-admin**
-- 수정: `src/App.tsx` — 위 매핑표의 5개 지점(홈 KPI 타일, 유입 차트+도넛, 유입 UTM 표, 설정 카드 2개, 디자인 시스템 컴포넌트 목록)과 각 섹션의 페이지 컨테이너(`flex flex-col gap-10 px-6 py-8`)를 교체.
-- 조사 필요: `src/pages/*.tsx`에 남은 grid 사용처(HomeSection.tsx·SettingsSection.tsx·DesignSystemSection.tsx·EventCatalogSection.tsx·UsersSection.tsx) — 플랜 작성 시 각 파일을 열어 실제 grid 지점을 다시 실측한다(이 스펙의 grep 결과는 App.tsx 기준이라 pages/ 하위는 아직 세지 않았다).
+- 수정: `src/App.tsx` — 홈 KPI 로딩 스켈레톤, 유입 차트+도넛, 유입 UTM 표와 각 섹션의 페이지 컨테이너(`flex flex-col gap-10 px-6 py-8`)를 교체.
+- 수정: `src/pages/HomeSection.tsx`(KPI 타일 grid를 Sixth로) · `src/pages/SettingsSection.tsx`(카드 2개를 Half로) · `src/pages/DesignSystemSection.tsx`(사용 현황 하이라이트 3장을 Third로).
+- 조사 필요: `src/pages/EventCatalogSection.tsx`·`src/pages/UsersSection.tsx`에 남은 grid 사용처 — 플랜 작성 시 각 파일을 열어 실제 grid 지점을 다시 실측한다.
 
 ## 테스트
 
 - adminds: `npm test`(registry-parity 등 기존 스위트, Layout 페이지는 별도 테스트 없음) · `npm run build`(tsc+vite) · 개발 서버에서 Breakpoints 표·새 Grid 섹션이 깨지지 않고 렌더링되는지 눈으로 확인.
-- momeokji-admin: 이 저장소에 어떤 테스트 스위트가 있는지 플랜 작성 시 momeokji-admin의 `package.json`을 열어 확인한다(현재 세션은 adminds 기준으로 구성돼 있어 momeokji-admin의 테스트 커맨드를 확정하지 않았다). 최소한 `npm run build` 통과와, 다섯 recipe를 적용한 각 섹션을 실제 브라우저(모바일·sm·lg 폭)에서 눈으로 확인하는 절차는 플랜에 반드시 포함한다.
+- momeokji-admin: 이 저장소에 어떤 테스트 스위트가 있는지 플랜 작성 시 momeokji-admin의 `package.json`을 열어 확인한다(현재 세션은 adminds 기준으로 구성돼 있어 momeokji-admin의 테스트 커맨드를 확정하지 않았다). 최소한 `npm run build` 통과와, 여섯 recipe를 적용한 각 섹션을 실제 브라우저(모바일·sm·lg 폭)에서 눈으로 확인하는 절차는 플랜에 반드시 포함한다. 홈 KPI 타일은 로딩→표시 전환 시 레이아웃이 튀지 않는지(스켈레톤과 콘텐츠의 grid가 같은지)를 별도로 확인한다.
 
 ## 명시적으로 다루지 않는 것
 
@@ -108,3 +113,4 @@ App.tsx·pages/*.tsx의 나머지 grid 사용처(설정 섹션 스켈레톤의 `
 - `tokens.css`에 breakpoint·grid 커스텀 프로퍼티 신설 — Tailwind 기본 유틸리티로 충분해 토큰화할 대상이 없다.
 - `grid-cols-[auto_1fr]`류 라벨+값 2칸 패턴, `grid-cols-[280px_1fr]`류 고정폭 사이드 레이아웃 — 카드 나열이 아닌 다른 문제라 이 시스템의 대상이 아니다.
 - md(768px) 전용 별도 grid 단계 — LNB를 고려해 의도적으로 만들지 않았다.
+- xl(1280px) 전용 별도 grid 단계 — Sixth가 lg에서 이미 6-up을 제공해 필요가 없어졌다. `LayoutPage`의 "xl은 아직 쓰지 않는다" 원칙과도 맞는다.
