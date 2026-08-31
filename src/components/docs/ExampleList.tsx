@@ -17,7 +17,7 @@ export function ExampleList({
    * 스스로 가진 overflow-x-auto 영역 안에서 굴러간다.
    */
   return (
-    <ul className="grid gap-5 sm:grid-cols-2 md:gap-6">
+    <ul className="grid gap-4 sm:grid-cols-2">
       {examples.map((example) => {
         const node = renderExample?.(example.id)
         return (

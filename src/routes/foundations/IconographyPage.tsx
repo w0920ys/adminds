@@ -79,7 +79,7 @@ export function IconographyPage() {
           기본은 2입니다. strokeWidth를 코드에 적었다면 왜 적었는지 한 줄로 말할 수 있어야 하고, 말할 수
           없으면 지웁니다.
         </p>
-        <div className="grid gap-3 sm:grid-cols-3">
+        <div className="grid gap-4 sm:grid-cols-3">
           {STROKES.map((item) => (
             <div key={item.width} className="flex flex-col gap-3 rounded-lg border p-4">
               <div className="bg-surface-raised grid min-h-20 place-items-center rounded-md">
@@ -126,7 +126,7 @@ export function IconographyPage() {
           라벨이면 <code className="text-12">aria-label</code>, 옆에 글자가 있으면{' '}
           <code className="text-12">aria-hidden</code>.
         </p>
-        <div className="grid gap-3 md:grid-cols-2">
+        <div className="grid gap-4 sm:grid-cols-2">
           <div className="flex flex-col gap-3 rounded-lg border p-4">
             <div className="bg-surface-raised grid min-h-20 place-items-center rounded-md">
               <Button size="icon" variant="outline" aria-label="사용자 추가">

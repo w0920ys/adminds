@@ -26,7 +26,7 @@ export function GetStartedOverview() {
       </DocSection>
 
       <DocSection title="Sections">
-        <ul className="grid gap-3 sm:grid-cols-2">
+        <ul className="grid gap-4 sm:grid-cols-2">
           {sections.map((section) => (
             <li key={section.id} className="h-full">
               <Link
@@ -60,7 +60,7 @@ export function GetStartedOverview() {
       </DocSection>
 
       <DocSection title="Status">
-        <ul className="grid gap-3 sm:grid-cols-3">
+        <ul className="grid gap-4 sm:grid-cols-3">
           <li className="rounded-lg border p-4">
             <strong className="text-40 font-bold tracking-tight">{components.total}</strong>
             <p className="text-muted-foreground mt-1 text-12">

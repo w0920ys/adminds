@@ -29,7 +29,7 @@ export function ComponentsIndex() {
 
       {groups.map(({ category, items }) => (
         <DocSection key={category} title={categoryLabel[category]}>
-          <ul className="grid gap-3 sm:grid-cols-2">
+          <ul className="grid gap-4 sm:grid-cols-2">
             {items.map((meta) => (
               <li key={meta.id} className="h-full">
                 <Link

@@ -15,28 +15,13 @@ const BREAKPOINTS = [
   { prefix: '2xl', minWidth: '96rem (1536px)' },
 ]
 
-const GRID_PATTERNS = [
-  {
-    pattern: 'sm:grid-cols-2 · md:grid-cols-2',
-    usage: '카드·예시가 반복되는 목록',
-    example: 'DoDont · ExampleList · PatternsOverview',
-  },
-  {
-    pattern: 'grid-cols-[auto_1fr]',
-    usage: '라벨과 값처럼 폭이 다른 두 칸',
-    example: 'Steps · Field',
-  },
-  {
-    pattern: 'grid-cols-3',
-    usage: '좁게 묶이는 세 칸',
-    example: 'Voice and Tone · Iconography',
-  },
-]
-
 /*
- * 위 GRID_PATTERNS과는 대상이 다르다 — 저건 이 문서 사이트 자신의
- * 레이아웃(DoDont, Steps 같은 문서용 UI)이고, 이 상수는 App Shell(설치형
- * ui/app-shell.tsx)로 만든 어드민 화면의 카드 그리드다. spans의 합은
+ * 이 문서 사이트 자신도 App Shell 소비자다 — layout/AppShell.tsx가 쓰는
+ * LNB(Lnb.tsx, md:w-60=240px)도 ui/app-shell.tsx의 LNB(md:w-56=224px)와
+ * 같은 이유로 md부터 콘텐츠 실폭을 줄인다. 그래서 GRID_RECIPES는 이
+ * 사이트 자신의 카드 목록(DoDont·ExampleList·ComponentsIndex 등)과
+ * 설치형 App Shell을 쓰는 소비 프로젝트(momeokji-admin) 양쪽에 같은
+ * 이름으로 적용된다 — 하나의 규칙이지 두 개가 아니다. spans의 합은
  * 항상 12 — RecipeBar가 그 비율 그대로 막대를 그린다.
  */
 const GRID_RECIPES = [
@@ -50,13 +35,13 @@ const GRID_RECIPES = [
     name: 'Half',
     classes: 'col-span-1 sm:col-span-1 lg:col-span-6',
     spans: [6, 6],
-    usage: '설정 카드 2개처럼 sm부터 2-up',
+    usage: '설정 카드 2개처럼 sm부터 2-up. 가벼운 카드는 이 사이트도 sm부터 쓴다(DoDont · PatternsOverview · ComponentsIndex)',
   },
   {
     name: 'Third',
     classes: 'col-span-1 sm:col-span-2 lg:col-span-4',
     spans: [4, 4, 4],
-    usage: '3-up 카드 목록 — lg 전까지 풀와이드로 쌓인다',
+    usage: '차트 카드는 lg 전까지 풀와이드로 쌓인다. 숫자·아이콘처럼 가벼운 카드는 이 사이트도 sm부터 쓴다(Iconography · Voice and Tone)',
   },
   {
     name: 'Quarter',
@@ -137,10 +122,10 @@ export function LayoutPage() {
     >
       <DocSection title="Overview">
         <p className="text-muted-foreground text-16">
-          색·타이포·간격처럼 값 하나가 토큰으로 떨어지는 대신, 이 문서는 지금 이 저장소가
-          실제로 쓰는 반응형 기준점과 폭, 격자 패턴을 있는 그대로 보입니다. 통일된 grid
-          시스템이나 breakpoint 토큰은 아직 없습니다 — 새로 만들지 않고, 지금 화면들이
-          실제로 어떻게 나뉘는지부터 정확히 적습니다.
+          반응형 기준점과 콘텐츠 폭은 지금 이 저장소가 실제로 쓰는 값을 있는 그대로 보입니다.
+          카드가 늘어서는 격자는 다릅니다 — Container Grid System이라는 하나의 규칙이 있고, 이
+          문서 사이트 자신과 설치형 <code className="text-12">App Shell</code>을 쓰는 소비
+          프로젝트(momeokji-admin 등) 양쪽에 같은 이름으로 적용됩니다.
         </p>
       </DocSection>
 
@@ -200,35 +185,26 @@ export function LayoutPage() {
         </p>
       </DocSection>
 
-      <DocSection title="Grid">
-        <p className="text-muted-foreground text-16">
-          통일된 grid 토큰은 없습니다. 대신 이 저장소 곳곳에서 반복되는 패턴 세 가지가
-          있습니다.
-        </p>
-        <div className="divide-y rounded-lg border">
-          {GRID_PATTERNS.map((row) => (
-            <div key={row.pattern} className="flex flex-col gap-1 p-4">
-              <code className="text-12">{row.pattern}</code>
-              <span className="text-muted-foreground text-14">{row.usage}</span>
-              <span className="text-muted-foreground text-12">{row.example}</span>
-            </div>
-          ))}
-        </div>
-        <p className="text-muted-foreground text-16">
-          한 줄짜리 배치는 grid 대신 flex로 충분합니다 — grid는 칸이 둘 이상으로 갈릴 때만
-          씁니다.
-        </p>
-      </DocSection>
-
       <DocSection title="Container Grid System">
         <p className="text-muted-foreground text-16">
-          위 Grid 패턴은 이 문서 사이트 자신의 레이아웃이었습니다. 이 절은 다릅니다 —{' '}
-          <code className="text-12">App Shell</code>(설치형 <code className="text-12">ui/app-shell.tsx</code>)로
-          지은 어드민 화면에서 카드를 얼마나 넓게, 몇 개씩 늘어놓을지 정하는 시스템입니다.
-          컨테이너 하나 · 그리드 행 하나 · span recipe 여섯 개로 끝납니다.
+          카드가 늘어서는 자리는 이 저장소 전체가 같은 규칙을 씁니다 — 컨테이너 하나 · 그리드
+          행 하나 · span recipe 여섯 개. <code className="text-12">App Shell</code>(설치형{' '}
+          <code className="text-12">ui/app-shell.tsx</code>)을 쓰는 소비 프로젝트의 어드민
+          화면뿐 아니라, 이 문서 사이트 자신(<code className="text-12">DoDont</code> ·{' '}
+          <code className="text-12">ExampleList</code> · <code className="text-12">ComponentsIndex</code>{' '}
+          등)도 같은 recipe로 짓습니다 — 이 사이트도 <code className="text-12">layout/AppShell.tsx</code>의
+          LNB가 md부터 콘텐츠 실폭을 줄이는 같은 구조이기 때문입니다. 다른 건 카드의 무게뿐입니다
+          — 무거운 카드(차트·표)는 recipe가 <code className="text-12">lg</code>에서 트리거되고,
+          가벼운 카드(숫자·짧은 목록)는 <code className="text-12">sm</code>에서 이미 트리거됩니다.
         </p>
 
         <p className="text-muted-foreground text-16 font-semibold">페이지 컨테이너</p>
+        <p className="text-muted-foreground text-16">
+          이 값은 <code className="text-12">App Shell</code> 기반 대시보드 페이지(momeokji-admin 등)의
+          몫입니다 — 이 문서 사이트 자신은 <code className="text-12">DocPage</code>가 이미 정한 읽기용
+          리듬(절 사이 <code className="text-12">gap-16</code>/<code className="text-12">md:gap-20</code>)을
+          그대로 씁니다. 서로 다른 콘텐츠(줄글 문서 vs 데이터 대시보드)라 의도적으로 다릅니다.
+        </p>
         <div className="rounded-lg border p-4">
           <code className="text-12">{'<div className="flex flex-col gap-10 px-6 py-8">'}</code>
         </div>
@@ -247,8 +223,9 @@ export function LayoutPage() {
         <p className="text-muted-foreground text-16">
           모바일은 1칸, <code className="text-12">sm</code>(640px)은 2칸, <code className="text-12">lg</code>
           (1024px)은 진짜 12칸입니다. <code className="text-12">md</code>(768px)에 별도 단계를 두지
-          않는 이유는 <code className="text-12">App Shell</code>의 LNB가 md부터 224px를 항상 고정으로
-          가져가기 때문입니다 — 뷰포트가 넓어져도 콘텐츠 실폭은 그만큼 못 늘어납니다:
+          않는 이유는 LNB(설치형 <code className="text-12">App Shell</code>이든 이 문서 사이트 자신의{' '}
+          <code className="text-12">layout/AppShell.tsx</code>든)가 md부터 폭을 항상 고정으로 가져가기
+          때문입니다 — 뷰포트가 넓어져도 콘텐츠 실폭은 그만큼 못 늘어납니다:
         </p>
         <BreakpointStrip />
 
@@ -271,9 +248,10 @@ export function LayoutPage() {
           ))}
         </div>
         <p className="text-muted-foreground text-16">
-          이 규칙에 안 맞는 특이 케이스(라벨+값 2칸처럼 폭이 고정된 사이드 레이아웃)는 위
-          <code className="text-12">grid-cols-[auto_1fr]</code> 패턴을 그대로 씁니다 —
-          카드 나열이 아닌 다른 문제라 recipe의 대상이 아닙니다.
+          이 규칙에 안 맞는 특이 케이스(라벨+값처럼 폭이 고정된 두 칸, <code className="text-12">Steps</code> ·{' '}
+          <code className="text-12">Field</code>가 쓰는 <code className="text-12">grid-cols-[auto_1fr]</code>)는
+          recipe의 대상이 아닙니다 — 카드 나열이 아닌 다른 문제입니다. 한 줄짜리 배치도 grid 대신
+          flex로 충분합니다.
         </p>
       </DocSection>
 
@@ -282,8 +260,8 @@ export function LayoutPage() {
           do={[
             '반응형은 sm과 md 위주로 설계한다',
             '페이지 콘텐츠 폭은 max-w-6xl을 벗어나지 않는다',
-            '카드·예시가 반복되는 목록은 sm:grid-cols-2나 md:grid-cols-2 관례를 따른다',
-            'App Shell 화면의 카드 그리드는 페이지 컨테이너 + 그리드 행 + 여섯 recipe 중 하나로 짓는다',
+            '카드가 늘어서는 자리는 그리드 행 + 여섯 recipe 중 하나로 짓는다 — 이 사이트 자신도 예외가 아니다',
+            '가벼운 카드(숫자·짧은 목록)는 recipe를 sm부터, 무거운 카드(차트·표)는 lg부터 트리거한다',
           ]}
           dont={[
             '임의로 새 breakpoint 값을 만든다',

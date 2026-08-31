@@ -29,7 +29,7 @@ export function PatternsOverview() {
       </DocSection>
 
       <DocSection title="Pages">
-        <ul className="grid gap-3 sm:grid-cols-2">
+        <ul className="grid gap-4 sm:grid-cols-2">
           {patterns.map((pattern) => (
             <li key={pattern.id} className="h-full">
               <Link
