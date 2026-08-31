@@ -29,6 +29,23 @@ export type Release = {
 /** 최신 버전이 배열의 맨 앞이다. */
 export const releases: Release[] = [
   {
+    version: 'v0.26.0',
+    publishedAt: '2026-08-31',
+    title: 'Foundations에 Container Grid System을 더했어요',
+    purpose:
+      'App Shell로 지은 어드민 화면에서 카드를 얼마나 넓게, 몇 개씩 늘어놓을지 정하는 시스템이에요. 페이지 컨테이너 하나·그리드 행 하나·span recipe 6개(Full/Half/Third/Quarter/Sixth/Two-thirds+One-third)로 끝나요.',
+    changes: [
+      {
+        target: 'Foundations / Layout',
+        type: 'New',
+        note: 'Container Grid System 절을 새로 추가했어요. LNB가 md부터 콘텐츠 실폭을 줄이는 걸 도식으로 보이고, recipe마다 12칸 비율 막대를 넣었어요.',
+      },
+    ],
+    requests: [],
+    reviewItems: [],
+    impact: ['Foundations'],
+  },
+  {
     version: 'v0.25.0',
     publishedAt: '2026-08-31',
     title: 'Input Group·Button Group을 더했어요',
