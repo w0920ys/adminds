@@ -50,15 +50,15 @@ export function PageviewCounter() {
   if (data === null) return null
 
   /*
-   * 배지처럼 튀는 배경 대신, 옆의 "All rights reserved."와 같은 색·굵기를
+   * 배지처럼 튀는 배경 대신, 위 "All rights reserved."와 같은 색·굵기를
    * 그대로 물려받는 일반 텍스트로 둔다 — 우피 참고 이미지의 어두운 배경은
-   * 그 화면이 다크 모드였을 뿐, 위계를 뒤집으라는 뜻은 아니었다.
+   * 그 화면이 다크 모드였을 뿐, 위계를 뒤집으라는 뜻은 아니었다. 같은 줄에
+   * 붙이면 문장이 길어져 읽기 번거로워, 저작권 문구 아래 한 줄로 둔다.
    */
   return (
-    <span aria-live="polite">
-      {' · 오늘 '}
-      {data.count.toLocaleString('ko-KR')}
+    <p className="text-muted-foreground text-12" aria-live="polite">
+      오늘 {data.count.toLocaleString('ko-KR')}
       {data.updatedAt && ` · ${formatRelativeKo(data.updatedAt, now)}`}
-    </span>
+    </p>
   )
 }
