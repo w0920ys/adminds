@@ -50,16 +50,15 @@ async function notifySlackIfThresholdReached(dateKey: string, count: number): Pr
 
   const date = dateKey.replace('pageview:', '')
   try {
-    const res = await fetch(webhookUrl, {
+    await fetch(webhookUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         text: `adminds 오늘(${date}) 조회수가 ${SLACK_ALERT_THRESHOLD}회를 넘었습니다 (현재 ${count}회).`,
       }),
     })
-    console.log('[slack-debug] status=%d body=%s urlLen=%d', res.status, await res.text(), webhookUrl.length)
-  } catch (err) {
-    console.log('[slack-debug] fetch threw', err)
+  } catch {
+    /* Slack이 잠깐 안 되더라도 조회수 응답 자체는 막지 않는다 */
   }
 }
 
