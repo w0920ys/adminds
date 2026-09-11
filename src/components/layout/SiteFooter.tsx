@@ -1,9 +1,10 @@
 import { Command } from 'lucide-react'
 import { Link } from 'react-router'
 import { sections } from '@/components/layout/nav-config'
+import { PageviewCounter } from '@/components/layout/PageviewCounter'
 
 const LINKEDIN = 'https://www.linkedin.com/in/yoon-sunwoo-649956204/'
-const EMAIL = 'w0920ys@gmail.com'
+const EMAIL = 'designyoonyoon@gmail.com'
 
 export function SiteFooter() {
   return (
@@ -21,6 +22,7 @@ export function SiteFooter() {
         </Link>
         <p className="text-muted-foreground text-12">
           © {new Date().getFullYear()} sunwooyoon. All rights reserved.
+          <PageviewCounter />
         </p>
       </div>
 
