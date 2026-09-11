@@ -1,32 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
-import { Redis } from '@upstash/redis'
-
-/*
- * Vercel KV(Upstash Redis) 연결에 딸려 온 값 그대로 쓴다 — 대시보드
- * Quickstart가 보여준 이름(KV_REST_API_URL·KV_REST_API_TOKEN)과
- * 정확히 같다. Redis.fromEnv()는 버전에 따라 UPSTASH_* 이름을 찾을 수도
- * 있어, 헷갈리지 않게 직접 두 값을 넘긴다.
- */
-const redis = new Redis({
-  url: process.env.KV_REST_API_URL!,
-  token: process.env.KV_REST_API_TOKEN!,
-})
-
-/*
- * '오늘'은 한국 시간(KST, UTC+9) 기준이다 — 방문자 대부분이 한국에
- * 있고, 자정 기준이 UTC와 9시간 어긋나면 '오늘 조회수'가 실제 하루와
- * 안 맞는다. 날짜별로 키를 나눠 저장하므로(pageview:YYYY-MM-DD), 값
- * 자체는 손대지 않고 만료(TTL)만 40일 뒤로 걸어 오래된 키가 무한히
- * 쌓이지 않게 한다 — 우피의 30일 보관과 비슷한 생각이다.
- */
-function todayKeyKST(): string {
-  const KST_OFFSET_MS = 9 * 60 * 60 * 1000
-  const kstNow = new Date(Date.now() + KST_OFFSET_MS)
-  return `pageview:${kstNow.toISOString().slice(0, 10)}`
-}
-
-/* 값 키와 나란히 두는 만료 기간이다 — 우피처럼 40일 지나면 자연히 사라진다 */
-const TTL_SECONDS = 60 * 60 * 24 * 40
+import { redis, TTL_SECONDS, todayKeyKST, postToSlack } from './_lib/pageview-shared.js'
 
 /* 오늘 조회수가 이 값에 처음 도달하는 순간 Slack으로 한 번 알린다 */
 const SLACK_ALERT_THRESHOLD = 10
@@ -41,22 +14,13 @@ const SLACK_ALERT_THRESHOLD = 10
 async function notifySlackIfThresholdReached(dateKey: string, count: number): Promise<void> {
   if (count < SLACK_ALERT_THRESHOLD) return
 
-  const webhookUrl = process.env.SLACK_WEBHOOK_URL
-  if (!webhookUrl) return
-
   const notifiedKey = `${dateKey}:notified`
   const acquired = await redis.set(notifiedKey, '1', { ex: TTL_SECONDS, nx: true })
   if (!acquired) return
 
   const date = dateKey.replace('pageview:', '')
   try {
-    await fetch(webhookUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        text: `adminds 오늘(${date}) 조회수가 ${SLACK_ALERT_THRESHOLD}회를 넘었습니다 (현재 ${count}회).`,
-      }),
-    })
+    await postToSlack(`adminds 오늘(${date}) 조회수가 ${SLACK_ALERT_THRESHOLD}회를 넘었습니다 (현재 ${count}회).`)
   } catch {
     /* Slack이 잠깐 안 되더라도 조회수 응답 자체는 막지 않는다 */
   }
