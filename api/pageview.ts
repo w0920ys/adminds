@@ -25,6 +25,9 @@ function todayKeyKST(): string {
   return `pageview:${kstNow.toISOString().slice(0, 10)}`
 }
 
+/* 값 키와 나란히 두는 만료 기간이다 — 우피처럼 40일 지나면 자연히 사라진다 */
+const TTL_SECONDS = 60 * 60 * 24 * 40
+
 /*
  * Vercel은 실제 요청자 IP를 x-forwarded-for 첫 번째 값으로 내려준다
  * (여러 프록시를 거치면 쉼표로 이어붙는데, 맨 앞이 클라이언트다).
@@ -59,6 +62,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   const key = todayKeyKST()
+  const updatedAtKey = `${key}:updatedAt`
   const ip = getClientIp(req)
   const excluded = getExcludedIps().includes(ip)
 
@@ -67,17 +71,29 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
    * 뜻이다 — 그래서 실제로 세는 자리는 POST + 제외 목록에 없을 때뿐이다.
    * 제외된 IP도 POST를 보낼 수 있지만(자기 화면에서도 오늘 숫자는
    * 보여야 하니까), 그 요청은 세지 않고 지금 값만 그대로 돌려준다.
+   *
+   * updatedAt은 우피 위젯의 'N분 전'을 재현하기 위한 값이다 — 마지막으로
+   * 카운트가 실제로 올라간 시각을 ISO 문자열로 남긴다. 값 키와 같은
+   * 만료 기간을 매번 다시 걸어(EX), 계속 방문이 있는 한 함께 살아있게 한다.
    */
   let count: number
+  let updatedAt: string | null
   if (req.method === 'POST' && !excluded) {
     count = await redis.incr(key)
     if (count === 1) {
-      await redis.expire(key, 60 * 60 * 24 * 40)
+      await redis.expire(key, TTL_SECONDS)
     }
+    updatedAt = new Date().toISOString()
+    await redis.set(updatedAtKey, updatedAt, { ex: TTL_SECONDS })
   } else {
-    count = Number((await redis.get<number>(key)) ?? 0)
+    const [storedCount, storedUpdatedAt] = await Promise.all([
+      redis.get<number>(key),
+      redis.get<string>(updatedAtKey),
+    ])
+    count = storedCount ?? 0
+    updatedAt = storedUpdatedAt ?? null
   }
 
   res.setHeader('Cache-Control', 'no-store')
-  res.status(200).json({ count, excluded })
+  res.status(200).json({ count, excluded, updatedAt })
 }
