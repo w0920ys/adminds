@@ -28,6 +28,40 @@ function todayKeyKST(): string {
 /* 값 키와 나란히 두는 만료 기간이다 — 우피처럼 40일 지나면 자연히 사라진다 */
 const TTL_SECONDS = 60 * 60 * 24 * 40
 
+/* 오늘 조회수가 이 값에 처음 도달하는 순간 Slack으로 한 번 알린다 */
+const SLACK_ALERT_THRESHOLD = 10
+
+/*
+ * count가 임계값을 처음 넘는 순간에만 한 번 보낸다 — 그 날 이후의 모든
+ * 요청마다 다시 보내면 알림이 아니라 소음이 된다. redis.set(..., {nx:true})
+ * 는 키가 없을 때만 성공하므로(이미 있으면 null을 돌려준다), 이 값을
+ * "오늘 이미 알렸는지"를 나타내는 잠금으로 그대로 쓸 수 있다. 동시에 여러
+ * 요청이 count===threshold를 봐도 잠금을 먼저 잡은 요청 하나만 보낸다.
+ */
+async function notifySlackIfThresholdReached(dateKey: string, count: number): Promise<void> {
+  if (count < SLACK_ALERT_THRESHOLD) return
+
+  const webhookUrl = process.env.SLACK_WEBHOOK_URL
+  if (!webhookUrl) return
+
+  const notifiedKey = `${dateKey}:notified`
+  const acquired = await redis.set(notifiedKey, '1', { ex: TTL_SECONDS, nx: true })
+  if (!acquired) return
+
+  const date = dateKey.replace('pageview:', '')
+  try {
+    await fetch(webhookUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        text: `adminds 오늘(${date}) 조회수가 ${SLACK_ALERT_THRESHOLD}회를 넘었습니다 (현재 ${count}회).`,
+      }),
+    })
+  } catch {
+    /* Slack이 잠깐 안 되더라도 조회수 응답 자체는 막지 않는다 */
+  }
+}
+
 /*
  * Vercel은 실제 요청자 IP를 x-forwarded-for 첫 번째 값으로 내려준다
  * (여러 프록시를 거치면 쉼표로 이어붙는데, 맨 앞이 클라이언트다).
@@ -85,6 +119,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
     updatedAt = new Date().toISOString()
     await redis.set(updatedAtKey, updatedAt, { ex: TTL_SECONDS })
+    await notifySlackIfThresholdReached(key, count)
   } else {
     const [storedCount, storedUpdatedAt] = await Promise.all([
       redis.get<number>(key),
