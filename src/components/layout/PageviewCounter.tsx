@@ -49,15 +49,16 @@ export function PageviewCounter() {
 
   if (data === null) return null
 
+  /*
+   * 배지처럼 튀는 배경 대신, 옆의 "All rights reserved."와 같은 색·굵기를
+   * 그대로 물려받는 일반 텍스트로 둔다 — 우피 참고 이미지의 어두운 배경은
+   * 그 화면이 다크 모드였을 뿐, 위계를 뒤집으라는 뜻은 아니었다.
+   */
   return (
-    <span
-      className="bg-foreground text-background ml-2 inline-flex items-center gap-1 rounded-md px-2 py-0.5 align-middle text-12 font-bold"
-      aria-live="polite"
-    >
-      <span>오늘 {data.count.toLocaleString('ko-KR')}</span>
-      {data.updatedAt && (
-        <span className="text-background/70 font-normal">· {formatRelativeKo(data.updatedAt, now)}</span>
-      )}
+    <span aria-live="polite">
+      {' · 오늘 '}
+      {data.count.toLocaleString('ko-KR')}
+      {data.updatedAt && ` · ${formatRelativeKo(data.updatedAt, now)}`}
     </span>
   )
 }
