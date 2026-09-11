@@ -22,8 +22,8 @@ export function SiteFooter() {
         </Link>
         <p className="text-muted-foreground text-12">
           © {new Date().getFullYear()} sunwooyoon. All rights reserved.
-          <PageviewCounter />
         </p>
+        <PageviewCounter />
       </div>
 
       <div className="flex gap-12">
