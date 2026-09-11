@@ -2,5 +2,6 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "rewrites": [
     { "source": "/((?!r/|llms\\.txt).*)", "destination": "/index.html" }
-  ]
+  ],
+  "crons": [{ "path": "/api/weekly-report", "schedule": "0 1 * * 1" }]
 }
