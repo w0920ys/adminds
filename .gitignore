@@ -31,3 +31,5 @@ dist-ssr
 
 # git worktree (병렬 세션용)
 .claude/worktrees
+.vercel
+.env*
